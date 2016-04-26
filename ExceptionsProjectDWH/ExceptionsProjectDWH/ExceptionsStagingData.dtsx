@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="11/9/2015 1:03:06 PM"
@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="ExceptionsStagingData"
   DTS:PackageType="5"
-  DTS:VersionBuild="93"
-  DTS:VersionGUID="{817A0651-F0E9-44A2-B753-BB594EE1183C}">
+  DTS:VersionBuild="94"
+  DTS:VersionGUID="{A8C638D4-9479-414D-B888-17FEC76EAA11}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -73,7 +73,7 @@
         <SQLTask:SqlTaskData
           SQLTask:Connection="{42796AA4-E456-4DBC-946D-8DEF7D075354}"
           SQLTask:BypassPrepare="False"
-          SQLTask:SqlStatementSource="delete from &#xA;Exceptions.StagingData&#xA;where &#xA;exists&#xA;(select case_id from [Exceptions].[staging_data_deletes_ssis]&#xA;where &#xA;StagingData.case_id = [staging_data_deletes_ssis].case_id&#xA;and StagingData.ExceptionRuleID = [staging_data_deletes_ssis].ExceptionRuleID&#xA;and StagingData.DatasetID = [staging_data_deletes_ssis].DatasetID&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="delete from &#xA;Exceptions.StagingData&#xA;where &#xA;exists&#xA;(select case_id from [Exceptions].[staging_data_deletes_ssis]&#xA;where &#xA;StagingData.case_id = [staging_data_deletes_ssis].case_id&#xA;and &#xA;StagingData.ExceptionRuleID = [staging_data_deletes_ssis].ExceptionRuleID&#xA;and &#xA;StagingData.DatasetID = [staging_data_deletes_ssis].DatasetID&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -2508,7 +2508,7 @@ order by case_id, exceptionruleid,Seq_No</property>
       DTS:LocaleID="-1"
       DTS:ObjectName="truncate_staging_data_deletes"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="2">
+      DTS:ThreadHint="1">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -2544,7 +2544,7 @@ order by case_id, exceptionruleid,Seq_No</property>
       DTS:LocaleID="-1"
       DTS:ObjectName="truncate_staging_data_values_updates"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="2">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -2568,7 +2568,7 @@ order by case_id, exceptionruleid,Seq_No</property>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{42796AA4-E456-4DBC-946D-8DEF7D075354}"
           SQLTask:BypassPrepare="False"
-          SQLTask:SqlStatementSource="delete from &#xA;Exceptions.StagingData_Values&#xA;where &#xA;exists&#xA;(select case_id from [Exceptions].[staging_data_values_deletes_ssis]&#xA;where &#xA;StagingData_Values.case_id = [staging_data_values_deletes_ssis].case_id&#xA;and StagingData_Values.[FieldID] = [staging_data_values_deletes_ssis].[FieldID]&#xA;and StagingData_Values.Seq_No = [staging_data_values_deletes_ssis].Seq_No&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="&#xA;update Exceptions.StagingData_Values&#xA;&#xA;&#xA;set Flag = Flag_dwh, &#xA;String = String_dwh, &#xA;Number = Number_dwh, &#xA;Date = Date_dwh&#xA;&#xA;&#xA;from Exceptions.[staging_data_values_updates_ssis]&#xA;&#xA;&#xA;where StagingData_Values.case_id = [staging_data_values_updates_ssis].case_id_dwh &#xA;&#xA;and [staging_data_values_updates_ssis].exceptionruleid_dwh = StagingData_Values.FieldID &#xA;&#xA;and &#xA;[staging_data_values_updates_ssis].Seq_No_dwh = StagingData_Values.Seq_No" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -2643,6 +2643,14 @@ order by case_id, exceptionruleid,Seq_No</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="171,42"
+          Id="Package\DeletesStagingData"
+          TopLeft="934.065500197496,380.18434546437" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\DeleteStagingValues"
+          TopLeft="877.42629157777,548.113989490119" />
+        <NodeLayout
           Size="306,42"
           Id="Package\Inserts and prep Deletes ExceptionsStagingData"
           TopLeft="925.718434706324,305.218930205636" />
@@ -2654,48 +2662,18 @@ order by case_id, exceptionruleid,Seq_No</property>
           Size="233,42"
           Id="Package\truncate_staging_data_deletes"
           TopLeft="1175.39493112101,191.170413519152" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="1291.89493112101,233.170413519152">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-138.676496414684,72.0485166864846"
-              Start="0,0"
-              End="-138.676496414684,64.5485166864846">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,43.617378198843" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,43.617378198843"
-                    Point2="0,47.617378198843"
-                    Point3="-4,47.617378198843" />
-                  <mssgle:LineSegment
-                    End="-134.676496414684,47.617378198843" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-134.676496414684,47.617378198843"
-                    Point2="-138.676496414684,47.617378198843"
-                    Point3="-138.676496414684,51.617378198843" />
-                  <mssgle:LineSegment
-                    End="-138.676496414684,64.5485166864846" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="259,42"
+          Id="Package\truncate_staging_data_values_deletes"
+          TopLeft="883.725033327351,187.093764987137" />
         <NodeLayout
           Size="263,42"
           Id="Package\truncate_staging_data_values_updates"
           TopLeft="611.855121397847,189.273847357206" />
         <NodeLayout
-          Size="259,42"
-          Id="Package\truncate_staging_data_values_deletes"
-          TopLeft="883.725033327351,187.093764987137" />
+          Size="183,42"
+          Id="Package\UpdatesStagingValues"
+          TopLeft="865.714015234868,642.061655476472" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="743.355121397847,231.273847357206">
@@ -2731,31 +2709,31 @@ order by case_id, exceptionruleid,Seq_No</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 9]"
-          TopLeft="1013.22503332735,229.093764987137">
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="1291.89493112101,233.170413519152">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="65.4934013789729,76.125165218499"
+              EndConnector="-138.676496414684,72.0485166864846"
               Start="0,0"
-              End="65.4934013789729,68.625165218499">
+              End="-138.676496414684,64.5485166864846">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,34.0625826092495" />
+                    End="0,43.617378198843" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,34.0625826092495"
-                    Point2="0,38.0625826092495"
-                    Point3="4,38.0625826092495" />
+                    Point1="0,43.617378198843"
+                    Point2="0,47.617378198843"
+                    Point3="-4,47.617378198843" />
                   <mssgle:LineSegment
-                    End="61.4934013789729,38.0625826092495" />
+                    End="-134.676496414684,47.617378198843" />
                   <mssgle:CubicBezierSegment
-                    Point1="61.4934013789729,38.0625826092495"
-                    Point2="65.4934013789729,38.0625826092495"
-                    Point3="65.4934013789729,42.0625826092495" />
+                    Point1="-134.676496414684,47.617378198843"
+                    Point2="-138.676496414684,47.617378198843"
+                    Point3="-138.676496414684,51.617378198843" />
                   <mssgle:LineSegment
-                    End="65.4934013789729,68.625165218499" />
+                    End="-138.676496414684,64.5485166864846" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2764,10 +2742,6 @@ order by case_id, exceptionruleid,Seq_No</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="175,42"
-          Id="Package\DeleteStagingValues"
-          TopLeft="877.42629157777,548.113989490119" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 10]"
           TopLeft="997.467921875411,513.631844631261">
@@ -2794,70 +2768,6 @@ order by case_id, exceptionruleid,Seq_No</property>
                     Point3="-32.5416302976415,21.2410724294289" />
                   <mssgle:LineSegment
                     End="-32.5416302976415,26.9821448588577" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="171,42"
-          Id="Package\DeletesStagingData"
-          TopLeft="934.065500197496,380.18434546437" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 13]"
-          TopLeft="1078.71843470632,347.218930205636">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-59.1529345088285,32.9654152587341"
-              Start="0,0"
-              End="-59.1529345088285,25.4654152587341">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,12.482707629367" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,12.482707629367"
-                    Point2="0,16.482707629367"
-                    Point3="-4,16.482707629367" />
-                  <mssgle:LineSegment
-                    End="-55.1529345088285,16.482707629367" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-55.1529345088285,16.482707629367"
-                    Point2="-59.1529345088285,16.482707629367"
-                    Point3="-59.1529345088285,20.482707629367" />
-                  <mssgle:LineSegment
-                    End="-59.1529345088285,25.4654152587341" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="183,42"
-          Id="Package\UpdatesStagingValues"
-          TopLeft="865.714015234868,642.061655476472" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 14]"
-          TopLeft="961.070153406319,590.113989490119">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,51.9476659863528"
-              Start="0,0"
-              End="0,44.4476659863528">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,44.4476659863528" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2900,6 +2810,96 @@ order by case_id, exceptionruleid,Seq_No</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 13]"
+          TopLeft="1078.71843470632,347.218930205636">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-59.1529345088285,32.9654152587341"
+              Start="0,0"
+              End="-59.1529345088285,25.4654152587341">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.482707629367" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.482707629367"
+                    Point2="0,16.482707629367"
+                    Point3="-4,16.482707629367" />
+                  <mssgle:LineSegment
+                    End="-55.1529345088285,16.482707629367" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-55.1529345088285,16.482707629367"
+                    Point2="-59.1529345088285,16.482707629367"
+                    Point3="-59.1529345088285,20.482707629367" />
+                  <mssgle:LineSegment
+                    End="-59.1529345088285,25.4654152587341" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 14]"
+          TopLeft="961.070153406319,590.113989490119">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51.9476659863528"
+              Start="0,0"
+              End="0,44.4476659863528">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.4476659863528" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="1013.22503332735,229.093764987137">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="65.4934013789729,76.125165218499"
+              Start="0,0"
+              End="65.4934013789729,68.625165218499">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.0625826092495" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.0625826092495"
+                    Point2="0,38.0625826092495"
+                    Point3="4,38.0625826092495" />
+                  <mssgle:LineSegment
+                    End="61.4934013789729,38.0625826092495" />
+                  <mssgle:CubicBezierSegment
+                    Point1="61.4934013789729,38.0625826092495"
+                    Point2="65.4934013789729,38.0625826092495"
+                    Point3="65.4934013789729,42.0625826092495" />
+                  <mssgle:LineSegment
+                    End="65.4934013789729,68.625165218499" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -2924,6 +2924,48 @@ order by case_id, exceptionruleid,Seq_No</property>
           Size="155,42"
           Id="Package\Inserts and prep Deletes ExceptionsStagingData\Conditional Split"
           TopLeft="387.812579827864,399.95380116053" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\Inserts and prep Deletes ExceptionsStagingData\Merge Join"
+          TopLeft="297.42909108253,243.021019196201" />
+        <NodeLayout
+          Size="252,42"
+          Id="Package\Inserts and prep Deletes ExceptionsStagingData\DeletesExceptionsStagingDataValues"
+          TopLeft="327.318544042484,562.248920280824" />
+        <EdgeLayout
+          Id="Package\Inserts and prep Deletes ExceptionsStagingData.Paths[OLE DB Source Output]"
+          TopLeft="183.008376614595,143.9084108353">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="159.087381134603,99.1126083609012"
+              Start="0,0"
+              End="159.087381134603,91.6126083609012">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,54.744555107525" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,54.744555107525"
+                    Point2="0,58.744555107525"
+                    Point3="4,58.744555107525" />
+                  <mssgle:LineSegment
+                    End="155.087381134603,58.744555107525" />
+                  <mssgle:CubicBezierSegment
+                    Point1="155.087381134603,58.744555107525"
+                    Point2="159.087381134603,58.744555107525"
+                    Point3="159.087381134603,62.744555107525" />
+                  <mssgle:LineSegment
+                    End="159.087381134603,91.6126083609012" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Inserts and prep Deletes ExceptionsStagingData.Paths[NewRows]"
           TopLeft="440.812579827864,441.95380116053">
@@ -2960,78 +3002,6 @@ order by case_id, exceptionruleid,Seq_No</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="130,42"
-          Id="Package\Inserts and prep Deletes ExceptionsStagingData\Merge Join"
-          TopLeft="297.42909108253,243.021019196201" />
-        <EdgeLayout
-          Id="Package\Inserts and prep Deletes ExceptionsStagingData.Paths[OLE DB Source Output]"
-          TopLeft="183.008376614595,143.9084108353">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="159.087381134603,99.1126083609012"
-              Start="0,0"
-              End="159.087381134603,91.6126083609012">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,54.744555107525" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,54.744555107525"
-                    Point2="0,58.744555107525"
-                    Point3="4,58.744555107525" />
-                  <mssgle:LineSegment
-                    End="155.087381134603,58.744555107525" />
-                  <mssgle:CubicBezierSegment
-                    Point1="155.087381134603,58.744555107525"
-                    Point2="159.087381134603,58.744555107525"
-                    Point3="159.087381134603,62.744555107525" />
-                  <mssgle:LineSegment
-                    End="159.087381134603,91.6126083609012" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Inserts and prep Deletes ExceptionsStagingData.Paths[OLE DB Source Output1]"
-          TopLeft="472.425354939375,90.3229144171522">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-89.6629305235109,152.698104779049"
-              Start="0,0"
-              End="-89.6629305235109,145.198104779049">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,86.5049557201048" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,86.5049557201048"
-                    Point2="0,90.5049557201048"
-                    Point3="-4,90.5049557201048" />
-                  <mssgle:LineSegment
-                    End="-85.6629305235109,90.5049557201048" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-85.6629305235109,90.5049557201048"
-                    Point2="-89.6629305235109,90.5049557201048"
-                    Point3="-89.6629305235109,94.5049557201048" />
-                  <mssgle:LineSegment
-                    End="-89.6629305235109,145.198104779049" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Inserts and prep Deletes ExceptionsStagingData.Paths[Merge Join Output]"
           TopLeft="362.42909108253,285.021019196201">
@@ -3066,10 +3036,6 @@ order by case_id, exceptionruleid,Seq_No</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="252,42"
-          Id="Package\Inserts and prep Deletes ExceptionsStagingData\DeletesExceptionsStagingDataValues"
-          TopLeft="327.318544042484,562.248920280824" />
         <EdgeLayout
           Id="Package\Inserts and prep Deletes ExceptionsStagingData.Paths[DeletedRows]"
           TopLeft="489.812579827864,441.95380116053">
@@ -3106,6 +3072,40 @@ order by case_id, exceptionruleid,Seq_No</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Inserts and prep Deletes ExceptionsStagingData.Paths[OLE DB Source Output1]"
+          TopLeft="472.425354939375,90.3229144171522">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-89.6629305235109,152.698104779049"
+              Start="0,0"
+              End="-89.6629305235109,145.198104779049">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,86.5049557201048" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,86.5049557201048"
+                    Point2="0,90.5049557201048"
+                    Point3="-4,90.5049557201048" />
+                  <mssgle:LineSegment
+                    End="-85.6629305235109,90.5049557201048" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-85.6629305235109,90.5049557201048"
+                    Point2="-89.6629305235109,90.5049557201048"
+                    Point3="-89.6629305235109,94.5049557201048" />
+                  <mssgle:LineSegment
+                    End="-89.6629305235109,145.198104779049" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -3138,6 +3138,19 @@ order by case_id, exceptionruleid,Seq_No</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Inserts and prep Deletes ExceptionsStagingData\DeletesExceptionsStagingDataValues">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues">
     <LayoutInfo>
@@ -3152,85 +3165,59 @@ order by case_id, exceptionruleid,Seq_No</property>
           Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SQL2008SVR"
           TopLeft="113.008376614595,101.9084108353" />
         <NodeLayout
+          Size="130,42"
+          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join"
+          TopLeft="328,233" />
+        <NodeLayout
           Size="161,42"
           Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01"
           TopLeft="371.155115255288,88.323332554043" />
+        <NodeLayout
+          Size="252,42"
+          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\DeletesExceptionsStagingDataValues"
+          TopLeft="418.625411270803,564.563425055613" />
+        <NodeLayout
+          Size="256,42"
+          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\UpdatesExceptionsStagingDataValues"
+          TopLeft="631.579432934292,499.824193735792" />
         <NodeLayout
           Size="155,42"
           Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Conditional Split"
           TopLeft="387.812579827864,399.95380116053" />
         <EdgeLayout
-          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues.Paths[NewRows]"
-          TopLeft="440.812579827864,441.95380116053">
+          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues.Paths[UpdatedRows]"
+          TopLeft="489.812579827864,441.95380116053">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-304.753863124582,149.205027908731"
+              EndConnector="269.766853106428,57.8703925752621"
               Start="0,0"
-              End="-304.753863124582,141.705027908731">
+              End="269.766853106428,50.3703925752621">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,56.5966780012473" />
+                    End="0,19.5029180573862" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,56.5966780012473"
-                    Point2="0,60.5966780012473"
-                    Point3="-4,60.5966780012473" />
+                    Point1="0,19.5029180573862"
+                    Point2="0,23.5029180573862"
+                    Point3="4,23.5029180573862" />
                   <mssgle:LineSegment
-                    End="-300.753863124582,60.5966780012473" />
+                    End="265.766853106428,23.5029180573862" />
                   <mssgle:CubicBezierSegment
-                    Point1="-300.753863124582,60.5966780012473"
-                    Point2="-304.753863124582,60.5966780012473"
-                    Point3="-304.753863124582,64.5966780012473" />
+                    Point1="265.766853106428,23.5029180573862"
+                    Point2="269.766853106428,23.5029180573862"
+                    Point3="269.766853106428,27.5029180573862" />
                   <mssgle:LineSegment
-                    End="-304.753863124582,141.705027908731" />
+                    End="269.766853106428,50.3703925752621" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-174.349509687291,65.5966780012473,43.94515625,9.421875"
+              BoundingBox="104.041903115714,28.5029180573862,61.683046875,11.609375"
               RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="130,42"
-          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join"
-          TopLeft="328,233" />
-        <EdgeLayout
-          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues.Paths[OLE DB Source Output]"
-          TopLeft="451.655115255288,130.323332554043">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-58.6551152552883,102.676667445957"
-              Start="0,0"
-              End="-58.6551152552883,95.176667445957">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,47.3383337229785" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,47.3383337229785"
-                    Point2="0,51.3383337229785"
-                    Point3="-4,51.3383337229785" />
-                  <mssgle:LineSegment
-                    End="-54.6551152552883,51.3383337229785" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-54.6551152552883,51.3383337229785"
-                    Point2="-58.6551152552883,51.3383337229785"
-                    Point3="-58.6551152552883,55.3383337229785" />
-                  <mssgle:LineSegment
-                    End="-58.6551152552883,95.176667445957" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -3268,6 +3255,76 @@ order by case_id, exceptionruleid,Seq_No</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues.Paths[OLE DB Source Output]"
+          TopLeft="451.655115255288,130.323332554043">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-58.6551152552883,102.676667445957"
+              Start="0,0"
+              End="-58.6551152552883,95.176667445957">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.3383337229785" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,47.3383337229785"
+                    Point2="0,51.3383337229785"
+                    Point3="-4,51.3383337229785" />
+                  <mssgle:LineSegment
+                    End="-54.6551152552883,51.3383337229785" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-54.6551152552883,51.3383337229785"
+                    Point2="-58.6551152552883,51.3383337229785"
+                    Point3="-58.6551152552883,55.3383337229785" />
+                  <mssgle:LineSegment
+                    End="-58.6551152552883,95.176667445957" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues.Paths[NewRows]"
+          TopLeft="440.812579827864,441.95380116053">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-304.753863124582,149.205027908731"
+              Start="0,0"
+              End="-304.753863124582,141.705027908731">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,56.5966780012473" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,56.5966780012473"
+                    Point2="0,60.5966780012473"
+                    Point3="-4,60.5966780012473" />
+                  <mssgle:LineSegment
+                    End="-300.753863124582,60.5966780012473" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-300.753863124582,60.5966780012473"
+                    Point2="-304.753863124582,60.5966780012473"
+                    Point3="-304.753863124582,64.5966780012473" />
+                  <mssgle:LineSegment
+                    End="-304.753863124582,141.705027908731" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-174.349509687291,65.5966780012473,43.94515625,9.421875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues.Paths[Merge Join Output]"
           TopLeft="393,275">
           <EdgeLayout.Curve>
@@ -3301,50 +3358,6 @@ order by case_id, exceptionruleid,Seq_No</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="256,42"
-          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\UpdatesExceptionsStagingDataValues"
-          TopLeft="631.579432934292,499.824193735792" />
-        <EdgeLayout
-          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues.Paths[UpdatedRows]"
-          TopLeft="489.812579827864,441.95380116053">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="269.766853106428,57.8703925752621"
-              Start="0,0"
-              End="269.766853106428,50.3703925752621">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,19.5029180573862" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,19.5029180573862"
-                    Point2="0,23.5029180573862"
-                    Point3="4,23.5029180573862" />
-                  <mssgle:LineSegment
-                    End="265.766853106428,23.5029180573862" />
-                  <mssgle:CubicBezierSegment
-                    Point1="265.766853106428,23.5029180573862"
-                    Point2="269.766853106428,23.5029180573862"
-                    Point3="269.766853106428,27.5029180573862" />
-                  <mssgle:LineSegment
-                    End="269.766853106428,50.3703925752621" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="104.041903115714,28.5029180573862,61.683046875,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="252,42"
-          Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\DeletesExceptionsStagingDataValues"
-          TopLeft="418.625411270803,564.563425055613" />
         <EdgeLayout
           Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues.Paths[DeletedRows]"
           TopLeft="465.312579827864,441.95380116053">
@@ -3414,19 +3427,6 @@ order by case_id, exceptionruleid,Seq_No</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\UpdatesExceptionsStagingDataValues">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\DeletesExceptionsStagingDataValues">
     <Properties>
       <Property>
@@ -3440,7 +3440,7 @@ order by case_id, exceptionruleid,Seq_No</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Inserts and prep Deletes ExceptionsStagingData\DeletesExceptionsStagingDataValues">
+    design-time-name="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\UpdatesExceptionsStagingDataValues">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
