@@ -1,0 +1,1377 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/9/2015 1:03:06 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="L05909"
+  DTS:CreatorName="SBC\jcoope"
+  DTS:DTSID="{47BC8AD2-EA4B-4011-9E6E-0C0457EAF04A}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="MatterSphereExport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="86"
+  DTS:VersionGUID="{F9DBA3F9-AAF0-4996-B5A5-12CAF5DC3338}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[cm_MatterSphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E9B625FD-AEDD-4A64-A491-678389EBF027}"
+      DTS:ObjectName="cm_MatterSphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::DestinationDatabaseMatterSphere]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::DestinationServerMatterSphere]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-LIV-MSSQ-01;Initial Catalog=MS_UAT;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SVR-LIV-DWH-01.red_dw]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9C6ADA6A-9434-435E-BE14-75FECED537A1}"
+      DTS:ObjectName="SVR-LIV-DWH-01.red_dw">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-LIV-DWH-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F11F0EA4-BF0F-44EF-8FC2-30FAAFCC3291}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="exceptions">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Export Exceptions to MS"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{4878A618-9A1E-4F82-A2E9-93A3753BB908}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Export Exceptions to MS"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Export Exceptions to MS\Conditional Split"
+              componentClassID="{7F88F654-4E20-4D14-84F4-AF9C925D3087}"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Export Exceptions to MS\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Conditional Split.Inputs[Conditional Split Input].Columns[case_id_dwh]"
+                      cachedDataType="i4"
+                      cachedName="case_id_dwh"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_dwh]" />
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Conditional Split.Inputs[Conditional Split Input].Columns[case_id_ms]"
+                      cachedDataType="i4"
+                      cachedName="case_id_ms"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_ms]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Export Exceptions to MS\Conditional Split.Outputs[NewRows]"
+                  description="Output 2 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="NewRows"
+                  synchronousInputId="Package\Export Exceptions to MS\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_ms]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(case_id_ms)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export Exceptions to MS\Conditional Split.Outputs[DeletedRows]"
+                  description="Output 3 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="DeletedRows"
+                  synchronousInputId="Package\Export Exceptions to MS\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_dwh]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(case_id_dwh)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">1</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export Exceptions to MS\Conditional Split.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Export Exceptions to MS\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export Exceptions to MS\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Export Exceptions to MS\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export Exceptions to MS\Data Conversion"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Export Exceptions to MS\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Data Conversion.Inputs[Data Conversion Input].Columns[clientnumber_dwh]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="clientnumber_dwh"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[clientnumber_dwh]" />
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Data Conversion.Inputs[Data Conversion Input].Columns[matternumber_dwh]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matternumber_dwh"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[matternumber_dwh]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Export Exceptions to MS\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Output].Columns[clientnumber_dwh]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Output].Columns[clientnumber_dwh]"
+                      name="clientnumber_dwh"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[clientnumber_dwh]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Output].Columns[matternumber_dwh]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Output].Columns[matternumber_dwh]"
+                      name="matternumber_dwh"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[matternumber_dwh]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Export Exceptions to MS\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export Exceptions to MS\Mattersphere"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Mattersphere"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[udMIExceptions]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select case_id,clientnumber, matternumber
+
+from 
+[dbo].[udMIExceptions]
+order by case_id</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Export Exceptions to MS\Mattersphere.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[cm_MatterSphere]"
+                  connectionManagerRefId="Package.ConnectionManagers[cm_MatterSphere]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].Columns[case_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[case_id]"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].Columns[case_id]"
+                      name="case_id"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].Columns[clientnumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[clientnumber]"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].Columns[clientnumber]"
+                      name="clientnumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].Columns[matternumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[matternumber]"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].Columns[matternumber]"
+                      name="matternumber"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[case_id]"
+                      dataType="i4"
+                      name="case_id" />
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[clientnumber]"
+                      dataType="wstr"
+                      length="8"
+                      name="clientnumber" />
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[matternumber]"
+                      dataType="wstr"
+                      length="8"
+                      name="matternumber" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[case_id]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[case_id]"
+                      name="case_id" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[clientnumber]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[clientnumber]"
+                      name="clientnumber" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[matternumber]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[matternumber]"
+                      name="matternumber" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export Exceptions to MS\Merge Join"
+              componentClassID="{14D43A4F-D7BD-489D-829E-6DE35750CFE4}"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Left Input].Columns[case_id]"
+                      cachedDataType="i4"
+                      cachedName="case_id"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].Columns[case_id]" />
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Left Input].Columns[client_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="client_code"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].Columns[client_code]" />
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Left Input].Columns[matter_number]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter_number"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].Columns[matter_number]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Right Input].Columns[case_id]"
+                      cachedDataType="i4"
+                      cachedName="case_id"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].Columns[case_id]" />
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Right Input].Columns[clientnumber]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="clientnumber"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].Columns[clientnumber]" />
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Right Input].Columns[matternumber]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="matternumber"
+                      lineageId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output].Columns[matternumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_dwh]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_dwh]"
+                      name="case_id_dwh"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Left Input].Columns[case_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[clientnumber_dwh]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[clientnumber_dwh]"
+                      name="clientnumber_dwh">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Left Input].Columns[client_code]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[matternumber_dwh]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[matternumber_dwh]"
+                      name="matternumber_dwh">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Left Input].Columns[matter_number]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_ms]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_ms]"
+                      name="case_id_ms">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Right Input].Columns[case_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[clientnumber_ms]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[clientnumber_ms]"
+                      name="clientnumber_ms">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Right Input].Columns[clientnumber]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[matternumber_ms]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[matternumber_ms]"
+                      name="matternumber_ms">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Right Input].Columns[matternumber]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export Exceptions to MS\OLE DB Command"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="OLE DB Command"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">delete from udMIExceptions
+where case_id = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Export Exceptions to MS\OLE DB Command.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[cm_MatterSphere]"
+                  connectionManagerRefId="Package.ConnectionManagers[cm_MatterSphere]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Export Exceptions to MS\OLE DB Command.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Command.Inputs[OLE DB Command Input].Columns[case_id_ms]"
+                      cachedDataType="i4"
+                      cachedName="case_id_ms"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_ms]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Export Exceptions to MS\OLE DB Command.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Export Exceptions to MS\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Export Exceptions to MS\OLE DB Command.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Export Exceptions to MS\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export Exceptions to MS\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[udMIExceptions]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">CHECK_CONSTRAINTS,ROWS_PER_BATCH = 50000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Export Exceptions to MS\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[cm_MatterSphere]"
+                  connectionManagerRefId="Package.ConnectionManagers[cm_MatterSphere]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[case_id_dwh]"
+                      cachedDataType="i4"
+                      cachedName="case_id_dwh"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[case_id]"
+                      lineageId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output].Columns[case_id_dwh]" />
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[clientnumber_dwh]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="clientnumber_dwh"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[clientnumber]"
+                      lineageId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Output].Columns[clientnumber_dwh]" />
+                    <inputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[matternumber_dwh]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="matternumber_dwh"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[matternumber]"
+                      lineageId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Output].Columns[matternumber_dwh]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[case_id]"
+                      dataType="i4"
+                      name="case_id" />
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[clientnumber]"
+                      dataType="wstr"
+                      length="8"
+                      name="clientnumber" />
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[matternumber]"
+                      dataType="wstr"
+                      length="8"
+                      name="matternumber" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Export Exceptions to MS\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Export Exceptions to MS\OLE DB Source"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[fact_exceptions_update]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select distinct case_id,
+
+SUBSTRING(client_code, PATINDEX('%[^0]%', client_code+'.'), LEN(client_code)) as client_code,
+case when matter_number = 'ML' then '0' else SUBSTRING(matter_number, PATINDEX('%[^0]%', matter_number+'.'), LEN(matter_number)) end as matter_number
+
+from
+dbo.fact_exceptions_update
+order by case_id</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Export Exceptions to MS\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SVR-LIV-DWH-01.red_dw]"
+                  connectionManagerRefId="Package.ConnectionManagers[SVR-LIV-DWH-01.red_dw]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].Columns[case_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[case_id]"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].Columns[case_id]"
+                      name="case_id"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].Columns[client_code]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[client_code]"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].Columns[client_code]"
+                      name="client_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].Columns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[matter_number]"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].Columns[matter_number]"
+                      name="matter_number"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[case_id]"
+                      dataType="i4"
+                      name="case_id" />
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[client_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="client_code" />
+                    <externalMetadataColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="matter_number" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[case_id]"
+                      dataType="i4"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[case_id]"
+                      name="case_id" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[client_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[client_code]"
+                      name="client_code" />
+                    <outputColumn
+                      refId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[matter_number]"
+                      name="matter_number" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Export Exceptions to MS.Paths[Data Conversion Output]"
+              endId="Package\Export Exceptions to MS\Conditional Split.Inputs[Conditional Split Input]"
+              name="Data Conversion Output"
+              startId="Package\Export Exceptions to MS\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Export Exceptions to MS.Paths[DeletedRows]"
+              endId="Package\Export Exceptions to MS\OLE DB Command.Inputs[OLE DB Command Input]"
+              name="DeletedRows"
+              startId="Package\Export Exceptions to MS\Conditional Split.Outputs[DeletedRows]" />
+            <path
+              refId="Package\Export Exceptions to MS.Paths[Merge Join Output]"
+              endId="Package\Export Exceptions to MS\Data Conversion.Inputs[Data Conversion Input]"
+              name="Merge Join Output"
+              startId="Package\Export Exceptions to MS\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Export Exceptions to MS.Paths[NewRows]"
+              endId="Package\Export Exceptions to MS\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="NewRows"
+              startId="Package\Export Exceptions to MS\Conditional Split.Outputs[NewRows]" />
+            <path
+              refId="Package\Export Exceptions to MS.Paths[OLE DB Source Output]"
+              endId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Right Input]"
+              name="OLE DB Source Output"
+              startId="Package\Export Exceptions to MS\Mattersphere.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Export Exceptions to MS.Paths[OLE DB Source Output1]"
+              endId="Package\Export Exceptions to MS\Merge Join.Inputs[Merge Join Left Input]"
+              name="OLE DB Source Output"
+              startId="Package\Export Exceptions to MS\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="193,42"
+          Id="Package\Export Exceptions to MS"
+          TopLeft="724,42" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Export Exceptions to MS">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Export Exceptions to MS\OLE DB Source"
+          TopLeft="181.528549717978,62.2100465506822" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\Export Exceptions to MS\Mattersphere"
+          TopLeft="95.2751451185371,177.786136938589" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Export Exceptions to MS\Conditional Split"
+          TopLeft="199.847067732166,499.58298010409" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Export Exceptions to MS\OLE DB Command"
+          TopLeft="652.63208923205,593.082301042012" />
+        <EdgeLayout
+          Id="Package\Export Exceptions to MS.Paths[DeletedRows]"
+          TopLeft="301.847067732166,541.58298010409">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="433.785021499884,51.4993209379227"
+              Start="0,0"
+              End="433.785021499884,43.9993209379227">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.9154330245969" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.9154330245969"
+                    Point2="0,20.9154330245969"
+                    Point3="4,20.9154330245969" />
+                  <mssgle:LineSegment
+                    End="429.785021499884,20.9154330245969" />
+                  <mssgle:CubicBezierSegment
+                    Point1="429.785021499884,20.9154330245969"
+                    Point2="433.785021499884,20.9154330245969"
+                    Point3="433.785021499884,24.9154330245969" />
+                  <mssgle:LineSegment
+                    End="433.785021499884,43.9993209379227" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="187.734932624942,25.9154330245969,58.31515625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Export Exceptions to MS\Data Conversion"
+          TopLeft="459.821739790229,381.788570777006" />
+        <EdgeLayout
+          Id="Package\Export Exceptions to MS.Paths[Data Conversion Output]"
+          TopLeft="537.821739790229,423.788570777006">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-260.474672058063,75.7944093270834"
+              Start="0,0"
+              End="-260.474672058063,68.2944093270834">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.8972046635417" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.8972046635417"
+                    Point2="0,37.8972046635417"
+                    Point3="-4,37.8972046635417" />
+                  <mssgle:LineSegment
+                    End="-256.474672058063,37.8972046635417" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-256.474672058063,37.8972046635417"
+                    Point2="-260.474672058063,37.8972046635417"
+                    Point3="-260.474672058063,41.8972046635417" />
+                  <mssgle:LineSegment
+                    End="-260.474672058063,68.2944093270834" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Export Exceptions to MS\OLE DB Destination"
+          TopLeft="32.5587167032816,591.158829069262" />
+        <EdgeLayout
+          Id="Package\Export Exceptions to MS.Paths[NewRows]"
+          TopLeft="252.847067732166,541.58298010409">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-134.788351028884,49.5758489651729"
+              Start="0,0"
+              End="-134.788351028884,42.0758489651729">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.1342528364304" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.1342528364304"
+                    Point2="0,20.1342528364304"
+                    Point3="-4,20.1342528364304" />
+                  <mssgle:LineSegment
+                    End="-130.788351028884,20.1342528364304" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-130.788351028884,20.1342528364304"
+                    Point2="-134.788351028884,20.1342528364304"
+                    Point3="-134.788351028884,24.1342528364304" />
+                  <mssgle:LineSegment
+                    End="-134.788351028884,42.0758489651729" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-89.3667536394422,25.1342528364304,43.94515625,9.421875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="130,42"
+          Id="Package\Export Exceptions to MS\Merge Join"
+          TopLeft="290,269" />
+        <EdgeLayout
+          Id="Package\Export Exceptions to MS.Paths[OLE DB Source Output]"
+          TopLeft="165.775145118537,219.786136938589">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="168.89152154813,49.2138630614112"
+              Start="0,0"
+              End="168.89152154813,41.7138630614112">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.1693109330553" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.1693109330553"
+                    Point2="0,29.1693109330553"
+                    Point3="4,29.1693109330553" />
+                  <mssgle:LineSegment
+                    End="164.89152154813,29.1693109330553" />
+                  <mssgle:CubicBezierSegment
+                    Point1="164.89152154813,29.1693109330553"
+                    Point2="168.89152154813,29.1693109330553"
+                    Point3="168.89152154813,33.1693109330553" />
+                  <mssgle:LineSegment
+                    End="168.89152154813,41.7138630614112" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Export Exceptions to MS.Paths[Merge Join Output]"
+          TopLeft="355,311">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="182.821739790229,70.7885707770062"
+              Start="0,0"
+              End="182.821739790229,63.2885707770062">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.3942853885031" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.3942853885031"
+                    Point2="0,35.3942853885031"
+                    Point3="4,35.3942853885031" />
+                  <mssgle:LineSegment
+                    End="178.821739790229,35.3942853885031" />
+                  <mssgle:CubicBezierSegment
+                    Point1="178.821739790229,35.3942853885031"
+                    Point2="182.821739790229,35.3942853885031"
+                    Point3="182.821739790229,39.3942853885031" />
+                  <mssgle:LineSegment
+                    End="182.821739790229,63.2885707770062" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Export Exceptions to MS.Paths[OLE DB Source Output1]"
+          TopLeft="256.528549717978,104.210046550682">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="118.804783615355,164.789953449318"
+              Start="0,0"
+              End="118.804783615355,157.289953449318">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,93.6718569076504" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,93.6718569076504"
+                    Point2="0,97.6718569076504"
+                    Point3="4,97.6718569076504" />
+                  <mssgle:LineSegment
+                    End="114.804783615355,97.6718569076504" />
+                  <mssgle:CubicBezierSegment
+                    Point1="114.804783615355,97.6718569076504"
+                    Point2="118.804783615355,97.6718569076504"
+                    Point3="118.804783615355,101.67185690765" />
+                  <mssgle:LineSegment
+                    End="118.804783615355,157.289953449318" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Export Exceptions to MS\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Export Exceptions to MS\Mattersphere">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Export Exceptions to MS\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
