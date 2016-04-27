@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="ExceptionsStagingData"
   DTS:PackageType="5"
-  DTS:VersionBuild="100"
-  DTS:VersionGUID="{01C9845A-5401-456F-BBE8-46077006B3E0}">
+  DTS:VersionBuild="102"
+  DTS:VersionGUID="{4D7B866F-CEB3-48D4-BDE6-1EA79FD94627}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1109,6 +1109,11 @@ order by case_id,exceptionruleid,datasetid</property>
                       cachedName="case_id"
                       cachedSortKeyPosition="1"
                       lineageId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Outputs[Merge Join Output].Columns[case_id]" />
+                    <inputColumn
+                      refId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Conditional Split.Inputs[Conditional Split Input].Columns[changedrows]"
+                      cachedDataType="i4"
+                      cachedName="changedrows"
+                      lineageId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Outputs[Merge Join Output].Columns[changedrows]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1184,13 +1189,13 @@ order by case_id,exceptionruleid,datasetid</property>
                       containsID="true"
                       dataType="System.String"
                       description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
-                      name="Expression">#{Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Outputs[Merge Join Output].Columns[case_id]} == #{Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Outputs[Merge Join Output].Columns[case_id_dwh]}</property>
+                      name="Expression">#{Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Outputs[Merge Join Output].Columns[case_id]} == #{Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Outputs[Merge Join Output].Columns[case_id_dwh]} &amp;&amp; #{Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Outputs[Merge Join Output].Columns[changedrows]} == 1</property>
                     <property
                       containsID="true"
                       dataType="System.String"
                       description="Specifies the friendly version of the expression. This expression version uses column names."
                       expressionType="Notify"
-                      name="FriendlyExpression">case_id == case_id_dwh</property>
+                      name="FriendlyExpression">case_id == case_id_dwh &amp;&amp; changedrows == 1</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
@@ -1558,6 +1563,11 @@ order by case_id,exceptionruleid,datasetid</property>
                       cachedDataType="dbTimeStamp"
                       cachedName="Date"
                       lineageId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Output].Columns[Date]" />
+                    <inputColumn
+                      refId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Inputs[Merge Join Right Input].Columns[changedrows]"
+                      cachedDataType="i4"
+                      cachedName="changedrows"
+                      lineageId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Output].Columns[changedrows]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1703,6 +1713,19 @@ order by case_id,exceptionruleid,datasetid</property>
                           dataType="System.Int32"
                           description="The input column associated with this output column"
                           name="InputColumnID">#{Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Inputs[Merge Join Left Input].Columns[Seq_No]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Outputs[Merge Join Output].Columns[changedrows]"
+                      dataType="i4"
+                      lineageId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Outputs[Merge Join Output].Columns[changedrows]"
+                      name="changedrows">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\Merge Join.Inputs[Merge Join Right Input].Columns[changedrows]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -2064,10 +2087,11 @@ order by case_id,FieldID,Seq_No</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select case_id, exceptionruleid, Flag, String, Number,Date, Seq_No
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select case_id, exceptionruleid, Flag, String, Number,Date, Seq_No, 
+case when DATEDIFF(HOUR, dss_update_time, GETDATE()) &lt; ? then 1 else 0 end as changedrows
 from ds_sh_exceptions_values
 --where dss_update_time &gt; DATEADD(dd, -1,getdate())
-where DATEDIFF(HOUR, dss_update_time, GETDATE()) &lt; ?
+--where DATEDIFF(HOUR, dss_update_time, GETDATE()) &lt; ?
 order by case_id, exceptionruleid,Seq_No</property>
                 <property
                   dataType="System.String"
@@ -2175,6 +2199,15 @@ order by case_id, exceptionruleid,Seq_No</property>
                       name="Seq_No"
                       sortKeyPosition="3"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Output].Columns[changedrows]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Output].ExternalColumns[changedrows]"
+                      lineageId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Output].Columns[changedrows]"
+                      name="changedrows"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2210,6 +2243,10 @@ order by case_id, exceptionruleid,Seq_No</property>
                       refId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Output].ExternalColumns[Seq_No]"
                       dataType="i4"
                       name="Seq_No" />
+                    <externalMetadataColumn
+                      refId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Output].ExternalColumns[changedrows]"
+                      dataType="i4"
+                      name="changedrows" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -2257,6 +2294,11 @@ order by case_id, exceptionruleid,Seq_No</property>
                       dataType="i4"
                       lineageId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Error Output].Columns[Seq_No]"
                       name="Seq_No" />
+                    <outputColumn
+                      refId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Error Output].Columns[changedrows]"
+                      dataType="i4"
+                      lineageId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Error Output].Columns[changedrows]"
+                      name="changedrows" />
                     <outputColumn
                       refId="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues\SVR-LIV-DWH-01.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                       dataType="i4"
@@ -2532,13 +2574,13 @@ order by case_id, exceptionruleid,Seq_No</property>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\PopulateLookBackPeriod"
+      DTS:refId="Package\PopulateLookBackPeriod - Currently Redundant"
       DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
       DTS:Description="Execute SQL Task"
       DTS:DTSID="{3C0B60C9-4AA5-4DEF-A5FF-6EDAE94CAB5C}"
       DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
       DTS:LocaleID="-1"
-      DTS:ObjectName="PopulateLookBackPeriod"
+      DTS:ObjectName="PopulateLookBackPeriod - Currently Redundant"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
       DTS:ThreadHint="0">
       <DTS:Variables />
@@ -2562,7 +2604,7 @@ order by case_id, exceptionruleid,Seq_No</property>
       DTS:LocaleID="-1"
       DTS:ObjectName="truncate_staging_data_deletes"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -2580,7 +2622,7 @@ order by case_id, exceptionruleid,Seq_No</property>
       DTS:LocaleID="-1"
       DTS:ObjectName="truncate_staging_data_values_deletes"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="2">
+      DTS:ThreadHint="1">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -2598,7 +2640,7 @@ order by case_id, exceptionruleid,Seq_No</property>
       DTS:LocaleID="-1"
       DTS:ObjectName="truncate_staging_data_values_updates"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
+      DTS:ThreadHint="2">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -2679,7 +2721,7 @@ order by case_id, exceptionruleid,Seq_No</property>
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
       DTS:DTSID="{C15C50CF-145D-4C58-824F-BFBCFBF8BC49}"
-      DTS:From="Package\PopulateLookBackPeriod"
+      DTS:From="Package\PopulateLookBackPeriod - Currently Redundant"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\truncate_staging_data_values_updates" />
@@ -2687,7 +2729,7 @@ order by case_id, exceptionruleid,Seq_No</property>
       DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
       DTS:CreationName=""
       DTS:DTSID="{ACA04E35-4AFE-4D05-8AA6-41FF50BDD9BC}"
-      DTS:From="Package\PopulateLookBackPeriod"
+      DTS:From="Package\PopulateLookBackPeriod - Currently Redundant"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 3"
       DTS:To="Package\truncate_staging_data_values_deletes" />
@@ -2695,7 +2737,7 @@ order by case_id, exceptionruleid,Seq_No</property>
       DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
       DTS:CreationName=""
       DTS:DTSID="{E550D405-04E5-43DF-B889-CB28D1164463}"
-      DTS:From="Package\PopulateLookBackPeriod"
+      DTS:From="Package\PopulateLookBackPeriod - Currently Redundant"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
       DTS:To="Package\truncate_staging_data_deletes" />
@@ -2736,6 +2778,10 @@ order by case_id, exceptionruleid,Seq_No</property>
           Size="399,42"
           Id="Package\Inserts and prep Updates and Deletes ExceptionsStagingDataValues"
           TopLeft="797.967921875411,471.631844631261" />
+        <NodeLayout
+          Size="196,42"
+          Id="Package\PopulateLookBackPeriod - Currently Redundant"
+          TopLeft="936,78" />
         <NodeLayout
           Size="233,42"
           Id="Package\truncate_staging_data_deletes"
@@ -2945,44 +2991,6 @@ order by case_id, exceptionruleid,Seq_No</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 9]"
-          TopLeft="1013.22503332735,229.093764987137">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="65.4934013789729,76.125165218499"
-              Start="0,0"
-              End="65.4934013789729,68.625165218499">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,34.0625826092495" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,34.0625826092495"
-                    Point2="0,38.0625826092495"
-                    Point3="4,38.0625826092495" />
-                  <mssgle:LineSegment
-                    End="61.4934013789729,38.0625826092495" />
-                  <mssgle:CubicBezierSegment
-                    Point1="61.4934013789729,38.0625826092495"
-                    Point2="65.4934013789729,38.0625826092495"
-                    Point3="65.4934013789729,42.0625826092495" />
-                  <mssgle:LineSegment
-                    End="65.4934013789729,68.625165218499" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="196,42"
-          Id="Package\PopulateLookBackPeriod"
-          TopLeft="936,78" />
-        <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="987,120">
           <EdgeLayout.Curve>
@@ -3076,6 +3084,40 @@ order by case_id, exceptionruleid,Seq_No</property>
                     Point3="210.89493112101,28.3603428823943" />
                   <mssgle:LineSegment
                     End="210.89493112101,63.670413519152" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="1013.22503332735,229.093764987137">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="65.4934013789729,76.125165218499"
+              Start="0,0"
+              End="65.4934013789729,68.625165218499">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.0625826092495" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.0625826092495"
+                    Point2="0,38.0625826092495"
+                    Point3="4,38.0625826092495" />
+                  <mssgle:LineSegment
+                    End="61.4934013789729,38.0625826092495" />
+                  <mssgle:CubicBezierSegment
+                    Point1="61.4934013789729,38.0625826092495"
+                    Point2="65.4934013789729,38.0625826092495"
+                    Point3="65.4934013789729,42.0625826092495" />
+                  <mssgle:LineSegment
+                    End="65.4934013789729,68.625165218499" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3444,26 +3486,26 @@ order by case_id, exceptionruleid,Seq_No</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-58.6551152552883,102.676667445957"
+              EndConnector="-38.3217819219547,102.676667445957"
               Start="0,0"
-              End="-58.6551152552883,95.176667445957">
+              End="-38.3217819219547,95.176667445957">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,47.3383337229785" />
+                    End="0,56.8569913433484" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,47.3383337229785"
-                    Point2="0,51.3383337229785"
-                    Point3="-4,51.3383337229785" />
+                    Point1="0,56.8569913433484"
+                    Point2="0,60.8569913433484"
+                    Point3="-4,60.8569913433484" />
                   <mssgle:LineSegment
-                    End="-54.6551152552883,51.3383337229785" />
+                    End="-34.3217819219547,60.8569913433484" />
                   <mssgle:CubicBezierSegment
-                    Point1="-54.6551152552883,51.3383337229785"
-                    Point2="-58.6551152552883,51.3383337229785"
-                    Point3="-58.6551152552883,55.3383337229785" />
+                    Point1="-34.3217819219547,60.8569913433484"
+                    Point2="-38.3217819219547,60.8569913433484"
+                    Point3="-38.3217819219547,64.8569913433484" />
                   <mssgle:LineSegment
-                    End="-58.6551152552883,95.176667445957" />
+                    End="-38.3217819219547,95.176667445957" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
