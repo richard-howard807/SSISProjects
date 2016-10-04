@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageTaskData"
   DTS:PackageType="5"
-  DTS:VersionBuild="70"
-  DTS:VersionGUID="{0085360D-25EF-4642-875C-DB86DB0B23FF}">
+  DTS:VersionBuild="77"
+  DTS:VersionGUID="{34F1913F-0492-46C2-9BAC-643FBA074F26}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -38,7 +38,7 @@
         DTS:Name="ServerName">@[$Project::CM_axxia01]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=SVR-LIV-MSP-01;Initial Catalog=axxia01;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=axxia01;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -499,27 +499,6 @@
                   synchronousInputId="Package\DFT - GetStageData\Data Conversion.Inputs[Data Conversion Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_TskCreatedBy]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="IgnoreFailure"
-                      length="10"
-                      lineageId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_TskCreatedBy]"
-                      name="DC_TskCreatedBy"
-                      truncationRowDisposition="IgnoreFailure">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[TskCreatedBy]}</property>
-                        <property
-                          dataType="System.Boolean"
-                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
-                          name="FastParse">false</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
                       refId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_TskDesc]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
@@ -548,7 +527,7 @@
                       length="8"
                       lineageId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_FeeusrID]"
                       name="DC_FeeusrID"
-                      truncationRowDisposition="IgnoreFailure">
+                      truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           containsID="true"
@@ -590,13 +569,34 @@
                       length="20"
                       lineageId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_ExtTskID]"
                       name="DC_ExtTskID"
-                      truncationRowDisposition="IgnoreFailure">
+                      truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the input column used as the source of data for the conversion."
                           name="SourceInputColumnLineageID">#{Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[ExtTskID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_TskCreatedBy]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_TskCreatedBy]"
+                      name="DC_TskCreatedBy"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[TskCreatedBy]}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -846,7 +846,7 @@
                     <inputColumn
                       refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DC_TskCreatedBy]"
                       cachedDataType="wstr"
-                      cachedLength="10"
+                      cachedLength="13"
                       cachedName="DC_TskCreatedBy"
                       externalMetadataColumnId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[tskCreatedBy]"
                       lineageId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_TskCreatedBy]" />
@@ -2742,49 +2742,171 @@ FROM    config.dbFile
     design-time-name="Package\DFT - GetStageData">
     <LayoutInfo>
       <GraphLayout
-        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="124,42"
+          Id="Package\DFT - GetStageData\SRT - MS"
+          TopLeft="438.036799509705,156.927804511837" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\DFT - GetStageData\Derived Column"
+          TopLeft="285,419" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - GetStageData\Merge Join"
+          TopLeft="283.102458966717,265.161522553831" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\DFT - GetStageData\SRT - Axxia01"
+          TopLeft="168.987986726656,146.893675944677" />
         <NodeLayout
           Size="142,42"
           Id="Package\DFT - GetStageData\SRC_axxia01"
           TopLeft="113.607994941543,62.0555872845628" />
         <NodeLayout
-          Size="132,42"
-          Id="Package\DFT - GetStageData\Row Count"
-          TopLeft="259.643829557122,489.416160815823" />
+          Size="211,42"
+          Id="Package\DFT - GetStageData\DEST_MatterSphereStaging"
+          TopLeft="265,567" />
         <NodeLayout
           Size="158,42"
           Id="Package\DFT - GetStageData\Data Conversion"
           TopLeft="256.760720910722,337.752189830597" />
         <NodeLayout
-          Size="156,42"
-          Id="Package\DFT - GetStageData\Derived Column"
-          TopLeft="285,419" />
+          Size="132,42"
+          Id="Package\DFT - GetStageData\Row Count"
+          TopLeft="259.643829557122,489.416160815823" />
+        <NodeLayout
+          Size="120,42"
+          Id="Package\DFT - GetStageData\SRV_MS"
+          TopLeft="464.293886791906,71.395478977311" />
         <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[Data Conversion Output]"
-          TopLeft="335.760720910722,379.752189830597">
+          Id="Package\DFT - GetStageData.Paths[Row Count Output 1]"
+          TopLeft="325.643829557122,531.416160815823">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="27.2392790892778,39.2478101694026"
+              EndConnector="44.8561704428783,35.5838391841775"
               Start="0,0"
-              End="27.2392790892778,31.7478101694026">
+              End="44.8561704428783,28.0838391841775">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,15.6239050847013" />
+                    End="0,13.7919195920887" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,15.6239050847013"
-                    Point2="0,19.6239050847013"
-                    Point3="4,19.6239050847013" />
+                    Point1="0,13.7919195920887"
+                    Point2="0,17.7919195920887"
+                    Point3="4,17.7919195920887" />
                   <mssgle:LineSegment
-                    End="23.2392790892778,19.6239050847013" />
+                    End="40.8561704428783,17.7919195920887" />
                   <mssgle:CubicBezierSegment
-                    Point1="23.2392790892778,19.6239050847013"
-                    Point2="27.2392790892778,19.6239050847013"
-                    Point3="27.2392790892778,23.6239050847013" />
+                    Point1="40.8561704428783,17.7919195920887"
+                    Point2="44.8561704428783,17.7919195920887"
+                    Point3="44.8561704428783,21.7919195920887" />
                   <mssgle:LineSegment
-                    End="27.2392790892778,31.7478101694026" />
+                    End="44.8561704428783,28.0838391841775" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[OLE DB Source Output1]"
+          TopLeft="524.293886791906,113.395478977311">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-24.2570872822007,43.5323255345256"
+              Start="0,0"
+              End="-24.2570872822007,36.0323255345256">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.7661627672628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.7661627672628"
+                    Point2="0,21.7661627672628"
+                    Point3="-4,21.7661627672628" />
+                  <mssgle:LineSegment
+                    End="-20.2570872822007,21.7661627672628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-20.2570872822007,21.7661627672628"
+                    Point2="-24.2570872822007,21.7661627672628"
+                    Point3="-24.2570872822007,25.7661627672628" />
+                  <mssgle:LineSegment
+                    End="-24.2570872822007,36.0323255345256" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[OLE DB Source Output]"
+          TopLeft="184.607994941543,104.055587284563">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="57.8799917851132,42.838088660114"
+              Start="0,0"
+              End="57.8799917851132,35.338088660114">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.419044330057" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.419044330057"
+                    Point2="0,21.419044330057"
+                    Point3="4,21.419044330057" />
+                  <mssgle:LineSegment
+                    End="53.8799917851132,21.419044330057" />
+                  <mssgle:CubicBezierSegment
+                    Point1="53.8799917851132,21.419044330057"
+                    Point2="57.8799917851132,21.419044330057"
+                    Point3="57.8799917851132,25.419044330057" />
+                  <mssgle:LineSegment
+                    End="57.8799917851132,35.338088660114" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[Merge Join Output]"
+          TopLeft="349.102458966717,307.161522553831">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-13.3417380559949,30.5906672767665"
+              Start="0,0"
+              End="-13.3417380559949,23.0906672767665">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.2953336383833" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.2953336383833"
+                    Point2="0,15.2953336383833"
+                    Point3="-4,15.2953336383833" />
+                  <mssgle:LineSegment
+                    End="-9.34173805599494,15.2953336383833" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-9.34173805599494,15.2953336383833"
+                    Point2="-13.3417380559949,15.2953336383833"
+                    Point3="-13.3417380559949,19.2953336383833" />
+                  <mssgle:LineSegment
+                    End="-13.3417380559949,23.0906672767665" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2824,157 +2946,37 @@ FROM    config.dbFile
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-26.6780852214392,19.2080804079113,16,16"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="211,42"
-          Id="Package\DFT - GetStageData\DEST_MatterSphereStaging"
-          TopLeft="265,567" />
         <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[Row Count Output 1]"
-          TopLeft="325.643829557122,531.416160815823">
+          Id="Package\DFT - GetStageData.Paths[Data Conversion Output]"
+          TopLeft="335.760720910722,379.752189830597">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="44.8561704428783,35.5838391841775"
+              EndConnector="27.2392790892778,39.2478101694026"
               Start="0,0"
-              End="44.8561704428783,28.0838391841775">
+              End="27.2392790892778,31.7478101694026">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,13.7919195920887" />
+                    End="0,15.6239050847013" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,13.7919195920887"
-                    Point2="0,17.7919195920887"
-                    Point3="4,17.7919195920887" />
+                    Point1="0,15.6239050847013"
+                    Point2="0,19.6239050847013"
+                    Point3="4,19.6239050847013" />
                   <mssgle:LineSegment
-                    End="40.8561704428783,17.7919195920887" />
+                    End="23.2392790892778,19.6239050847013" />
                   <mssgle:CubicBezierSegment
-                    Point1="40.8561704428783,17.7919195920887"
-                    Point2="44.8561704428783,17.7919195920887"
-                    Point3="44.8561704428783,21.7919195920887" />
+                    Point1="23.2392790892778,19.6239050847013"
+                    Point2="27.2392790892778,19.6239050847013"
+                    Point3="27.2392790892778,23.6239050847013" />
                   <mssgle:LineSegment
-                    End="44.8561704428783,28.0838391841775" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="147,42"
-          Id="Package\DFT - GetStageData\SRT - Axxia01"
-          TopLeft="168.987986726656,146.893675944677" />
-        <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[OLE DB Source Output]"
-          TopLeft="184.607994941543,104.055587284563">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="57.8799917851132,42.838088660114"
-              Start="0,0"
-              End="57.8799917851132,35.338088660114">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,17.419044330057" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,17.419044330057"
-                    Point2="0,21.419044330057"
-                    Point3="4,21.419044330057" />
-                  <mssgle:LineSegment
-                    End="53.8799917851132,21.419044330057" />
-                  <mssgle:CubicBezierSegment
-                    Point1="53.8799917851132,21.419044330057"
-                    Point2="57.8799917851132,21.419044330057"
-                    Point3="57.8799917851132,25.419044330057" />
-                  <mssgle:LineSegment
-                    End="57.8799917851132,35.338088660114" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="120,42"
-          Id="Package\DFT - GetStageData\SRV_MS"
-          TopLeft="464.293886791906,71.395478977311" />
-        <NodeLayout
-          Size="124,42"
-          Id="Package\DFT - GetStageData\SRT - MS"
-          TopLeft="438.036799509705,156.927804511837" />
-        <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[OLE DB Source Output1]"
-          TopLeft="524.293886791906,113.395478977311">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-24.2570872822007,43.5323255345256"
-              Start="0,0"
-              End="-24.2570872822007,36.0323255345256">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,17.7661627672628" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,17.7661627672628"
-                    Point2="0,21.7661627672628"
-                    Point3="-4,21.7661627672628" />
-                  <mssgle:LineSegment
-                    End="-20.2570872822007,21.7661627672628" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-20.2570872822007,21.7661627672628"
-                    Point2="-24.2570872822007,21.7661627672628"
-                    Point3="-24.2570872822007,25.7661627672628" />
-                  <mssgle:LineSegment
-                    End="-24.2570872822007,36.0323255345256" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="132,42"
-          Id="Package\DFT - GetStageData\Merge Join"
-          TopLeft="283.102458966717,265.161522553831" />
-        <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[Sort Output]"
-          TopLeft="242.487986726656,188.893675944677">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="85.9478055733945,76.2678466091542"
-              Start="0,0"
-              End="85.9478055733945,68.7678466091542">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,41.212675534768" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,41.212675534768"
-                    Point2="0,45.212675534768"
-                    Point3="4,45.212675534768" />
-                  <mssgle:LineSegment
-                    End="81.9478055733945,45.212675534768" />
-                  <mssgle:CubicBezierSegment
-                    Point1="81.9478055733945,45.212675534768"
-                    Point2="85.9478055733945,45.212675534768"
-                    Point3="85.9478055733945,49.212675534768" />
-                  <mssgle:LineSegment
-                    End="85.9478055733945,68.7678466091542" />
+                    End="27.2392790892778,31.7478101694026" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3018,31 +3020,31 @@ FROM    config.dbFile
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[Merge Join Output]"
-          TopLeft="349.102458966717,307.161522553831">
+          Id="Package\DFT - GetStageData.Paths[Sort Output]"
+          TopLeft="242.487986726656,188.893675944677">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-13.3417380559949,30.5906672767665"
+              EndConnector="85.9478055733945,76.2678466091542"
               Start="0,0"
-              End="-13.3417380559949,23.0906672767665">
+              End="85.9478055733945,68.7678466091542">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,11.2953336383833" />
+                    End="0,41.212675534768" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,11.2953336383833"
-                    Point2="0,15.2953336383833"
-                    Point3="-4,15.2953336383833" />
+                    Point1="0,41.212675534768"
+                    Point2="0,45.212675534768"
+                    Point3="4,45.212675534768" />
                   <mssgle:LineSegment
-                    End="-9.34173805599494,15.2953336383833" />
+                    End="81.9478055733945,45.212675534768" />
                   <mssgle:CubicBezierSegment
-                    Point1="-9.34173805599494,15.2953336383833"
-                    Point2="-13.3417380559949,15.2953336383833"
-                    Point3="-13.3417380559949,19.2953336383833" />
+                    Point1="81.9478055733945,45.212675534768"
+                    Point2="85.9478055733945,45.212675534768"
+                    Point3="85.9478055733945,49.212675534768" />
                   <mssgle:LineSegment
-                    End="-13.3417380559949,23.0906672767665" />
+                    End="85.9478055733945,68.7678466091542" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3054,6 +3056,42 @@ FROM    config.dbFile
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - GetStageData.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - GetStageData.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - GetStageData.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - GetStageData.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - GetStageData.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - GetStageData.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
   <PipelineComponentMetadata
     design-time-name="Package\DFT - GetStageData\SRC_axxia01">
     <Properties>
@@ -3075,42 +3113,6 @@ FROM    config.dbFile
       </Property>
     </Properties>
   </PipelineComponentMetadata>
-  <DtsEventHandler
-    design-time-name="Package\DFT - GetStageData.EventHandlers[OnPostExecute]">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
-        <NodeLayout
-          Size="128,42"
-          Id="Package\DFT - GetStageData.EventHandlers[OnPostExecute]\EndAudit"
-          TopLeft="60,60" />
-      </GraphLayout>
-    </LayoutInfo>
-  </DtsEventHandler>
-  <DtsEventHandler
-    design-time-name="Package\DFT - GetStageData.EventHandlers[OnPreExecute]">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
-        <NodeLayout
-          Size="128,42"
-          Id="Package\DFT - GetStageData.EventHandlers[OnPreExecute]\StartAudit"
-          TopLeft="60,60" />
-      </GraphLayout>
-    </LayoutInfo>
-  </DtsEventHandler>
-  <DtsEventHandler
-    design-time-name="Package\DFT - GetStageData.EventHandlers[OnError]">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
-        <NodeLayout
-          Size="128,42"
-          Id="Package\DFT - GetStageData.EventHandlers[OnError]\AuditError"
-          TopLeft="60,60" />
-      </GraphLayout>
-    </LayoutInfo>
-  </DtsEventHandler>
   <PipelineComponentMetadata
     design-time-name="Package\DFT - GetStageData\SRV_MS">
     <Properties>

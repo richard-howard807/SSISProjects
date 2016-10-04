@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="_MasterMatterSpherePhase2"
   DTS:PackageType="5"
-  DTS:VersionBuild="10"
-  DTS:VersionGUID="{D7FE0F15-3D21-4E1C-B01C-76217C0C34CE}">
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{1505AB59-BFDA-43AB-A506-FF0BFA003344}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -142,6 +142,23 @@
             SQLTask:DataType="3"
             SQLTask:ParameterSize="-1" />
         </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EPT - InsertIntoMatterSphere"
+      DTS:CreationName="SSIS.ExecutePackageTask.3"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{8FD623B4-EB8B-45C1-A712-A90641BC6AF0}"
+      DTS:ExecutableType="SSIS.ExecutePackageTask.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EPT - InsertIntoMatterSphere"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>InsertIntoMatterSphere.dtsx</PackageName>
+        </ExecutePackageTask>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -328,10 +345,18 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{0FE0D551-1093-421D-9158-0B739543ACB4}"
+      DTS:DTSID="{F1BD5D46-3AB6-45F7-85D7-1F595E36A261}"
       DTS:From="Package\EPT - ValidateTaskData"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
+      DTS:To="Package\EPT - InsertIntoMatterSphere" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{68BDEDB5-6765-4FA0-93A7-BDCFD94B5C4D}"
+      DTS:From="Package\EPT - InsertIntoMatterSphere"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
       DTS:To="Package\EndAudit" />
   </DTS:PrecedenceConstraints>
   <DTS:EventHandlers>
@@ -404,19 +429,23 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="200,42"
-          Id="Package\StartAudit"
-          TopLeft="135.092980184194,84.2994547608558" />
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="200,42"
           Id="Package\EndAudit"
-          TopLeft="138.055490214319,388.579798688665" />
+          TopLeft="136.117513379717,451.77476064545" />
         <NodeLayout
           Size="180,42"
           Id="Package\EPT - StageTaskData"
           TopLeft="151.446248287127,170.532648135554" />
+        <NodeLayout
+          Size="191,42"
+          Id="Package\EPT - ValidateTaskData"
+          TopLeft="134.063698066948,259.036939246922" />
+        <NodeLayout
+          Size="200,42"
+          Id="Package\StartAudit"
+          TopLeft="135.092980184194,84.2994547608558" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="238.26961423566,126.299454760856">
@@ -439,10 +468,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="191,42"
-          Id="Package\EPT - ValidateTaskData"
-          TopLeft="134.063698066948,259.036939246922" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="241.446248287127,212.532648135554">
@@ -477,32 +502,46 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <NodeLayout
+          Size="185,42"
+          Id="Package\EPT - InsertIntoMatterSphere"
+          TopLeft="140.851081735645,343.526539295726" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="229.563698066948,301.036939246922">
+          TopLeft="231.457389901296,301.036939246922">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="8.49179214737129,87.5428594417427"
+              EndConnector="0,42.4896000488038"
               Start="0,0"
-              End="8.49179214737129,80.0428594417427">
+              End="0,34.9896000488038">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,39.7714297208714" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,39.7714297208714"
-                    Point2="0,43.7714297208714"
-                    Point3="4,43.7714297208714" />
+                    End="0,34.9896000488038" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="234.734297557681,385.526539295726">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66.248221349724"
+              Start="0,0"
+              End="0,58.748221349724">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="4.49179214737129,43.7714297208714" />
-                  <mssgle:CubicBezierSegment
-                    Point1="4.49179214737129,43.7714297208714"
-                    Point2="8.49179214737129,43.7714297208714"
-                    Point3="8.49179214737129,47.7714297208714" />
-                  <mssgle:LineSegment
-                    End="8.49179214737129,80.0428594417427" />
+                    End="0,58.748221349724" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -515,18 +554,6 @@
     </LayoutInfo>
   </Package>
   <DtsEventHandler
-    design-time-name="Package\StartAudit.EventHandlers[OnError]">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
-        <NodeLayout
-          Size="128,42"
-          Id="Package\StartAudit.EventHandlers[OnError]\AuditError"
-          TopLeft="60,60" />
-      </GraphLayout>
-    </LayoutInfo>
-  </DtsEventHandler>
-  <DtsEventHandler
     design-time-name="Package.EventHandlers[OnError]">
     <LayoutInfo>
       <GraphLayout
@@ -535,6 +562,18 @@
           Size="128,42"
           Id="Package.EventHandlers[OnError]\AuditError"
           TopLeft="109,89" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\StartAudit.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\StartAudit.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
       </GraphLayout>
     </LayoutInfo>
   </DtsEventHandler>
