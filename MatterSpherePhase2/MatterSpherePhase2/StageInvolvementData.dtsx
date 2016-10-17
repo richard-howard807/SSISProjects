@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageInvolvementData"
   DTS:PackageType="5"
-  DTS:VersionBuild="86"
-  DTS:VersionGUID="{93E5FA1D-7ABB-44EC-8AB2-D08349EC5800}">
+  DTS:VersionBuild="91"
+  DTS:VersionGUID="{175A9561-EBD6-4972-BDAE-C87DEACACF33}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1118,7 +1118,7 @@ where [refTable].[contid] = ?</property>
                 <output
                   refId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output]"
                   errorOrTruncationOperation="Lookup"
-                  errorRowDisposition="FailComponent"
+                  errorRowDisposition="IgnoreFailure"
                   exclusionGroup="1"
                   name="Lookup Match Output"
                   synchronousInputId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Inputs[Lookup Input]">
@@ -1286,7 +1286,7 @@ where [refTable].[FedClientNumber] = ?</property>
                       refId="Package\DFT - Get Involvement data\LKP_MSContID.Inputs[Lookup Input].Columns[entity_code]"
                       cachedCodepage="1252"
                       cachedDataType="str"
-                      cachedLength="8"
+                      cachedLength="10"
                       cachedName="entity_code"
                       lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[entity_code]">
                       <properties>
@@ -1437,7 +1437,7 @@ where [refTable].[FedClientNumber] = ?</property>
                       refId="Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Left Input].Columns[entity_code]"
                       cachedCodepage="1252"
                       cachedDataType="str"
-                      cachedLength="8"
+                      cachedLength="10"
                       cachedName="entity_code"
                       lineageId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[entity_code]" />
                   </inputColumns>
@@ -1614,7 +1614,7 @@ where [refTable].[FedClientNumber] = ?</property>
                       refId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[entity_code]"
                       codePage="1252"
                       dataType="str"
-                      length="8"
+                      length="10"
                       lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[entity_code]"
                       name="entity_code">
                       <properties>
@@ -1689,7 +1689,7 @@ where [refTable].[FedClientNumber] = ?</property>
 ,[matter] 
 ,ROW_NUMBER() OVER (PARTITION BY Invol.case_id ORDER BY seq_no) AS seq_no
 ,capacity_code 
-,entity_code
+,CAST(entity_code AS CHAR(10)) AS entity_code
 ,RTRIM([client]) + '-' + RTRIM([matter]) AS [FEDCode]
 FROM dbo.invol AS Invol
 INNER JOIN DataTransferStaging.[dbo].[MSPhaseTwoMatters] AS ConverstionData
@@ -1800,7 +1800,7 @@ ORDER BY case_id,seq_no</property>
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[entity_code]"
-                      length="8"
+                      length="10"
                       lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[entity_code]"
                       name="entity_code"
                       truncationRowDisposition="FailComponent" />
@@ -1843,7 +1843,7 @@ ORDER BY case_id,seq_no</property>
                       refId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[entity_code]"
                       codePage="1252"
                       dataType="str"
-                      length="8"
+                      length="10"
                       name="entity_code" />
                   </externalMetadataColumns>
                 </output>
@@ -1889,7 +1889,7 @@ ORDER BY case_id,seq_no</property>
                       refId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[entity_code]"
                       codePage="1252"
                       dataType="str"
-                      length="8"
+                      length="10"
                       lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[entity_code]"
                       name="entity_code" />
                     <outputColumn
@@ -2045,7 +2045,7 @@ ORDER BY case_id,seq_no</property>
                       refId="Package\DFT - Get Involvement data\SRT - Axxia01.Inputs[Sort Input].Columns[entity_code]"
                       cachedCodepage="1252"
                       cachedDataType="str"
-                      cachedLength="8"
+                      cachedLength="10"
                       cachedName="entity_code"
                       lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[entity_code]">
                       <properties>
@@ -2160,7 +2160,7 @@ ORDER BY case_id,seq_no</property>
                       refId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[entity_code]"
                       codePage="1252"
                       dataType="str"
-                      length="8"
+                      length="10"
                       lineageId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[entity_code]"
                       name="entity_code">
                       <properties>
@@ -2993,7 +2993,7 @@ FROM    config.dbFile
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-13.37927015688,23.5930020741024,96.3827734375,11.609375"
+              BoundingBox="-22.24792250063,23.5930020741024,114.120078125,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
