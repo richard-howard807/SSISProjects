@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageDocumentData"
   DTS:PackageType="5"
-  DTS:VersionBuild="110"
-  DTS:VersionGUID="{D12FFAC2-9DA2-4486-9925-9FD8D36FE327}">
+  DTS:VersionBuild="111"
+  DTS:VersionGUID="{9191AE3E-6C59-4B41-80DF-EBA9937CC56E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -759,6 +759,11 @@
                       cachedDataType="i8"
                       cachedName="clID"
                       lineageId="Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[clID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input].Columns[VersionNumber]"
+                      cachedDataType="i4"
+                      cachedName="VersionNumber"
+                      lineageId="Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[VersionNumber]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -843,7 +848,7 @@
                       dataType="wstr"
                       errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      length="255"
+                      length="98"
                       lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DocumentDestination]"
                       name="DCT - DocumentDestination"
                       truncationRowDisposition="FailComponent">
@@ -852,13 +857,13 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">@[User::NewShareLocation] + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[clID]} + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[fileID]} + "\\In\\" + #{Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]} + "." + #{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[DocumentExtension]}</property>
+                          name="Expression">@[User::NewShareLocation] + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[clID]} + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[fileID]} + "\\In\\" + #{Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]} + "." + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[VersionNumber]} + "." + #{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[DocumentExtension]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">@[User::NewShareLocation] + "\\" + (DT_WSTR,10)clID + "\\" + (DT_WSTR,10)fileID + "\\In\\" + [DC-DocumentNumber] + "." + DocumentExtension</property>
+                          name="FriendlyExpression">@[User::NewShareLocation] + "\\" + (DT_WSTR,10)clID + "\\" + (DT_WSTR,10)fileID + "\\In\\" + [DC-DocumentNumber] + "." + (DT_WSTR,10)VersionNumber + "." + DocumentExtension</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -1168,7 +1173,7 @@
                     <inputColumn
                       refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT - DocumentDestination]"
                       cachedDataType="wstr"
-                      cachedLength="255"
+                      cachedLength="98"
                       cachedName="DCT - DocumentDestination"
                       externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentDestination]"
                       lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DocumentDestination]" />
@@ -3865,6 +3870,10 @@ FROM    config.dbFile
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="142,42"
+          Id="Package\DFT - GetDocumentStageData\SRC_axxia01"
+          TopLeft="537.835820530457,468.886454953457" />
+        <NodeLayout
           Size="211,42"
           Id="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging"
           TopLeft="716.641121111929,996.460456150284" />
@@ -3872,14 +3881,6 @@ FROM    config.dbFile
           Size="211,42"
           Id="Package\DFT - GetDocumentStageData\Data Conversion"
           TopLeft="716.641121111929,755.212645980881" />
-        <NodeLayout
-          Size="211,42"
-          Id="Package\DFT - GetDocumentStageData\SRC_axxia01"
-          TopLeft="537.835820530457,468.886454953457" />
-        <NodeLayout
-          Size="211,42"
-          Id="Package\DFT - GetDocumentStageData\SRT - Axxia01"
-          TopLeft="537.835820530457,557.318526635302" />
         <NodeLayout
           Size="211,42"
           Id="Package\DFT - GetDocumentStageData\Merge Join"
@@ -3900,28 +3901,10 @@ FROM    config.dbFile
           Size="211,42"
           Id="Package\DFT - GetDocumentStageData\SRV_MS"
           TopLeft="897.917199710912,468.886454953457" />
-        <EdgeLayout
-          Id="Package\DFT - GetDocumentStageData.Paths[OLE DB Source Output]"
-          TopLeft="1003.41719971091,510.886454953457">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,46.4320716818449"
-              Start="0,0"
-              End="0,38.9320716818449">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38.9320716818449" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="211,42"
+          Id="Package\DFT - GetDocumentStageData\SRT - Axxia01"
+          TopLeft="537.835820530457,557.318526635302" />
         <EdgeLayout
           Id="Package\DFT - GetDocumentStageData.Paths[Merge Join Output]"
           TopLeft="822.141121111929,706.622890549455">
@@ -4080,7 +4063,41 @@ FROM    config.dbFile
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - GetDocumentStageData.Paths[OLE DB Source Output1]"
-          TopLeft="643.335820530457,510.886454953457">
+          TopLeft="608.835820530457,510.886454953457">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="34.5,46.4320716818449"
+              Start="0,0"
+              End="34.5,38.9320716818449">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.2160358409225" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.2160358409225"
+                    Point2="0,23.2160358409225"
+                    Point3="4,23.2160358409225" />
+                  <mssgle:LineSegment
+                    End="30.5,23.2160358409225" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30.5,23.2160358409225"
+                    Point2="34.5,23.2160358409225"
+                    Point3="34.5,27.2160358409225" />
+                  <mssgle:LineSegment
+                    End="34.5,38.9320716818449" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[OLE DB Source Output]"
+          TopLeft="1003.41719971091,510.886454953457">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -4140,6 +4157,14 @@ FROM    config.dbFile
     </LayoutInfo>
   </DtsEventHandler>
   <PipelineComponentMetadata
+    design-time-name="Package\DFT - GetDocumentStageData\SRC_axxia01">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging">
     <Properties>
       <Property>
@@ -4149,14 +4174,6 @@ FROM    config.dbFile
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - GetDocumentStageData\SRC_axxia01">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
