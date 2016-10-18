@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageInvolvementData"
   DTS:PackageType="5"
-  DTS:VersionBuild="91"
-  DTS:VersionGUID="{175A9561-EBD6-4972-BDAE-C87DEACACF33}">
+  DTS:VersionBuild="98"
+  DTS:VersionGUID="{A9ED8E9F-ED85-40CA-ADFA-F1B93207AF5D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -452,6 +452,15 @@
                 <input
                   refId="Package\DFT - Get Involvement data\Data Conversion.Inputs[Data Conversion Input]"
                   name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Data Conversion.Inputs[Data Conversion Input].Columns[InvolvementRef]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="60"
+                      cachedName="InvolvementRef"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[InvolvementRef]" />
+                  </inputColumns>
                   <externalMetadataColumns />
                 </input>
               </inputs>
@@ -461,6 +470,29 @@
                   exclusionGroup="1"
                   name="Data Conversion Output"
                   synchronousInputId="Package\DFT - Get Involvement data\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Data Conversion.Outputs[Data Conversion Output].Columns[DCT_InvolRef]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\DFT - Get Involvement data\Data Conversion.Outputs[Data Conversion Output].Columns[DCT_InvolRef]"
+                      name="DCT_InvolRef"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[InvolvementRef]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
                   <externalMetadataColumns />
                 </output>
                 <output
@@ -659,7 +691,7 @@
                       cachedDataType="i4"
                       cachedName="DCT-Status"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
-                      lineageId="Package\DFT - Get Involvement data\Derived Column.Outputs[Derived Column Output].Columns[DCT-Status]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT-Status]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[client]"
                       cachedCodepage="1252"
@@ -667,7 +699,7 @@
                       cachedLength="8"
                       cachedName="client"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDClient]"
-                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[client]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[client]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[matter]"
                       cachedCodepage="1252"
@@ -675,72 +707,86 @@
                       cachedLength="8"
                       cachedName="matter"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDMatter]"
-                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[matter]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[matter]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[clNo]"
                       cachedDataType="wstr"
                       cachedLength="12"
                       cachedName="clNo"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSClientID]"
-                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[clNo]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[clNo]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[fileNo]"
                       cachedDataType="wstr"
                       cachedLength="20"
                       cachedName="fileNo"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSFileID]"
-                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[fileNo]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[fileNo]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[fileID]"
                       cachedDataType="i8"
                       cachedName="fileID"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FileID]"
-                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[fileID]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[fileID]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[LKP-ContID]"
                       cachedDataType="i8"
                       cachedName="LKP-ContID"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[contID]"
-                      lineageId="Package\DFT - Get Involvement data\LKP_MSContID.Outputs[Lookup Match Output].Columns[LKP-ContID]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-ContID]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[seq_no]"
                       cachedDataType="i8"
                       cachedName="seq_no"
+                      cachedSortKeyPosition="2"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocOrder]"
-                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[seq_no]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[seq_no]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[LKP-AssociateCode]"
                       cachedDataType="wstr"
                       cachedLength="15"
                       cachedName="LKP-AssociateCode"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocType]"
-                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateCode.Outputs[Lookup Match Output].Columns[LKP-AssociateCode]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-AssociateCode]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[LKP-Header]"
                       cachedDataType="wstr"
                       cachedLength="80"
                       cachedName="LKP-Header"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocHeading]"
-                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Header]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Header]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[LKP-Salutation]"
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="LKP-Salutation"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocSalut]"
-                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Salutation]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Salutation]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[LKP-DefaultAddress]"
                       cachedDataType="i8"
                       cachedName="LKP-DefaultAddress"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocdefaultaddID]"
-                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-DefaultAddress]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-DefaultAddress]" />
                     <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT-AuditID]"
                       cachedDataType="i4"
                       cachedName="DCT-AuditID"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[AuditID]"
-                      lineageId="Package\DFT - Get Involvement data\Derived Column.Outputs[Derived Column Output].Columns[DCT-AuditID]" />
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT-AuditID]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[UseDX]"
+                      cachedDataType="i4"
+                      cachedName="UseDX"
+                      externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocUseDX]"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[UseDX]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT_InvolRef]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="DCT_InvolRef"
+                      externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocRef]"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT_InvolRef]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -821,6 +867,15 @@
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[AuditID]"
                       dataType="i4"
                       name="AuditID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocRef]"
+                      dataType="wstr"
+                      length="50"
+                      name="assocRef" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocUseDX]"
+                      dataType="bool"
+                      name="assocUseDX" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1440,6 +1495,18 @@ where [refTable].[FedClientNumber] = ?</property>
                       cachedLength="10"
                       cachedName="entity_code"
                       lineageId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[entity_code]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Left Input].Columns[InvolvementRef]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="60"
+                      cachedName="InvolvementRef"
+                      lineageId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[InvolvementRef]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Left Input].Columns[UseDX]"
+                      cachedDataType="i4"
+                      cachedName="UseDX"
+                      lineageId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[UseDX]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1625,6 +1692,34 @@ where [refTable].[FedClientNumber] = ?</property>
                           name="InputColumnID">#{Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Left Input].Columns[entity_code]}</property>
                       </properties>
                     </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[InvolvementRef]"
+                      codePage="1252"
+                      dataType="str"
+                      length="60"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[InvolvementRef]"
+                      name="InvolvementRef">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Left Input].Columns[InvolvementRef]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[UseDX]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[UseDX]"
+                      name="UseDX">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Left Input].Columns[UseDX]}</property>
+                      </properties>
+                    </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -1655,6 +1750,663 @@ where [refTable].[FedClientNumber] = ?</property>
                   refId="Package\DFT - Get Involvement data\Row Count.Outputs[Row Count Output 1]"
                   name="Row Count Output 1"
                   synchronousInputId="Package\DFT - Get Involvement data\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Get Involvement data\Sort"
+              componentClassID="{5B1A3FF5-D366-4D75-AD1F-F19A36FCBEDB}"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[FEDCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="17"
+                      cachedName="FEDCode"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[FEDCode]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[client]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="client"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[client]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[matter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[matter]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[case_id]"
+                      cachedDataType="i4"
+                      cachedName="case_id"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[case_id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[clNo]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[fileNo]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="fileNo"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[fileNo]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[fileID]"
+                      cachedDataType="i8"
+                      cachedName="fileID"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[fileID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[seq_no]"
+                      cachedDataType="i8"
+                      cachedName="seq_no"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[seq_no]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[capacity_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="capacity_code"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[capacity_code]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[entity_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="entity_code"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[entity_code]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[InvolvementRef]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="60"
+                      cachedName="InvolvementRef"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[InvolvementRef]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[UseDX]"
+                      cachedDataType="i4"
+                      cachedName="UseDX"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[UseDX]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[LKP-AssociateCode]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="LKP-AssociateCode"
+                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateCode.Outputs[Lookup Match Output].Columns[LKP-AssociateCode]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[LKP-ContID]"
+                      cachedDataType="i8"
+                      cachedName="LKP-ContID"
+                      lineageId="Package\DFT - Get Involvement data\LKP_MSContID.Outputs[Lookup Match Output].Columns[LKP-ContID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[LKP-Header]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="LKP-Header"
+                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Header]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[LKP-Salutation]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LKP-Salutation"
+                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Salutation]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[LKP-DefaultAddress]"
+                      cachedDataType="i8"
+                      cachedName="LKP-DefaultAddress"
+                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-DefaultAddress]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[DCT_InvolRef]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="DCT_InvolRef"
+                      lineageId="Package\DFT - Get Involvement data\Data Conversion.Outputs[Data Conversion Output].Columns[DCT_InvolRef]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[DCT-Status]"
+                      cachedDataType="i4"
+                      cachedName="DCT-Status"
+                      lineageId="Package\DFT - Get Involvement data\Derived Column.Outputs[Derived Column Output].Columns[DCT-Status]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[DCT-AuditID]"
+                      cachedDataType="i4"
+                      cachedName="DCT-AuditID"
+                      lineageId="Package\DFT - Get Involvement data\Derived Column.Outputs[Derived Column Output].Columns[DCT-AuditID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[FEDCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="17"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[FEDCode]"
+                      name="FEDCode"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[FEDCode]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[client]"
+                      name="client">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[client]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[matter]"
+                      name="matter">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[matter]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[case_id]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[case_id]"
+                      name="case_id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[case_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[clNo]"
+                      name="clNo">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[clNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[fileNo]"
+                      name="fileNo">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[fileNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[fileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[fileID]"
+                      name="fileID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[fileID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[seq_no]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[seq_no]"
+                      name="seq_no"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[seq_no]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[capacity_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[capacity_code]"
+                      name="capacity_code">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[capacity_code]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[entity_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[entity_code]"
+                      name="entity_code">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[entity_code]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[InvolvementRef]"
+                      codePage="1252"
+                      dataType="str"
+                      length="60"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[InvolvementRef]"
+                      name="InvolvementRef">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[InvolvementRef]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[UseDX]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[UseDX]"
+                      name="UseDX">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[UseDX]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-AssociateCode]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-AssociateCode]"
+                      name="LKP-AssociateCode">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\LKP_AssociateCode.Outputs[Lookup Match Output].Columns[LKP-AssociateCode]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-ContID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-ContID]"
+                      name="LKP-ContID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\LKP_MSContID.Outputs[Lookup Match Output].Columns[LKP-ContID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Header]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Header]"
+                      name="LKP-Header">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Header]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Salutation]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Salutation]"
+                      name="LKP-Salutation">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Salutation]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-DefaultAddress]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-DefaultAddress]"
+                      name="LKP-DefaultAddress">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-DefaultAddress]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT_InvolRef]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT_InvolRef]"
+                      name="DCT_InvolRef">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Data Conversion.Outputs[Data Conversion Output].Columns[DCT_InvolRef]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT-Status]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT-Status]"
+                      name="DCT-Status">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Derived Column.Outputs[Derived Column Output].Columns[DCT-Status]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT-AuditID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT-AuditID]"
+                      name="DCT-AuditID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Derived Column.Outputs[Derived Column Output].Columns[DCT-AuditID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
                   <externalMetadataColumns />
                 </output>
               </outputs>
@@ -1691,10 +2443,13 @@ where [refTable].[FedClientNumber] = ?</property>
 ,capacity_code 
 ,CAST(entity_code AS CHAR(10)) AS entity_code
 ,RTRIM([client]) + '-' + RTRIM([matter]) AS [FEDCode]
+,CAST(CASE WHEN reference='' THEN NULL ELSE reference END AS varchar(50)) AS InvolvementRef
+,0 as UseDX
 FROM dbo.invol AS Invol
 INNER JOIN DataTransferStaging.[dbo].[MSPhaseTwoMatters] AS ConverstionData
  ON Invol.case_id=ConverstionData.case_id
 WHERE entity_code IS NOT NULL
+AND capacity_code NOT IN ('~ZFIRM','VE001','~ZMMCLIENT')
 ORDER BY case_id,seq_no</property>
                 <property
                   dataType="System.String"
@@ -1804,6 +2559,26 @@ ORDER BY case_id,seq_no</property>
                       lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[entity_code]"
                       name="entity_code"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[InvolvementRef]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[InvolvementRef]"
+                      length="60"
+                      lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[InvolvementRef]"
+                      name="InvolvementRef"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[UseDX]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[UseDX]"
+                      lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[UseDX]"
+                      name="UseDX"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1845,6 +2620,16 @@ ORDER BY case_id,seq_no</property>
                       dataType="str"
                       length="10"
                       name="entity_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[InvolvementRef]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="InvolvementRef" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[UseDX]"
+                      dataType="i4"
+                      name="UseDX" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -1897,6 +2682,18 @@ ORDER BY case_id,seq_no</property>
                       dataType="i4"
                       lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[case_id]"
                       name="case_id" />
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[InvolvementRef]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[InvolvementRef]"
+                      name="InvolvementRef" />
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[UseDX]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[UseDX]"
+                      name="UseDX" />
                     <outputColumn
                       refId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -2059,6 +2856,40 @@ ORDER BY case_id,seq_no</property>
                           name="NewSortKeyPosition">0</property>
                       </properties>
                     </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\SRT - Axxia01.Inputs[Sort Input].Columns[InvolvementRef]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="60"
+                      cachedName="InvolvementRef"
+                      lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[InvolvementRef]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\SRT - Axxia01.Inputs[Sort Input].Columns[UseDX]"
+                      cachedDataType="i4"
+                      cachedName="UseDX"
+                      lineageId="Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[UseDX]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -2169,6 +3000,34 @@ ORDER BY case_id,seq_no</property>
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
                           name="SortColumnId">#{Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[entity_code]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[InvolvementRef]"
+                      codePage="1252"
+                      dataType="str"
+                      length="60"
+                      lineageId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[InvolvementRef]"
+                      name="InvolvementRef">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[InvolvementRef]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[UseDX]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Involvement data\SRT - Axxia01.Outputs[Sort Output].Columns[UseDX]"
+                      name="UseDX">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\SRC_axxia01.Outputs[OLE DB Source Output].Columns[UseDX]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -2556,7 +3415,7 @@ FROM    config.dbFile
               startId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output]" />
             <path
               refId="Package\DFT - Get Involvement data.Paths[Row Count Output 1]"
-              endId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input]"
+              endId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input]"
               name="Row Count Output 1"
               startId="Package\DFT - Get Involvement data\Row Count.Outputs[Row Count Output 1]" />
             <path
@@ -2569,6 +3428,11 @@ FROM    config.dbFile
               endId="Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Right Input]"
               name="Sort Output"
               startId="Package\DFT - Get Involvement data\SRT - MS.Outputs[Sort Output]" />
+            <path
+              refId="Package\DFT - Get Involvement data.Paths[Sort Output2]"
+              endId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input]"
+              name="Sort Output"
+              startId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -2670,37 +3534,251 @@ FROM    config.dbFile
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - Get Involvement data\Merge Join"
+          TopLeft="1050,445.714285714286" />
+        <NodeLayout
           Size="120,42"
           Id="Package\DFT - Get Involvement data\SRV_MS"
           TopLeft="1198.24219871986,287.62414891263" />
         <NodeLayout
-          Size="142,42"
-          Id="Package\DFT - Get Involvement data\SRC_axxia01"
-          TopLeft="820.915664033154,180.972450877016" />
+          Size="172,42"
+          Id="Package\DFT - Get Involvement data\LKP_AssociateCode"
+          TopLeft="993.87576687626,534.813995851795" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\DFT - Get Involvement data\DEST_MatterSphereStaging"
+          TopLeft="991.907122999895,950.745523264181" />
+        <NodeLayout
+          Size="199,42"
+          Id="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail"
+          TopLeft="1235,685" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\DFT - Get Involvement data\LKP_MSContID"
+          TopLeft="1074,614" />
         <NodeLayout
           Size="156,42"
           Id="Package\DFT - Get Involvement data\Derived Column"
           TopLeft="1011.9071229999,802.745523264182" />
         <NodeLayout
-          Size="132,42"
-          Id="Package\DFT - Get Involvement data\Merge Join"
-          TopLeft="1050,445.714285714286" />
+          Size="124,42"
+          Id="Package\DFT - Get Involvement data\SRT - MS"
+          TopLeft="1171.98511143766,373.156474447156" />
         <NodeLayout
-          Size="132,42"
-          Id="Package\DFT - Get Involvement data\Row Count"
-          TopLeft="986.550952557017,873.161684080004" />
+          Size="142,42"
+          Id="Package\DFT - Get Involvement data\SRC_axxia01"
+          TopLeft="820.915664033154,180.972450877016" />
         <NodeLayout
           Size="147,42"
           Id="Package\DFT - Get Involvement data\SRT - Axxia01"
           TopLeft="779.777447651879,299.773841795891" />
         <NodeLayout
-          Size="124,42"
-          Id="Package\DFT - Get Involvement data\SRT - MS"
-          TopLeft="1171.98511143766,373.156474447156" />
+          Size="158,47"
+          Id="Package\DFT - Get Involvement data\Data Conversion"
+          TopLeft="1010.51547477986,694.646833761336" />
         <NodeLayout
-          Size="211,42"
-          Id="Package\DFT - Get Involvement data\DEST_MatterSphereStaging"
-          TopLeft="991.907122999895,950.745523264181" />
+          Size="132,42"
+          Id="Package\DFT - Get Involvement data\Row Count"
+          TopLeft="986.550952557017,873.161684080004" />
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Merge Join Output]"
+          TopLeft="1116,487.714285714286">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-36.1242331237399,47.0997101375092"
+              Start="0,0"
+              End="-36.1242331237399,39.5997101375092">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5498550687546" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.5498550687546"
+                    Point2="0,23.5498550687546"
+                    Point3="-4,23.5498550687546" />
+                  <mssgle:LineSegment
+                    End="-32.1242331237399,23.5498550687546" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-32.1242331237399,23.5498550687546"
+                    Point2="-36.1242331237399,23.5498550687546"
+                    Point3="-36.1242331237399,27.5498550687546" />
+                  <mssgle:LineSegment
+                    End="-36.1242331237399,39.5997101375092" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output2]"
+          TopLeft="1235,706">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-66.484525220138,12.1468337613358"
+              Start="0,0"
+              End="-58.984525220138,12.1468337613358">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-29.242262610069,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-29.242262610069,0"
+                    Point2="-33.242262610069,0"
+                    Point3="-33.242262610069,4" />
+                  <mssgle:LineSegment
+                    End="-33.242262610069,8.14683376133576" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.242262610069,8.14683376133576"
+                    Point2="-33.242262610069,12.1468337613358"
+                    Point3="-37.242262610069,12.1468337613358" />
+                  <mssgle:LineSegment
+                    End="-58.984525220138,12.1468337613358" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-81.433649328819,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output1]"
+          TopLeft="1149.5,656">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="185,29"
+              Start="0,0"
+              End="185,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.5"
+                    Point2="0,14.5"
+                    Point3="4,14.5" />
+                  <mssgle:LineSegment
+                    End="181,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="181,14.5"
+                    Point2="185,14.5"
+                    Point3="185,18.5" />
+                  <mssgle:LineSegment
+                    End="185,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="44.30861328125,19.5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output]"
+          TopLeft="1079.87576687626,576.813995851795">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="69.6242331237399,37.1860041482048"
+              Start="0,0"
+              End="69.6242331237399,29.6860041482048">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.5930020741024" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.5930020741024"
+                    Point2="0,18.5930020741024"
+                    Point3="4,18.5930020741024" />
+                  <mssgle:LineSegment
+                    End="65.6242331237399,18.5930020741024" />
+                  <mssgle:CubicBezierSegment
+                    Point1="65.6242331237399,18.5930020741024"
+                    Point2="69.6242331237399,18.5930020741024"
+                    Point3="69.6242331237399,22.5930020741024" />
+                  <mssgle:LineSegment
+                    End="69.6242331237399,29.6860041482048" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-22.2479225006301,23.5930020741024,114.120078125,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Derived Column Output]"
+          TopLeft="1089.9071229999,844.745523264182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-37.3561704428826,28.416160815822"
+              Start="0,0"
+              End="-37.3561704428826,20.916160815822">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.208080407911" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.208080407911"
+                    Point2="0,14.208080407911"
+                    Point3="-4,14.208080407911" />
+                  <mssgle:LineSegment
+                    End="-33.3561704428826,14.208080407911" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.3561704428826,14.208080407911"
+                    Point2="-37.3561704428826,14.208080407911"
+                    Point3="-37.3561704428826,18.208080407911" />
+                  <mssgle:LineSegment
+                    End="-37.3561704428826,20.916160815822" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Data Conversion Output]"
+          TopLeft="1089.71129888988,741.646833761336">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,61.098689502846"
+              Start="0,0"
+              End="0,53.598689502846">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.598689502846" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - Get Involvement data.Paths[Sort Output1]"
           TopLeft="1233.98511143766,415.156474447156">
@@ -2761,40 +3839,6 @@ FROM    config.dbFile
                     Point3="262.722552348121,55.9702219591974" />
                   <mssgle:LineSegment
                     End="262.722552348121,96.4404439183947" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Row Count Output 1]"
-          TopLeft="1052.55095255702,915.161684080004">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="44.8561704428782,35.5838391841775"
-              Start="0,0"
-              End="44.8561704428782,28.0838391841775">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,13.7919195920887" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,13.7919195920887"
-                    Point2="0,17.7919195920887"
-                    Point3="4,17.7919195920887" />
-                  <mssgle:LineSegment
-                    End="40.8561704428782,17.7919195920887" />
-                  <mssgle:CubicBezierSegment
-                    Point1="40.8561704428782,17.7919195920887"
-                    Point2="44.8561704428782,17.7919195920887"
-                    Point3="44.8561704428782,21.7919195920887" />
-                  <mssgle:LineSegment
-                    End="44.8561704428782,28.0838391841775" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2871,40 +3915,6 @@ FROM    config.dbFile
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Derived Column Output]"
-          TopLeft="1089.9071229999,844.745523264182">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-37.3561704428826,28.416160815822"
-              Start="0,0"
-              End="-37.3561704428826,20.916160815822">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,10.208080407911" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,10.208080407911"
-                    Point2="0,14.208080407911"
-                    Point3="-4,14.208080407911" />
-                  <mssgle:LineSegment
-                    End="-33.3561704428826,14.208080407911" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-33.3561704428826,14.208080407911"
-                    Point2="-37.3561704428826,14.208080407911"
-                    Point3="-37.3561704428826,18.208080407911" />
-                  <mssgle:LineSegment
-                    End="-37.3561704428826,20.916160815822" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <AnnotationLayout
           Text="This se;ect and join alllows us to limit just the tasks we need by selecting the client and matter from a table in the staging database"
           ParentId="Package\DFT - Get Involvement data"
@@ -2920,35 +3930,35 @@ FROM    config.dbFile
           Id="aa5a15a6-2017-4bac-8e8e-2a8213e5f879"
           TopLeft="1111.42857142857,214.571428571429" />
         <NodeLayout
-          Size="172,42"
-          Id="Package\DFT - Get Involvement data\LKP_AssociateCode"
-          TopLeft="993.87576687626,534.813995851795" />
+          Size="100,42"
+          Id="Package\DFT - Get Involvement data\Sort"
+          TopLeft="1262,884" />
         <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Merge Join Output]"
-          TopLeft="1116,487.714285714286">
+          Id="Package\DFT - Get Involvement data.Paths[Row Count Output 1]"
+          TopLeft="1118.55095255702,894.161684080004">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-36.1242331237399,47.0997101375092"
+              EndConnector="143.449047442983,10.838315919996"
               Start="0,0"
-              End="-36.1242331237399,39.5997101375092">
+              End="135.949047442983,10.838315919996">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,19.5498550687546" />
+                    End="67.7245237214916,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,19.5498550687546"
-                    Point2="0,23.5498550687546"
-                    Point3="-4,23.5498550687546" />
+                    Point1="67.7245237214916,0"
+                    Point2="71.7245237214916,0"
+                    Point3="71.7245237214916,4" />
                   <mssgle:LineSegment
-                    End="-32.1242331237399,23.5498550687546" />
+                    End="71.7245237214916,6.83831591999603" />
                   <mssgle:CubicBezierSegment
-                    Point1="-32.1242331237399,23.5498550687546"
-                    Point2="-36.1242331237399,23.5498550687546"
-                    Point3="-36.1242331237399,27.5498550687546" />
+                    Point1="71.7245237214916,6.83831591999603"
+                    Point2="71.7245237214916,10.838315919996"
+                    Point3="75.7245237214916,10.838315919996" />
                   <mssgle:LineSegment
-                    End="-36.1242331237399,39.5997101375092" />
+                    End="135.949047442983,10.838315919996" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2957,146 +3967,38 @@ FROM    config.dbFile
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="151,42"
-          Id="Package\DFT - Get Involvement data\LKP_MSContID"
-          TopLeft="1074,614" />
         <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output]"
-          TopLeft="1079.87576687626,576.813995851795">
+          Id="Package\DFT - Get Involvement data.Paths[Sort Output2]"
+          TopLeft="1312,926">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="69.6242331237399,37.1860041482048"
+              EndConnector="-214.592877000105,24.745523264181"
               Start="0,0"
-              End="69.6242331237399,29.6860041482048">
+              End="-214.592877000105,17.245523264181">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,14.5930020741024" />
+                    End="0,8.37276163209049" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,14.5930020741024"
-                    Point2="0,18.5930020741024"
-                    Point3="4,18.5930020741024" />
+                    Point1="0,8.37276163209049"
+                    Point2="0,12.3727616320905"
+                    Point3="-4,12.3727616320905" />
                   <mssgle:LineSegment
-                    End="65.6242331237399,18.5930020741024" />
+                    End="-210.592877000105,12.3727616320905" />
                   <mssgle:CubicBezierSegment
-                    Point1="65.6242331237399,18.5930020741024"
-                    Point2="69.6242331237399,18.5930020741024"
-                    Point3="69.6242331237399,22.5930020741024" />
+                    Point1="-210.592877000105,12.3727616320905"
+                    Point2="-214.592877000105,12.3727616320905"
+                    Point3="-214.592877000105,16.3727616320905" />
                   <mssgle:LineSegment
-                    End="69.6242331237399,29.6860041482048" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-22.24792250063,23.5930020741024,114.120078125,16"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="158,47"
-          Id="Package\DFT - Get Involvement data\Data Conversion"
-          TopLeft="1010.51547477986,694.646833761336" />
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Data Conversion Output]"
-          TopLeft="1089.71129888988,741.646833761336">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,61.098689502846"
-              Start="0,0"
-              End="0,53.598689502846">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,53.598689502846" />
+                    End="-214.592877000105,17.245523264181" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="199,42"
-          Id="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail"
-          TopLeft="1235,685" />
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output1]"
-          TopLeft="1149.5,656">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="185,29"
-              Start="0,0"
-              End="185,21.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,10.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,10.5"
-                    Point2="0,14.5"
-                    Point3="4,14.5" />
-                  <mssgle:LineSegment
-                    End="181,14.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="181,14.5"
-                    Point2="185,14.5"
-                    Point3="185,18.5" />
-                  <mssgle:LineSegment
-                    End="185,21.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="44.30861328125,19.5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output2]"
-          TopLeft="1235,706">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-66.484525220138,12.1468337613358"
-              Start="0,0"
-              End="-58.984525220138,12.1468337613358">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-29.242262610069,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-29.242262610069,0"
-                    Point2="-33.242262610069,0"
-                    Point3="-33.242262610069,4" />
-                  <mssgle:LineSegment
-                    End="-33.242262610069,8.14683376133576" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-33.242262610069,8.14683376133576"
-                    Point2="-33.242262610069,12.1468337613358"
-                    Point3="-37.242262610069,12.1468337613358" />
-                  <mssgle:LineSegment
-                    End="-58.984525220138,12.1468337613358" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-81.433649328819,-17.609375,96.3827734375,11.609375"
-              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -3139,8 +4041,77 @@ FROM    config.dbFile
     </LayoutInfo>
   </DtsEventHandler>
   <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Involvement data\LKP_AssociateCode">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Involvement data\LKP_MSContID">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\DFT - Get Involvement data\SRV_MS">
     <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
@@ -3164,75 +4135,6 @@ FROM    config.dbFile
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\LKP_AssociateCode">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\LKP_MSContID">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
