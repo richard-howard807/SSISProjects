@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageDocumentData"
   DTS:PackageType="5"
-  DTS:VersionBuild="111"
-  DTS:VersionGUID="{9191AE3E-6C59-4B41-80DF-EBA9937CC56E}">
+  DTS:VersionBuild="114"
+  DTS:VersionGUID="{85E2B8AA-D90B-48FC-ADE8-22F2D4ED753C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -155,6 +155,15 @@
       <DTS:VariableValue
         DTS:DataType="8"
         xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D579BFF8-3550-438B-BAA5-77FC70BC5BA0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DirectoryID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -803,7 +812,7 @@
                       dataType="wstr"
                       errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      length="61"
+                      length="97"
                       lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-DocFileName]"
                       name="DCT-DocFileName"
                       truncationRowDisposition="FailComponent">
@@ -812,13 +821,13 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">#{Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]} + "." + #{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[DocumentExtension]}</property>
+                          name="Expression">(DT_WSTR,10)#{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[clID]} + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[fileID]} + "\\In\\" + #{Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]} + "." + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[VersionNumber]} + "." + #{Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[DocumentExtension]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">[DC-DocumentNumber] + "." + DocumentExtension</property>
+                          name="FriendlyExpression">(DT_WSTR,10)clID + "\\" + (DT_WSTR,10)fileID + "\\In\\" + [DC-DocumentNumber] + "." + (DT_WSTR,10)VersionNumber + "." + DocumentExtension</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -909,6 +918,28 @@
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
                           name="FriendlyExpression">@[User::AuditID]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DirectoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DirectoryID]"
+                      name="DCT - DirectoryID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::DirectoryID]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::DirectoryID]</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -1026,7 +1057,7 @@
                     <inputColumn
                       refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT-DocFileName]"
                       cachedDataType="wstr"
-                      cachedLength="61"
+                      cachedLength="97"
                       cachedName="DCT-DocFileName"
                       externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocFileName]"
                       lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-DocFileName]" />
@@ -1205,6 +1236,12 @@
                       cachedName="DCT - AuditID"
                       externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[AuditIdDataStage]"
                       lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - AuditID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT - DirectoryID]"
+                      cachedDataType="i4"
+                      cachedName="DCT - DirectoryID"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DirectoryId]"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DirectoryID]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1372,6 +1409,10 @@
                       refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[AuditIdFileMove]"
                       dataType="i4"
                       name="AuditIdFileMove" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DirectoryId]"
+                      dataType="i4"
+                      name="DirectoryId" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2015,13 +2056,13 @@
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT  RTRIM(cashdr.client) AS [FEDClient] ,
         RTRIM(cashdr.matter) AS [FEDMatter] ,
        RTRIM(docbpath.path_name) + RTRIM(cashdr.client) + '\' + RTRIM(cashdr.matter) + '\'
-        + CAST(Docs.document_no AS VARCHAR(10)) + (CASE WHEN ISNULL(curver,'y')='y' THEN '' ELSE '_' + CAST(docversion.version_no AS VARCHAR(5)) END)    + '.' + COALESCE(CASE WHEN wpdefn.wp_code = 'WORD' THEN 'doc' ELSE wp_extension END,
-                                                              Docs.wp_code)  AS [DocumentSource] ,
+        + CAST(Docs.document_no AS VARCHAR(10)) + (CASE WHEN ISNULL(curver,'y')='y' THEN '' ELSE '_' + CAST(docversion.version_no AS VARCHAR(5)) END)    + '.' + LOWER(COALESCE(CASE WHEN wpdefn.wp_code = 'WORD' THEN 'doc' ELSE wp_extension END,
+                                                              Docs.wp_code))  AS [DocumentSource] ,
         ISNULL(docversion.version_no,'1') AS [VersionNumber] ,
         Docs.title AS [DocumentTitle] ,
         casact.activity_desc AS [AlternateDocDescription] ,
         Docs.document_no AS [DocumentNumber] ,
-        COALESCE(wp_extension, Docs.wp_code) AS [DocumentExtension] ,
+        LOWER(COALESCE(wp_extension, Docs.wp_code)) AS [DocumentExtension] ,
         'Converted Documents' AS [DocWallet] ,
         1 AS [DocDirection] ,
         mg_feearn AS [Author] ,
@@ -3729,11 +3770,14 @@ FROM    config.dbFile
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{726FA6D2-D3EF-4857-964B-651516280DAD}"
-          SQLTask:SqlStatementSource="SELECT '\\svr-liv-jobs-02\mattersphere\MS_TEST\Docs' AS dirPath&#xA;FROM &#xA;dbo.dbDirectory &#xA;WHERE dirCode = 'OMDOCUMENTS'"
+          SQLTask:SqlStatementSource="SELECT '\\svr-liv-jobs-02\mattersphere\MS_TEST\Docs' AS dirPath,dirid&#xA;FROM &#xA;dbo.dbDirectory &#xA;WHERE dirCode = 'OMDOCUMENTS'"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
             SQLTask:ResultName="dirpath"
             SQLTask:DtsVariableName="User::NewShareLocation" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="dirid"
+            SQLTask:DtsVariableName="User::DirectoryID" />
         </SQLTask:SqlTaskData>
       </DTS:ObjectData>
     </DTS:Executable>
@@ -3870,10 +3914,6 @@ FROM    config.dbFile
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="142,42"
-          Id="Package\DFT - GetDocumentStageData\SRC_axxia01"
-          TopLeft="537.835820530457,468.886454953457" />
-        <NodeLayout
           Size="211,42"
           Id="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging"
           TopLeft="716.641121111929,996.460456150284" />
@@ -3891,42 +3931,24 @@ FROM    config.dbFile
           TopLeft="716.641121111929,906.876616966107" />
         <NodeLayout
           Size="211,42"
-          Id="Package\DFT - GetDocumentStageData\SRT - MS"
-          TopLeft="897.917199710912,557.318526635302" />
+          Id="Package\DFT - GetDocumentStageData\SRT - Axxia01"
+          TopLeft="537.835820530457,557.318526635302" />
         <NodeLayout
-          Size="211,42"
-          Id="Package\DFT - GetDocumentStageData\Derived Column"
-          TopLeft="716.641121111929,836.460456150284" />
+          Size="142,42"
+          Id="Package\DFT - GetDocumentStageData\SRC_axxia01"
+          TopLeft="537.835820530457,468.886454953457" />
         <NodeLayout
           Size="211,42"
           Id="Package\DFT - GetDocumentStageData\SRV_MS"
           TopLeft="897.917199710912,468.886454953457" />
         <NodeLayout
           Size="211,42"
-          Id="Package\DFT - GetDocumentStageData\SRT - Axxia01"
-          TopLeft="537.835820530457,557.318526635302" />
-        <EdgeLayout
-          Id="Package\DFT - GetDocumentStageData.Paths[Merge Join Output]"
-          TopLeft="822.141121111929,706.622890549455">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,48.5897554314261"
-              Start="0,0"
-              End="0,41.0897554314261">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,41.0897554314261" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Id="Package\DFT - GetDocumentStageData\Derived Column"
+          TopLeft="716.641121111929,836.460456150284" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\DFT - GetDocumentStageData\SRT - MS"
+          TopLeft="897.917199710912,557.318526635302" />
         <EdgeLayout
           Id="Package\DFT - GetDocumentStageData.Paths[Derived Column Output]"
           TopLeft="822.141121111929,878.460456150284">
@@ -4117,6 +4139,28 @@ FROM    config.dbFile
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[Merge Join Output]"
+          TopLeft="822.141121111929,706.622890549455">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.5897554314261"
+              Start="0,0"
+              End="0,41.0897554314261">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.0897554314261" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -4157,14 +4201,6 @@ FROM    config.dbFile
     </LayoutInfo>
   </DtsEventHandler>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT - GetDocumentStageData\SRC_axxia01">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging">
     <Properties>
       <Property>
@@ -4174,6 +4210,14 @@ FROM    config.dbFile
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - GetDocumentStageData\SRC_axxia01">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
