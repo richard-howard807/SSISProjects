@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageTaskData"
   DTS:PackageType="5"
-  DTS:VersionBuild="86"
-  DTS:VersionGUID="{0513132E-0949-4A87-A399-7F3179E1EA4F}">
+  DTS:VersionBuild="87"
+  DTS:VersionGUID="{D02A1FBC-3142-4837-9893-B17F932D0FAA}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1518,10 +1518,10 @@
 ,1 AS [SourceSystemID]
 ,activity_desc AS [TskDesc]
 ,plan_date AS [TskDue]
-,initiating_entity AS [FeeusrID]
+,CASE WHEN ISNUMERIC(initiating_entity) &lt;&gt;1 THEN mg_feearn ELSE initiating_entity END  AS [FeeusrID]
 ,'' AS [TskNotes]
 ,getdate() AS [TskCreated]
-,initiating_entity AS [TskCreatedBy]
+,CASE WHEN ISNUMERIC(initiating_entity) &lt;&gt;1 THEN mg_feearn ELSE initiating_entity END AS [TskCreatedBy]
 ,NULL AS [TskCompleted]
 ,NULL AS [TskCompletedBy]
 ,NULL AS [DocID]
@@ -1535,13 +1535,15 @@ INNER JOIN DataTransferStaging.[dbo].[MSPhaseTwoMatters] AS Export
  ON cashdr.case_id=Export.case_id
 INNER JOIN dbo.casact AS casact
  ON cashdr.case_id=casact.case_id
+INNER JOIN dbo.camatgrp ON cashdr.client=mg_client AND cashdr.matter=mg_matter
 INNER JOIN (SELECT activity_code FROM axxia01.dbo.actlup
 WHERE activity_desc LIKE '%REM%'
 OR activity_desc LIKE '%KEY%') AS actlup
  ON casact.activity_code=actlup.activity_code
 WHERE tran_done IS NULL
 AND p_a_marker='p'
-AND activity_desc NOT LIKE '%BCM%'</property>
+AND activity_desc NOT LIKE '%BCM%'
+AND date_closed IS NULL</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
