@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageInvolvementData"
   DTS:PackageType="5"
-  DTS:VersionBuild="99"
-  DTS:VersionGUID="{E61658F2-A753-4E36-BF4F-FAE74E8AB8A7}">
+  DTS:VersionBuild="100"
+  DTS:VersionGUID="{D4A6671B-C8E5-4B0B-9F14-C26D779A3E63}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -709,13 +709,6 @@
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDMatter]"
                       lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[matter]" />
                     <inputColumn
-                      refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[clNo]"
-                      cachedDataType="wstr"
-                      cachedLength="12"
-                      cachedName="clNo"
-                      externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSClientID]"
-                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[clNo]" />
-                    <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[fileNo]"
                       cachedDataType="wstr"
                       cachedLength="20"
@@ -787,6 +780,12 @@
                       cachedName="DCT_InvolRef"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocRef]"
                       lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[DCT_InvolRef]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[clid]"
+                      cachedDataType="i8"
+                      cachedName="clid"
+                      externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSClientID]"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[clid]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1539,6 +1538,11 @@ where [refTable].[FedClientNumber] = ?</property>
                       cachedDataType="i8"
                       cachedName="fileID"
                       lineageId="Package\DFT - Get Involvement data\SRT - MS.Outputs[Sort Output].Columns[fileID]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Right Input].Columns[clid]"
+                      cachedDataType="i8"
+                      cachedName="clid"
+                      lineageId="Package\DFT - Get Involvement data\SRT - MS.Outputs[Sort Output].Columns[clid]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1718,6 +1722,19 @@ where [refTable].[FedClientNumber] = ?</property>
                           dataType="System.Int32"
                           description="The input column associated with this output column"
                           name="InputColumnID">#{Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Left Input].Columns[UseDX]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[clid]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[clid]"
+                      name="clid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Right Input].Columns[clid]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -2116,6 +2133,22 @@ where [refTable].[FedClientNumber] = ?</property>
                           name="NewSortKeyPosition">0</property>
                       </properties>
                     </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[clid]"
+                      cachedDataType="i8"
+                      cachedName="clid"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[clid]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -2404,6 +2437,19 @@ where [refTable].[FedClientNumber] = ?</property>
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
                           name="SortColumnId">#{Package\DFT - Get Involvement data\Derived Column.Outputs[Derived Column Output].Columns[DCT-AuditID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[clid]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[clid]"
+                      name="clid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[clid]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -3125,6 +3171,22 @@ ORDER BY case_id,seq_no</property>
                           name="NewSortKeyPosition">0</property>
                       </properties>
                     </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\SRT - MS.Inputs[Sort Input].Columns[clid]"
+                      cachedDataType="i8"
+                      cachedName="clid"
+                      lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[clid]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -3191,6 +3253,19 @@ ORDER BY case_id,seq_no</property>
                           name="SortColumnId">#{Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[fileID]}</property>
                       </properties>
                     </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRT - MS.Outputs[Sort Output].Columns[clid]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Involvement data\SRT - MS.Outputs[Sort Output].Columns[clid]"
+                      name="clid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[clid]}</property>
+                      </properties>
+                    </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -3224,7 +3299,8 @@ ORDER BY case_id,seq_no</property>
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT  clNo ,
         fileNo ,
         FEDCode ,
-        dbFile.fileID
+        dbFile.fileID,
+        dbclient.clid
 FROM    config.dbFile
         INNER JOIN config.dbClient ON dbFile.clID = dbClient.clID
         INNER JOIN dbo.udExtFile ON dbFile.fileID = udExtFile.fileID;</property>
@@ -3302,6 +3378,15 @@ FROM    config.dbFile
                       lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[fileID]"
                       name="fileID"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[clid]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[clid]"
+                      lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[clid]"
+                      name="clid"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -3324,6 +3409,10 @@ FROM    config.dbFile
                       refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
                       dataType="i8"
                       name="fileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[clid]"
+                      dataType="i8"
+                      name="clid" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -3354,6 +3443,11 @@ FROM    config.dbFile
                       dataType="i8"
                       lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Error Output].Columns[fileID]"
                       name="fileID" />
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Error Output].Columns[clid]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Error Output].Columns[clid]"
+                      name="clid" />
                     <outputColumn
                       refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
