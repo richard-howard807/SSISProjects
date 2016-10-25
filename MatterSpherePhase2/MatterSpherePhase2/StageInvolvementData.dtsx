@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageInvolvementData"
   DTS:PackageType="5"
-  DTS:VersionBuild="115"
-  DTS:VersionGUID="{39DCD137-C3DF-4DA6-BB3F-3F4585D91AB3}">
+  DTS:VersionBuild="116"
+  DTS:VersionGUID="{FE2C2AE5-E91F-4EF7-9311-C481E95EE7A1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -3291,13 +3291,14 @@ where [refTable].[FedClientNumber] = ?</property>
 ,[matter] 
 ,ROW_NUMBER() OVER (PARTITION BY Invol.case_id ORDER BY seq_no) AS seq_no
 ,capacity_code 
-,CAST(entity_code AS CHAR(10)) AS entity_code
+,CAST(COALESCE(go_forward_client_number,entity_code) collate database_default AS CHAR(10))  entity_code
 ,RTRIM([client]) + '-' + RTRIM([matter]) AS [FEDCode]
 ,CAST(CASE WHEN reference='' THEN NULL ELSE reference END AS varchar(50)) AS InvolvementRef
 ,0 as UseDX
 FROM dbo.invol AS Invol
 INNER JOIN DataTransferStaging.[dbo].[MSPhaseTwoMatters] AS ConverstionData
  ON Invol.case_id=ConverstionData.case_id
+LEFT OUTER JOIN DataTransferStaging.dbo.DedupedClientNumbersPhase2 ON Invol.entity_code=client_no collate database_default
 WHERE ISNULL(entity_code,'') &lt;&gt; ''
 AND capacity_code NOT IN ('~ZFIRM','VE001','~ZMMCLIENT')
 ORDER BY case_id,seq_no</property>
@@ -4282,17 +4283,17 @@ FROM    config.dbFile
               name="Data Conversion Output"
               startId="Package\DFT - Get Involvement data\Data Conversion - Ref.Outputs[Data Conversion Output]" />
             <path
-              refId="Package\DFT - Get Involvement data.Paths[Derived Column Output1]"
+              refId="Package\DFT - Get Involvement data.Paths[Derived Column Output]"
               endId="Package\DFT - Get Involvement data\DEST - NoMatchAssociateCode.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\DFT - Get Involvement data\DCT - Unmatched AssociateCode.Outputs[Derived Column Output]" />
             <path
-              refId="Package\DFT - Get Involvement data.Paths[Derived Column Output2]"
+              refId="Package\DFT - Get Involvement data.Paths[Derived Column Output1]"
               endId="Package\DFT - Get Involvement data\Data Conversion - Ref.Inputs[Data Conversion Input]"
               name="Derived Column Output"
               startId="Package\DFT - Get Involvement data\DCT - Unmatched ContID.Outputs[Derived Column Output]" />
             <path
-              refId="Package\DFT - Get Involvement data.Paths[Derived Column Output]"
+              refId="Package\DFT - Get Involvement data.Paths[Derived Column Output2]"
               endId="Package\DFT - Get Involvement data\Row Count.Inputs[Row Count Input 1]"
               name="Derived Column Output"
               startId="Package\DFT - Get Involvement data\Derived Column.Outputs[Derived Column Output]" />
@@ -4312,15 +4313,15 @@ FROM    config.dbFile
               name="Lookup Match Output"
               startId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\DFT - Get Involvement data.Paths[Lookup No Match Output]"
-              endId="Package\DFT - Get Involvement data\DCT - Unmatched AssociateCode.Inputs[Derived Column Input]"
-              name="Lookup No Match Output"
-              startId="Package\DFT - Get Involvement data\LKP_AssociateCode.Outputs[Lookup No Match Output]" />
-            <path
               refId="Package\DFT - Get Involvement data.Paths[Lookup No Match Output1]"
               endId="Package\DFT - Get Involvement data\DCT - Unmatched ContID.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
               startId="Package\DFT - Get Involvement data\LKP_MSContID.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - Get Involvement data.Paths[Lookup No Match Output]"
+              endId="Package\DFT - Get Involvement data\DCT - Unmatched AssociateCode.Inputs[Derived Column Input]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - Get Involvement data\LKP_AssociateCode.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\DFT - Get Involvement data.Paths[Merge Join Output]"
               endId="Package\DFT - Get Involvement data\LKP_AssociateCode.Inputs[Lookup Input]"
@@ -4457,13 +4458,57 @@ FROM    config.dbFile
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="120,42"
-          Id="Package\DFT - Get Involvement data\SRV_MS"
-          TopLeft="1198.24219871986,287.62414891263" />
+          Size="132,42"
+          Id="Package\DFT - Get Involvement data\Merge Join"
+          TopLeft="1050,445.714285714286" />
+        <NodeLayout
+          Size="201,42"
+          Id="Package\DFT - Get Involvement data\DCT - Unmatched ContID"
+          TopLeft="1238.11974262514,529.950096304597" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - Get Involvement data\Row Count"
+          TopLeft="986.550952557017,873.161684080004" />
+        <NodeLayout
+          Size="226,42"
+          Id="Package\DFT - Get Involvement data\DEST - NoMatchAssociateCode"
+          TopLeft="651.692677889532,547.031850977814" />
         <NodeLayout
           Size="142,42"
           Id="Package\DFT - Get Involvement data\SRC_axxia01"
           TopLeft="820.915664033154,180.972450877016" />
+        <NodeLayout
+          Size="120,42"
+          Id="Package\DFT - Get Involvement data\SRV_MS"
+          TopLeft="1198.24219871986,287.62414891263" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\DFT - Get Involvement data\DEST - ContID"
+          TopLeft="1371.03134190923,615.676054123507" />
+        <NodeLayout
+          Size="236,42"
+          Id="Package\DFT - Get Involvement data\DCT - Unmatched AssociateCode"
+          TopLeft="673.28063265781,479.252633763059" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\DFT - Get Involvement data\LKP_AssociateCode"
+          TopLeft="993.87576687626,534.813995851795" />
+        <NodeLayout
+          Size="124,42"
+          Id="Package\DFT - Get Involvement data\SRT - MS"
+          TopLeft="1171.98511143766,373.156474447156" />
+        <NodeLayout
+          Size="184,42"
+          Id="Package\DFT - Get Involvement data\Data Conversion - Ref"
+          TopLeft="1454.83386893298,529.320568928922" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\DFT - Get Involvement data\Derived Column"
+          TopLeft="1011.9071229999,802.745523264182" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\DFT - Get Involvement data\LKP_MSContID"
+          TopLeft="1074,614" />
         <NodeLayout
           Size="199,42"
           Id="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail"
@@ -4477,323 +4522,13 @@ FROM    config.dbFile
           Id="Package\DFT - Get Involvement data\DEST_MatterSphereStaging"
           TopLeft="991.907122999895,950.745523264181" />
         <NodeLayout
-          Size="100,42"
-          Id="Package\DFT - Get Involvement data\Sort"
-          TopLeft="1262,884" />
-        <NodeLayout
-          Size="201,42"
-          Id="Package\DFT - Get Involvement data\DCT - Unmatched ContID"
-          TopLeft="1238.11974262514,529.950096304597" />
-        <NodeLayout
-          Size="151,42"
-          Id="Package\DFT - Get Involvement data\LKP_MSContID"
-          TopLeft="1074,614" />
-        <NodeLayout
-          Size="132,42"
-          Id="Package\DFT - Get Involvement data\Row Count"
-          TopLeft="986.550952557017,873.161684080004" />
-        <NodeLayout
-          Size="226,42"
-          Id="Package\DFT - Get Involvement data\DEST - NoMatchAssociateCode"
-          TopLeft="651.692677889532,547.031850977814" />
-        <NodeLayout
-          Size="124,42"
-          Id="Package\DFT - Get Involvement data\SRT - MS"
-          TopLeft="1171.98511143766,373.156474447156" />
-        <NodeLayout
-          Size="236,42"
-          Id="Package\DFT - Get Involvement data\DCT - Unmatched AssociateCode"
-          TopLeft="673.28063265781,479.252633763059" />
-        <NodeLayout
-          Size="150,42"
-          Id="Package\DFT - Get Involvement data\DEST - ContID"
-          TopLeft="1371.03134190923,615.676054123507" />
-        <NodeLayout
-          Size="132,42"
-          Id="Package\DFT - Get Involvement data\Merge Join"
-          TopLeft="1050,445.714285714286" />
-        <NodeLayout
-          Size="172,42"
-          Id="Package\DFT - Get Involvement data\LKP_AssociateCode"
-          TopLeft="993.87576687626,534.813995851795" />
-        <NodeLayout
           Size="158,47"
           Id="Package\DFT - Get Involvement data\Data Conversion"
           TopLeft="1010.51547477986,694.646833761336" />
         <NodeLayout
-          Size="156,42"
-          Id="Package\DFT - Get Involvement data\Derived Column"
-          TopLeft="1011.9071229999,802.745523264182" />
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Lookup No Match Output1]"
-          TopLeft="1173.33333333333,614">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="133.119742625142,-42.0499036954027"
-              Start="0,0"
-              End="133.119742625142,-34.5499036954027">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-17.0926541560179" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-17.0926541560179"
-                    Point2="0,-21.0926541560179"
-                    Point3="4,-21.0926541560179" />
-                  <mssgle:LineSegment
-                    End="129.119742625142,-21.0926541560179" />
-                  <mssgle:CubicBezierSegment
-                    Point1="129.119742625142,-21.0926541560179"
-                    Point2="133.119742625142,-21.0926541560179"
-                    Point3="133.119742625142,-25.0926541560179" />
-                  <mssgle:LineSegment
-                    End="133.119742625142,-34.5499036954027" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="10.753484593821,-16.0926541560179,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Lookup No Match Output]"
-          TopLeft="993.87576687626,555.813995851795">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-84.5951342184505,-55.5613620887362"
-              Start="0,0"
-              End="-77.0951342184505,-55.5613620887362">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-38.2975671092253,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-38.2975671092253,0"
-                    Point2="-42.2975671092253,0"
-                    Point3="-42.2975671092253,-4" />
-                  <mssgle:LineSegment
-                    End="-42.2975671092253,-51.5613620887362" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-42.2975671092253,-51.5613620887362"
-                    Point2="-42.2975671092253,-55.5613620887362"
-                    Point3="-46.2975671092253,-55.5613620887362" />
-                  <mssgle:LineSegment
-                    End="-77.0951342184505,-55.5613620887362" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-98.1039538279753,1,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output2]"
-          TopLeft="1235,706">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-66.4845252201399,12.146833761336"
-              Start="0,0"
-              End="-58.9845252201399,12.146833761336">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-29.2422626100699,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-29.2422626100699,0"
-                    Point2="-33.2422626100699,0"
-                    Point3="-33.2422626100699,4" />
-                  <mssgle:LineSegment
-                    End="-33.2422626100699,8.14683376133598" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-33.2422626100699,8.14683376133598"
-                    Point2="-33.2422626100699,12.146833761336"
-                    Point3="-37.2422626100699,12.146833761336" />
-                  <mssgle:LineSegment
-                    End="-58.9845252201399,12.146833761336" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-81.4336493288199,-17.609375,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output1]"
-          TopLeft="1149.5,656">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="185,29"
-              Start="0,0"
-              End="185,21.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,10.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,10.5"
-                    Point2="0,14.5"
-                    Point3="4,14.5" />
-                  <mssgle:LineSegment
-                    End="181,14.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="181,14.5"
-                    Point2="185,14.5"
-                    Point3="185,18.5" />
-                  <mssgle:LineSegment
-                    End="185,21.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="44.30861328125,19.5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output]"
-          TopLeft="1079.87576687626,576.813995851795">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="69.6242331237399,37.1860041482048"
-              Start="0,0"
-              End="69.6242331237399,29.6860041482048">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,14.5930020741024" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,14.5930020741024"
-                    Point2="0,18.5930020741024"
-                    Point3="4,18.5930020741024" />
-                  <mssgle:LineSegment
-                    End="65.6242331237399,18.5930020741024" />
-                  <mssgle:CubicBezierSegment
-                    Point1="65.6242331237399,18.5930020741024"
-                    Point2="69.6242331237399,18.5930020741024"
-                    Point3="69.6242331237399,22.5930020741024" />
-                  <mssgle:LineSegment
-                    End="69.6242331237399,29.6860041482048" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-13.3792701568801,23.5930020741024,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Derived Column Output1]"
-          TopLeft="753.28063265781,521.25263376306">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="11.412045231722,25.7792172147542"
-              Start="0,0"
-              End="11.412045231722,18.2792172147542">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,6.41584533929461" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,6.41584533929461"
-                    Point2="0,10.4158453392946"
-                    Point3="4,10.4158453392946" />
-                  <mssgle:LineSegment
-                    End="7.412045231722,10.4158453392946" />
-                  <mssgle:CubicBezierSegment
-                    Point1="7.412045231722,10.4158453392946"
-                    Point2="11.412045231722,10.4158453392946"
-                    Point3="11.412045231722,14.4158453392946" />
-                  <mssgle:LineSegment
-                    End="11.412045231722,18.2792172147542" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Derived Column Output]"
-          TopLeft="1089.9071229999,844.745523264182">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-37.3561704428826,28.416160815822"
-              Start="0,0"
-              End="-37.3561704428826,20.916160815822">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,10.208080407911" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,10.208080407911"
-                    Point2="0,14.208080407911"
-                    Point3="-4,14.208080407911" />
-                  <mssgle:LineSegment
-                    End="-33.3561704428826,14.208080407911" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-33.3561704428826,14.208080407911"
-                    Point2="-37.3561704428826,14.208080407911"
-                    Point3="-37.3561704428826,18.208080407911" />
-                  <mssgle:LineSegment
-                    End="-37.3561704428826,20.916160815822" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Involvement data.Paths[Data Conversion Output]"
-          TopLeft="1089.71129888988,741.646833761336">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,61.098689502846"
-              Start="0,0"
-              End="0,53.598689502846">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,53.598689502846" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="100,42"
+          Id="Package\DFT - Get Involvement data\Sort"
+          TopLeft="1262,884" />
         <EdgeLayout
           Id="Package\DFT - Get Involvement data.Paths[Sort Output2]"
           TopLeft="1312,926">
@@ -5032,26 +4767,222 @@ FROM    config.dbFile
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <AnnotationLayout
-          Text="This se;ect and join alllows us to limit just the tasks we need by selecting the client and matter from a table in the staging database"
-          ParentId="Package\DFT - Get Involvement data"
-          FontInfo="{assembly:Null}"
-          Size="721,42"
-          Id="7cb103bb-6e9f-4a1c-aba5-8a2f8fe81b33"
-          TopLeft="341.767063082592,109.973781585537" />
-        <AnnotationLayout
-          Text="Selects the parts of the data that are MatterSphere specific"
-          ParentId="Package\DFT - Get Involvement data"
-          FontInfo="{assembly:Null}"
-          Size="341,42"
-          Id="aa5a15a6-2017-4bac-8e8e-2a8213e5f879"
-          TopLeft="1111.42857142857,214.571428571429" />
-        <NodeLayout
-          Size="184,42"
-          Id="Package\DFT - Get Involvement data\Data Conversion - Ref"
-          TopLeft="1454.83386893298,529.320568928922" />
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Lookup No Match Output1]"
+          TopLeft="1173.33333333333,614">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="133.119742625142,-42.0499036954027"
+              Start="0,0"
+              End="133.119742625142,-34.5499036954027">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-17.0926541560179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-17.0926541560179"
+                    Point2="0,-21.0926541560179"
+                    Point3="4,-21.0926541560179" />
+                  <mssgle:LineSegment
+                    End="129.119742625142,-21.0926541560179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="129.119742625142,-21.0926541560179"
+                    Point2="133.119742625142,-21.0926541560179"
+                    Point3="133.119742625142,-25.0926541560179" />
+                  <mssgle:LineSegment
+                    End="133.119742625142,-34.5499036954027" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="10.753484593821,-16.0926541560179,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Lookup No Match Output]"
+          TopLeft="993.87576687626,555.813995851795">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-84.5951342184505,-55.5613620887362"
+              Start="0,0"
+              End="-77.0951342184505,-55.5613620887362">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-38.2975671092253,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-38.2975671092253,0"
+                    Point2="-42.2975671092253,0"
+                    Point3="-42.2975671092253,-4" />
+                  <mssgle:LineSegment
+                    End="-42.2975671092253,-51.5613620887362" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-42.2975671092253,-51.5613620887362"
+                    Point2="-42.2975671092253,-55.5613620887362"
+                    Point3="-46.2975671092253,-55.5613620887362" />
+                  <mssgle:LineSegment
+                    End="-77.0951342184505,-55.5613620887362" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-98.1039538279753,1,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output2]"
+          TopLeft="1235,706">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-66.4845252201399,12.146833761336"
+              Start="0,0"
+              End="-58.9845252201399,12.146833761336">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-29.2422626100699,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-29.2422626100699,0"
+                    Point2="-33.2422626100699,0"
+                    Point3="-33.2422626100699,4" />
+                  <mssgle:LineSegment
+                    End="-33.2422626100699,8.14683376133598" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.2422626100699,8.14683376133598"
+                    Point2="-33.2422626100699,12.146833761336"
+                    Point3="-37.2422626100699,12.146833761336" />
+                  <mssgle:LineSegment
+                    End="-58.9845252201399,12.146833761336" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-81.4336493288199,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output1]"
+          TopLeft="1149.5,656">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="185,29"
+              Start="0,0"
+              End="185,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.5"
+                    Point2="0,14.5"
+                    Point3="4,14.5" />
+                  <mssgle:LineSegment
+                    End="181,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="181,14.5"
+                    Point2="185,14.5"
+                    Point3="185,18.5" />
+                  <mssgle:LineSegment
+                    End="185,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="44.30861328125,19.5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Lookup Match Output]"
+          TopLeft="1079.87576687626,576.813995851795">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="69.6242331237399,37.1860041482048"
+              Start="0,0"
+              End="69.6242331237399,29.6860041482048">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.5930020741024" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.5930020741024"
+                    Point2="0,18.5930020741024"
+                    Point3="4,18.5930020741024" />
+                  <mssgle:LineSegment
+                    End="65.6242331237399,18.5930020741024" />
+                  <mssgle:CubicBezierSegment
+                    Point1="65.6242331237399,18.5930020741024"
+                    Point2="69.6242331237399,18.5930020741024"
+                    Point3="69.6242331237399,22.5930020741024" />
+                  <mssgle:LineSegment
+                    End="69.6242331237399,29.6860041482048" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-13.3792701568801,23.5930020741024,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - Get Involvement data.Paths[Derived Column Output2]"
+          TopLeft="1089.9071229999,844.745523264182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-37.3561704428826,28.416160815822"
+              Start="0,0"
+              End="-37.3561704428826,20.916160815822">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.208080407911" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.208080407911"
+                    Point2="0,14.208080407911"
+                    Point3="-4,14.208080407911" />
+                  <mssgle:LineSegment
+                    End="-33.3561704428826,14.208080407911" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.3561704428826,14.208080407911"
+                    Point2="-37.3561704428826,14.208080407911"
+                    Point3="-37.3561704428826,18.208080407911" />
+                  <mssgle:LineSegment
+                    End="-37.3561704428826,20.916160815822" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Derived Column Output1]"
           TopLeft="1370.78640929181,571.950096304597">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -5076,6 +5007,40 @@ FROM    config.dbFile
                     Point3="146.714126307839,18.5" />
                   <mssgle:LineSegment
                     End="146.714126307839,6.8704726243252" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Derived Column Output]"
+          TopLeft="753.28063265781,521.25263376306">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="11.412045231722,25.7792172147542"
+              Start="0,0"
+              End="11.412045231722,18.2792172147542">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,6.41584533929461" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,6.41584533929461"
+                    Point2="0,10.4158453392946"
+                    Point3="4,10.4158453392946" />
+                  <mssgle:LineSegment
+                    End="7.412045231722,10.4158453392946" />
+                  <mssgle:CubicBezierSegment
+                    Point1="7.412045231722,10.4158453392946"
+                    Point2="11.412045231722,10.4158453392946"
+                    Point3="11.412045231722,14.4158453392946" />
+                  <mssgle:LineSegment
+                    End="11.412045231722,18.2792172147542" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5118,6 +5083,42 @@ FROM    config.dbFile
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Involvement data.Paths[Data Conversion Output]"
+          TopLeft="1089.71129888988,741.646833761336">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,61.098689502846"
+              Start="0,0"
+              End="0,53.598689502846">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.598689502846" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="This se;ect and join alllows us to limit just the tasks we need by selecting the client and matter from a table in the staging database"
+          ParentId="Package\DFT - Get Involvement data"
+          FontInfo="{assembly:Null}"
+          Size="721,42"
+          Id="7cb103bb-6e9f-4a1c-aba5-8a2f8fe81b33"
+          TopLeft="341.767063082592,109.973781585537" />
+        <AnnotationLayout
+          Text="Selects the parts of the data that are MatterSphere specific"
+          ParentId="Package\DFT - Get Involvement data"
+          FontInfo="{assembly:Null}"
+          Size="341,42"
+          Id="aa5a15a6-2017-4bac-8e8e-2a8213e5f879"
+          TopLeft="1111.42857142857,214.571428571429" />
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -5158,6 +5159,27 @@ FROM    config.dbFile
     </LayoutInfo>
   </DtsEventHandler>
   <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Involvement data\DEST - NoMatchAssociateCode">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Involvement data\SRC_axxia01">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\DFT - Get Involvement data\SRV_MS">
     <Properties>
       <Property>
@@ -5166,8 +5188,59 @@ FROM    config.dbFile
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\SRC_axxia01">
+    design-time-name="Package\DFT - Get Involvement data\DEST - ContID">
     <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Involvement data\LKP_AssociateCode">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Involvement data\LKP_MSContID">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
@@ -5206,78 +5279,6 @@ FROM    config.dbFile
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\LKP_MSContID">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\DEST - NoMatchAssociateCode">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\DEST - ContID">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\LKP_AssociateCode">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
