@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageTaskData"
   DTS:PackageType="5"
-  DTS:VersionBuild="87"
-  DTS:VersionGUID="{D02A1FBC-3142-4837-9893-B17F932D0FAA}">
+  DTS:VersionBuild="90"
+  DTS:VersionGUID="{153CB44C-3B54-46ED-9AD2-E448BCB6DC40}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -587,7 +587,7 @@
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      length="13"
+                      length="10"
                       lineageId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_TskCreatedBy]"
                       name="DC_TskCreatedBy"
                       truncationRowDisposition="FailComponent">
@@ -846,7 +846,7 @@
                     <inputColumn
                       refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DC_TskCreatedBy]"
                       cachedDataType="wstr"
-                      cachedLength="13"
+                      cachedLength="10"
                       cachedName="DC_TskCreatedBy"
                       externalMetadataColumnId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[tskCreatedBy]"
                       lineageId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC_TskCreatedBy]" />
@@ -1518,10 +1518,10 @@
 ,1 AS [SourceSystemID]
 ,activity_desc AS [TskDesc]
 ,plan_date AS [TskDue]
-,CASE WHEN ISNUMERIC(initiating_entity) &lt;&gt;1 THEN mg_feearn ELSE initiating_entity END  AS [FeeusrID]
+,CAST(CASE WHEN ISNUMERIC(initiating_entity) &lt;&gt;1 THEN mg_feearn ELSE initiating_entity END AS CHAR(8))  AS [FeeusrID]
 ,'' AS [TskNotes]
 ,getdate() AS [TskCreated]
-,CASE WHEN ISNUMERIC(initiating_entity) &lt;&gt;1 THEN mg_feearn ELSE initiating_entity END AS [TskCreatedBy]
+,CAST(CASE WHEN ISNUMERIC(initiating_entity) &lt;&gt;1 THEN mg_feearn ELSE initiating_entity END AS CHAR(8))  AS [TskCreatedBy]
 ,NULL AS [TskCompleted]
 ,NULL AS [TskCompletedBy]
 ,NULL AS [DocID]
@@ -1764,7 +1764,7 @@ AND date_closed IS NULL</property>
                       refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[FeeusrID]"
                       codePage="1252"
                       dataType="str"
-                      length="13"
+                      length="8"
                       name="FeeusrID" />
                     <externalMetadataColumn
                       refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[TskNotes]"
@@ -1780,7 +1780,7 @@ AND date_closed IS NULL</property>
                       refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[TskCreatedBy]"
                       codePage="1252"
                       dataType="str"
-                      length="13"
+                      length="8"
                       name="TskCreatedBy" />
                     <externalMetadataColumn
                       refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[TskCompleted]"
@@ -1854,7 +1854,7 @@ AND date_closed IS NULL</property>
                       refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[FeeusrID]"
                       codePage="1252"
                       dataType="str"
-                      length="13"
+                      length="8"
                       lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[FeeusrID]"
                       name="FeeusrID" />
                     <outputColumn
@@ -1873,7 +1873,7 @@ AND date_closed IS NULL</property>
                       refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[TskCreatedBy]"
                       codePage="1252"
                       dataType="str"
-                      length="13"
+                      length="8"
                       lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[TskCreatedBy]"
                       name="TskCreatedBy" />
                     <outputColumn
@@ -2949,7 +2949,7 @@ FROM    config.dbFile
     design-time-name="Package\DFT - GetStageData">
     <LayoutInfo>
       <GraphLayout
-        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="120,42"
           Id="Package\DFT - GetStageData\SRV_MS"
@@ -3221,7 +3221,9 @@ FROM    config.dbFile
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-26.6780852214391,19.2080804079113,16,16"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
