@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="InsertDocsToMS"
   DTS:PackageType="5"
-  DTS:VersionBuild="93"
-  DTS:VersionGUID="{FB9AC1D1-505D-433C-AF9A-D3E3482F114B}">
+  DTS:VersionBuild="94"
+  DTS:VersionGUID="{D119C462-5712-408E-98B7-52E5BEF8D573}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -599,9 +599,9 @@
 	,NULL AS [docIDExt] 
 	,0 AS [SecurityOptions] 
  FROM DocumentStage
- LEFT OUTER JOIN MS_Prod.config.dbAssociates  ON DocumentStage.MSFileID=dbAssociates.fileID 
+ LEFT OUTER JOIN dbo.Documentassociates as dbAssociates  ON DocumentStage.MSFileID=dbAssociates.fileID 
  AND assocOrder=0
- LEFT OUTER JOIN (SELECT appCode,appID FROM MS_Prod.dbo.dbApplication WHERE appCode='SHELL') AS Applications
+ LEFT OUTER JOIN (SELECT appCode,appID FROM dbo.DocumentApplication WHERE appCode='SHELL') AS Applications
   ON appcode='SHELL'
  WHERE StatusID  IN(8,11) AND IsCurrent='Y'</property>
                     <property
@@ -3016,6 +3016,10 @@ INNER JOIN config.dbDocument AS doc
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion"
           TopLeft="97.2867989074904,135.659801471448" />
         <NodeLayout
+          Size="220,42"
+          Id="Package\ST - Import Into MatterSphere\EST - Update Stage Status ID"
+          TopLeft="190,290" />
+        <NodeLayout
           Size="228,42"
           Id="Package\ST - Import Into MatterSphere\EST - Update Version ID dbdoc"
           TopLeft="89.4995225731308,215.067068645582" />
@@ -3075,10 +3079,6 @@ INNER JOIN config.dbDocument AS doc
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="220,42"
-          Id="Package\ST - Import Into MatterSphere\EST - Update Stage Status ID"
-          TopLeft="190,290" />
         <EdgeLayout
           Id="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint 2]"
           TopLeft="203.499522573131,257.067068645582">
@@ -3141,47 +3141,13 @@ INNER JOIN config.dbDocument AS doc
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="132,42"
-          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\Row Count"
-          TopLeft="295,263" />
-        <NodeLayout
           Size="185,42"
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage"
           TopLeft="323,117" />
-        <EdgeLayout
-          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[OLE DB Source Output]"
-          TopLeft="415.5,159">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-54.5,104"
-              Start="0,0"
-              End="-54.5,96.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,48" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,48"
-                    Point2="0,52"
-                    Point3="-4,52" />
-                  <mssgle:LineSegment
-                    End="-50.5,52" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-50.5,52"
-                    Point2="-54.5,52"
-                    Point3="-54.5,56" />
-                  <mssgle:LineSegment
-                    End="-54.5,96.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="132,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\Row Count"
+          TopLeft="295,263" />
         <NodeLayout
           Size="189,42"
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - MS DbDocument"
@@ -3190,6 +3156,40 @@ INNER JOIN config.dbDocument AS doc
           Size="158,42"
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\Data Conversion"
           TopLeft="593,284" />
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[Data Conversion Output]"
+          TopLeft="672,326">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-189.5,28"
+              Start="0,0"
+              End="-189.5,20.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10"
+                    Point2="0,14"
+                    Point3="-4,14" />
+                  <mssgle:LineSegment
+                    End="-185.5,14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-185.5,14"
+                    Point2="-189.5,14"
+                    Point3="-189.5,18" />
+                  <mssgle:LineSegment
+                    End="-189.5,20.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[Row Count Output 1]"
           TopLeft="427,284">
@@ -3225,31 +3225,31 @@ INNER JOIN config.dbDocument AS doc
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[Data Conversion Output]"
-          TopLeft="672,326">
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[OLE DB Source Output]"
+          TopLeft="415.5,159">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-189.5,28"
+              EndConnector="-54.5,104"
               Start="0,0"
-              End="-189.5,20.5">
+              End="-54.5,96.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,10" />
+                    End="0,48" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,10"
-                    Point2="0,14"
-                    Point3="-4,14" />
+                    Point1="0,48"
+                    Point2="0,52"
+                    Point3="-4,52" />
                   <mssgle:LineSegment
-                    End="-185.5,14" />
+                    End="-50.5,52" />
                   <mssgle:CubicBezierSegment
-                    Point1="-185.5,14"
-                    Point2="-189.5,14"
-                    Point3="-189.5,18" />
+                    Point1="-50.5,52"
+                    Point2="-54.5,52"
+                    Point3="-54.5,56" />
                   <mssgle:LineSegment
-                    End="-189.5,20.5" />
+                    End="-54.5,96.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3285,6 +3285,27 @@ INNER JOIN config.dbDocument AS doc
       </GraphLayout>
     </LayoutInfo>
   </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - MS DbDocument">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion">
     <LayoutInfo>
@@ -3430,23 +3451,10 @@ INNER JOIN config.dbDocument AS doc
     </LayoutInfo>
   </DtsEventHandler>
   <PipelineComponentMetadata
-    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage">
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion\SRC - Stage Versions">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - MS DbDocument">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -3460,14 +3468,6 @@ INNER JOIN config.dbDocument AS doc
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion\SRC - Stage Versions">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
