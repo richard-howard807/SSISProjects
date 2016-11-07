@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="InsertDocsToMS"
   DTS:PackageType="5"
-  DTS:VersionBuild="94"
-  DTS:VersionGUID="{D119C462-5712-408E-98B7-52E5BEF8D573}">
+  DTS:VersionBuild="95"
+  DTS:VersionGUID="{94166AE4-6A24-407B-9AE8-BBB2EDC83D6A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -76,7 +76,7 @@
         DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=svr-liv-msp-01;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -196,6 +196,15 @@
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1F1C4D8B-6CD3-4B83-8AAB-8450103DB536}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInsertedVersion">
       <DTS:VariableValue
         DTS:DataType="3">0</DTS:VariableValue>
     </DTS:Variable>
@@ -2113,7 +2122,7 @@
                         SQLTask:ParameterSize="-1" />
                       <SQLTask:ParameterBinding
                         SQLTask:ParameterName="@CountInserted"
-                        SQLTask:DtsVariableName="User::RowCountInserts"
+                        SQLTask:DtsVariableName="User::RowCountInsertedVersion"
                         SQLTask:ParameterDirection="Input"
                         SQLTask:DataType="3"
                         SQLTask:ParameterSize="-1" />
@@ -2530,7 +2539,7 @@
                     <property
                       dataType="System.String"
                       description="Specifies the variable to hold the row count."
-                      name="VariableName">User::RowCount</property>
+                      name="VariableName">User::RowCountInsertedVersion</property>
                   </properties>
                   <inputs>
                     <input
@@ -3316,51 +3325,17 @@ INNER JOIN config.dbDocument AS doc
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion\Row Count"
           TopLeft="263,191" />
         <NodeLayout
-          Size="235,42"
-          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion\DEST - Insert Into dbDocVersion"
-          TopLeft="241.690237531899,278.964679771512" />
-        <NodeLayout
           Size="180,42"
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion\SRC - Stage Versions"
           TopLeft="285,79" />
-        <EdgeLayout
-          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion.Paths[OLE DB Source Output]"
-          TopLeft="375,121">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-46,70"
-              Start="0,0"
-              End="-46,62.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,31" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,31"
-                    Point2="0,35"
-                    Point3="-4,35" />
-                  <mssgle:LineSegment
-                    End="-42,35" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-42,35"
-                    Point2="-46,35"
-                    Point3="-46,39" />
-                  <mssgle:LineSegment
-                    End="-46,62.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <NodeLayout
           Size="158,42"
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion\Data Conversion"
           TopLeft="473,246" />
+        <NodeLayout
+          Size="235,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion\DEST - Insert Into dbDocVersion"
+          TopLeft="241.690237531899,278.964679771512" />
         <EdgeLayout
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion.Paths[Row Count Output 1]"
           TopLeft="395,212">
@@ -3387,6 +3362,40 @@ INNER JOIN config.dbDocument AS doc
                     Point3="43,55" />
                   <mssgle:LineSegment
                     End="70.5,55" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocVersion.Paths[OLE DB Source Output]"
+          TopLeft="375,121">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-46,70"
+              Start="0,0"
+              End="-46,62.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31"
+                    Point2="0,35"
+                    Point3="-4,35" />
+                  <mssgle:LineSegment
+                    End="-42,35" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-42,35"
+                    Point2="-46,35"
+                    Point3="-46,39" />
+                  <mssgle:LineSegment
+                    End="-46,62.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
