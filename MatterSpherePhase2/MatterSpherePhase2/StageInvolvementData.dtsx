@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageInvolvementData"
   DTS:PackageType="5"
-  DTS:VersionBuild="118"
-  DTS:VersionGUID="{C1C7C766-824E-4FA3-80E7-E423C82F83EC}">
+  DTS:VersionBuild="120"
+  DTS:VersionGUID="{B6DFE678-5CB9-4EA4-9F4E-655B563AF633}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1549,13 +1549,6 @@
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocType]"
                       lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-AssociateCode]" />
                     <inputColumn
-                      refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[LKP-Header]"
-                      cachedDataType="wstr"
-                      cachedLength="80"
-                      cachedName="LKP-Header"
-                      externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocHeading]"
-                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Header]" />
-                    <inputColumn
                       refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[LKP-Salutation]"
                       cachedDataType="wstr"
                       cachedLength="50"
@@ -1593,6 +1586,13 @@
                       cachedName="clid"
                       externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSClientID]"
                       lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[clid]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[filedesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="filedesc"
+                      externalMetadataColumnId="Package\DFT - Get Involvement data\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[assocHeading]"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[filedesc]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1883,7 +1883,7 @@ where [refTable].[Capacity Code] = ?</property>
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT contid,contName  AS Header ,COALESCE(contSalut, 'Sir/Madam') AS Salutation 
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT contid ,COALESCE(contSalut, 'Sir/Madam') AS Salutation 
 ,contDefaultAddress
 FROM config.dbContact</property>
                 <property
@@ -1891,7 +1891,7 @@ FROM config.dbContact</property>
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (SELECT contid,contName  AS Header ,COALESCE(contSalut, 'Sir/Madam') AS Salutation 
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (SELECT contid ,COALESCE(contSalut, 'Sir/Madam') AS Salutation 
 ,contDefaultAddress
 FROM config.dbContact) [refTable]
 where [refTable].[contid] = ?</property>
@@ -1925,7 +1925,7 @@ where [refTable].[contid] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="contid" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Header" dataType="DT_WSTR" length="80" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Salutation" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="contDefaultAddress" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="contid" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Salutation" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="contDefaultAddress" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -1982,21 +1982,6 @@ where [refTable].[contid] = ?</property>
                   name="Lookup Match Output"
                   synchronousInputId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Inputs[Lookup Input]">
                   <outputColumns>
-                    <outputColumn
-                      refId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Header]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Copy Column"
-                      length="80"
-                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Header]"
-                      name="LKP-Header"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn">Header</property>
-                      </properties>
-                    </outputColumn>
                     <outputColumn
                       refId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Salutation]"
                       dataType="wstr"
@@ -2347,6 +2332,12 @@ where [refTable].[FedClientNumber] = ?</property>
                       cachedDataType="i8"
                       cachedName="clid"
                       lineageId="Package\DFT - Get Involvement data\SRT - MS.Outputs[Sort Output].Columns[clid]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Right Input].Columns[filedesc]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="filedesc"
+                      lineageId="Package\DFT - Get Involvement data\SRT - MS.Outputs[Sort Output].Columns[filedesc]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -2539,6 +2530,20 @@ where [refTable].[FedClientNumber] = ?</property>
                           dataType="System.Int32"
                           description="The input column associated with this output column"
                           name="InputColumnID">#{Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Right Input].Columns[clid]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[filedesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[filedesc]"
+                      name="filedesc">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Involvement data\Merge Join.Inputs[Merge Join Right Input].Columns[filedesc]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -2839,23 +2844,6 @@ where [refTable].[FedClientNumber] = ?</property>
                       </properties>
                     </inputColumn>
                     <inputColumn
-                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[LKP-Header]"
-                      cachedDataType="wstr"
-                      cachedLength="80"
-                      cachedName="LKP-Header"
-                      lineageId="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Header]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
                       refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[LKP-Salutation]"
                       cachedDataType="wstr"
                       cachedLength="50"
@@ -2942,6 +2930,23 @@ where [refTable].[FedClientNumber] = ?</property>
                       cachedDataType="i8"
                       cachedName="clid"
                       lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[clid]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Inputs[Sort Input].Columns[filedesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="filedesc"
+                      lineageId="Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[filedesc]">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3163,20 +3168,6 @@ where [refTable].[FedClientNumber] = ?</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
-                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Header]"
-                      dataType="wstr"
-                      length="80"
-                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Header]"
-                      name="LKP-Header">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT - Get Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output].Columns[LKP-Header]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
                       refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[LKP-Salutation]"
                       dataType="wstr"
                       length="50"
@@ -3254,6 +3245,20 @@ where [refTable].[FedClientNumber] = ?</property>
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
                           name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[clid]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[filedesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Get Involvement data\Sort.Outputs[Sort Output].Columns[filedesc]"
+                      name="filedesc">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\Merge Join.Outputs[Merge Join Output].Columns[filedesc]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -3992,6 +3997,23 @@ ORDER BY case_id,seq_no</property>
                           name="NewSortKeyPosition">0</property>
                       </properties>
                     </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Involvement data\SRT - MS.Inputs[Sort Input].Columns[filedesc]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="filedesc"
+                      lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[filedesc]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -4071,6 +4093,20 @@ ORDER BY case_id,seq_no</property>
                           name="SortColumnId">#{Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[clid]}</property>
                       </properties>
                     </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRT - MS.Outputs[Sort Output].Columns[filedesc]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\DFT - Get Involvement data\SRT - MS.Outputs[Sort Output].Columns[filedesc]"
+                      name="filedesc">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[filedesc]}</property>
+                      </properties>
+                    </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -4105,7 +4141,8 @@ ORDER BY case_id,seq_no</property>
         fileNo ,
         FEDCode ,
         dbFile.fileID,
-        dbclient.clid
+        dbclient.clid,
+       CAST(LEFT(dbfile.filedesc,200) AS nvarchar(200)) AS filedesc
 FROM    config.dbFile
         INNER JOIN config.dbClient ON dbFile.clID = dbClient.clID
         INNER JOIN dbo.udExtFile ON dbFile.fileID = udExtFile.fileID;</property>
@@ -4192,6 +4229,16 @@ FROM    config.dbFile
                       lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[clid]"
                       name="clid"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[filedesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[filedesc]"
+                      length="200"
+                      lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].Columns[filedesc]"
+                      name="filedesc"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -4218,6 +4265,11 @@ FROM    config.dbFile
                       refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[clid]"
                       dataType="i8"
                       name="clid" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[filedesc]"
+                      dataType="wstr"
+                      length="200"
+                      name="filedesc" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -4253,6 +4305,12 @@ FROM    config.dbFile
                       dataType="i8"
                       lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Error Output].Columns[clid]"
                       name="clid" />
+                    <outputColumn
+                      refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Error Output].Columns[filedesc]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Error Output].Columns[filedesc]"
+                      name="filedesc" />
                     <outputColumn
                       refId="Package\DFT - Get Involvement data\SRV_MS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -4458,45 +4516,49 @@ FROM    config.dbFile
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="132,42"
-          Id="Package\DFT - Get Involvement data\Merge Join"
-          TopLeft="1050,445.714285714286" />
-        <NodeLayout
           Size="201,42"
           Id="Package\DFT - Get Involvement data\DCT - Unmatched ContID"
           TopLeft="1238.11974262514,529.950096304597" />
-        <NodeLayout
-          Size="132,42"
-          Id="Package\DFT - Get Involvement data\Row Count"
-          TopLeft="986.550952557017,873.161684080004" />
         <NodeLayout
           Size="226,42"
           Id="Package\DFT - Get Involvement data\DEST - NoMatchAssociateCode"
           TopLeft="651.692677889532,547.031850977814" />
         <NodeLayout
-          Size="142,42"
-          Id="Package\DFT - Get Involvement data\SRC_axxia01"
-          TopLeft="820.915664033154,180.972450877016" />
+          Size="124,42"
+          Id="Package\DFT - Get Involvement data\SRT - MS"
+          TopLeft="1171.98511143766,373.156474447156" />
         <NodeLayout
-          Size="120,42"
-          Id="Package\DFT - Get Involvement data\SRV_MS"
-          TopLeft="1198.24219871986,287.62414891263" />
+          Size="132,42"
+          Id="Package\DFT - Get Involvement data\Row Count"
+          TopLeft="986.550952557017,873.161684080004" />
         <NodeLayout
           Size="150,42"
           Id="Package\DFT - Get Involvement data\DEST - ContID"
           TopLeft="1371.03134190923,615.676054123507" />
         <NodeLayout
+          Size="147,42"
+          Id="Package\DFT - Get Involvement data\SRT - Axxia01"
+          TopLeft="779.777447651879,299.773841795891" />
+        <NodeLayout
           Size="236,42"
           Id="Package\DFT - Get Involvement data\DCT - Unmatched AssociateCode"
           TopLeft="673.28063265781,479.252633763059" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - Get Involvement data\Merge Join"
+          TopLeft="1050,445.714285714286" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\DFT - Get Involvement data\LKP_MSContID"
+          TopLeft="1074,614" />
         <NodeLayout
           Size="172,42"
           Id="Package\DFT - Get Involvement data\LKP_AssociateCode"
           TopLeft="993.87576687626,534.813995851795" />
         <NodeLayout
-          Size="124,42"
-          Id="Package\DFT - Get Involvement data\SRT - MS"
-          TopLeft="1171.98511143766,373.156474447156" />
+          Size="120,42"
+          Id="Package\DFT - Get Involvement data\SRV_MS"
+          TopLeft="1198.24219871986,287.62414891263" />
         <NodeLayout
           Size="184,42"
           Id="Package\DFT - Get Involvement data\Data Conversion - Ref"
@@ -4506,17 +4568,9 @@ FROM    config.dbFile
           Id="Package\DFT - Get Involvement data\Derived Column"
           TopLeft="1011.9071229999,802.745523264182" />
         <NodeLayout
-          Size="151,42"
-          Id="Package\DFT - Get Involvement data\LKP_MSContID"
-          TopLeft="1074,614" />
-        <NodeLayout
           Size="199,42"
           Id="Package\DFT - Get Involvement data\LKP_AssociateExtraDetail"
           TopLeft="1235,685" />
-        <NodeLayout
-          Size="147,42"
-          Id="Package\DFT - Get Involvement data\SRT - Axxia01"
-          TopLeft="779.777447651879,299.773841795891" />
         <NodeLayout
           Size="211,42"
           Id="Package\DFT - Get Involvement data\DEST_MatterSphereStaging"
@@ -4529,6 +4583,10 @@ FROM    config.dbFile
           Size="100,42"
           Id="Package\DFT - Get Involvement data\Sort"
           TopLeft="1262,884" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\DFT - Get Involvement data\SRC_axxia01"
+          TopLeft="820.915664033154,180.972450877016" />
         <EdgeLayout
           Id="Package\DFT - Get Involvement data.Paths[Sort Output2]"
           TopLeft="1312,926">
@@ -5172,22 +5230,6 @@ FROM    config.dbFile
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\SRC_axxia01">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\SRV_MS">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\DFT - Get Involvement data\DEST - ContID">
     <Properties>
       <Property>
@@ -5197,6 +5239,29 @@ FROM    config.dbFile
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Involvement data\LKP_MSContID">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -5224,23 +5289,8 @@ FROM    config.dbFile
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT - Get Involvement data\LKP_MSContID">
+    design-time-name="Package\DFT - Get Involvement data\SRV_MS">
     <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
@@ -5279,6 +5329,14 @@ FROM    config.dbFile
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Involvement data\SRC_axxia01">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
