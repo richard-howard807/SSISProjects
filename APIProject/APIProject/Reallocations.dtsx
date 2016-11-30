@@ -1,0 +1,803 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/30/2016 4:40:49 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="L06131"
+  DTS:CreatorName="SBC\ewilli02"
+  DTS:DTSID="{05BADE60-2C01-428F-9AB8-7DAE98CEA4EC}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Reallocations"
+  DTS:PackageType="5"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{33067E4F-B6C8-4EB6-8572-A33FD4A083E7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ARTIION.DataTransferStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{084DB4F8-1D70-4F57-B09C-AD51DF7DAEBD}"
+      DTS:ObjectName="ARTIION.DataTransferStaging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=ARTIION;Initial Catalog=DataTransferStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{065CE606-4F2A-4855-9097-63BE8438D6B4}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\svr-liv-fs-03\Restricted\Management\Information Systems\Teams\Development\Business Intelligence\API\MatterReallocations\MSReallocations.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[svr-liv-mssq-01.MattersphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F09E2155-2340-477A-963E-463A2EABCE46}"
+      DTS:ObjectName="svr-liv-mssq-01.MattersphereStaging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-mssq-01;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\EST_Truncate FEDReallocations"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{51FC31DE-F447-49FD-8709-1CE61E14203D}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST_Truncate FEDReallocations"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{084DB4F8-1D70-4F57-B09C-AD51DF7DAEBD}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [DataTransferStaging].[dbo].[FEDReallocations]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST_Truncate MSReallocations"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A55CB514-DB28-49E9-BFC7-152333E55523}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST_Truncate MSReallocations"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F09E2155-2340-477A-963E-463A2EABCE46}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [MattersphereStaging].[dbo].[MSReallocations]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Data to Staging"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{3212AE94-0951-40EB-A5EB-8C36DFF84797}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Data to Staging"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Import Data to Staging\Excel Source"
+              componentClassID="{8C084929-27D1-479F-9641-ABB7CDADF1AC}"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Reallocations$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import Data to Staging\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Client]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Client]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Client]"
+                      name="MS Client"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Matter]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Matter]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Matter]"
+                      name="MS Matter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Client]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Client]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Client]"
+                      name="FED Client"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Matter]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]"
+                      name="FED Matter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[Old Fee Earner]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[Old Fee Earner]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[Old Fee Earner]"
+                      name="Old Fee Earner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Fee Earner]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Fee Earner]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Fee Earner]"
+                      name="New Fee Earner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Case Assistant]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Case Assistant]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Case Assistant]"
+                      name="New Case Assistant"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New BCM]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New BCM]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New BCM]"
+                      name="New BCM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Partner]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Partner]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Partner]"
+                      name="New Partner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[VolumeFlag]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[VolumeFlag]"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[VolumeFlag]"
+                      name="VolumeFlag"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Client]"
+                      dataType="wstr"
+                      length="255"
+                      name="MS Client" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Matter]"
+                      dataType="wstr"
+                      length="255"
+                      name="MS Matter" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Client]"
+                      dataType="wstr"
+                      length="255"
+                      name="FED Client" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Matter]"
+                      dataType="wstr"
+                      length="255"
+                      name="FED Matter" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[Old Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      name="Old Fee Earner" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Fee Earner" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Case Assistant]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Case Assistant" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New BCM]"
+                      dataType="wstr"
+                      length="255"
+                      name="New BCM" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Partner]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Partner" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[VolumeFlag]"
+                      dataType="wstr"
+                      length="255"
+                      name="VolumeFlag" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[MS Client]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[MS Client]"
+                      name="MS Client" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[MS Matter]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[MS Matter]"
+                      name="MS Matter" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[FED Client]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[FED Client]"
+                      name="FED Client" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[FED Matter]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[FED Matter]"
+                      name="FED Matter" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[Old Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[Old Fee Earner]"
+                      name="Old Fee Earner" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Fee Earner]"
+                      name="New Fee Earner" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Case Assistant]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Case Assistant]"
+                      name="New Case Assistant" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New BCM]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New BCM]"
+                      name="New BCM" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Partner]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Partner]"
+                      name="New Partner" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[VolumeFlag]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[VolumeFlag]"
+                      name="VolumeFlag" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import Data to Staging\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[MSReallocations]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import Data to Staging\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-mssq-01.MattersphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-mssq-01.MattersphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MS Client]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MS Client"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Client]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Client]" />
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MS Matter]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MS Matter"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Matter]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Matter]" />
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FED Client]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FED Client"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Client]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Client]" />
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FED Matter]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FED Matter"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Matter]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]" />
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Old Fee Earner]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Old Fee Earner"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Old Fee Earner]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[Old Fee Earner]" />
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Fee Earner]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="New Fee Earner"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Fee Earner]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Fee Earner]" />
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Case Assistant]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="New Case Assistant"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Case Assistant]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Case Assistant]" />
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New BCM]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="New BCM"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New BCM]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New BCM]" />
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Partner]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="New Partner"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Partner]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Partner]" />
+                    <inputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[VolumeFlag]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="VolumeFlag"
+                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VolumeFlag]"
+                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[VolumeFlag]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Client]"
+                      dataType="wstr"
+                      length="255"
+                      name="MS Client" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Matter]"
+                      dataType="wstr"
+                      length="255"
+                      name="MS Matter" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Client]"
+                      dataType="wstr"
+                      length="255"
+                      name="FED Client" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Matter]"
+                      dataType="wstr"
+                      length="255"
+                      name="FED Matter" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Old Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      name="Old Fee Earner" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Fee Earner" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Case Assistant]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Case Assistant" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New BCM]"
+                      dataType="wstr"
+                      length="255"
+                      name="New BCM" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Partner]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Partner" />
+                    <externalMetadataColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VolumeFlag]"
+                      dataType="wstr"
+                      length="255"
+                      name="VolumeFlag" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Import Data to Staging.Paths[Excel Source Output]"
+              endId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{90D80FD7-70D0-4591-8FA3-23224484F778}"
+      DTS:From="Package\EST_Truncate MSReallocations"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Import Data to Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{CFE92DD0-EB09-4C8C-92FC-B6DD60219E84}"
+      DTS:From="Package\Import Data to Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\EST_Truncate FEDReallocations" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="226,42"
+          Id="Package\EST_Truncate MSReallocations"
+          TopLeft="213,61" />
+        <NodeLayout
+          Size="190,42"
+          Id="Package\Import Data to Staging"
+          TopLeft="303,185" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="326,103">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="72,82"
+              Start="0,0"
+              End="72,74.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,37"
+                    Point2="0,41"
+                    Point3="4,41" />
+                  <mssgle:LineSegment
+                    End="68,41" />
+                  <mssgle:CubicBezierSegment
+                    Point1="68,41"
+                    Point2="72,41"
+                    Point3="72,45" />
+                  <mssgle:LineSegment
+                    End="72,74.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="230,42"
+          Id="Package\EST_Truncate FEDReallocations"
+          TopLeft="287,306" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="400,227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79"
+              Start="0,0"
+              End="0,71.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,71.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Import Data to Staging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="141,42"
+          Id="Package\Import Data to Staging\Excel Source"
+          TopLeft="178,116" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Import Data to Staging\OLE DB Destination"
+          TopLeft="246,276" />
+        <EdgeLayout
+          Id="Package\Import Data to Staging.Paths[Excel Source Output]"
+          TopLeft="248.5,158">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="84,118"
+              Start="0,0"
+              End="84,110.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,55"
+                    Point2="0,59"
+                    Point3="4,59" />
+                  <mssgle:LineSegment
+                    End="80,59" />
+                  <mssgle:CubicBezierSegment
+                    Point1="80,59"
+                    Point2="84,59"
+                    Point3="84,63" />
+                  <mssgle:LineSegment
+                    End="84,110.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import Data to Staging\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import Data to Staging\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
