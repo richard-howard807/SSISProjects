@@ -1,0 +1,1093 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/30/2016 3:10:54 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\DAbram"
+  DTS:DTSID="{DD328D67-1009-4A4F-B91B-6CD8F724F62E}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="CaseDetails"
+  DTS:PackageType="5"
+  DTS:VersionBuild="6"
+  DTS:VersionGUID="{E19A62E9-5282-454A-8FF4-63FE2F5D878F}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ARTIION.DataTransferStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{80B91956-A949-41E9-BEFF-1D870D9BC004}"
+      DTS:ObjectName="ARTIION.DataTransferStaging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=ARTIION;Initial Catalog=DataTransferStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{E19BF65D-EB46-4252-9D19-85FBDF4FF0D4}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=M:\API\CaseDetails\CaseDetailsAPI.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SQL2008SVR.axxia01]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AC664AE7-A37D-484C-9AEF-D9CBB27BFA58}"
+      DTS:ObjectName="SQL2008SVR.axxia01">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008SVR;Initial Catalog=axxia01;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT_Copy from Excel to Temp Staging Table"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{098697E7-DA4D-4355-B415-49C24749B0F6}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_Copy from Excel to Temp Staging Table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Inputs[Data Conversion Input].Columns[Client]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Client"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[Client]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Inputs[Data Conversion Input].Columns[Matter]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Matter"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[Matter]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[client]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="8"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[client]"
+                      name="client"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[Client]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[matter]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="8"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[matter]"
+                      name="matter"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[Matter]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST_Data Transfer Staging"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[CaseDetailsAPI]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ARTIION.DataTransferStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[ARTIION.DataTransferStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[case_detail_code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="case_detail_code"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_detail_code]"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_detail_code]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[case_text]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="case_text"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_text]"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_text]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[case_value]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="case_value"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_value]"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_value]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[case_date]"
+                      cachedDataType="date"
+                      cachedName="case_date"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_date]"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_date]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[client]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="client"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[Client]"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[client]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[matter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[Matter]"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[matter]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[case_id]"
+                      cachedDataType="i4"
+                      cachedName="case_id"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_id]"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output].Columns[case_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_id]"
+                      dataType="wstr"
+                      length="255"
+                      name="case_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[Client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="Client" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[Matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="Matter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_detail_code]"
+                      dataType="wstr"
+                      length="255"
+                      name="case_detail_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_text]"
+                      dataType="wstr"
+                      length="255"
+                      name="case_text" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_date]"
+                      dataType="dbTimeStamp"
+                      name="case_date" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_value]"
+                      dataType="r8"
+                      name="case_value" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI"
+              componentClassID="{8C084929-27D1-479F-9641-ABB7CDADF1AC}"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="ES_CaseDetailsAPI"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">CaseDetailsAPI$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_id]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_id]"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_id]"
+                      name="case_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[Client]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[Client]"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[Client]"
+                      name="Client"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[Matter]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[Matter]"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[Matter]"
+                      name="Matter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_detail_code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_detail_code]"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_detail_code]"
+                      name="case_detail_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_text]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_text]"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_text]"
+                      name="case_text"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_value]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_value]"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_value]"
+                      name="case_value"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_date]"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_date]"
+                      name="case_date"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_id]"
+                      dataType="r8"
+                      name="case_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[Client]"
+                      dataType="wstr"
+                      length="255"
+                      name="Client" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[Matter]"
+                      dataType="wstr"
+                      length="255"
+                      name="Matter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_detail_code]"
+                      dataType="wstr"
+                      length="255"
+                      name="case_detail_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_text]"
+                      dataType="wstr"
+                      length="255"
+                      name="case_text" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_value]"
+                      dataType="wstr"
+                      length="255"
+                      name="case_value" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_date]"
+                      dataType="date"
+                      name="case_date" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_id]"
+                      dataType="r8"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_id]"
+                      name="case_id" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[Client]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[Client]"
+                      name="Client" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[Matter]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[Matter]"
+                      name="Matter" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_detail_code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_detail_code]"
+                      name="case_detail_code" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_text]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_text]"
+                      name="case_text" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_value]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_value]"
+                      name="case_value" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_date]"
+                      dataType="date"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_date]"
+                      name="case_date" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup Case Id"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[cashdr]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[cashdr]) [refTable]
+where [refTable].[client] = ? and [refTable].[matter] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="case_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="case_public_desc1" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_public_desc2" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_type_code" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="date_opened" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="date_closed" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="notes_mkr" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="client" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="matter" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_private_desc1" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_private_desc2" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="note_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="their_ref" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="plead_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="acting_for" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="stream_rem" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="stream_def" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_grp" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="folder_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[client]};#{Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[matter]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SQL2008SVR.axxia01]"
+                  connectionManagerRefId="Package.ConnectionManagers[SQL2008SVR.axxia01]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Inputs[Lookup Input].Columns[client]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="client"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[client]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">client</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Inputs[Lookup Input].Columns[matter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[matter]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">matter</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output].Columns[case_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output].Columns[case_id]"
+                      name="case_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">case_id</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT_Copy from Excel to Temp Staging Table.Paths[Data Conversion Output]"
+              endId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Inputs[Lookup Input]"
+              name="Data Conversion Output"
+              startId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\DFT_Copy from Excel to Temp Staging Table.Paths[Excel Source Output]"
+              endId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Inputs[Data Conversion Input]"
+              name="Excel Source Output"
+              startId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\DFT_Copy from Excel to Temp Staging Table.Paths[Lookup Match Output]"
+              endId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST_Populate Staging Table for API"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6256781E-9E91-4041-84D9-13F034A434AC}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST_Populate Staging Table for API"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{80B91956-A949-41E9-BEFF-1D870D9BC004}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE collatedata.tbl_AddCaseDetail&#xA;INSERT INTO   collatedata.tbl_AddCaseDetail&#xA;        ( case_id ,&#xA;          seq_no ,&#xA;          case_detail_code ,&#xA;          case_date ,&#xA;          case_mkr ,&#xA;          case_text ,&#xA;          case_value ,&#xA;          cd_parent ,&#xA;          error ,&#xA;          errormsg ,&#xA;          instr_payment_id ,&#xA;          instruction_id ,&#xA;          ForeignKey ,&#xA;          Processed&#xA;        )&#xA;SELECT Data.case_id,&#xA;          0 , -- seq_no - int&#xA;          Data.case_detail_code, -- case_detail_code - char(10)&#xA;          Data.case_date,--- datetime&#xA;          NULL,  -- case_mkr - char(1)&#xA;          RTRIM(LEFT(Data.case_text,60)) as case_text, -- case_text - char(60)&#xA;          Data.case_value, -- case_value - decimal&#xA;          NULL, -- cd_parent - int&#xA;          0 , -- error - int&#xA;          '' , -- errormsg - varchar(2000)&#xA;          0 , -- instr_payment_id - int&#xA;          NULL , -- instruction_id - int&#xA;          NULL, -- ForeignKey - int&#xA;          0 &#xA;FROM [dbo].CaseDetailsAPI AS Data&#xA;INNER JOIN axxia01.dbo.cashdr AS cashdr on Data.case_id = cashdr.case_id" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST_Truncate Data in Temp Staging Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C620B70C-1DCD-4A56-93CA-5E5EB7A82802}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST_Truncate Data in Temp Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{80B91956-A949-41E9-BEFF-1D870D9BC004}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.CaseDetailsAPI" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{EC6C984A-E9F0-4A28-A732-F3B8E1FBD664}"
+      DTS:From="Package\EST_Truncate Data in Temp Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT_Copy from Excel to Temp Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{5C55514E-2931-4B55-A8DA-E14603EE6AB8}"
+      DTS:From="Package\DFT_Copy from Excel to Temp Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\EST_Populate Staging Table for API" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="281,42"
+          Id="Package\EST_Truncate Data in Temp Staging Table"
+          TopLeft="176,79" />
+        <NodeLayout
+          Size="293,42"
+          Id="Package\DFT_Copy from Excel to Temp Staging Table"
+          TopLeft="198.713098338422,175.075638805201" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="316.5,121">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28.7130983384222,54.0756388052008"
+              Start="0,0"
+              End="28.7130983384222,46.5756388052008">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.0378194026004" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.0378194026004"
+                    Point2="0,27.0378194026004"
+                    Point3="4,27.0378194026004" />
+                  <mssgle:LineSegment
+                    End="24.7130983384222,27.0378194026004" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24.7130983384222,27.0378194026004"
+                    Point2="28.7130983384222,27.0378194026004"
+                    Point3="28.7130983384222,31.0378194026004" />
+                  <mssgle:LineSegment
+                    End="28.7130983384222,46.5756388052008" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="249,42"
+          Id="Package\EST_Populate Staging Table for API"
+          TopLeft="225.322289578077,302.013839901147" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="347.517693958249,217.075638805201">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,84.9382010959463"
+              Start="0,0"
+              End="0,77.4382010959463">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,77.4382010959463" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT_Copy from Excel to Temp Staging Table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="169,42"
+          Id="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI"
+          TopLeft="279.136913658484,135.794981587561" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging"
+          TopLeft="270.185175705439,402.649281622528" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion"
+          TopLeft="296.427493905295,223.225008890957" />
+        <EdgeLayout
+          Id="Package\DFT_Copy from Excel to Temp Staging Table.Paths[Excel Source Output]"
+          TopLeft="363.636913658484,177.794981587561">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="11.7905802468114,45.4300273033951"
+              Start="0,0"
+              End="11.7905802468114,37.9300273033951">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.7150136516975" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.7150136516975"
+                    Point2="0,22.7150136516975"
+                    Point3="4,22.7150136516975" />
+                  <mssgle:LineSegment
+                    End="7.79058024681143,22.7150136516975" />
+                  <mssgle:CubicBezierSegment
+                    Point1="7.79058024681143,22.7150136516975"
+                    Point2="11.7905802468114,22.7150136516975"
+                    Point3="11.7905802468114,26.7150136516975" />
+                  <mssgle:LineSegment
+                    End="11.7905802468114,37.9300273033951" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="154,42"
+          Id="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id"
+          TopLeft="283.449070296602,307" />
+        <EdgeLayout
+          Id="Package\DFT_Copy from Excel to Temp Staging Table.Paths[Data Conversion Output]"
+          TopLeft="375.427493905295,265.225008890956">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-14.9784236086932,41.7749911090435"
+              Start="0,0"
+              End="-14.9784236086932,34.2749911090435">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.8874955545218" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.8874955545218"
+                    Point2="0,20.8874955545218"
+                    Point3="-4,20.8874955545218" />
+                  <mssgle:LineSegment
+                    End="-10.9784236086932,20.8874955545218" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-10.9784236086932,20.8874955545218"
+                    Point2="-14.9784236086932,20.8874955545218"
+                    Point3="-14.9784236086932,24.8874955545218" />
+                  <mssgle:LineSegment
+                    End="-14.9784236086932,34.2749911090435" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Copy from Excel to Temp Staging Table.Paths[Lookup Match Output]"
+          TopLeft="360.449070296602,349">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="17.2361054088365,53.6492816225279"
+              Start="0,0"
+              End="17.2361054088365,46.1492816225279">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.8246408112639" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.8246408112639"
+                    Point2="0,26.8246408112639"
+                    Point3="4,26.8246408112639" />
+                  <mssgle:LineSegment
+                    End="13.2361054088365,26.8246408112639" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.2361054088365,26.8246408112639"
+                    Point2="17.2361054088365,26.8246408112639"
+                    Point3="17.2361054088365,30.8246408112639" />
+                  <mssgle:LineSegment
+                    End="17.2361054088365,46.1492816225279" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-39.5733340143317,31.8246408112639,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[cashdr]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
