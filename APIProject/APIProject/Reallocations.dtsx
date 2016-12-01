@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Reallocations"
   DTS:PackageType="5"
-  DTS:VersionBuild="1"
-  DTS:VersionGUID="{33067E4F-B6C8-4EB6-8572-A33FD4A083E7}">
+  DTS:VersionBuild="6"
+  DTS:VersionGUID="{5D09F807-CA30-4A4A-B34A-CC3688E8CEF3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -33,7 +33,7 @@
       DTS:ObjectName="Excel Connection Manager">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\svr-liv-fs-03\Restricted\Management\Information Systems\Teams\Development\Business Intelligence\API\MatterReallocations\MSReallocations.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\svr-liv-fs-03\Restricted\Management\Information Systems\Teams\Development\Business Intelligence\API\MatterReallocations\MSReallocations.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -50,47 +50,13 @@
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\EST_Truncate FEDReallocations"
-      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{51FC31DE-F447-49FD-8709-1CE61E14203D}"
-      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="EST_Truncate FEDReallocations"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{084DB4F8-1D70-4F57-B09C-AD51DF7DAEBD}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE [DataTransferStaging].[dbo].[FEDReallocations]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\EST_Truncate MSReallocations"
-      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{A55CB514-DB28-49E9-BFC7-152333E55523}"
-      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="EST_Truncate MSReallocations"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{F09E2155-2340-477A-963E-463A2EABCE46}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE [MattersphereStaging].[dbo].[MSReallocations]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\Import Data to Staging"
+      DTS:refId="Package\DFT_Import Data to FEDReallocations"
       DTS:CreationName="SSIS.Pipeline.3"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{3212AE94-0951-40EB-A5EB-8C36DFF84797}"
+      DTS:DTSID="{9565BA97-2EC0-4A2F-B7EA-9F9534BCCBE1}"
       DTS:ExecutableType="SSIS.Pipeline.3"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Import Data to Staging"
+      DTS:ObjectName="DFT_Import Data to FEDReallocations"
       DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
       <DTS:Variables />
       <DTS:ObjectData>
@@ -98,7 +64,890 @@
           version="1">
           <components>
             <component
-              refId="Package\Import Data to Staging\Excel Source"
+              refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Get MS Client and Matter Numbers"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT clno,fileno,FEDCode, 
+ CASE WHEN FEDCode is null THEN 
+	(CASE WHEN ISNUMERIC(clno)=1 THEN  RIGHT('00000000' + CONVERT(VARCHAR,clno), 8) ELSE 
+		CAST(RTRIM(clNo) AS VARCHAR(8)) END) 
+	ELSE (CAST(SUBSTRING(RTRIM(FEDCode), 1, CASE WHEN CHARINDEX('-', RTRIM(FEDCode)) &gt; 0 THEN CHARINDEX('-', RTRIM(FEDCode))-1 ELSE LEN(RTRIM(FEDCode)) END) AS CHAR(8))) 
+	END AS Client,
+	CASE WHEN FEDCode is null 
+	THEN RIGHT('00000000' + CONVERT(VARCHAR,fileno), 8) ELSE CAST(RIGHT(RTRIM(FEDCode),LEN(RTRIM(FEDCode))-CHARINDEX('-',RTRIM(FEDCode)))AS CHAR(8))
+	END  AS Matter
+ FROM MS_PROD.config.dbFile
+ INNER JOIN MS_PROD.config.dbClient ON dbFile.clID=dbClient.clID
+ INNER JOIN MS_PROD.dbo.udExtFile ON dbFile.fileID=udExtFile.fileID</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (SELECT clno,fileno,FEDCode, 
+ CASE WHEN FEDCode is null THEN 
+	(CASE WHEN ISNUMERIC(clno)=1 THEN  RIGHT('00000000' + CONVERT(VARCHAR,clno), 8) ELSE 
+		CAST(RTRIM(clNo) AS VARCHAR(8)) END) 
+	ELSE (CAST(SUBSTRING(RTRIM(FEDCode), 1, CASE WHEN CHARINDEX('-', RTRIM(FEDCode)) &gt; 0 THEN CHARINDEX('-', RTRIM(FEDCode))-1 ELSE LEN(RTRIM(FEDCode)) END) AS CHAR(8))) 
+	END AS Client,
+	CASE WHEN FEDCode is null 
+	THEN RIGHT('00000000' + CONVERT(VARCHAR,fileno), 8) ELSE CAST(RIGHT(RTRIM(FEDCode),LEN(RTRIM(FEDCode))-CHARINDEX('-',RTRIM(FEDCode)))AS CHAR(8))
+	END  AS Matter
+ FROM MS_PROD.config.dbFile
+ INNER JOIN MS_PROD.config.dbClient ON dbFile.clID=dbClient.clID
+ INNER JOIN MS_PROD.dbo.udExtFile ON dbFile.fileID=udExtFile.fileID) [refTable]
+where [refTable].[Client] = ? and [refTable].[Matter] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="clno" dataType="DT_WSTR" length="12" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="fileno" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FEDCode" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Client" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Matter" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Client]};#{Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Matter]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-mssq-01.MattersphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-mssq-01.MattersphereStaging]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Inputs[Lookup Input].Columns[FED Client]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="FED Client"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Client]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Client</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Inputs[Lookup Input].Columns[FED Matter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="FED Matter"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Matter]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Matter</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Match Output].Columns[clno]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="12"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Match Output].Columns[clno]"
+                      name="clno"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">clno</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Match Output].Columns[fileno]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="20"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Match Output].Columns[fileno]"
+                      name="fileno"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">fileno</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[FEDReallocations]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[ARTIION.DataTransferStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[ARTIION.DataTransferStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Old Fee Earner]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Old Fee Earner"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Old Fee Earner]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[Old Fee Earner]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Fee Earner]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="New Fee Earner"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Fee Earner]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New Fee Earner]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Case Assistant]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="New Case Assistant"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Case Assistant]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New Case Assistant]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New BCM]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="New BCM"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New BCM]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New BCM]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Partner]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="New Partner"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Partner]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New Partner]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[VolumeFlag]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="VolumeFlag"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VolumeFlag]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[VolumeFlag]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[clno]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clno"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Client]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Match Output].Columns[clno]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[fileno]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="fileno"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Matter]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Match Output].Columns[fileno]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FED Client]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="FED Client"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Client]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Client]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FED Matter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="FED Matter"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Matter]"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Matter]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Client]"
+                      dataType="wstr"
+                      length="255"
+                      name="MS Client" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Matter]"
+                      dataType="wstr"
+                      length="255"
+                      name="MS Matter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="Client" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="Matter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Old Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      name="Old Fee Earner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Fee Earner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Case Assistant]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Case Assistant" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New BCM]"
+                      dataType="wstr"
+                      length="255"
+                      name="New BCM" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Partner]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Partner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VolumeFlag]"
+                      dataType="wstr"
+                      length="255"
+                      name="VolumeFlag" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[MSReallocations]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-mssq-01.MattersphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-mssq-01.MattersphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[MS Client]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MS Client]"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[MS Client]"
+                      name="MS Client"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[MS Matter]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MS Matter]"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[MS Matter]"
+                      name="MS Matter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Client]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FED Client]"
+                      length="8"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Client]"
+                      name="FED Client"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Matter]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FED Matter]"
+                      length="8"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[FED Matter]"
+                      name="FED Matter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[Old Fee Earner]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Old Fee Earner]"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[Old Fee Earner]"
+                      name="Old Fee Earner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New Fee Earner]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New Fee Earner]"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New Fee Earner]"
+                      name="New Fee Earner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New Case Assistant]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New Case Assistant]"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New Case Assistant]"
+                      name="New Case Assistant"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New BCM]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New BCM]"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New BCM]"
+                      name="New BCM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New Partner]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New Partner]"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[New Partner]"
+                      name="New Partner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[VolumeFlag]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[VolumeFlag]"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].Columns[VolumeFlag]"
+                      name="VolumeFlag"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MS Client]"
+                      dataType="wstr"
+                      length="255"
+                      name="MS Client" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MS Matter]"
+                      dataType="wstr"
+                      length="255"
+                      name="MS Matter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FED Client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="FED Client" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FED Matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="FED Matter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Old Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      name="Old Fee Earner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Fee Earner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New Case Assistant]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Case Assistant" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New BCM]"
+                      dataType="wstr"
+                      length="255"
+                      name="New BCM" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New Partner]"
+                      dataType="wstr"
+                      length="255"
+                      name="New Partner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[VolumeFlag]"
+                      dataType="wstr"
+                      length="255"
+                      name="VolumeFlag" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MS Client]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MS Client]"
+                      name="MS Client" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MS Matter]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MS Matter]"
+                      name="MS Matter" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FED Client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FED Client]"
+                      name="FED Client" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FED Matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FED Matter]"
+                      name="FED Matter" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Old Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Old Fee Earner]"
+                      name="Old Fee Earner" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New Fee Earner]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New Fee Earner]"
+                      name="New Fee Earner" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New Case Assistant]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New Case Assistant]"
+                      name="New Case Assistant" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New BCM]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New BCM]"
+                      name="New BCM" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New Partner]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New Partner]"
+                      name="New Partner" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[VolumeFlag]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[VolumeFlag]"
+                      name="VolumeFlag" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT_Import Data to FEDReallocations.Paths[Lookup Match Output]"
+              endId="Package\DFT_Import Data to FEDReallocations\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Import Data to FEDReallocations.Paths[OLE DB Source Output]"
+              endId="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT_Import Data to FEDReallocations\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT_Import Data to MSReallocations"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{3212AE94-0951-40EB-A5EB-8C36DFF84797}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_Import Data to MSReallocations"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_Import Data to MSReallocations\Data Conversion"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT_Import Data to MSReallocations\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Import Data to MSReallocations\Data Conversion.Inputs[Data Conversion Input].Columns[FED Client]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FED Client"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[FED Client]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to MSReallocations\Data Conversion.Inputs[Data Conversion Input].Columns[FED Matter]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FED Matter"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\DFT_Import Data to MSReallocations\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of FED Client]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="8"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of FED Client]"
+                      name="Copy of FED Client"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[FED Client]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of FED Matter]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="8"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of FED Matter]"
+                      name="Copy of FED Matter"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\DFT_Import Data to MSReallocations\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Import Data to MSReallocations\Excel Source"
               componentClassID="{8C084929-27D1-479F-9641-ABB7CDADF1AC}"
               contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
               description="Excel Source"
@@ -139,7 +988,7 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\Import Data to Staging\Excel Source.Connections[OleDbConnection]"
+                  refId="Package\DFT_Import Data to MSReallocations\Excel Source.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
                   connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
                   description="The OLE DB runtime connection used to access the database."
@@ -147,239 +996,239 @@
               </connections>
               <outputs>
                 <output
-                  refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output]"
+                  refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output]"
                   name="Excel Source Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Client]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[MS Client]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Client]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Client]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Client]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[MS Client]"
                       name="MS Client"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Matter]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[MS Matter]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Matter]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Matter]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Matter]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[MS Matter]"
                       name="MS Matter"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Client]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[FED Client]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Client]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Client]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Client]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[FED Client]"
                       name="FED Client"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Matter]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Matter]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]"
                       name="FED Matter"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[Old Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[Old Fee Earner]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[Old Fee Earner]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[Old Fee Earner]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[Old Fee Earner]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[Old Fee Earner]"
                       name="Old Fee Earner"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New Fee Earner]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Fee Earner]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Fee Earner]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Fee Earner]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New Fee Earner]"
                       name="New Fee Earner"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Case Assistant]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New Case Assistant]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Case Assistant]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Case Assistant]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Case Assistant]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New Case Assistant]"
                       name="New Case Assistant"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New BCM]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New BCM]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New BCM]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[New BCM]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New BCM]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New BCM]"
                       name="New BCM"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Partner]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New Partner]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Partner]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Partner]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Partner]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New Partner]"
                       name="New Partner"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[VolumeFlag]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[VolumeFlag]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[VolumeFlag]"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[VolumeFlag]"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[VolumeFlag]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[VolumeFlag]"
                       name="VolumeFlag"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Client]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Client]"
                       dataType="wstr"
                       length="255"
                       name="MS Client" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Matter]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[MS Matter]"
                       dataType="wstr"
                       length="255"
                       name="MS Matter" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Client]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Client]"
                       dataType="wstr"
                       length="255"
                       name="FED Client" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Matter]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[FED Matter]"
                       dataType="wstr"
                       length="255"
                       name="FED Matter" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[Old Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[Old Fee Earner]"
                       dataType="wstr"
                       length="255"
                       name="Old Fee Earner" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Fee Earner]"
                       dataType="wstr"
                       length="255"
                       name="New Fee Earner" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Case Assistant]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Case Assistant]"
                       dataType="wstr"
                       length="255"
                       name="New Case Assistant" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New BCM]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[New BCM]"
                       dataType="wstr"
                       length="255"
                       name="New BCM" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Partner]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[New Partner]"
                       dataType="wstr"
                       length="255"
                       name="New Partner" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].ExternalColumns[VolumeFlag]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].ExternalColumns[VolumeFlag]"
                       dataType="wstr"
                       length="255"
                       name="VolumeFlag" />
                   </externalMetadataColumns>
                 </output>
                 <output
-                  refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output]"
+                  refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output]"
                   isErrorOut="true"
                   name="Excel Source Error Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[MS Client]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[MS Client]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[MS Client]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[MS Client]"
                       name="MS Client" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[MS Matter]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[MS Matter]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[MS Matter]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[MS Matter]"
                       name="MS Matter" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[FED Client]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[FED Client]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[FED Client]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[FED Client]"
                       name="FED Client" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[FED Matter]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[FED Matter]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[FED Matter]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[FED Matter]"
                       name="FED Matter" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[Old Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[Old Fee Earner]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[Old Fee Earner]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[Old Fee Earner]"
                       name="Old Fee Earner" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[New Fee Earner]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Fee Earner]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[New Fee Earner]"
                       name="New Fee Earner" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Case Assistant]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[New Case Assistant]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Case Assistant]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[New Case Assistant]"
                       name="New Case Assistant" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New BCM]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[New BCM]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New BCM]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[New BCM]"
                       name="New BCM" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Partner]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[New Partner]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[New Partner]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[New Partner]"
                       name="New Partner" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[VolumeFlag]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[VolumeFlag]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[VolumeFlag]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[VolumeFlag]"
                       name="VolumeFlag" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      refId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -388,7 +1237,7 @@
               </outputs>
             </component>
             <component
-              refId="Package\Import Data to Staging\OLE DB Destination"
+              refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination"
               componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
@@ -445,7 +1294,7 @@
               </properties>
               <connections>
                 <connection
-                  refId="Package\Import Data to Staging\OLE DB Destination.Connections[OleDbConnection]"
+                  refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[svr-liv-mssq-01.MattersphereStaging]"
                   connectionManagerRefId="Package.ConnectionManagers[svr-liv-mssq-01.MattersphereStaging]"
                   description="The OLE DB runtime connection used to access the database."
@@ -453,132 +1302,136 @@
               </connections>
               <inputs>
                 <input
-                  refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input]"
                   errorOrTruncationOperation="Insert"
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MS Client]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MS Client]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="MS Client"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Client]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Client]" />
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Client]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[MS Client]" />
                     <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MS Matter]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MS Matter]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="MS Matter"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Matter]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[MS Matter]" />
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Matter]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[MS Matter]" />
                     <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FED Client]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="FED Client"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Client]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Client]" />
-                    <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FED Matter]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="FED Matter"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Matter]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[FED Matter]" />
-                    <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Old Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Old Fee Earner]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="Old Fee Earner"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Old Fee Earner]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[Old Fee Earner]" />
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Old Fee Earner]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[Old Fee Earner]" />
                     <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Fee Earner]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="New Fee Earner"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Fee Earner]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Fee Earner]" />
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Fee Earner]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New Fee Earner]" />
                     <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Case Assistant]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Case Assistant]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="New Case Assistant"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Case Assistant]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Case Assistant]" />
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Case Assistant]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New Case Assistant]" />
                     <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New BCM]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New BCM]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="New BCM"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New BCM]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New BCM]" />
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New BCM]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New BCM]" />
                     <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Partner]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New Partner]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="New Partner"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Partner]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[New Partner]" />
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Partner]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[New Partner]" />
                     <inputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[VolumeFlag]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[VolumeFlag]"
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="VolumeFlag"
-                      externalMetadataColumnId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VolumeFlag]"
-                      lineageId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output].Columns[VolumeFlag]" />
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VolumeFlag]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output].Columns[VolumeFlag]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of FED Client]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="Copy of FED Client"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Client]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of FED Client]" />
+                    <inputColumn
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of FED Matter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="Copy of FED Matter"
+                      externalMetadataColumnId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Matter]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of FED Matter]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Client]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Client]"
                       dataType="wstr"
                       length="255"
                       name="MS Client" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Matter]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MS Matter]"
                       dataType="wstr"
                       length="255"
                       name="MS Matter" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Client]"
-                      dataType="wstr"
-                      length="255"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
                       name="FED Client" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Matter]"
-                      dataType="wstr"
-                      length="255"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FED Matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
                       name="FED Matter" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Old Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Old Fee Earner]"
                       dataType="wstr"
                       length="255"
                       name="Old Fee Earner" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Fee Earner]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Fee Earner]"
                       dataType="wstr"
                       length="255"
                       name="New Fee Earner" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Case Assistant]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Case Assistant]"
                       dataType="wstr"
                       length="255"
                       name="New Case Assistant" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New BCM]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New BCM]"
                       dataType="wstr"
                       length="255"
                       name="New BCM" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Partner]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New Partner]"
                       dataType="wstr"
                       length="255"
                       name="New Partner" />
                     <externalMetadataColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VolumeFlag]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VolumeFlag]"
                       dataType="wstr"
                       length="255"
                       name="VolumeFlag" />
@@ -587,22 +1440,22 @@
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  synchronousInputId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      refId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Import Data to Staging\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -613,12 +1466,68 @@
           </components>
           <paths>
             <path
-              refId="Package\Import Data to Staging.Paths[Excel Source Output]"
-              endId="Package\Import Data to Staging\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              refId="Package\DFT_Import Data to MSReallocations.Paths[Data Conversion Output]"
+              endId="Package\DFT_Import Data to MSReallocations\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\DFT_Import Data to MSReallocations\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\DFT_Import Data to MSReallocations.Paths[Excel Source Output]"
+              endId="Package\DFT_Import Data to MSReallocations\Data Conversion.Inputs[Data Conversion Input]"
               name="Excel Source Output"
-              startId="Package\Import Data to Staging\Excel Source.Outputs[Excel Source Output]" />
+              startId="Package\DFT_Import Data to MSReallocations\Excel Source.Outputs[Excel Source Output]" />
           </paths>
         </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST_Insert into MatterReallocation"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B9F97627-C32B-4807-80CC-5DC86DCF75B0}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST_Insert into MatterReallocation"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F09E2155-2340-477A-963E-463A2EABCE46}"
+          SQLTask:SqlStatementSource="INSERT INTO [MattersphereStaging].[dbo].[MatterReallocation]&#xA;           ([clNo]&#xA;           ,[fileNo]&#xA;           ,[FedClient]&#xA;           ,[FEDMatter]&#xA;           ,[PreviousFE]&#xA;           ,[filePrincipleID]&#xA;           ,[NewAssistant]&#xA;           ,[fileResponsibleID]&#xA;           ,[Partner]&#xA;           ,[StatusID]&#xA;           ,[error]&#xA;           ,[errormsg])&#xA;SELECT  COALESCE([MS Client],clno) AS [clNo]&#xA;       ,COALESCE([MS Matter],fileno) AS [fileNo]&#xA;       ,[FED Client] AS [FedClient]&#xA;       ,[FED Matter] AS [FEDMatter]&#xA;       ,[Old Fee Earner] AS [PreviousFE]&#xA;       ,[New Fee Earner] AS [filePrincipleID]&#xA;       ,[New Case Assistant] AS [NewAssistant]&#xA;       ,[New BCM] AS [fileResponsibleID]&#xA;       ,[New Partner] AS [Partner]&#xA;       ,0 AS [StatusID]&#xA;       ,NULL [error]&#xA;       ,NULL [errormsg] &#xA;FROM [dbo].[MSReallocations] AS Reallocations&#xA;INNER JOIN &#xA;(&#xA; SELECT clno,fileno,FEDCode&#xA; FROM MS_PROD.config.dbFile&#xA; INNER JOIN MS_PROD.config.dbClient ON dbFile.clID=dbClient.clID&#xA; INNER JOIN MS_PROD.dbo.udExtFile ON dbFile.fileID=udExtFile.fileID&#xA;) AS MS&#xA; ON RTRIM([FED Client]) + '-' + RTRIM([FED Matter])=FEDCode" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST_Truncate FEDReallocations"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{51FC31DE-F447-49FD-8709-1CE61E14203D}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST_Truncate FEDReallocations"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{084DB4F8-1D70-4F57-B09C-AD51DF7DAEBD}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [DataTransferStaging].[dbo].[FEDReallocations]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST_Truncate MSReallocations"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A55CB514-DB28-49E9-BFC7-152333E55523}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST_Truncate MSReallocations"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F09E2155-2340-477A-963E-463A2EABCE46}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [MattersphereStaging].[dbo].[MSReallocations]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -630,15 +1539,31 @@
       DTS:From="Package\EST_Truncate MSReallocations"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
-      DTS:To="Package\Import Data to Staging" />
+      DTS:To="Package\DFT_Import Data to MSReallocations" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
       DTS:DTSID="{CFE92DD0-EB09-4C8C-92FC-B6DD60219E84}"
-      DTS:From="Package\Import Data to Staging"
+      DTS:From="Package\DFT_Import Data to MSReallocations"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\EST_Truncate FEDReallocations" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{3B50AC5E-04AA-4A8A-B557-5DE6403C8D71}"
+      DTS:From="Package\EST_Truncate FEDReallocations"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\DFT_Import Data to FEDReallocations" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{B2D8ACCF-5C1A-4565-9BB9-B7B7A379AE46}"
+      DTS:From="Package\DFT_Import Data to FEDReallocations"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\EST_Insert into MatterReallocation" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -651,14 +1576,18 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="230,42"
+          Id="Package\EST_Truncate FEDReallocations"
+          TopLeft="287,306" />
         <NodeLayout
           Size="226,42"
           Id="Package\EST_Truncate MSReallocations"
           TopLeft="213,61" />
         <NodeLayout
-          Size="190,42"
-          Id="Package\Import Data to Staging"
+          Size="255,42"
+          Id="Package\DFT_Import Data to MSReallocations"
           TopLeft="303,185" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
@@ -666,9 +1595,9 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="72,82"
+              EndConnector="104.5,82"
               Start="0,0"
-              End="72,74.5">
+              End="104.5,74.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -679,13 +1608,47 @@
                     Point2="0,41"
                     Point3="4,41" />
                   <mssgle:LineSegment
-                    End="68,41" />
+                    End="100.5,41" />
                   <mssgle:CubicBezierSegment
-                    Point1="68,41"
-                    Point2="72,41"
-                    Point3="72,45" />
+                    Point1="100.5,41"
+                    Point2="104.5,41"
+                    Point3="104.5,45" />
                   <mssgle:LineSegment
-                    End="72,74.5" />
+                    End="104.5,74.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="430.5,227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-28.5,79"
+              Start="0,0"
+              End="-28.5,71.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35.5"
+                    Point2="0,39.5"
+                    Point3="-4,39.5" />
+                  <mssgle:LineSegment
+                    End="-24.5,39.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-24.5,39.5"
+                    Point2="-28.5,39.5"
+                    Point3="-28.5,43.5" />
+                  <mssgle:LineSegment
+                    End="-28.5,71.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -695,23 +1658,73 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="230,42"
-          Id="Package\EST_Truncate FEDReallocations"
-          TopLeft="287,306" />
+          Size="260,42"
+          Id="Package\DFT_Import Data to FEDReallocations"
+          TopLeft="294,432" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="400,227">
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="402,348">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,79"
+              EndConnector="22,84"
               Start="0,0"
-              End="0,71.5">
+              End="22,76.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,71.5" />
+                    End="0,38" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38"
+                    Point2="0,42"
+                    Point3="4,42" />
+                  <mssgle:LineSegment
+                    End="18,42" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18,42"
+                    Point2="22,42"
+                    Point3="22,46" />
+                  <mssgle:LineSegment
+                    End="22,76.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="244,42"
+          Id="Package\EST_Insert into MatterReallocation"
+          TopLeft="331,547" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="424,474">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-10.5,73"
+              Start="0,0"
+              End="-10.5,65.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.5"
+                    Point2="0,36.5"
+                    Point3="-4,36.5" />
+                  <mssgle:LineSegment
+                    End="-6.5,36.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-6.5,36.5"
+                    Point2="-10.5,36.5"
+                    Point3="-10.5,40.5" />
+                  <mssgle:LineSegment
+                    End="-10.5,65.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -724,44 +1737,82 @@
     </LayoutInfo>
   </Package>
   <TaskHost
-    design-time-name="Package\Import Data to Staging">
+    design-time-name="Package\DFT_Import Data to MSReallocations">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="141,42"
-          Id="Package\Import Data to Staging\Excel Source"
-          TopLeft="178,116" />
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="173,42"
-          Id="Package\Import Data to Staging\OLE DB Destination"
-          TopLeft="246,276" />
+          Id="Package\DFT_Import Data to MSReallocations\OLE DB Destination"
+          TopLeft="204.134942871993,413.405343187948" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\DFT_Import Data to MSReallocations\Excel Source"
+          TopLeft="178,116" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\DFT_Import Data to MSReallocations\Data Conversion"
+          TopLeft="228.297430470425,229.947621605537" />
         <EdgeLayout
-          Id="Package\Import Data to Staging.Paths[Excel Source Output]"
+          Id="Package\DFT_Import Data to MSReallocations.Paths[Excel Source Output]"
           TopLeft="248.5,158">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="84,118"
+              EndConnector="58.7974304704248,71.947621605537"
               Start="0,0"
-              End="84,110.5">
+              End="58.7974304704248,64.447621605537">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,55" />
+                    End="0,31.9738108027685" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,55"
-                    Point2="0,59"
-                    Point3="4,59" />
+                    Point1="0,31.9738108027685"
+                    Point2="0,35.9738108027685"
+                    Point3="4,35.9738108027685" />
                   <mssgle:LineSegment
-                    End="80,59" />
+                    End="54.7974304704248,35.9738108027685" />
                   <mssgle:CubicBezierSegment
-                    Point1="80,59"
-                    Point2="84,59"
-                    Point3="84,63" />
+                    Point1="54.7974304704248,35.9738108027685"
+                    Point2="58.7974304704248,35.9738108027685"
+                    Point3="58.7974304704248,39.9738108027685" />
                   <mssgle:LineSegment
-                    End="84,110.5" />
+                    End="58.7974304704248,64.447621605537" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Import Data to MSReallocations.Paths[Data Conversion Output]"
+          TopLeft="307.297430470425,271.947621605537">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-16.6624875984316,141.457721582411"
+              Start="0,0"
+              End="-16.6624875984316,133.957721582411">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.7288607912054" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,66.7288607912054"
+                    Point2="0,70.7288607912054"
+                    Point3="-4,70.7288607912054" />
+                  <mssgle:LineSegment
+                    End="-12.6624875984316,70.7288607912054" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.6624875984316,70.7288607912054"
+                    Point2="-16.6624875984316,70.7288607912054"
+                    Point3="-16.6624875984316,74.7288607912054" />
+                  <mssgle:LineSegment
+                    End="-16.6624875984316,133.957721582411" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -774,7 +1825,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Import Data to Staging\Excel Source">
+    design-time-name="Package\DFT_Import Data to MSReallocations\Excel Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -787,7 +1838,134 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Import Data to Staging\OLE DB Destination">
+    design-time-name="Package\DFT_Import Data to MSReallocations\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT_Import Data to FEDReallocations">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="152,42"
+          Id="Package\DFT_Import Data to FEDReallocations\OLE DB Source"
+          TopLeft="250,101" />
+        <NodeLayout
+          Size="245,42"
+          Id="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers"
+          TopLeft="262.888324473765,203.918395222013" />
+        <EdgeLayout
+          Id="Package\DFT_Import Data to FEDReallocations.Paths[OLE DB Source Output]"
+          TopLeft="326,143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="59.3883244737652,60.918395222013"
+              Start="0,0"
+              End="59.3883244737652,53.418395222013">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.4591976110065" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.4591976110065"
+                    Point2="0,30.4591976110065"
+                    Point3="4,30.4591976110065" />
+                  <mssgle:LineSegment
+                    End="55.3883244737652,30.4591976110065" />
+                  <mssgle:CubicBezierSegment
+                    Point1="55.3883244737652,30.4591976110065"
+                    Point2="59.3883244737652,30.4591976110065"
+                    Point3="59.3883244737652,34.4591976110065" />
+                  <mssgle:LineSegment
+                    End="59.3883244737652,53.418395222013" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="173,42"
+          Id="Package\DFT_Import Data to FEDReallocations\OLE DB Destination"
+          TopLeft="303,352" />
+        <EdgeLayout
+          Id="Package\DFT_Import Data to FEDReallocations.Paths[Lookup Match Output]"
+          TopLeft="387.444162236883,245.918395222013">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,106.081604777987"
+              Start="0,0"
+              End="0,98.581604777987">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,98.581604777987" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,43.4861148889935,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Import Data to FEDReallocations\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Import Data to FEDReallocations\Get MS Client and Matter Numbers">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Import Data to FEDReallocations\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
