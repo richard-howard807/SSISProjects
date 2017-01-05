@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="CaseDetails"
   DTS:PackageType="5"
-  DTS:VersionBuild="8"
-  DTS:VersionGUID="{76F91847-AFB7-4C52-81C3-D9A5E72CB3A4}">
+  DTS:VersionBuild="10"
+  DTS:VersionGUID="{DC7FF286-3DBA-4AA7-88BF-86D1A78C6510}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -257,8 +257,7 @@
                       lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_text]" />
                     <inputColumn
                       refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[case_value]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
+                      cachedDataType="r8"
                       cachedName="case_value"
                       externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_value]"
                       lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_value]" />
@@ -285,11 +284,11 @@
                       externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[Matter]"
                       lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Data Conversion.Outputs[Data Conversion Output].Columns[matter]" />
                     <inputColumn
-                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[case_id]"
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].Columns[DC_case_id]"
                       cachedDataType="i4"
-                      cachedName="case_id"
+                      cachedName="DC_case_id"
                       externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\DEST_Data Transfer Staging.Inputs[OLE DB Destination Input].ExternalColumns[case_id]"
-                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output].Columns[case_id]" />
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output].Columns[DC_case_id]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -461,11 +460,10 @@
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_value]"
-                      dataType="wstr"
+                      dataType="r8"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_value]"
-                      length="255"
                       lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].Columns[case_value]"
                       name="case_value"
                       truncationRowDisposition="FailComponent" />
@@ -508,8 +506,7 @@
                       name="case_text" />
                     <externalMetadataColumn
                       refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_value]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="r8"
                       name="case_value" />
                     <externalMetadataColumn
                       refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Output].ExternalColumns[case_date]"
@@ -554,8 +551,7 @@
                       name="case_text" />
                     <outputColumn
                       refId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_value]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="r8"
                       lineageId="Package\DFT_Copy from Excel to Temp Staging Table\ES_CaseDetailsAPI.Outputs[Excel Source Error Output].Columns[case_value]"
                       name="case_value" />
                     <outputColumn
@@ -594,13 +590,15 @@
                   description="Specifies the SQL statement that generates the lookup table."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[cashdr]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT case_id, client, matter
+  FROM axxia01.dbo.cashdr</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[cashdr]) [refTable]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (SELECT case_id, client, matter
+  FROM axxia01.dbo.cashdr) [refTable]
 where [refTable].[client] = ? and [refTable].[matter] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -632,7 +630,7 @@ where [refTable].[client] = ? and [refTable].[matter] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="case_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="case_public_desc1" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_public_desc2" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_type_code" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="date_opened" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="date_closed" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="notes_mkr" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="client" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="matter" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_private_desc1" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_private_desc2" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="note_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="their_ref" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="plead_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="acting_for" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="stream_rem" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="stream_def" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_grp" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="folder_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="case_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="client" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="matter" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -710,11 +708,11 @@ where [refTable].[client] = ? and [refTable].[matter] = ?</property>
                   synchronousInputId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Inputs[Lookup Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output].Columns[case_id]"
+                      refId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output].Columns[DC_case_id]"
                       dataType="i4"
                       errorOrTruncationOperation="Copy Column"
-                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output].Columns[case_id]"
-                      name="case_id"
+                      lineageId="Package\DFT_Copy from Excel to Temp Staging Table\Lookup Case Id.Outputs[Lookup Match Output].Columns[DC_case_id]"
+                      name="DC_case_id"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
@@ -1066,17 +1064,17 @@ where [refTable].[client] = ? and [refTable].[matter] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[cashdr]</Value>
+          type="q3:string"></Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
