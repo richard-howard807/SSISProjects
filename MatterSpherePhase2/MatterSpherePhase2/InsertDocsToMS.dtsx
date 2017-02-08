@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="InsertDocsToMS"
   DTS:PackageType="5"
-  DTS:VersionBuild="95"
-  DTS:VersionGUID="{94166AE4-6A24-407B-9AE8-BBB2EDC83D6A}">
+  DTS:VersionBuild="96"
+  DTS:VersionGUID="{9B032501-62AA-4318-AC58-F867792209E5}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -76,7 +76,7 @@
         DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=svr-liv-msp-01;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -567,7 +567,13 @@
 	,MSFileID AS [fileID] 
 	,dbAssociates.[assocID] 
 	,1 AS [docbrID]
-	,'SHELL' AS [docType] 
+	,CASE WHEN DocumentExtension = 'msg' THEN 'EMAIL'
+WHEN DocumentExtension = 'docx'  THEN 'DOCUMENT'
+WHEN  DocumentExtension = 'doc'  THEN 'DOCUMENT'
+WHEN  DocumentExtension = 'xls'  THEN 'SPREADSHEET'
+WHEN  DocumentExtension = 'xlsx'  THEN 'SPREADSHEET'
+WHEN  DocumentExtension = 'pdf'  THEN 'PDF'
+ELSE 'SHELL' END AS [docType] 
 	,NULL AS [docprecID]
 	,NULL AS [docbaseprecID] 
 	,NULL AS [docChecksum] 
@@ -582,7 +588,7 @@
 	,0 AS [docArchived] 
 	,0 AS [docArchiveLocation] 
 	,NULL AS [docArchiveDirID]
-	,appID AS [docAppID]
+	,typeDefaultApp AS [docAppID]
 	,NULL AS [docPasswordHint] 
 	,DocumentExtension AS [docExtension]
 	,CreationDate AS [docAuthored] 
@@ -610,8 +616,14 @@
  FROM DocumentStage
  LEFT OUTER JOIN dbo.Documentassociates as dbAssociates  ON DocumentStage.MSFileID=dbAssociates.fileID 
  AND assocOrder=0
- LEFT OUTER JOIN (SELECT appCode,appID FROM dbo.DocumentApplication WHERE appCode='SHELL') AS Applications
-  ON appcode='SHELL'
+ LEFT OUTER JOIN MS_Prod.dbo.dbDocumentType  AS docType
+  ON (CASE WHEN DocumentExtension = 'msg' THEN 'EMAIL'
+WHEN DocumentExtension = 'docx'  THEN 'DOCUMENT'
+WHEN  DocumentExtension = 'doc'  THEN 'DOCUMENT'
+WHEN  DocumentExtension = 'xls'  THEN 'SPREADSHEET'
+WHEN  DocumentExtension = 'xlsx'  THEN 'SPREADSHEET'
+WHEN  DocumentExtension = 'pdf'  THEN 'PDF'
+ELSE 'SHELL' END)=docType.typeCode
  WHERE StatusID  IN(8,11) AND IsCurrent='Y'</property>
                     <property
                       dataType="System.String"
@@ -1075,7 +1087,7 @@
                           refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Output].ExternalColumns[docType]"
                           codePage="1252"
                           dataType="str"
-                          length="5"
+                          length="11"
                           name="docType" />
                         <externalMetadataColumn
                           refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Output].ExternalColumns[docprecID]"
@@ -1270,7 +1282,7 @@
                           refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Error Output].Columns[docType]"
                           codePage="1252"
                           dataType="str"
-                          length="5"
+                          length="11"
                           lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Error Output].Columns[docType]"
                           name="docType" />
                         <outputColumn
