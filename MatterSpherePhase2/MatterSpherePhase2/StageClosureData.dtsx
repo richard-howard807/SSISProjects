@@ -1,0 +1,2186 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2016 5:34:25 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\DAbram"
+  DTS:DTSID="{9D63EE30-3B55-4665-BEAE-338D2BFA0BED}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="StageClosureData"
+  DTS:PackageType="5"
+  DTS:VersionBuild="91"
+  DTS:VersionGUID="{ED8B823E-AE30-4004-86B6-A5EF55101387}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{FCFE2D59-A921-49A0-9C08-5C5F2250E254}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_axxia01]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{218FEDDD-B0E1-43C5-965F-D69CE7C321A9}"
+      DTS:ObjectName="CM_axxia01">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_axxia01]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=axxia01;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C0070D3A-E97E-4042-ABB1-778A47D323BD}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EDBB2488-2045-46E0-9F7A-EBF184034BAF}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MS_Prod;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C099775E-15D4-47CA-9152-6E7D9C7A9FDF}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{D0C5E8EB-8527-4B95-A49C-3E42BCC0EEA1}"
+      DTS:ObjectName="ParentAuditID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::AuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{7DB7A723-88BF-4F9A-8B73-BAB7572E6DAA}"
+      DTS:ObjectName="AuditID" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{98DD4582-4F30-4CA4-A212-AB41F3D15610}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{14B250C6-14E4-479D-80E0-F5441ECE8E5B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9E53EAE5-C528-4AC4-81D5-8CF1372D696F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D9F77544-20AF-40B5-A396-05A00284997A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AA7974DA-3553-4314-9E3C-94687313BB31}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B03760F9-8108-41DE-A199-1321C74DD66F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7AD101D3-AAC7-4E71-AE56-C340E8A0FEC3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3442A3B8-0CB2-4AE8-ACE2-32FA57AFBF12}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{261AC684-EDC9-4D00-8D2C-09036A94CF39}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{39D8D473-21C6-40A2-B8A1-379C02832DCE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F30CD910-D0F3-4088-92EC-5599155A2625}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{67E8423F-3982-46CD-87CA-C1640F8074EA}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - GetStageData"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{FC4831AC-DB0A-456F-8AB5-768D4ED64F5F}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - GetStageData"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - GetStageData.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{AAA02924-3EB7-4B15-B475-93773934967D}"
+          DTS:EventID="234406780"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{630CA5AD-DB35-4532-AF57-F9F7FD95CB5F}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - GetStageData.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:Disabled="True"
+              DTS:DTSID="{C0E76D24-E43B-4CC6-BF99-E19DED82C1A6}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{FCFE2D59-A921-49A0-9C08-5C5F2250E254}"
+                  SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERRORCODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERRORDESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@AuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - GetStageData.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{48179BA0-EF5E-4DCB-992C-B56E49990DDD}"
+          DTS:EventID="633920316"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{9182180B-423E-4746-9011-3A474D8D63E4}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - GetStageData.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{46846314-D436-4188-95FB-3010D1CE497E}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{FCFE2D59-A921-49A0-9C08-5C5F2250E254}"
+                  SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCountInserts"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountUpdates"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - GetStageData.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{0D836417-21A4-402B-9855-F806F183F419}"
+          DTS:EventID="633922188"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{BE5D40C7-2C8C-4C45-B4A5-C0F61A967B3F}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - GetStageData.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{F7A847DE-0A6D-4F7A-8000-177824DEE68C}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{FCFE2D59-A921-49A0-9C08-5C5F2250E254}"
+                  SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - GetStageData\Data Conversion"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - GetStageData\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\DFT - GetStageData\Data Conversion.Inputs[Data Conversion Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\DFT - GetStageData\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetStageData\Derived Column"
+              componentClassID="{49928E82-9C4E-49F0-AABE-3812B82707EC}"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - GetStageData\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetStageData\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DFT - GetStageData\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-Status]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT - GetStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-Status]"
+                      name="DCT-Status"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">0</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - GetStageData\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DFT - GetStageData\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetStageData\DEST_MatterSphereStaging"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST_MatterSphereStaging"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[MSPhaseTwoMattersToClose]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[case_id]"
+                      cachedDataType="i4"
+                      cachedName="case_id"
+                      externalMetadataColumnId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[case_id]"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[case_id]" />
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[fileID]"
+                      cachedDataType="i8"
+                      cachedName="fileID"
+                      externalMetadataColumnId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FileID]"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[fileID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[client]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="client"
+                      externalMetadataColumnId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[client]"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[client]" />
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[matter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter"
+                      externalMetadataColumnId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[matter]"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[matter]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[case_id]"
+                      dataType="i4"
+                      name="case_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="client" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="matter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FileID]"
+                      dataType="i8"
+                      name="FileID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetStageData\Merge Join"
+              componentClassID="{14D43A4F-D7BD-489D-829E-6DE35750CFE4}"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input].Columns[FEDCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="17"
+                      cachedName="FEDCode"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[FEDCode]" />
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input].Columns[case_id]"
+                      cachedDataType="i4"
+                      cachedName="case_id"
+                      lineageId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[case_id]" />
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input].Columns[client]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="client"
+                      lineageId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[client]" />
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input].Columns[matter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter"
+                      lineageId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[matter]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input].Columns[FEDCode]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FEDCode"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[FEDCode]" />
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      lineageId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[clNo]" />
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input].Columns[fileNo]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="fileNo"
+                      lineageId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[fileNo]" />
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input].Columns[fileID]"
+                      cachedDataType="i8"
+                      cachedName="fileID"
+                      lineageId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[fileID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[FEDCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="17"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[FEDCode]"
+                      name="FEDCode"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input].Columns[FEDCode]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[case_id]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[case_id]"
+                      name="case_id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input].Columns[case_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[clNo]"
+                      name="clNo">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input].Columns[clNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[fileNo]"
+                      name="fileNo">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input].Columns[fileNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[fileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[fileID]"
+                      name="fileID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input].Columns[fileID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[client]"
+                      name="client">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input].Columns[client]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output].Columns[matter]"
+                      name="matter">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input].Columns[matter]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetStageData\Row Count"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - GetStageData\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetStageData\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - GetStageData\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetStageData\SRC_axxia01"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_axxia01"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT case_id AS case_id
+,client as client
+,matter as matter
+      ,RTRIM(cashdr.client) + '-' + RTRIM(cashdr.matter) AS FEDCode
+FROM DataTransferStaging.dbo.MSPhaseTwoMatters as cashdr</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - GetStageData\SRC_axxia01.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_axxia01]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_axxia01]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      length="17"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      name="FEDCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[case_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[case_id]"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[case_id]"
+                      name="case_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[client]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[client]"
+                      length="8"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[client]"
+                      name="client"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[matter]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[matter]"
+                      length="8"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[matter]"
+                      name="matter"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="17"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[case_id]"
+                      dataType="i4"
+                      name="case_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="client" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="matter" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="17"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      name="FEDCode" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[client]"
+                      name="client" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[matter]"
+                      name="matter" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[case_id]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[case_id]"
+                      name="case_id" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetStageData\SRT - Axxia01"
+              componentClassID="{5B1A3FF5-D366-4D75-AD1F-F19A36FCBEDB}"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="SRT - Axxia01"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - GetStageData\SRT - Axxia01.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\SRT - Axxia01.Inputs[Sort Input].Columns[FEDCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="17"
+                      cachedName="FEDCode"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[FEDCode]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\SRT - Axxia01.Inputs[Sort Input].Columns[case_id]"
+                      cachedDataType="i4"
+                      cachedName="case_id"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[case_id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\SRT - Axxia01.Inputs[Sort Input].Columns[client]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="client"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[client]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\SRT - Axxia01.Inputs[Sort Input].Columns[matter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter"
+                      lineageId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[matter]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[FEDCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="17"
+                      lineageId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[FEDCode]"
+                      name="FEDCode"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[FEDCode]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[case_id]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[case_id]"
+                      name="case_id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[case_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[client]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[client]"
+                      name="client">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[client]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[matter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output].Columns[matter]"
+                      name="matter">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[matter]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetStageData\SRT - MS"
+              componentClassID="{5B1A3FF5-D366-4D75-AD1F-F19A36FCBEDB}"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="SRT - MS"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - GetStageData\SRT - MS.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\SRT - MS.Inputs[Sort Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[clNo]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\SRT - MS.Inputs[Sort Input].Columns[fileNo]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="fileNo"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[fileNo]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\SRT - MS.Inputs[Sort Input].Columns[FEDCode]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FEDCode"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[FEDCode]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - GetStageData\SRT - MS.Inputs[Sort Input].Columns[fileID]"
+                      cachedDataType="i8"
+                      cachedName="fileID"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[fileID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[clNo]"
+                      name="clNo">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[clNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[fileNo]"
+                      name="fileNo">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[fileNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[FEDCode]"
+                      name="FEDCode"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[FEDCode]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[fileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output].Columns[fileID]"
+                      name="fileID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[fileID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetStageData\SRV_MS"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRV_MS"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT  clNo ,
+        fileNo ,
+        FEDCode ,
+        dbFile.fileID
+FROM    config.dbFile
+        INNER JOIN config.dbClient ON dbFile.clID = dbClient.clID
+        INNER JOIN dbo.udExtFile ON dbFile.fileID = udExtFile.fileID;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - GetStageData\SRV_MS.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Mattersphere]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Mattersphere]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[clNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      length="12"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[clNo]"
+                      name="clNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      length="20"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      name="fileNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      length="50"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      name="FEDCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[fileID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].Columns[fileID]"
+                      name="fileID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
+                      dataType="i8"
+                      name="fileID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      name="clNo" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      name="fileNo" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      name="FEDCode" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[fileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[fileID]"
+                      name="fileID" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - GetStageData.Paths[Data Conversion Output]"
+              endId="Package\DFT - GetStageData\Derived Column.Inputs[Derived Column Input]"
+              name="Data Conversion Output"
+              startId="Package\DFT - GetStageData\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\DFT - GetStageData.Paths[Derived Column Output]"
+              endId="Package\DFT - GetStageData\Row Count.Inputs[Row Count Input 1]"
+              name="Derived Column Output"
+              startId="Package\DFT - GetStageData\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DFT - GetStageData.Paths[Merge Join Output]"
+              endId="Package\DFT - GetStageData\Data Conversion.Inputs[Data Conversion Input]"
+              name="Merge Join Output"
+              startId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\DFT - GetStageData.Paths[OLE DB Source Output]"
+              endId="Package\DFT - GetStageData\SRT - Axxia01.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - GetStageData\SRC_axxia01.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - GetStageData.Paths[OLE DB Source Output1]"
+              endId="Package\DFT - GetStageData\SRT - MS.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - GetStageData\SRV_MS.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - GetStageData.Paths[Row Count Output 1]"
+              endId="Package\DFT - GetStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - GetStageData\Row Count.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - GetStageData.Paths[Sort Output]"
+              endId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output]" />
+            <path
+              refId="Package\DFT - GetStageData.Paths[Sort Output1]"
+              endId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{89527648-901B-41F9-802D-03FFEB159650}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{4B728507-64B1-452E-B031-30991155D62D}"
+      DTS:EventID="234406780"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{0C7C52B9-7365-42DB-A7C8-CE9419EB3D1E}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{D024BFF4-9845-476D-A3CD-54106ED4899A}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FCFE2D59-A921-49A0-9C08-5C5F2250E254}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="175,42"
+          Id="Package\DFT - GetStageData"
+          TopLeft="233.05703958826,218.564942805792" />
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="NaN,NaN" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT - GetStageData">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="120,42"
+          Id="Package\DFT - GetStageData\SRV_MS"
+          TopLeft="1198.24219871986,287.62414891263" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\DFT - GetStageData\SRC_axxia01"
+          TopLeft="820.915664033154,180.972450877016" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\DFT - GetStageData\Derived Column"
+          TopLeft="1018.94831192796,635.22866993532" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - GetStageData\Merge Join"
+          TopLeft="1050,445.714285714286" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - GetStageData\Row Count"
+          TopLeft="993.592141485078,705.644830751142" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\DFT - GetStageData\SRT - Axxia01"
+          TopLeft="779.777447651879,299.773841795891" />
+        <NodeLayout
+          Size="124,42"
+          Id="Package\DFT - GetStageData\SRT - MS"
+          TopLeft="1171.98511143766,373.156474447156" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\DFT - GetStageData\DEST_MatterSphereStaging"
+          TopLeft="998.948311927956,783.228669935319" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\DFT - GetStageData\Data Conversion"
+          TopLeft="990.709032838678,553.980859765916" />
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[Sort Output1]"
+          TopLeft="1233.98511143766,415.156474447156">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-97.3184447709932,30.5578112671298"
+              Start="0,0"
+              End="-97.3184447709932,23.0578112671298">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.1151096733284" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.1151096733284"
+                    Point2="0,18.1151096733284"
+                    Point3="-4,18.1151096733284" />
+                  <mssgle:LineSegment
+                    End="-93.3184447709932,18.1151096733284" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-93.3184447709932,18.1151096733284"
+                    Point2="-97.3184447709932,18.1151096733284"
+                    Point3="-97.3184447709932,22.1151096733284" />
+                  <mssgle:LineSegment
+                    End="-97.3184447709932,23.0578112671298" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[Sort Output]"
+          TopLeft="853.277447651879,341.773841795891">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="262.722552348121,103.940443918395"
+              Start="0,0"
+              End="262.722552348121,96.4404439183947">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.9702219591974" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,47.9702219591974"
+                    Point2="0,51.9702219591974"
+                    Point3="4,51.9702219591974" />
+                  <mssgle:LineSegment
+                    End="258.722552348121,51.9702219591974" />
+                  <mssgle:CubicBezierSegment
+                    Point1="258.722552348121,51.9702219591974"
+                    Point2="262.722552348121,51.9702219591974"
+                    Point3="262.722552348121,55.9702219591974" />
+                  <mssgle:LineSegment
+                    End="262.722552348121,96.4404439183947" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[Row Count Output 1]"
+          TopLeft="1059.59214148508,747.644830751142">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="44.8561704428782,35.5838391841775"
+              Start="0,0"
+              End="44.8561704428782,28.0838391841775">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.7919195920887" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.7919195920887"
+                    Point2="0,17.7919195920887"
+                    Point3="4,17.7919195920887" />
+                  <mssgle:LineSegment
+                    End="40.8561704428782,17.7919195920887" />
+                  <mssgle:CubicBezierSegment
+                    Point1="40.8561704428782,17.7919195920887"
+                    Point2="44.8561704428782,17.7919195920887"
+                    Point3="44.8561704428782,21.7919195920887" />
+                  <mssgle:LineSegment
+                    End="44.8561704428782,28.0838391841775" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[OLE DB Source Output1]"
+          TopLeft="1258.24219871986,329.62414891263">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-24.2570872822007,43.5323255345256"
+              Start="0,0"
+              End="-24.2570872822007,36.0323255345256">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.7661627672628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.7661627672628"
+                    Point2="0,21.7661627672628"
+                    Point3="-4,21.7661627672628" />
+                  <mssgle:LineSegment
+                    End="-20.2570872822007,21.7661627672628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-20.2570872822007,21.7661627672628"
+                    Point2="-24.2570872822007,21.7661627672628"
+                    Point3="-24.2570872822007,25.7661627672628" />
+                  <mssgle:LineSegment
+                    End="-24.2570872822007,36.0323255345256" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[OLE DB Source Output]"
+          TopLeft="891.915664033154,222.972450877016">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-38.638216381275,76.801390918875"
+              Start="0,0"
+              End="-38.638216381275,69.301390918875">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.4006954594375" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.4006954594375"
+                    Point2="0,38.4006954594375"
+                    Point3="-4,38.4006954594375" />
+                  <mssgle:LineSegment
+                    End="-34.638216381275,38.4006954594375" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-34.638216381275,38.4006954594375"
+                    Point2="-38.638216381275,38.4006954594375"
+                    Point3="-38.638216381275,42.4006954594375" />
+                  <mssgle:LineSegment
+                    End="-38.638216381275,69.301390918875" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[Merge Join Output]"
+          TopLeft="1116,487.714285714286">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-46.290967161322,66.2665740516302"
+              Start="0,0"
+              End="-46.290967161322,58.7665740516302">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.1332870258151" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.1332870258151"
+                    Point2="0,33.1332870258151"
+                    Point3="-4,33.1332870258151" />
+                  <mssgle:LineSegment
+                    End="-42.290967161322,33.1332870258151" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-42.290967161322,33.1332870258151"
+                    Point2="-46.290967161322,33.1332870258151"
+                    Point3="-46.290967161322,37.1332870258151" />
+                  <mssgle:LineSegment
+                    End="-46.290967161322,58.7665740516302" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[Derived Column Output]"
+          TopLeft="1096.94831192796,677.228669935319">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-37.3561704428782,28.4161608158224"
+              Start="0,0"
+              End="-37.3561704428782,20.9161608158224">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.2080804079113" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.2080804079113"
+                    Point2="0,14.2080804079113"
+                    Point3="-4,14.2080804079113" />
+                  <mssgle:LineSegment
+                    End="-33.3561704428782,14.2080804079113" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.3561704428782,14.2080804079113"
+                    Point2="-37.3561704428782,14.2080804079113"
+                    Point3="-37.3561704428782,18.2080804079113" />
+                  <mssgle:LineSegment
+                    End="-37.3561704428782,20.9161608158224" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[Data Conversion Output]"
+          TopLeft="1069.70903283868,595.980859765916">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="27.2392790892778,39.2478101694031"
+              Start="0,0"
+              End="27.2392790892778,31.7478101694031">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.6239050847015" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.6239050847015"
+                    Point2="0,19.6239050847015"
+                    Point3="4,19.6239050847015" />
+                  <mssgle:LineSegment
+                    End="23.2392790892778,19.6239050847015" />
+                  <mssgle:CubicBezierSegment
+                    Point1="23.2392790892778,19.6239050847015"
+                    Point2="27.2392790892778,19.6239050847015"
+                    Point3="27.2392790892778,23.6239050847015" />
+                  <mssgle:LineSegment
+                    End="27.2392790892778,31.7478101694031" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="This select takes all matters that have been converted and looks up the file ID to insert into new Detail in FED"
+          ParentId="Package\DFT - GetStageData"
+          FontInfo="{assembly:Null}"
+          Size="606,42"
+          Id="7cb103bb-6e9f-4a1c-aba5-8a2f8fe81b33"
+          TopLeft="341.767063082592,109.973781585537" />
+        <AnnotationLayout
+          Text="Selects the parts of the data that are MatterSphere specific"
+          ParentId="Package\DFT - GetStageData"
+          FontInfo="{assembly:Null}"
+          Size="341,42"
+          Id="aa5a15a6-2017-4bac-8e8e-2a8213e5f879"
+          TopLeft="1111.42857142857,214.571428571429" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - GetStageData.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - GetStageData.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - GetStageData.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - GetStageData.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - GetStageData.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - GetStageData.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - GetStageData\SRV_MS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - GetStageData\SRC_axxia01">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - GetStageData\DEST_MatterSphereStaging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
