@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageDocumentData"
   DTS:PackageType="5"
-  DTS:VersionBuild="118"
-  DTS:VersionGUID="{03A3251D-59B6-4BEA-8F4E-E8E58D7A82CF}">
+  DTS:VersionBuild="119"
+  DTS:VersionGUID="{36655C21-60C4-442A-8ECE-55D5C3CAB3F9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1187,7 +1187,7 @@
                     <inputColumn
                       refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT - DocumentLocation]"
                       cachedDataType="wstr"
-                      cachedLength="255"
+                      cachedLength="25"
                       cachedName="DCT - DocumentLocation"
                       externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentLocation]"
                       lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DocumentLocation]" />
@@ -2038,7 +2038,9 @@
         Docs.title AS [DocumentTitle] ,
         casact.activity_desc AS [AlternateDocDescription] ,
         Docs.document_no AS [DocumentNumber] ,
-        LOWER(COALESCE(wp_extension, Docs.wp_code)) AS [DocumentExtension] ,
+         RTRIM(LOWER(COALESCE(CASE WHEN wpdefn.wp_code = 'WORD' THEN 'doc' ELSE wp_extension END,
+                                                              Docs.wp_code)))  AS [DocumentExtension] ,
+		
         'Converted Documents' AS [DocWallet] ,
         1 AS [DocDirection] ,
         mg_feearn AS [Author] ,
