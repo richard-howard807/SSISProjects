@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="EquitracExport"
   DTS:PackageType="5"
-  DTS:VersionBuild="160"
-  DTS:VersionGUID="{95E788DA-E72A-4966-934A-01600B9B43E9}">
+  DTS:VersionBuild="166"
+  DTS:VersionGUID="{46A8EF6F-32C9-467E-B02D-691128CB4F71}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -60,7 +60,7 @@
           DTS:RowDelimiter=""
           DTS:TextQualifier="_x003C_none_x003E_"
           DTS:CodePage="1252"
-          DTS:ConnectionString="\\a06000\Scratch\Equitrac\EquitracExport1.txt">
+          DTS:ConnectionString="\\svr-liv-eqep-01\import\EquitracExport1.txt">
           <DTS:FlatFileColumns>
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -86,6 +86,37 @@
       <DTS:VariableValue
         DTS:DataType="8"
         xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{73BF55C0-E8F1-4667-9406-D1C07045D21A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::CopyFolder]+ @[User::CopyFileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CopyFileFullName">
+      <DTS:VariableValue
+        DTS:DataType="8">\\svr-liv-eqep-01\import\Backup\clntsinp_20170324_155700.eqt</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DD4C8138-32F2-4551-AA9E-D8EC98777F7D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;clntsinp_&quot;+&#xA;(DT_STR, 4, 1252) DATEPART(&quot;yyyy&quot;, @[System::StartTime]) + RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;mm&quot; , @[System::StartTime]   ), 2) + &#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;dd&quot; ,  @[System::StartTime]  ), 2) + &#xA;&quot;_&quot;+ &#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;hh&quot; , @[System::StartTime]   ), 2) + &#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;mi&quot; , @[System::StartTime]   ), 2) + &#xA;&quot;00&quot;&#xA;+&quot;.eqt&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CopyFileName">
+      <DTS:VariableValue
+        DTS:DataType="8">clntsinp_20170324_155700.eqt</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ABD817B1-470D-4455-9F3C-E052DE97BB49}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CopyFolder">
+      <DTS:VariableValue
+        DTS:DataType="8">\\svr-liv-eqep-01\import\Backup\</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -166,6 +197,26 @@
     </DTS:Variable>
   </DTS:Variables>
   <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CopyFile"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="File System Task"
+      DTS:DTSID="{cb06928d-31bd-40f2-8b17-76819b9a3964}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CopyFile"
+      DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOverwriteDestFile="True"
+          TaskSourcePath="$Project::CM_DestFileName"
+          TaskIsSourceVariable="True"
+          TaskDestinationPath="User::CopyFileFullName"
+          TaskIsDestinationVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\PopulateExtractFile"
       DTS:CreationName="SSIS.Pipeline.3"
@@ -268,8 +319,11 @@ caclient.cl_clname AS ClientName,
 cashdr.case_public_desc1 AS CaseDescription
 FROM axxia01.dbo.cashdr cashdr
 INNER JOIN axxia01.dbo.caclient caclient  ON cashdr.client = caclient.cl_accode 
+left JOIN MS_Prod.dbo.udExtFile  uf  ON RTRIM(client)+'-'+RTRIM(cashdr.matter)  =uf.FEDCode COLLATE Latin1_General_BIN
+LEFT JOIN MS_Prod.config.dbFile dbf ON dbf.fileID = uf.fileID
 WHERE ISNUMERIC(cl_accode)=1
-AND cashdr.date_closed IS NULL
+AND (cashdr.date_closed IS NULL OR
+(dbf.fileClosed IS NULL AND uf.bitMSOnlyMM = 1))
 )
 --Get the matters where the client can't have it's leading 0s stripped
 ,CTEUnstrippableClients
@@ -283,10 +337,13 @@ caclient.cl_clname AS ClientName,
 cashdr.case_public_desc1 AS CaseDescription
 FROM axxia01.dbo.cashdr cashdr
 INNER JOIN axxia01.dbo.caclient caclient ON cashdr.client = caclient.cl_accode 
+left JOIN MS_Prod.dbo.udExtFile  uf  ON RTRIM(client)+'-'+RTRIM(cashdr.matter)  =uf.FEDCode COLLATE Latin1_General_BIN
+LEFT JOIN MS_Prod.config.dbFile dbf ON dbf.fileID = uf.fileID
 WHERE 
 1=1
 AND ISNUMERIC(cl_accode)=0
-AND cashdr.date_closed IS NULL
+AND (cashdr.date_closed IS NULL OR
+(dbf.fileClosed IS NULL AND uf.bitMSOnlyMM = 1))
 )
 ,
 --Union all of the stripped and non stripped client numbers together.
@@ -431,12 +488,6 @@ ORDER BY 1</property>
                   name="OLE DB Source Error Output">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\PopulateExtractFile\SRC_SourceData.Outputs[OLE DB Source Error Output].Columns[OutputColumn]"
-                      dataType="wstr"
-                      length="370"
-                      lineageId="Package\PopulateExtractFile\SRC_SourceData.Outputs[OLE DB Source Error Output].Columns[OutputColumn]"
-                      name="OutputColumn" />
-                    <outputColumn
                       refId="Package\PopulateExtractFile\SRC_SourceData.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
                       lineageId="Package\PopulateExtractFile\SRC_SourceData.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
@@ -448,6 +499,12 @@ ORDER BY 1</property>
                       lineageId="Package\PopulateExtractFile\SRC_SourceData.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
+                    <outputColumn
+                      refId="Package\PopulateExtractFile\SRC_SourceData.Outputs[OLE DB Source Error Output].Columns[OutputColumn]"
+                      dataType="wstr"
+                      length="370"
+                      lineageId="Package\PopulateExtractFile\SRC_SourceData.Outputs[OLE DB Source Error Output].Columns[OutputColumn]"
+                      name="OutputColumn" />
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -485,15 +542,48 @@ ORDER BY 1</property>
           TaskIsDestinationVariable="True" />
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\WaitFor"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9FDD82F0-A3D0-4605-B816-6C0B3952D7CF}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="WaitFor"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{618B4F08-8035-45B2-A6CD-C4E36F426A67}"
+          SQLTask:SqlStatementSource="WAITFOR DELAY '00:00:30'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{BA2E9A1D-9BC4-4CE9-8407-67C7A7BF99F6}"
+      DTS:DTSID="{8937B952-5F7E-4BBA-84C1-963262E108CB}"
       DTS:From="Package\PopulateExtractFile"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
+      DTS:To="Package\CopyFile" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{FE0F9BB3-B37A-4BA3-8B13-3B3C6801DA87}"
+      DTS:From="Package\CopyFile"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\WaitFor" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{C5EB44FE-9611-4E6C-880D-668D57AA35EA}"
+      DTS:From="Package\WaitFor"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
       DTS:To="Package\RenameFile" />
   </DTS:PrecedenceConstraints>
   <DTS:EventHandlers>
@@ -708,7 +798,7 @@ ORDER BY 1</property>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="171,42"
           Id="Package\PopulateExtractFile"
@@ -716,21 +806,109 @@ ORDER BY 1</property>
         <NodeLayout
           Size="172,42"
           Id="Package\RenameFile"
-          TopLeft="247.226232544204,240" />
+          TopLeft="254.079679850482,379.457574451619" />
+        <NodeLayout
+          Size="120,42"
+          Id="Package\CopyFile"
+          TopLeft="263.885153173291,230.242936589775" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="332.863116272102,162">
+          TopLeft="332.5,162">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,78"
+              EndConnector="-8.61484682670931,68.2429365897747"
               Start="0,0"
-              End="0,70.5">
+              End="-8.61484682670931,60.7429365897747">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,70.5" />
+                    End="0,30.1214682948873" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30.1214682948873"
+                    Point2="0,34.1214682948873"
+                    Point3="-4,34.1214682948873" />
+                  <mssgle:LineSegment
+                    End="-4.61484682670931,34.1214682948873" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4.61484682670931,34.1214682948873"
+                    Point2="-8.61484682670931,34.1214682948873"
+                    Point3="-8.61484682670931,38.1214682948873" />
+                  <mssgle:LineSegment
+                    End="-8.61484682670931,60.7429365897747" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="117,42"
+          Id="Package\WaitFor"
+          TopLeft="251,301" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="323.885153173291,272.242936589775">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-14.3851531732907,28.7570634102253"
+              Start="0,0"
+              End="-14.3851531732907,21.2570634102253">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.3785317051127" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.3785317051127"
+                    Point2="0,14.3785317051127"
+                    Point3="-4,14.3785317051127" />
+                  <mssgle:LineSegment
+                    End="-10.3851531732907,14.3785317051127" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-10.3851531732907,14.3785317051127"
+                    Point2="-14.3851531732907,14.3785317051127"
+                    Point3="-14.3851531732907,18.3785317051127" />
+                  <mssgle:LineSegment
+                    End="-14.3851531732907,21.2570634102253" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="309.5,343">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30.579679850482,36.4575744516189"
+              Start="0,0"
+              End="30.579679850482,28.9575744516189">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.2287872258095" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.2287872258095"
+                    Point2="0,18.2287872258095"
+                    Point3="4,18.2287872258095" />
+                  <mssgle:LineSegment
+                    End="26.579679850482,18.2287872258095" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26.579679850482,18.2287872258095"
+                    Point2="30.579679850482,18.2287872258095"
+                    Point3="30.579679850482,22.2287872258095" />
+                  <mssgle:LineSegment
+                    End="30.579679850482,28.9575744516189" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
