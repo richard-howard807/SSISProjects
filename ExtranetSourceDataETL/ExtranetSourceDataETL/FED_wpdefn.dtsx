@@ -1,0 +1,1408 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/18/2017 10:51:36 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\Dabram"
+  DTS:DTSID="{E2DF3AF1-789F-43FE-9AB0-AFEF44E7EA04}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="FED_wpdefn"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{9C0460C3-139A-448C-93A2-604BBB1E90A6}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_DEST_Extranet]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3E112303-0B6A-47F1-8A21-858DC5F7C379}"
+      DTS:ObjectName="CM_DEST_Extranet">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-sql-03;Initial Catalog=FED;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_FED_Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D4542F99-8C23-4F49-8E0F-8DFD26E7A8B2}"
+      DTS:ObjectName="CM_FED_Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=artiiondb-01;Initial Catalog=axxia01;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - wpdefn"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0F4D23DB-BDA8-425B-B451-C93F8CEF8412}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - wpdefn"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - wpdefn\DEST_Update_NoMatches"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="DEST_Update_NoMatches"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">EXECUTE dbo.usp_Update_wpdefn ?,?,?,?,?,?,?,?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_DEST_Extranet]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_DEST_Extranet]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].Columns[wp_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="wp_code"
+                      externalMetadataColumnId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_code]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_code]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].Columns[wp_name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="wp_name"
+                      externalMetadataColumnId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_name]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_name]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].Columns[wp_call_before]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="wp_call_before"
+                      externalMetadataColumnId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_call_before]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_call_before]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].Columns[wp_call_after]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="wp_call_after"
+                      externalMetadataColumnId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_call_after]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_call_after]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].Columns[wp_extension]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="wp_extension"
+                      externalMetadataColumnId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_extension]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_extension]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].Columns[wp_macro_loc]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="60"
+                      cachedName="wp_macro_loc"
+                      externalMetadataColumnId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_macro_loc]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_macro_loc]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].Columns[wp_directory]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="wp_directory"
+                      externalMetadataColumnId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_directory]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_directory]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].Columns[wp_command]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="wp_command"
+                      externalMetadataColumnId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_command]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_command]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="@wp_code">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="@wp_name">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_call_before]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="@wp_call_before">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_call_after]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="@wp_call_after">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_extension]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="@wp_extension">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_macro_loc]"
+                      codePage="1252"
+                      dataType="str"
+                      length="60"
+                      name="@wp_macro_loc">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_directory]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="@wp_directory">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input].ExternalColumns[@wp_command]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="@wp_command">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\DEST_Update_NoMatches.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\DEST_Update_NoMatches.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\DEST_Update_NoMatches.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - wpdefn\LKP - Check Data the same"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP - Check Data the same"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+wp_code,
+HASHCOLUMN
+FROM [vw_wpdefn_lookup]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (SELECT
+wp_code,
+HASHCOLUMN
+FROM [vw_wpdefn_lookup]) [refTable]
+where [refTable].[wp_code] = ? and [refTable].[HASHCOLUMN] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="wp_code" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="HASHCOLUMN" dataType="DT_BYTES" length="8000" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_code]};#{Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - wpdefn\LKP - Check Data the same.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_DEST_Extranet]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_DEST_Extranet]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - wpdefn\LKP - Check Data the same.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\LKP - Check Data the same.Inputs[Lookup Input].Columns[wp_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="wp_code"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_code]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">wp_code</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\LKP - Check Data the same.Inputs[Lookup Input].Columns[HASHCOLUMN]"
+                      cachedDataType="bytes"
+                      cachedLength="8000"
+                      cachedName="HASHCOLUMN"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">HASHCOLUMN</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - wpdefn\LKP - Check Data the same.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - wpdefn\LKP - Check Data the same.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - wpdefn\LKP - Check Data the same.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - wpdefn\LKP - Check Data the same.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - wpdefn\LKP - Check Data the same.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - wpdefn\LKP - Check Data the same.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\LKP - Check Data the same.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\LKP - Check Data the same.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\LKP - Check Data the same.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\LKP - Check Data the same.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - wpdefn\LKP - Exists"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP - Exists"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[wpdefn]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[wpdefn]) [refTable]
+where [refTable].[wp_code] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="wp_code" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="wp_name" dataType="DT_STR" length="20" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="wp_call_before" dataType="DT_STR" length="20" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="wp_call_after" dataType="DT_STR" length="20" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="wp_extension" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="wp_macro_loc" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="wp_directory" dataType="DT_STR" length="150" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="wp_command" dataType="DT_STR" length="150" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_code]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - wpdefn\LKP - Exists.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_DEST_Extranet]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_DEST_Extranet]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - wpdefn\LKP - Exists.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\LKP - Exists.Inputs[Lookup Input].Columns[wp_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="wp_code"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_code]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">wp_code</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - wpdefn\LKP - Exists.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - wpdefn\LKP - Exists.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - wpdefn\LKP - Exists.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - wpdefn\LKP - Exists.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - wpdefn\LKP - Exists.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - wpdefn\LKP - Exists.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\LKP - Exists.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\LKP - Exists.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\LKP - Exists.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\LKP - Exists.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - wpdefn\SRC_FED_SRC"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_FED_SRC"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[wpdefn]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT [wp_code]
+      ,[wp_name]
+      ,[wp_call_before]
+      ,[wp_call_after]
+      ,[wp_extension]
+      ,[wp_macro_loc]
+      ,[wp_directory]
+      ,[wp_command]
+	  ,HASHBYTES('md5', (SELECT
+	   [wp_name]
+      ,[wp_call_before]
+      ,[wp_call_after]
+      ,[wp_extension]
+      ,[wp_macro_loc]
+      ,[wp_directory]
+      ,[wp_command] FOR XML RAW)) AS HASHCOLUMN
+  FROM [dbo].[wpdefn]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - wpdefn\SRC_FED_SRC.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_FED_Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_FED_Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_code]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_code]"
+                      length="10"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_code]"
+                      name="wp_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_name]"
+                      length="20"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_name]"
+                      name="wp_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_call_before]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_call_before]"
+                      length="20"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_call_before]"
+                      name="wp_call_before"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_call_after]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_call_after]"
+                      length="20"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_call_after]"
+                      name="wp_call_after"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_extension]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_extension]"
+                      length="10"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_extension]"
+                      name="wp_extension"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_macro_loc]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_macro_loc]"
+                      length="60"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_macro_loc]"
+                      name="wp_macro_loc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_directory]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_directory]"
+                      length="150"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_directory]"
+                      name="wp_directory"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_command]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_command]"
+                      length="150"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_command]"
+                      name="wp_command"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]"
+                      dataType="bytes"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[HASHCOLUMN]"
+                      length="8000"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]"
+                      name="HASHCOLUMN"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="wp_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="wp_name" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_call_before]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="wp_call_before" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_call_after]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="wp_call_after" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_extension]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="wp_extension" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_macro_loc]"
+                      codePage="1252"
+                      dataType="str"
+                      length="60"
+                      name="wp_macro_loc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_directory]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="wp_directory" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[wp_command]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="wp_command" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].ExternalColumns[HASHCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      name="HASHCOLUMN" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_code]"
+                      name="wp_code" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_name]"
+                      name="wp_name" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_call_before]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_call_before]"
+                      name="wp_call_before" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_call_after]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_call_after]"
+                      name="wp_call_after" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_extension]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_extension]"
+                      name="wp_extension" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_macro_loc]"
+                      codePage="1252"
+                      dataType="str"
+                      length="60"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_macro_loc]"
+                      name="wp_macro_loc" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_directory]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_directory]"
+                      name="wp_directory" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_command]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[wp_command]"
+                      name="wp_command" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[HASHCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[HASHCOLUMN]"
+                      name="HASHCOLUMN" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - wpdefn\SRC_Insert_NoMatches"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="SRC_Insert_NoMatches"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[wpdefn]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_DEST_Extranet]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_DEST_Extranet]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].Columns[wp_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="wp_code"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_code]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_code]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].Columns[wp_name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="wp_name"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_name]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_name]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].Columns[wp_call_before]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="wp_call_before"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_call_before]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_call_before]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].Columns[wp_call_after]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="wp_call_after"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_call_after]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_call_after]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].Columns[wp_extension]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="wp_extension"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_extension]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_extension]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].Columns[wp_macro_loc]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="60"
+                      cachedName="wp_macro_loc"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_macro_loc]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_macro_loc]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].Columns[wp_directory]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="wp_directory"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_directory]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_directory]" />
+                    <inputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].Columns[wp_command]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="wp_command"
+                      externalMetadataColumnId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_command]"
+                      lineageId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output].Columns[wp_command]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="wp_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="wp_name" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_call_before]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="wp_call_before" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_call_after]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="wp_call_after" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_extension]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="wp_extension" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_macro_loc]"
+                      codePage="1252"
+                      dataType="str"
+                      length="60"
+                      name="wp_macro_loc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_directory]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="wp_directory" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input].ExternalColumns[wp_command]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="wp_command" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - wpdefn.Paths[Lookup Match Output]"
+              endId="Package\DFT - wpdefn\LKP - Check Data the same.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT - wpdefn\LKP - Exists.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - wpdefn.Paths[Lookup No Match Output]"
+              endId="Package\DFT - wpdefn\SRC_Insert_NoMatches.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - wpdefn\LKP - Exists.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - wpdefn.Paths[Lookup No Match Output1]"
+              endId="Package\DFT - wpdefn\DEST_Update_NoMatches.Inputs[OLE DB Command Input]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - wpdefn\LKP - Check Data the same.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - wpdefn.Paths[OLE DB Source Output]"
+              endId="Package\DFT - wpdefn\LKP - Exists.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - wpdefn\SRC_FED_SRC.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="145,42"
+          Id="Package\DFT - wpdefn"
+          TopLeft="151,109" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - wpdefn">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="149,42"
+          Id="Package\DFT - wpdefn\SRC_FED_SRC"
+          TopLeft="144,104" />
+        <NodeLayout
+          Size="136,42"
+          Id="Package\DFT - wpdefn\LKP - Exists"
+          TopLeft="155,226" />
+        <EdgeLayout
+          Id="Package\DFT - wpdefn.Paths[OLE DB Source Output]"
+          TopLeft="220.75,146">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,80"
+              Start="0,0"
+              End="0,72.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="191,42"
+          Id="Package\DFT - wpdefn\SRC_Insert_NoMatches"
+          TopLeft="159,371" />
+        <EdgeLayout
+          Id="Package\DFT - wpdefn.Paths[Lookup No Match Output]"
+          TopLeft="223,268">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31.5,103"
+              Start="0,0"
+              End="31.5,95.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,47.5"
+                    Point2="0,51.5"
+                    Point3="4,51.5" />
+                  <mssgle:LineSegment
+                    End="27.5,51.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27.5,51.5"
+                    Point2="31.5,51.5"
+                    Point3="31.5,55.5" />
+                  <mssgle:LineSegment
+                    End="31.5,95.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-40.05638671875,56.5,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="209,42"
+          Id="Package\DFT - wpdefn\LKP - Check Data the same"
+          TopLeft="395,233" />
+        <EdgeLayout
+          Id="Package\DFT - wpdefn.Paths[Lookup Match Output]"
+          TopLeft="291,250.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="104,0"
+              Start="0,0"
+              End="96.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="96.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0.0586132812499969,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="203,42"
+          Id="Package\DFT - wpdefn\DEST_Update_NoMatches"
+          TopLeft="434,367" />
+        <EdgeLayout
+          Id="Package\DFT - wpdefn.Paths[Lookup No Match Output1]"
+          TopLeft="499.5,275">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="36,92"
+              Start="0,0"
+              End="36,84.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,42"
+                    Point2="0,46"
+                    Point3="4,46" />
+                  <mssgle:LineSegment
+                    End="32,46" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32,46"
+                    Point2="36,46"
+                    Point3="36,50" />
+                  <mssgle:LineSegment
+                    End="36,84.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-37.80638671875,51,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - wpdefn\SRC_FED_SRC">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - wpdefn\LKP - Exists">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[wpdefn]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - wpdefn\SRC_Insert_NoMatches">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - wpdefn\LKP - Check Data the same">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
