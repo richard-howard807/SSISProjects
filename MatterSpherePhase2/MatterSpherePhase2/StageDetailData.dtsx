@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageDetailData"
   DTS:PackageType="5"
-  DTS:VersionBuild="135"
-  DTS:VersionGUID="{48D61DAB-B9E8-4810-AF08-58B50172A20C}">
+  DTS:VersionBuild="139"
+  DTS:VersionGUID="{37AD2224-E565-4C8B-8EBD-51D6CB8CCD32}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1441,6 +1441,7 @@ where [refTable].[Detail] = ? and [refTable].[MS Lookup Type] = ? and [refTable]
                       cachedDataType="wstr"
                       cachedLength="255"
                       cachedName="MS code"
+                      cachedSortKeyPosition="2"
                       lineageId="Package\DFT - GetStageData\SRT - MS Detail LKP.Outputs[Sort Output].Columns[MS code]" />
                     <inputColumn
                       refId="Package\DFT - GetStageData\Merge Detail FED To MS.Inputs[Merge Join Right Input].Columns[MS Table]"
@@ -2525,7 +2526,7 @@ where [refTable].[Detail] = ? and [refTable].[PicklistName] = ? and [refTable].[
    ON casdet.case_id=cashdr.case_id
 INNER JOIN DataTransferStaging.dbo.MSPhaseTwoMatters
  ON casdet.case_id=MSPhaseTwoMatters.case_id
-WHERE case_text IS NOT NULL OR case_value IS NOT NULL OR case_date IS NOT NULL</property>
+WHERE (case_text IS NOT NULL OR case_value IS NOT NULL OR case_date IS NOT NULL)</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -4374,7 +4375,7 @@ WHERE case_text IS NOT NULL OR case_value IS NOT NULL OR case_date IS NOT NULL</
                         <property
                           dataType="System.Int32"
                           description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
+                          name="NewSortKeyPosition">2</property>
                       </properties>
                     </inputColumn>
                     <inputColumn
@@ -4481,7 +4482,8 @@ WHERE case_text IS NOT NULL OR case_value IS NOT NULL OR case_date IS NOT NULL</
                       dataType="wstr"
                       length="255"
                       lineageId="Package\DFT - GetStageData\SRT - MS Detail LKP.Outputs[Sort Output].Columns[MS code]"
-                      name="MS code">
+                      name="MS code"
+                      sortKeyPosition="2">
                       <properties>
                         <property
                           containsID="true"
@@ -6888,14 +6890,14 @@ FROM PhaseTwoDetailLookup</property>
               startId="Package\DFT - GetStageData\Lookup.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\DFT - GetStageData.Paths[Merge Join Output1]"
-              endId="Package\DFT - GetStageData\Data Conversion.Inputs[Data Conversion Input]"
-              name="Merge Join Output"
-              startId="Package\DFT - GetStageData\Merge Detail FED To MS.Outputs[Merge Join Output]" />
-            <path
-              refId="Package\DFT - GetStageData.Paths[Merge Join Output]"
               endId="Package\DFT - GetStageData\SRT - DetailCode.Inputs[Sort Input]"
               name="Merge Join Output"
               startId="Package\DFT - GetStageData\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\DFT - GetStageData.Paths[Merge Join Output]"
+              endId="Package\DFT - GetStageData\Data Conversion.Inputs[Data Conversion Input]"
+              name="Merge Join Output"
+              startId="Package\DFT - GetStageData\Merge Detail FED To MS.Outputs[Merge Join Output]" />
             <path
               refId="Package\DFT - GetStageData.Paths[NonCodeLookups]"
               endId="Package\DFT - GetStageData\SRT - CodeLookups.Inputs[Sort Input]"
@@ -6923,34 +6925,34 @@ FROM PhaseTwoDetailLookup</property>
               startId="Package\DFT - GetStageData\Row Count.Outputs[Row Count Output 1]" />
             <path
               refId="Package\DFT - GetStageData.Paths[Sort Output5]"
+              endId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output]" />
+            <path
+              refId="Package\DFT - GetStageData.Paths[Sort Output]"
               endId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Left Input]"
               name="Sort Output"
               startId="Package\DFT - GetStageData\SRT - Axxia01.Outputs[Sort Output]" />
             <path
-              refId="Package\DFT - GetStageData.Paths[Sort Output]"
+              refId="Package\DFT - GetStageData.Paths[Sort Output1]"
               endId="Package\DFT - GetStageData\Merge Detail FED To MS.Inputs[Merge Join Right Input]"
               name="Sort Output"
               startId="Package\DFT - GetStageData\SRT - MS Detail LKP.Outputs[Sort Output]" />
             <path
-              refId="Package\DFT - GetStageData.Paths[Sort Output1]"
+              refId="Package\DFT - GetStageData.Paths[Sort Output2]"
               endId="Package\DFT - GetStageData\Union All.Inputs[Union All Input 1]"
               name="Sort Output"
               startId="Package\DFT - GetStageData\SRT - CodeLookups.Outputs[Sort Output]" />
             <path
-              refId="Package\DFT - GetStageData.Paths[Sort Output2]"
+              refId="Package\DFT - GetStageData.Paths[Sort Output3]"
               endId="Package\DFT - GetStageData\PickList Match on Text.Inputs[Lookup Input]"
               name="Sort Output"
               startId="Package\DFT - GetStageData\SRT - NonLookups.Outputs[Sort Output]" />
             <path
-              refId="Package\DFT - GetStageData.Paths[Sort Output3]"
+              refId="Package\DFT - GetStageData.Paths[Sort Output4]"
               endId="Package\DFT - GetStageData\Merge Detail FED To MS.Inputs[Merge Join Left Input]"
               name="Sort Output"
               startId="Package\DFT - GetStageData\SRT - DetailCode.Outputs[Sort Output]" />
-            <path
-              refId="Package\DFT - GetStageData.Paths[Sort Output4]"
-              endId="Package\DFT - GetStageData\Merge Join.Inputs[Merge Join Right Input]"
-              name="Sort Output"
-              startId="Package\DFT - GetStageData\SRT - MS.Outputs[Sort Output]" />
             <path
               refId="Package\DFT - GetStageData.Paths[Union All Output 1]"
               endId="Package\DFT - GetStageData\Row Count.Inputs[Row Count Input 1]"
@@ -7186,7 +7188,7 @@ FROM PhaseTwoDetailLookup</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - GetStageData.Paths[Merge Join Output1]"
-          TopLeft="322.5,1204.02291938074">
+          TopLeft="322.5,1000.02291938074">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7208,7 +7210,7 @@ FROM PhaseTwoDetailLookup</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - GetStageData.Paths[Merge Join Output]"
-          TopLeft="322.5,1000.02291938074">
+          TopLeft="322.5,1204.02291938074">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7624,40 +7626,6 @@ FROM PhaseTwoDetailLookup</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - GetStageData.Paths[Sort Output5]"
-          TopLeft="126.5,898.022919380743">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="175.333333333333,60"
-              Start="0,0"
-              End="175.333333333333,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,31.5688622754491" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,31.5688622754491"
-                    Point2="0,35.5688622754491"
-                    Point3="4,35.5688622754491" />
-                  <mssgle:LineSegment
-                    End="171.333333333333,35.5688622754491" />
-                  <mssgle:CubicBezierSegment
-                    Point1="171.333333333333,35.5688622754491"
-                    Point2="175.333333333333,35.5688622754491"
-                    Point3="175.333333333333,39.5688622754491" />
-                  <mssgle:LineSegment
-                    End="175.333333333333,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[Sort Output4]"
           TopLeft="322.5,898.022919380743">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -7691,7 +7659,7 @@ FROM PhaseTwoDetailLookup</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[Sort Output3]"
+          Id="Package\DFT - GetStageData.Paths[Sort Output4]"
           TopLeft="322.5,1102.02291938074">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -7725,7 +7693,7 @@ FROM PhaseTwoDetailLookup</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[Sort Output2]"
+          Id="Package\DFT - GetStageData.Paths[Sort Output3]"
           TopLeft="467.5,1612.02291938074">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -7759,7 +7727,7 @@ FROM PhaseTwoDetailLookup</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[Sort Output1]"
+          Id="Package\DFT - GetStageData.Paths[Sort Output2]"
           TopLeft="322.5,2020.02291938074">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -7793,7 +7761,7 @@ FROM PhaseTwoDetailLookup</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DFT - GetStageData.Paths[Sort Output]"
+          Id="Package\DFT - GetStageData.Paths[Sort Output1]"
           TopLeft="93.5,1102.02291938074">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -7818,6 +7786,40 @@ FROM PhaseTwoDetailLookup</property>
                     Point3="197.833333333333,39.707019328586" />
                   <mssgle:LineSegment
                     End="197.833333333333,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetStageData.Paths[Sort Output]"
+          TopLeft="126.5,898.022919380743">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="175.333333333333,60"
+              Start="0,0"
+              End="175.333333333333,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5688622754491" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.5688622754491"
+                    Point2="0,35.5688622754491"
+                    Point3="4,35.5688622754491" />
+                  <mssgle:LineSegment
+                    End="171.333333333333,35.5688622754491" />
+                  <mssgle:CubicBezierSegment
+                    Point1="171.333333333333,35.5688622754491"
+                    Point2="175.333333333333,35.5688622754491"
+                    Point3="175.333333333333,39.5688622754491" />
+                  <mssgle:LineSegment
+                    End="175.333333333333,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
