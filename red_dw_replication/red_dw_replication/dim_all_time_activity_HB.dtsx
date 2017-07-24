@@ -1,0 +1,2965 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/3/2015 10:11:48 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\DAbram"
+  DTS:DTSID="{1BB1757B-DE08-4045-A01B-06E8131BFA9B}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="dim_all_time_activity_HB"
+  DTS:PackageType="5"
+  DTS:VersionBuild="40"
+  DTS:VersionGUID="{D3A42BC7-DD4D-4F5C-920E-4880B3C66388}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1322378E-88B7-439E-9382-A91BDB6821C6}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Audit_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Audit_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008SVR;Initial Catalog=red_dw_replication;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Red_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D5BD8D6F-D3C3-4E60-80F1-F1D35B89ACDC}"
+      DTS:ObjectName="CM_Red_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Red_DW_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Red_DW_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dwh-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{55DCB3AC-3B59-4705-BF12-801AE6860B83}"
+      DTS:ObjectName="CM_Red_dw_Replication">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Red_dw_Replication_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Red_dw_Replication_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008SVR;Initial Catalog=red_dw_replication;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="ParentAuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{F0FA1B17-DCAF-4D55-A46A-40F4C47D8EE1}"
+      DTS:ObjectName="ParentAuditID" />
+  </DTS:Configurations>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{8E698E37-8D01-453F-8EE3-A84F5509A492}"
+      DTS:ObjectName="CM_Audit_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw_replication</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{41BBAC15-DE2C-430A-A484-AAEB63259756}"
+      DTS:ObjectName="CM_Audit_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">SQL2008SVR</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{18BFAE78-24D4-4884-9303-DB5AE5289CEB}"
+      DTS:ObjectName="CM_Red_DW_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{90BA890B-195B-4437-9886-99FC8578F9FE}"
+      DTS:ObjectName="CM_Red_dw_Replication_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw_replication</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{428A131D-EADD-4CEC-90D5-A4AE4C3189E6}"
+      DTS:ObjectName="CM_Red_dw_Replication_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">SQL2008SVR</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{87BD20F2-5717-4FF7-B254-92F1F22B28D0}"
+      DTS:ObjectName="CM_Red_DW_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">svr-liv-dwh-01</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{1E3F7AB2-BEFD-4522-A4C7-68A84EBD37C3}"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">0</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E133B23A-53DF-4ACC-968E-E9CD66730D6D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8D2E8F77-47E4-4FCA-926B-70B1220D7A74}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6779CF53-3327-4FED-99F2-8658BF6A78FE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{21F4E6D5-41E8-4E11-B59B-9658AE3AF57D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E1EDF063-81EB-4AC3-B49D-E8B61F880A2B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B7F5BC7B-B5FE-42A9-868A-650732715BDB}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFullPath">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8A6A9E98-346C-4ADB-A0EA-AA9E885B4A06}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D3A40F0B-124E-471C-879E-9F39B32D621D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{077AD2B2-3F56-4FF3-B24C-66D055136797}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::ParentAuditID]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4F2D831C-B68E-4C66-8818-BDAE53D92B25}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F1944F7B-8628-4D1D-ACE5-7061160517B6}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountChanged">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F97E3182-CA59-4BA4-BCB9-9E5D4B583933}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountDeleted">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Charge Lookback Hours"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F35F4B81-722F-4F17-9F40-EF6283BECAFB}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Charge Lookback Hours"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55DCB3AC-3B59-4705-BF12-801AE6860B83}"
+          SQLTask:SqlStatementSource="SELECT&#xA;value AS LookBackHours&#xA;FROM  [dbo].[ControlTable]&#xA;WHERE controlitem = 'Lookback_hours'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LookbackHours"
+            SQLTask:DtsVariableName="User::LookbackHours" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - dim_all_time_activity"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{54F3C1A1-7317-401B-9082-6F2CD6FDAE6D}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - dim_all_time_activity"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_all_time_activity.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{2CF795B6-A1FB-4DCA-9D85-2C3808D8CAF8}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{8E1047FD-7E49-4DD7-B2BD-99969677FF4C}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_all_time_activity.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{67EAC223-D6D6-44B2-BA7B-233101725E63}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{1322378E-88B7-439E-9382-A91BDB6821C6}"
+                  SQLTask:SqlStatementSource="exec uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_CODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_DESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_all_time_activity.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{1E5ED817-0069-4CC2-952E-38BA5DA22377}"
+          DTS:EventID="685659520"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{9BB73694-4AE9-405B-A139-1C26F878EC33}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_all_time_activity.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{2CDC8B87-C004-4777-BEF1-2F4DE90BD837}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{1322378E-88B7-439E-9382-A91BDB6821C6}"
+                  SQLTask:SqlStatementSource="uspAuditEnd ?, ?, ?, null, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCount"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountChanged"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountExpired"
+                    SQLTask:DtsVariableName="User::RowCountDeleted"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_all_time_activity.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{645C214B-FC13-476F-907C-6A6E22A4AFD1}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{6AF19EEF-FD6F-43B6-999B-C76931D4FE96}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_all_time_activity.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{1F2663E8-F2C9-41C3-A931-388565A7396D}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{1322378E-88B7-439E-9382-A91BDB6821C6}"
+                  SQLTask:SqlStatementSource="uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST - dim_all_time_activiy"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_all_time_activity]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].Columns[dss_update_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dss_update_time"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[dss_update_time]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dss_update_time]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].Columns[dim_all_time_activity_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_all_time_activity_key"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[dim_all_time_activity_key]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].Columns[time_activity_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="time_activity_code"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[time_activity_code]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[time_activity_code]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].Columns[matter_stage]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="matter_stage"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[matter_stage]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[matter_stage]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].Columns[reporting_exclusions]"
+                      cachedDataType="i4"
+                      cachedName="reporting_exclusions"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[reporting_exclusions]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[reporting_exclusions]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      name="dim_all_time_activity_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[time_activity_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="time_activity_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[matter_stage]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="matter_stage" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input].ExternalColumns[reporting_exclusions]"
+                      dataType="i4"
+                      name="reporting_exclusions" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity\Lookup"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Select [dim_all_time_activity_key]
+FROM [dbo].[dim_all_time_activity]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (Select [dim_all_time_activity_key]
+FROM [dbo].[dim_all_time_activity]) [refTable]
+where [refTable].[dim_all_time_activity_key] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">3072</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">4096</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="dim_all_time_activity_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_all_time_activity\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\Lookup.Inputs[Lookup Input].Columns[dim_all_time_activity_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_all_time_activity_key"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">dim_all_time_activity_key</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity\Lookup 1"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup 1"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+dim_all_time_activity_key,
+HASCOLUMN 
+FROM [dbo].[vw_dim_all_time_activity_lookup]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (SELECT
+dim_all_time_activity_key,
+HASCOLUMN 
+FROM [dbo].[vw_dim_all_time_activity_lookup]) [refTable]
+where [refTable].[dim_all_time_activity_key] = ? and [refTable].[HASCOLUMN] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">3072</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">4096</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="dim_all_time_activity_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HASCOLUMN" dataType="DT_BYTES" length="8000" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]};#{Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[HASCOLUMN]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_all_time_activity\Lookup 1.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity\Lookup 1.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\Lookup 1.Inputs[Lookup Input].Columns[dim_all_time_activity_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_all_time_activity_key"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">dim_all_time_activity_key</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\Lookup 1.Inputs[Lookup Input].Columns[HASCOLUMN]"
+                      cachedDataType="bytes"
+                      cachedLength="8000"
+                      cachedName="HASCOLUMN"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[HASCOLUMN]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">HASCOLUMN</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Lookup 1.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Lookup 1.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Lookup 1.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Lookup 1.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Lookup 1.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Lookup 1.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity\Row Count Changed"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count Changed">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountChanged</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity\Row Count Changed.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Row Count Changed.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Row Count Changed.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity\Row Count Inserted"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count Inserted">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCount</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity\Row Count Inserted.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Row Count Inserted.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Row Count Inserted.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - dim_all_time_activity"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_bank_account]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT [dim_all_time_activity_key]
+      ,[time_activity_code] COLLATE Latin1_General_BIN AS [time_activity_code]
+       ,[matter_stage]
+      ,[reporting_exclusions]
+      ,[dss_update_time]
+	  ,HASHBYTES('md5', (SELECT
+	  [time_activity_code] COLLATE Latin1_General_BIN AS [time_activity_code]
+       ,[matter_stage]
+      ,[reporting_exclusions]
+      ,[dss_update_time]
+      FOR XML RAW)) AS HASCOLUMN
+  FROM [dbo].[dim_all_time_activity]
+WHERE DATEDIFF(HOUR, [dss_update_time], GETDATE()) &lt; 0</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"Parameter0:Input",{D3A40F0B-124E-471C-879E-9F39B32D621D};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dss_update_time]"
+                      name="dss_update_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[dim_all_time_activity_key]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]"
+                      name="dim_all_time_activity_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[time_activity_code]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[time_activity_code]"
+                      length="20"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[time_activity_code]"
+                      name="time_activity_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[matter_stage]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[matter_stage]"
+                      length="10"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[matter_stage]"
+                      name="matter_stage"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[reporting_exclusions]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[reporting_exclusions]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[reporting_exclusions]"
+                      name="reporting_exclusions"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[HASCOLUMN]"
+                      dataType="bytes"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[HASCOLUMN]"
+                      length="8000"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[HASCOLUMN]"
+                      name="HASCOLUMN"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      name="dim_all_time_activity_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[time_activity_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="time_activity_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[matter_stage]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="matter_stage" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[reporting_exclusions]"
+                      dataType="i4"
+                      name="reporting_exclusions" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[HASCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      name="HASCOLUMN" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[dim_all_time_activity_key]"
+                      name="dim_all_time_activity_key" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[time_activity_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[time_activity_code]"
+                      name="time_activity_code" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[matter_stage]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[matter_stage]"
+                      name="matter_stage" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[reporting_exclusions]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[reporting_exclusions]"
+                      name="reporting_exclusions" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[dss_update_time]"
+                      name="dss_update_time" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[HASCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[HASCOLUMN]"
+                      name="HASCOLUMN" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Update Dim_all_time_activity"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">EXEC [dbo].[usp_Update_dim_all_time_activity] ?, ?, ?, ?, ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].Columns[dim_all_time_activity_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_all_time_activity_key"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@dim_all_time_activity_key]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].Columns[time_activity_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="time_activity_code"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@time_activity_code]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[time_activity_code]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].Columns[dss_update_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dss_update_time"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@dss_update_time]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dss_update_time]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].Columns[matter_stage]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="matter_stage"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@matter_stage]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[matter_stage]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].Columns[reporting_exclusions]"
+                      cachedDataType="i4"
+                      cachedName="reporting_exclusions"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@reporting_exclusions]"
+                      lineageId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[reporting_exclusions]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@dim_all_time_activity_key]"
+                      dataType="i4"
+                      name="@dim_all_time_activity_key">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@time_activity_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="@time_activity_code">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@matter_stage]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="@matter_stage">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@reporting_exclusions]"
+                      dataType="i4"
+                      name="@reporting_exclusions">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input].ExternalColumns[@dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="@dss_update_time">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - dim_all_time_activity.Paths[Lookup Match Output]"
+              endId="Package\DFT - dim_all_time_activity\Lookup 1.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT - dim_all_time_activity\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - dim_all_time_activity.Paths[Lookup No Match Output]"
+              endId="Package\DFT - dim_all_time_activity\Row Count Inserted.Inputs[Row Count Input 1]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - dim_all_time_activity\Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - dim_all_time_activity.Paths[Lookup No Match Output1]"
+              endId="Package\DFT - dim_all_time_activity\Row Count Changed.Inputs[Row Count Input 1]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - dim_all_time_activity\Lookup 1.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - dim_all_time_activity.Paths[OLE DB Source Output]"
+              endId="Package\DFT - dim_all_time_activity\Lookup.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_all_time_activity.Paths[Row Count Output 1]"
+              endId="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_all_time_activity\Row Count Inserted.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - dim_all_time_activity.Paths[Row Count Output 11]"
+              endId="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity.Inputs[OLE DB Command Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_all_time_activity\Row Count Changed.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - dim_all_time_activity_deletes"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{82A05D2B-7B12-43B9-B8EE-B9927A8E5A57}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - dim_all_time_activity_deletes"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{CB4A58F6-3BF3-4882-BD8B-BBDE15BCA6CA}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{88A5F091-8D5D-41B3-B44D-DD75DEB76D5B}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{3D079263-0ECA-4789-9C17-BC1F626CC175}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{1322378E-88B7-439E-9382-A91BDB6821C6}"
+                  SQLTask:SqlStatementSource="exec uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_CODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_DESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{1E499710-F156-40F5-934D-9DF9262499D6}"
+          DTS:EventID="685659520"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{0DE700A5-7651-40E1-8E38-916CDA50CCB0}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{10DFC8B5-EF25-4F9D-9EEB-D9ABF00BAC11}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{1322378E-88B7-439E-9382-A91BDB6821C6}"
+                  SQLTask:SqlStatementSource="uspAuditEnd ?, ?, ?, null, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCount"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountChanged"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountExpired"
+                    SQLTask:DtsVariableName="User::RowCountDeleted"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{F270F3FD-A1DA-4710-B157-89956D35C651}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{ED8B4F52-AA89-42EF-A812-CD2395FA4F55}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{30014C2E-8B82-41E0-9043-9A8B5D4D2F64}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{1322378E-88B7-439E-9382-A91BDB6821C6}"
+                  SQLTask:SqlStatementSource="uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - dim_all_time_activity_deletes\Conditional Split"
+              componentClassID="{7F88F654-4E20-4D14-84F4-AF9C925D3087}"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Inputs[Conditional Split Input].Columns[DEST_dim_all_time_activity_key]"
+                      cachedDataType="i4"
+                      cachedName="DEST_dim_all_time_activity_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_all_time_activity_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Inputs[Conditional Split Input].Columns[dim_all_time_activity_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_all_time_activity_key"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_all_time_activity_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Outputs[DeletedRows]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="DeletedRows"
+                  synchronousInputId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_all_time_activity_key]}) &amp;&amp; ![ISNULL](#{Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_all_time_activity_key]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(dim_all_time_activity_key) &amp;&amp; !ISNULL(DEST_dim_all_time_activity_key)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Outputs[None]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="None"
+                  synchronousInputId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Delete Deleted Rows"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">delete from [dbo].[dim_all_time_activity] where dim_all_time_activity_key = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].Columns[DEST_dim_all_time_activity_key]"
+                      cachedDataType="i4"
+                      cachedName="DEST_dim_all_time_activity_key"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_all_time_activity_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity_deletes\Deleted Row Count"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Deleted Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountDeleted</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity_deletes\Deleted Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\Deleted Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_all_time_activity_deletes\Deleted Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity_deletes\Merge Join"
+              componentClassID="{14D43A4F-D7BD-489D-829E-6DE35750CFE4}"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Inputs[Merge Join Left Input].Columns[dim_all_time_activity_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_all_time_activity_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Inputs[Merge Join Right Input].Columns[dim_all_time_activity_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_all_time_activity_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_all_time_activity_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_all_time_activity_key]"
+                      name="DEST_dim_all_time_activity_key"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - dim_all_time_activity_deletes\Merge Join.Inputs[Merge Join Left Input].Columns[dim_all_time_activity_key]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_all_time_activity_key]"
+                      name="dim_all_time_activity_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - dim_all_time_activity_deletes\Merge Join.Inputs[Merge Join Right Input].Columns[dim_all_time_activity_key]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - DEST_dim_all_time_activity"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_bill]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+dim_all_time_activity_key
+FROM [dbo].[dim_all_time_activity]
+ORDER BY dim_all_time_activity_key ASC</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[dim_all_time_activity_key]"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]"
+                      name="dim_all_time_activity_key"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      name="dim_all_time_activity_key" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[dim_all_time_activity_key]"
+                      name="dim_all_time_activity_key" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - dim_all_time_activity"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_bill]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+dim_all_time_activity_key
+FROM [dbo].[dim_all_time_activity]
+ORDER BY dim_all_time_activity_key ASC</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[dim_all_time_activity_key]"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].Columns[dim_all_time_activity_key]"
+                      name="dim_all_time_activity_key"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Output].ExternalColumns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      name="dim_all_time_activity_key" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[dim_all_time_activity_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[dim_all_time_activity_key]"
+                      name="dim_all_time_activity_key" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - dim_all_time_activity_deletes.Paths[DeletedRows]"
+              endId="Package\DFT - dim_all_time_activity_deletes\Deleted Row Count.Inputs[Row Count Input 1]"
+              name="DeletedRows"
+              startId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Outputs[DeletedRows]" />
+            <path
+              refId="Package\DFT - dim_all_time_activity_deletes.Paths[Merge Join Output]"
+              endId="Package\DFT - dim_all_time_activity_deletes\Conditional Split.Inputs[Conditional Split Input]"
+              name="Merge Join Output"
+              startId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\DFT - dim_all_time_activity_deletes.Paths[OLE DB Source Output]"
+              endId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Inputs[Merge Join Left Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_all_time_activity_deletes.Paths[OLE DB Source Output1]"
+              endId="Package\DFT - dim_all_time_activity_deletes\Merge Join.Inputs[Merge Join Right Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_all_time_activity_deletes.Paths[Row Count Output 1]"
+              endId="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_all_time_activity_deletes\Deleted Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{AE6A3CB6-9908-42D4-8A44-0CFA87B97939}"
+      DTS:From="Package\Charge Lookback Hours"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - dim_all_time_activity" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{D29C0B6E-6CE3-4495-BD00-69BDB476A8C1}"
+      DTS:From="Package\DFT - dim_all_time_activity"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DFT - dim_all_time_activity_deletes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="186,42"
+          Id="Package\Charge Lookback Hours"
+          TopLeft="210.146489506638,66.2292046422385" />
+        <NodeLayout
+          Size="210,42"
+          Id="Package\DFT - dim_all_time_activity"
+          TopLeft="210.146489506638,153" />
+        <NodeLayout
+          Size="249,42"
+          Id="Package\DFT - dim_all_time_activity_deletes"
+          TopLeft="210.146489506638,255" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="303.146489506638,108.229204642239">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12,44.7707953577615"
+              Start="0,0"
+              End="12,37.2707953577615">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.3853976788808" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.3853976788808"
+                    Point2="0,22.3853976788808"
+                    Point3="4,22.3853976788808" />
+                  <mssgle:LineSegment
+                    End="8,22.3853976788808" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8,22.3853976788808"
+                    Point2="12,22.3853976788808"
+                    Point3="12,26.3853976788808" />
+                  <mssgle:LineSegment
+                    End="12,37.2707953577615" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="315.146489506638,195">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="19.5,60"
+              Start="0,0"
+              End="19.5,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="15.5,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="15.5,30"
+                    Point2="19.5,30"
+                    Point3="19.5,34" />
+                  <mssgle:LineSegment
+                    End="19.5,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - dim_all_time_activity">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="124,42"
+          Id="Package\DFT - dim_all_time_activity\Lookup 1"
+          TopLeft="355,455" />
+        <NodeLayout
+          Size="209,42"
+          Id="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity"
+          TopLeft="53.1986109646435,331.088234020692" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\DFT - dim_all_time_activity\Row Count Inserted"
+          TopLeft="38.6970478062403,553.133392305659" />
+        <NodeLayout
+          Size="218,42"
+          Id="Package\DFT - dim_all_time_activity\Update Dim_all_time_activity"
+          TopLeft="497.118816238769,715.764341905681" />
+        <NodeLayout
+          Size="200,42"
+          Id="Package\DFT - dim_all_time_activity\Lookup"
+          TopLeft="57,446" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\DFT - dim_all_time_activity\Row Count Changed"
+          TopLeft="480.235438554178,620.631744959582" />
+        <NodeLayout
+          Size="212,42"
+          Id="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy"
+          TopLeft="38.6970478062403,638.362136306875" />
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity.Paths[Lookup No Match Output]"
+          TopLeft="157,488">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-30.8029521937597,65.133392305659"
+              Start="0,0"
+              End="-30.8029521937597,57.633392305659">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5666961528295" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.5666961528295"
+                    Point2="0,32.5666961528295"
+                    Point3="-4,32.5666961528295" />
+                  <mssgle:LineSegment
+                    End="-26.8029521937597,32.5666961528295" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-26.8029521937597,32.5666961528295"
+                    Point2="-30.8029521937597,32.5666961528295"
+                    Point3="-30.8029521937597,36.5666961528295" />
+                  <mssgle:LineSegment
+                    End="-30.8029521937597,57.633392305659" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-71.2078628156299,37.5666961528295,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity.Paths[Lookup Match Output]"
+          TopLeft="257,467">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="98,9"
+              Start="0,0"
+              End="90.5,9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="45,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45,0"
+                    Point2="49,0"
+                    Point3="49,4" />
+                  <mssgle:LineSegment
+                    End="49,5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="49,5"
+                    Point2="49,9"
+                    Point3="53,9" />
+                  <mssgle:LineSegment
+                    End="90.5,9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0.808613281249997,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity.Paths[Row Count Output 11]"
+          TopLeft="568.735438554178,662.631744959582">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="37.3833776845908,53.1325969460983"
+              Start="0,0"
+              End="37.3833776845908,45.6325969460983">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5662984730491" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.5662984730491"
+                    Point2="0,26.5662984730491"
+                    Point3="4,26.5662984730491" />
+                  <mssgle:LineSegment
+                    End="33.3833776845908,26.5662984730491" />
+                  <mssgle:CubicBezierSegment
+                    Point1="33.3833776845908,26.5662984730491"
+                    Point2="37.3833776845908,26.5662984730491"
+                    Point3="37.3833776845908,30.5662984730491" />
+                  <mssgle:LineSegment
+                    End="37.3833776845908,45.6325969460983" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity.Paths[Row Count Output 1]"
+          TopLeft="126.19704780624,595.133392305659">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="18.5,43.228744001216"
+              Start="0,0"
+              End="18.5,35.728744001216">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.614372000608" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.614372000608"
+                    Point2="0,21.614372000608"
+                    Point3="4,21.614372000608" />
+                  <mssgle:LineSegment
+                    End="14.5,21.614372000608" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.5,21.614372000608"
+                    Point2="18.5,21.614372000608"
+                    Point3="18.5,25.614372000608" />
+                  <mssgle:LineSegment
+                    End="18.5,35.728744001216" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity.Paths[OLE DB Source Output]"
+          TopLeft="157.349305482322,373.088234020692">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72.911765979308"
+              Start="0,0"
+              End="0,65.411765979308">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,65.411765979308" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity.Paths[Lookup No Match Output1]"
+          TopLeft="417,497">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="151.735438554178,123.631744959582"
+              Start="0,0"
+              End="151.735438554178,116.131744959582">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57.8158724797912" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,57.8158724797912"
+                    Point2="0,61.8158724797912"
+                    Point3="4,61.8158724797912" />
+                  <mssgle:LineSegment
+                    End="147.735438554178,61.8158724797912" />
+                  <mssgle:CubicBezierSegment
+                    Point1="147.735438554178,61.8158724797912"
+                    Point2="151.735438554178,61.8158724797912"
+                    Point3="151.735438554178,65.8158724797912" />
+                  <mssgle:LineSegment
+                    End="151.735438554178,116.131744959582" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="20.061332558339,66.8158724797912,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_all_time_activity.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_all_time_activity.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_all_time_activity.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_all_time_activity.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_all_time_activity.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_all_time_activity.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_all_time_activity\Lookup 1">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_all_time_activity\SRC - dim_all_time_activity">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_all_time_activity\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_all_time_activity\DEST - dim_all_time_activiy">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT - dim_all_time_activity_deletes">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - dim_all_time_activity_deletes\Merge Join"
+          TopLeft="364,237" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\DFT - dim_all_time_activity_deletes\Delete Deleted Rows"
+          TopLeft="413,534" />
+        <NodeLayout
+          Size="209,42"
+          Id="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity"
+          TopLeft="493.335666981363,135.200950070437" />
+        <NodeLayout
+          Size="241,42"
+          Id="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity"
+          TopLeft="129,124" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\DFT - dim_all_time_activity_deletes\Deleted Row Count"
+          TopLeft="359,456" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\DFT - dim_all_time_activity_deletes\Conditional Split"
+          TopLeft="346,359" />
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity_deletes.Paths[OLE DB Source Output]"
+          TopLeft="249.5,166">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="180.5,71"
+              Start="0,0"
+              End="180.5,63.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.5"
+                    Point2="0,35.5"
+                    Point3="4,35.5" />
+                  <mssgle:LineSegment
+                    End="176.5,35.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="176.5,35.5"
+                    Point2="180.5,35.5"
+                    Point3="180.5,39.5" />
+                  <mssgle:LineSegment
+                    End="180.5,63.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity_deletes.Paths[Merge Join Output]"
+          TopLeft="427.25,279">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,80"
+              Start="0,0"
+              End="0,72.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity_deletes.Paths[DeletedRows]"
+          TopLeft="424.5,401">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="20.5,55"
+              Start="0,0"
+              End="20.5,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5"
+                    Point2="0,27.5"
+                    Point3="4,27.5" />
+                  <mssgle:LineSegment
+                    End="16.5,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16.5,27.5"
+                    Point2="20.5,27.5"
+                    Point3="20.5,31.5" />
+                  <mssgle:LineSegment
+                    End="20.5,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-18.907578125,32.5,58.31515625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity_deletes.Paths[Row Count Output 1]"
+          TopLeft="445,498">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="57.5,36"
+              Start="0,0"
+              End="57.5,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14"
+                    Point2="0,18"
+                    Point3="4,18" />
+                  <mssgle:LineSegment
+                    End="53.5,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="53.5,18"
+                    Point2="57.5,18"
+                    Point3="57.5,22" />
+                  <mssgle:LineSegment
+                    End="57.5,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_all_time_activity_deletes.Paths[OLE DB Source Output1]"
+          TopLeft="597.835666981363,177.200950070437">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-147.169000314697,59.7990499295629"
+              Start="0,0"
+              End="-147.169000314697,52.2990499295629">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.4497361857888" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.4497361857888"
+                    Point2="0,35.4497361857888"
+                    Point3="-4,35.4497361857888" />
+                  <mssgle:LineSegment
+                    End="-143.169000314697,35.4497361857888" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-143.169000314697,35.4497361857888"
+                    Point2="-147.169000314697,35.4497361857888"
+                    Point3="-147.169000314697,39.4497361857888" />
+                  <mssgle:LineSegment
+                    End="-147.169000314697,52.2990499295629" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_all_time_activity_deletes.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_all_time_activity_deletes\SRC - dim_all_time_activity">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_all_time_activity_deletes\SRC - DEST_dim_all_time_activity">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

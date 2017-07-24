@@ -1,0 +1,3221 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/3/2015 10:11:48 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\DAbram"
+  DTS:DTSID="{68A1C8AE-DC01-4DF3-858C-23AF6FF53881}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="dim_bill_HB"
+  DTS:PackageType="5"
+  DTS:VersionBuild="33"
+  DTS:VersionGUID="{DDEDB831-1C45-412B-AE42-C79CE3D42D8F}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2A208ED7-4DC2-4B38-A4E5-2016A16BDC36}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Audit_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Audit_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008SVR;Initial Catalog=red_dw_replication;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Red_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{FC533C09-18EA-40A2-B066-07076E4BE4BD}"
+      DTS:ObjectName="CM_Red_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Red_DW_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Red_DW_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dwh-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{47F4B1B9-A654-4645-BBED-5B51BD5FF88E}"
+      DTS:ObjectName="CM_Red_dw_Replication">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Red_dw_Replication_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Red_dw_Replication_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008SVR;Initial Catalog=red_dw_replication;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="ParentAuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{F6C4CCEA-173A-48EB-8749-C15EAE29F9B1}"
+      DTS:ObjectName="ParentAuditID" />
+  </DTS:Configurations>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{FC28AB6C-FE38-4AB9-B5BE-29A6CAA5086D}"
+      DTS:ObjectName="CM_Audit_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw_replication</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{6BB3EEC5-6817-483D-890B-D3A70D5F06A7}"
+      DTS:ObjectName="CM_Audit_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">SQL2008SVR</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{1489B28A-81A4-49E4-9B13-25AF297873CE}"
+      DTS:ObjectName="CM_Red_DW_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{5A1ADAB7-E167-49E8-9F8E-C7212CA48A6F}"
+      DTS:ObjectName="CM_Red_dw_Replication_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw_replication</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{1D5342B8-2BC8-4550-B242-006B47719E60}"
+      DTS:ObjectName="CM_Red_dw_Replication_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">SQL2008SVR</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{0DB8BE96-9F95-44B6-AA8C-D68176777BF8}"
+      DTS:ObjectName="CM_Red_DW_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">svr-liv-dwh-01</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{28E20569-C47B-40C9-B3C2-0E0761C8F8C5}"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">0</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7C578AC1-6917-4286-9D7A-C0F8A9285FF7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8CBFABFC-6C12-43C0-AA1A-85BC6054BCCD}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CE707E72-F015-4363-8577-8B6C48C3A1C6}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8E194A91-8508-4A35-A3F5-3095C7B78838}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A3C8A8FE-79F2-4285-B760-1334DF89C983}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5426D990-2F8F-42B1-AF95-C541D87591AC}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFullPath">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3CC00815-0844-45A2-8A99-9BAC1F64C541}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A031631E-1CE4-426D-966E-E0A78B9D95F6}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{378A9B97-E0CD-42E2-A72E-E1ED0DAE7D82}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::ParentAuditID]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AEB3B417-E9A5-4911-9F49-F3E8AE8679DF}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FC8DC03D-0D12-484B-8AF3-A1C8C3CB2112}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountChanged">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C21F64A0-321D-4EB7-974F-79D96AE9C241}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountDeleted">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Charge Lookback Hours"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D388383B-2350-4DBD-9503-7206E6EC36CF}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Charge Lookback Hours"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{47F4B1B9-A654-4645-BBED-5B51BD5FF88E}"
+          SQLTask:SqlStatementSource="SELECT&#xA;value AS LookBackHours&#xA;FROM  [dbo].[ControlTable]&#xA;WHERE controlitem = 'Lookback_hours'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LookbackHours"
+            SQLTask:DtsVariableName="User::LookbackHours" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - dim_bill"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7BFE8B16-8FB4-4AFE-A292-5B6B742575AB}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - dim_bill"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_bill.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{B9F24753-723E-4F43-A4DE-5723E11826A3}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{B85C5AB2-8B9B-4BA0-87B5-2C4FDE3418AA}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_bill.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{B9E6AB50-0511-4B28-BE1D-7841C0320BC0}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{2A208ED7-4DC2-4B38-A4E5-2016A16BDC36}"
+                  SQLTask:SqlStatementSource="exec uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_CODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_DESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_bill.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{3A836126-8591-4102-8792-FD04D56DB712}"
+          DTS:EventID="685659520"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{ED29BAC7-C7A2-4F17-8678-43842A5DE7F3}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_bill.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{31F59B6B-936B-498F-B1F1-7337FAFB0D71}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{2A208ED7-4DC2-4B38-A4E5-2016A16BDC36}"
+                  SQLTask:SqlStatementSource="uspAuditEnd ?, ?, ?, null, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCount"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountChanged"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountExpired"
+                    SQLTask:DtsVariableName="User::RowCountDeleted"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_bill.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{3F9B0BF6-FC86-44C3-95B7-F6BAAD0895C0}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{8577C1FC-57FA-4E5E-A84A-852F566AA151}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_bill.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{25B493AA-DA27-4AF5-9A2A-A5880BC66430}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{2A208ED7-4DC2-4B38-A4E5-2016A16BDC36}"
+                  SQLTask:SqlStatementSource="uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - dim_bill\DEST - dim_bill"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST - dim_bill"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_bill]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_bill\DEST - dim_bill.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].Columns[source_system_id]"
+                      cachedDataType="i4"
+                      cachedName="source_system_id"
+                      externalMetadataColumnId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[source_system_id]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[source_system_id]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].Columns[dss_update_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dss_update_time"
+                      externalMetadataColumnId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[dss_update_time]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dss_update_time]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].Columns[dim_bill_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_bill_key"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[dim_bill_key]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].Columns[bill_number]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="bill_number"
+                      externalMetadataColumnId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[bill_number]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_number]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].Columns[bill_sequence]"
+                      cachedDataType="i4"
+                      cachedName="bill_sequence"
+                      externalMetadataColumnId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[bill_sequence]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_sequence]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].Columns[record_type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="record_type"
+                      externalMetadataColumnId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[record_type]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[record_type]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].Columns[bill_flag]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="bill_flag"
+                      externalMetadataColumnId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[bill_flag]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_flag]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].Columns[outstanding_flag]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="outstanding_flag"
+                      externalMetadataColumnId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[outstanding_flag]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[outstanding_flag]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[source_system_id]"
+                      dataType="i4"
+                      name="source_system_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[dim_bill_key]"
+                      dataType="i4"
+                      name="dim_bill_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[bill_number]"
+                      dataType="wstr"
+                      length="20"
+                      name="bill_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[bill_sequence]"
+                      dataType="i4"
+                      name="bill_sequence" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[record_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="record_type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[bill_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="bill_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[bill_address]"
+                      dataType="i4"
+                      name="bill_address" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[outstanding_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="outstanding_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[exchange_rate]"
+                      dataType="numeric"
+                      name="exchange_rate"
+                      precision="11"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input].ExternalColumns[currency_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="currency_code" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill\DEST - dim_bill.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\DEST - dim_bill.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\DEST - dim_bill.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\DEST - dim_bill.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill\Lookup"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[dim_bill]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[dim_bill]) [refTable]
+where [refTable].[dim_bill_key] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">3072</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">4096</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="dim_bill_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="source_system_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="bill_number" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="bill_sequence" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="record_type" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="bill_flag" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="bill_address" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="dss_update_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="outstanding_flag" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="exchange_rate" dataType="DT_NUMERIC" length="0" precision="11" scale="6" codePage="0"/&gt;&lt;referenceColumn name="currency_code" dataType="DT_STR" length="2" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_bill\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Lookup.Inputs[Lookup Input].Columns[dim_bill_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_bill_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">dim_bill_key</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - dim_bill\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - dim_bill\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - dim_bill\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill\Lookup Changed Hash Value"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup Changed Hash Value"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[vw_dim_bill_lookup]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[vw_dim_bill_lookup]) [refTable]
+where [refTable].[dim_bill_key] = ? and [refTable].[HASHCOLUMN] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">3072</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">4096</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="dim_bill_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="source_system_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="bill_number" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="bill_sequence" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="record_type" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="bill_flag" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="dss_update_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="outstanding_flag" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="HASHCOLUMN" dataType="DT_BYTES" length="8000" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]};#{Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_bill\Lookup Changed Hash Value.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill\Lookup Changed Hash Value.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Lookup Changed Hash Value.Inputs[Lookup Input].Columns[dim_bill_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_bill_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">dim_bill_key</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Lookup Changed Hash Value.Inputs[Lookup Input].Columns[HASHCOLUMN]"
+                      cachedDataType="bytes"
+                      cachedLength="8000"
+                      cachedName="HASHCOLUMN"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">HASHCOLUMN</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill\Lookup Changed Hash Value.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - dim_bill\Lookup Changed Hash Value.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill\Lookup Changed Hash Value.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - dim_bill\Lookup Changed Hash Value.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill\Lookup Changed Hash Value.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - dim_bill\Lookup Changed Hash Value.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\Lookup Changed Hash Value.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\Lookup Changed Hash Value.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\Lookup Changed Hash Value.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\Lookup Changed Hash Value.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill\Row Count Changed"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count Changed">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountChanged</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill\Row Count Changed.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill\Row Count Changed.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_bill\Row Count Changed.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill\Row Count Inserted"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count Inserted">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCount</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill\Row Count Inserted.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill\Row Count Inserted.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_bill\Row Count Inserted.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill\SRC - dim_bill"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - dim_bill"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_bank_account]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT [dim_bill_key]
+      ,[source_system_id]
+      ,[bill_number]
+      ,[bill_sequence]
+      ,[record_type]
+      ,[bill_flag]
+      --,[bill_address]
+      ,[dss_update_time]
+      ,[outstanding_flag]
+--      ,[matter_reference]
+   --   ,[bill_address_id]
+      --,[fees_apportioned]
+      --,[last_reminder_number]
+      --,[exchange_rate]
+      --,[currency_code]
+	  ,HASHBYTES('md5',(SELECT [source_system_id]
+      ,[bill_number]
+      ,[bill_sequence]
+      ,[record_type]
+      ,[bill_flag]
+      --,[bill_address]
+      ,[dss_update_time]
+      ,[outstanding_flag]
+--      ,[matter_reference]
+    --  ,[bill_address_id]
+      --,[fees_apportioned]
+      --,[last_reminder_number]
+      --,[exchange_rate]
+      --,[currency_code] 
+	  FOR XML RAW
+	  )) AS HASHCOLUMN
+  FROM [dbo].[dim_bill]
+  WHERE DATEDIFF(HOUR, [dss_update_time], GETDATE()) &lt; ?</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"Parameter0:Input",{A031631E-1CE4-426D-966E-E0A78B9D95F6};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_bill\SRC - dim_bill.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[source_system_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[source_system_id]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[source_system_id]"
+                      name="source_system_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dss_update_time]"
+                      name="dss_update_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dim_bill_key]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]"
+                      name="dim_bill_key"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_number]"
+                      length="20"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_number]"
+                      name="bill_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_sequence]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_sequence]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_sequence]"
+                      name="bill_sequence"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[record_type]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[record_type]"
+                      length="1"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[record_type]"
+                      name="record_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_flag]"
+                      length="1"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_flag]"
+                      name="bill_flag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[outstanding_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[outstanding_flag]"
+                      length="8"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[outstanding_flag]"
+                      name="outstanding_flag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]"
+                      dataType="bytes"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[HASHCOLUMN]"
+                      length="8000"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]"
+                      name="HASHCOLUMN"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[source_system_id]"
+                      dataType="i4"
+                      name="source_system_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dim_bill_key]"
+                      dataType="i4"
+                      name="dim_bill_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_number]"
+                      dataType="wstr"
+                      length="20"
+                      name="bill_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_sequence]"
+                      dataType="i4"
+                      name="bill_sequence" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[record_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="record_type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="bill_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[outstanding_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="outstanding_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[HASHCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      name="HASHCOLUMN" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[dim_bill_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[dim_bill_key]"
+                      name="dim_bill_key" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[source_system_id]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[source_system_id]"
+                      name="source_system_id" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[bill_number]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[bill_number]"
+                      name="bill_number" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[bill_sequence]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[bill_sequence]"
+                      name="bill_sequence" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[record_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[record_type]"
+                      name="record_type" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[bill_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[bill_flag]"
+                      name="bill_flag" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[dss_update_time]"
+                      name="dss_update_time" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[outstanding_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[outstanding_flag]"
+                      name="outstanding_flag" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[HASHCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[HASHCOLUMN]"
+                      name="HASHCOLUMN" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill\Update Changed Rows"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Update Changed Rows"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">exec usp_Update_dim_bill ?, ?, ?, ?, ?, ?, ?, ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_bill\Update Changed Rows.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].Columns[source_system_id]"
+                      cachedDataType="i4"
+                      cachedName="source_system_id"
+                      externalMetadataColumnId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@source_system_id]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[source_system_id]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].Columns[dss_update_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dss_update_time"
+                      externalMetadataColumnId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@dss_update_time]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dss_update_time]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].Columns[dim_bill_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_bill_key"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@dim_bill_key]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].Columns[bill_number]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="bill_number"
+                      externalMetadataColumnId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@bill_number]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_number]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].Columns[bill_sequence]"
+                      cachedDataType="i4"
+                      cachedName="bill_sequence"
+                      externalMetadataColumnId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@bill_sequence]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_sequence]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].Columns[record_type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="record_type"
+                      externalMetadataColumnId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@record_type]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[record_type]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].Columns[bill_flag]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="bill_flag"
+                      externalMetadataColumnId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@bill_flag]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[bill_flag]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].Columns[outstanding_flag]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="outstanding_flag"
+                      externalMetadataColumnId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@outstanding_flag]"
+                      lineageId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[outstanding_flag]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@source_system_id]"
+                      dataType="i4"
+                      name="@source_system_id">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="@dss_update_time">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@dim_bill_key]"
+                      dataType="i4"
+                      name="@dim_bill_key">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@bill_number]"
+                      dataType="wstr"
+                      length="20"
+                      name="@bill_number">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@bill_sequence]"
+                      dataType="i4"
+                      name="@bill_sequence">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@record_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="@record_type">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@bill_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="@bill_flag">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input].ExternalColumns[@outstanding_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="@outstanding_flag">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill\Update Changed Rows.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill\Update Changed Rows.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\Update Changed Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill\Update Changed Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill\Update Changed Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - dim_bill.Paths[Lookup Match Output]"
+              endId="Package\DFT - dim_bill\Lookup Changed Hash Value.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT - dim_bill\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - dim_bill.Paths[Lookup No Match Output]"
+              endId="Package\DFT - dim_bill\Row Count Inserted.Inputs[Row Count Input 1]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - dim_bill\Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - dim_bill.Paths[Lookup No Match Output1]"
+              endId="Package\DFT - dim_bill\Row Count Changed.Inputs[Row Count Input 1]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - dim_bill\Lookup Changed Hash Value.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - dim_bill.Paths[OLE DB Source Output]"
+              endId="Package\DFT - dim_bill\Lookup.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_bill\SRC - dim_bill.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_bill.Paths[Row Count Output 1]"
+              endId="Package\DFT - dim_bill\DEST - dim_bill.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_bill\Row Count Inserted.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - dim_bill.Paths[Row Count Output 11]"
+              endId="Package\DFT - dim_bill\Update Changed Rows.Inputs[OLE DB Command Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_bill\Row Count Changed.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - dim_bill_deletes"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{1389B74F-42E2-433B-AA09-068E417E326E}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - dim_bill_deletes"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_bill_deletes.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{C1115CD1-4BC6-4F19-9AEA-9EE834A7380E}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{693006BA-9C3F-4D9D-8AE7-30DE751C30B6}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_bill_deletes.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{7402F874-06F6-466A-8FF5-62F56E7F01DC}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{2A208ED7-4DC2-4B38-A4E5-2016A16BDC36}"
+                  SQLTask:SqlStatementSource="exec uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_CODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_DESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_bill_deletes.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{CFCE9686-9771-4948-BDC1-D5C8B12B397A}"
+          DTS:EventID="685659520"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{B737D9C8-6507-4D79-9B12-1D3448BB76B5}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_bill_deletes.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{1BC12236-B21C-4A88-84E4-32A4255E7441}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{2A208ED7-4DC2-4B38-A4E5-2016A16BDC36}"
+                  SQLTask:SqlStatementSource="uspAuditEnd ?, ?, ?, null, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCount"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountChanged"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountExpired"
+                    SQLTask:DtsVariableName="User::RowCountDeleted"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_bill_deletes.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{FFF8303D-67E6-426C-8033-7498975C494E}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{51B136C2-0BC3-436B-9BE6-CC0B25E76025}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_bill_deletes.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{8033002F-71B3-4431-9058-8FC69A6EEE51}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{2A208ED7-4DC2-4B38-A4E5-2016A16BDC36}"
+                  SQLTask:SqlStatementSource="uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - dim_bill_deletes\Conditional Split"
+              componentClassID="{7F88F654-4E20-4D14-84F4-AF9C925D3087}"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill_deletes\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_bill_deletes\Conditional Split.Inputs[Conditional Split Input].Columns[DEST_dim_bill_key]"
+                      cachedDataType="i4"
+                      cachedName="DEST_dim_bill_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_bill_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_bill_deletes\Conditional Split.Inputs[Conditional Split Input].Columns[dim_bill_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_bill_key"
+                      lineageId="Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_bill_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\Conditional Split.Outputs[DeletedRows]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="DeletedRows"
+                  synchronousInputId="Package\DFT - dim_bill_deletes\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_bill_key]}) &amp;&amp; ![ISNULL](#{Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_bill_key]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(dim_bill_key) &amp;&amp; !ISNULL(DEST_dim_bill_key)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\Conditional Split.Outputs[None]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="None"
+                  synchronousInputId="Package\DFT - dim_bill_deletes\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\DFT - dim_bill_deletes\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill_deletes\Delete Deleted Rows"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Delete Deleted Rows"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">delete from dim_bill where dim_bill_key = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].Columns[DEST_dim_bill_key]"
+                      cachedDataType="i4"
+                      cachedName="DEST_dim_bill_key"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_bill_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill_deletes\Deleted Row Count"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Deleted Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountDeleted</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill_deletes\Deleted Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\Deleted Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_bill_deletes\Deleted Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill_deletes\Merge Join"
+              componentClassID="{14D43A4F-D7BD-489D-829E-6DE35750CFE4}"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_bill_deletes\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_bill_deletes\Merge Join.Inputs[Merge Join Left Input].Columns[dim_bill_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_bill_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT - dim_bill_deletes\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_bill_deletes\Merge Join.Inputs[Merge Join Right Input].Columns[dim_bill_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_bill_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_bill_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_bill_key]"
+                      name="DEST_dim_bill_key"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - dim_bill_deletes\Merge Join.Inputs[Merge Join Left Input].Columns[dim_bill_key]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_bill_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_bill_key]"
+                      name="dim_bill_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - dim_bill_deletes\Merge Join.Inputs[Merge Join Right Input].Columns[dim_bill_key]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - DEST_dim_bill"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_bill]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dim_bill_key]"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]"
+                      name="dim_bill_key"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dim_bill_key]"
+                      dataType="i4"
+                      name="dim_bill_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[source_system_id]"
+                      dataType="i4"
+                      name="source_system_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_number]"
+                      dataType="wstr"
+                      length="20"
+                      name="bill_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_sequence]"
+                      dataType="i4"
+                      name="bill_sequence" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[record_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="record_type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="bill_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_address]"
+                      dataType="i4"
+                      name="bill_address" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[outstanding_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="outstanding_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[exchange_rate]"
+                      dataType="numeric"
+                      name="exchange_rate"
+                      precision="11"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output].ExternalColumns[currency_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="currency_code" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Error Output].Columns[dim_bill_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Error Output].Columns[dim_bill_key]"
+                      name="dim_bill_key" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_bill_deletes\SRC - dim_bill"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - dim_bill"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_bill]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dim_bill_key]"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].Columns[dim_bill_key]"
+                      name="dim_bill_key"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dim_bill_key]"
+                      dataType="i4"
+                      name="dim_bill_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[source_system_id]"
+                      dataType="i4"
+                      name="source_system_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_number]"
+                      dataType="wstr"
+                      length="20"
+                      name="bill_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_sequence]"
+                      dataType="i4"
+                      name="bill_sequence" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[record_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="record_type" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="bill_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[outstanding_flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="outstanding_flag" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[matter_reference]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="matter_reference" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output].ExternalColumns[bill_address_id]"
+                      dataType="i4"
+                      name="bill_address_id" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[dim_bill_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Error Output].Columns[dim_bill_key]"
+                      name="dim_bill_key" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - dim_bill_deletes.Paths[DeletedRows]"
+              endId="Package\DFT - dim_bill_deletes\Deleted Row Count.Inputs[Row Count Input 1]"
+              name="DeletedRows"
+              startId="Package\DFT - dim_bill_deletes\Conditional Split.Outputs[DeletedRows]" />
+            <path
+              refId="Package\DFT - dim_bill_deletes.Paths[Merge Join Output]"
+              endId="Package\DFT - dim_bill_deletes\Conditional Split.Inputs[Conditional Split Input]"
+              name="Merge Join Output"
+              startId="Package\DFT - dim_bill_deletes\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\DFT - dim_bill_deletes.Paths[OLE DB Source Output]"
+              endId="Package\DFT - dim_bill_deletes\Merge Join.Inputs[Merge Join Left Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_bill_deletes.Paths[OLE DB Source Output1]"
+              endId="Package\DFT - dim_bill_deletes\Merge Join.Inputs[Merge Join Right Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_bill_deletes\SRC - dim_bill.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_bill_deletes.Paths[Row Count Output 1]"
+              endId="Package\DFT - dim_bill_deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_bill_deletes\Deleted Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{E6315B04-0A1A-4DDA-BEDA-0A5DBACE3724}"
+      DTS:From="Package\Charge Lookback Hours"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - dim_bill" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{F83AE006-7012-4AFE-9C77-16D92253BCC1}"
+      DTS:From="Package\DFT - dim_bill"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DFT - dim_bill_deletes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="186,42"
+          Id="Package\Charge Lookback Hours"
+          TopLeft="210.146489506638,66.2292046422385" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\DFT - dim_bill"
+          TopLeft="210.146489506638,153" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\DFT - dim_bill_deletes"
+          TopLeft="210.146489506638,255" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="303.146489506638,108.229204642239">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.7707953577615"
+              Start="0,0"
+              End="0,37.2707953577615">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.2707953577615" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="303.146489506638,195">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - dim_bill">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="216,42"
+          Id="Package\DFT - dim_bill\Lookup Changed Hash Value"
+          TopLeft="332,470.094353807548" />
+        <NodeLayout
+          Size="188,42"
+          Id="Package\DFT - dim_bill\Update Changed Rows"
+          TopLeft="512.209269766446,823.932393350019" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\DFT - dim_bill\Row Count Inserted"
+          TopLeft="38.6970478062403,553.133392305659" />
+        <NodeLayout
+          Size="115,42"
+          Id="Package\DFT - dim_bill\Lookup"
+          TopLeft="38.6970478062403,470.094353807548" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\DFT - dim_bill\SRC - dim_bill"
+          TopLeft="53.1986109646435,331.088234020692" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\DFT - dim_bill\Row Count Changed"
+          TopLeft="512.209269766446,734.833997034232" />
+        <NodeLayout
+          Size="153,42"
+          Id="Package\DFT - dim_bill\DEST - dim_bill"
+          TopLeft="38.6970478062403,638.362136306875" />
+        <EdgeLayout
+          Id="Package\DFT - dim_bill.Paths[Row Count Output 11]"
+          TopLeft="603.459269766446,776.833997034233">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.0983963157859"
+              Start="0,0"
+              End="0,39.5983963157859">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5983963157859" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_bill.Paths[Row Count Output 1]"
+          TopLeft="141.69704780624,595.133392305659">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-26.5,43.228744001216"
+              Start="0,0"
+              End="-26.5,35.728744001216">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.614372000608" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.614372000608"
+                    Point2="0,21.614372000608"
+                    Point3="-4,21.614372000608" />
+                  <mssgle:LineSegment
+                    End="-22.5,21.614372000608" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.5,21.614372000608"
+                    Point2="-26.5,21.614372000608"
+                    Point3="-26.5,25.614372000608" />
+                  <mssgle:LineSegment
+                    End="-26.5,35.728744001216" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_bill.Paths[OLE DB Source Output]"
+          TopLeft="156.198610964644,373.088234020692">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-60.0015631584032,97.0061197868559"
+              Start="0,0"
+              End="-60.0015631584032,89.5061197868559">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.503059893428" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,44.503059893428"
+                    Point2="0,48.503059893428"
+                    Point3="-4,48.503059893428" />
+                  <mssgle:LineSegment
+                    End="-56.0015631584032,48.503059893428" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-56.0015631584032,48.503059893428"
+                    Point2="-60.0015631584032,48.503059893428"
+                    Point3="-60.0015631584032,52.503059893428" />
+                  <mssgle:LineSegment
+                    End="-60.0015631584032,89.5061197868559" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_bill.Paths[Lookup No Match Output1]"
+          TopLeft="440,512.094353807548">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="160.709269766446,222.739643226684"
+              Start="0,0"
+              End="160.709269766446,215.239643226684">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,107.369821613342" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,107.369821613342"
+                    Point2="0,111.369821613342"
+                    Point3="4,111.369821613342" />
+                  <mssgle:LineSegment
+                    End="156.709269766446,111.369821613342" />
+                  <mssgle:CubicBezierSegment
+                    Point1="156.709269766446,111.369821613342"
+                    Point2="160.709269766446,111.369821613342"
+                    Point3="160.709269766446,115.369821613342" />
+                  <mssgle:LineSegment
+                    End="160.709269766446,215.239643226684" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="24.548248164473,116.369821613342,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_bill.Paths[Lookup No Match Output]"
+          TopLeft="96.1970478062403,512.094353807548">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="45.5,41.0390384981109"
+              Start="0,0"
+              End="45.5,33.5390384981109">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5195192490555" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.5195192490555"
+                    Point2="0,20.5195192490555"
+                    Point3="4,20.5195192490555" />
+                  <mssgle:LineSegment
+                    End="41.5,20.5195192490555" />
+                  <mssgle:CubicBezierSegment
+                    Point1="41.5,20.5195192490555"
+                    Point2="45.5,20.5195192490555"
+                    Point3="45.5,24.5195192490555" />
+                  <mssgle:LineSegment
+                    End="45.5,33.5390384981109" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-33.05638671875,25.5195192490555,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_bill.Paths[Lookup Match Output]"
+          TopLeft="153.69704780624,493.927687140882">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="178.30295219376,0"
+              Start="0,0"
+              End="170.80295219376,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="170.80295219376,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="37.21008937813,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_bill.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_bill.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_bill.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_bill.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_bill.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_bill.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_bill\Lookup Changed Hash Value">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[vw_dim_bill_lookup]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">1</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_bill\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[dim_bill]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_bill\SRC - dim_bill">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_bill\DEST - dim_bill">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT - dim_bill_deletes">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - dim_bill_deletes\Merge Join"
+          TopLeft="299,263" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\DFT - dim_bill_deletes\Delete Deleted Rows"
+          TopLeft="413,534" />
+        <NodeLayout
+          Size="178,42"
+          Id="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill"
+          TopLeft="129,124" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\DFT - dim_bill_deletes\Deleted Row Count"
+          TopLeft="359,456" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\DFT - dim_bill_deletes\SRC - dim_bill"
+          TopLeft="384.616573266849,106.852851727746" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\DFT - dim_bill_deletes\Conditional Split"
+          TopLeft="346,359" />
+        <EdgeLayout
+          Id="Package\DFT - dim_bill_deletes.Paths[Row Count Output 1]"
+          TopLeft="445,498">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="57.5,36"
+              Start="0,0"
+              End="57.5,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14"
+                    Point2="0,18"
+                    Point3="4,18" />
+                  <mssgle:LineSegment
+                    End="53.5,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="53.5,18"
+                    Point2="57.5,18"
+                    Point3="57.5,22" />
+                  <mssgle:LineSegment
+                    End="57.5,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_bill_deletes.Paths[OLE DB Source Output1]"
+          TopLeft="458.116573266849,148.852851727746">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-72.4499066001827,114.147148272254"
+              Start="0,0"
+              End="-72.4499066001827,106.647148272254">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,63.6680699338512" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,63.6680699338512"
+                    Point2="0,67.6680699338512"
+                    Point3="-4,67.6680699338512" />
+                  <mssgle:LineSegment
+                    End="-68.4499066001827,67.6680699338512" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-68.4499066001827,67.6680699338512"
+                    Point2="-72.4499066001827,67.6680699338512"
+                    Point3="-72.4499066001827,71.6680699338512" />
+                  <mssgle:LineSegment
+                    End="-72.4499066001827,106.647148272254" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_bill_deletes.Paths[OLE DB Source Output]"
+          TopLeft="218,166">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="147,97"
+              Start="0,0"
+              End="147,89.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,44.5"
+                    Point2="0,48.5"
+                    Point3="4,48.5" />
+                  <mssgle:LineSegment
+                    End="143,48.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="143,48.5"
+                    Point2="147,48.5"
+                    Point3="147,52.5" />
+                  <mssgle:LineSegment
+                    End="147,89.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_bill_deletes.Paths[Merge Join Output]"
+          TopLeft="365,305">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="59.5,54"
+              Start="0,0"
+              End="59.5,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23"
+                    Point2="0,27"
+                    Point3="4,27" />
+                  <mssgle:LineSegment
+                    End="55.5,27" />
+                  <mssgle:CubicBezierSegment
+                    Point1="55.5,27"
+                    Point2="59.5,27"
+                    Point3="59.5,31" />
+                  <mssgle:LineSegment
+                    End="59.5,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_bill_deletes.Paths[DeletedRows]"
+          TopLeft="424.5,401">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="20.5,55"
+              Start="0,0"
+              End="20.5,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5"
+                    Point2="0,27.5"
+                    Point3="4,27.5" />
+                  <mssgle:LineSegment
+                    End="16.5,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16.5,27.5"
+                    Point2="20.5,27.5"
+                    Point3="20.5,31.5" />
+                  <mssgle:LineSegment
+                    End="20.5,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-18.907578125,32.5,58.31515625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_bill_deletes.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_bill_deletes.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_bill_deletes.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_bill_deletes.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_bill_deletes.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_bill_deletes.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_bill_deletes\SRC - DEST_dim_bill">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_bill_deletes\SRC - dim_bill">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

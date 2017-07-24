@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/2/2016 10:06:58 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="L06131"
+  DTS:CreatorName="SBC\ewilli02"
+  DTS:DTSID="{D82D73F6-FAF5-4C39-8384-D8AA5EECDD3F}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="fact_finance_summary"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{383A001E-0F19-4855-A3DD-B90912404048}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SQL2008svr.red_dw_replication]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A48EED3F-A2E1-45C6-9247-E9D5ECF11FD3}"
+      DTS:ObjectName="SQL2008svr.red_dw_replication">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008svr;Initial Catalog=red_dw_replication;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{66CC3E2A-AEE7-43B5-9C73-AD7BDF620133}"
+      DTS:ObjectName="svr-liv-dwh-01.red_dw">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dwh-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT_Copy from red_dw to red_dw_replication"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2F314C7F-E288-47CD-89F8-162A608EED04}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_Copy from red_dw to red_dw_replication"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST_fact_finance_summary"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[fact_finance_summary]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SQL2008svr.red_dw_replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[SQL2008svr.red_dw_replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].Columns[client_code]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="client_code"
+                      externalMetadataColumnId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].ExternalColumns[client_code]"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[client_code]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].Columns[matter_number]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter_number"
+                      externalMetadataColumnId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].ExternalColumns[matter_number]"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[matter_number]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].Columns[wip]"
+                      cachedDataType="numeric"
+                      cachedName="wip"
+                      cachedPrecision="13"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].ExternalColumns[wip]"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[wip]" />
+                    <inputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].Columns[disbursement_balance]"
+                      cachedDataType="numeric"
+                      cachedName="disbursement_balance"
+                      cachedPrecision="13"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].ExternalColumns[disbursement_balance]"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[disbursement_balance]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].ExternalColumns[client_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="client_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].ExternalColumns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="matter_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].ExternalColumns[wip]"
+                      dataType="numeric"
+                      name="wip"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input].ExternalColumns[disbursement_balance]"
+                      dataType="numeric"
+                      name="disbursement_balance"
+                      precision="13"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_fact_finance_summary"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT [client_code]
+      ,[matter_number]
+      ,[wip]
+      ,[disbursement_balance]
+FROM red_dw.dbo.fact_finance_summary</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[client_code]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].ExternalColumns[client_code]"
+                      length="8"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[client_code]"
+                      name="client_code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].ExternalColumns[matter_number]"
+                      length="8"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[matter_number]"
+                      name="matter_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[wip]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].ExternalColumns[wip]"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[wip]"
+                      name="wip"
+                      precision="13"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[disbursement_balance]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].ExternalColumns[disbursement_balance]"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].Columns[disbursement_balance]"
+                      name="disbursement_balance"
+                      precision="13"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].ExternalColumns[client_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="client_code" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].ExternalColumns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="matter_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].ExternalColumns[wip]"
+                      dataType="numeric"
+                      name="wip"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output].ExternalColumns[disbursement_balance]"
+                      dataType="numeric"
+                      name="disbursement_balance"
+                      precision="13"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[client_code]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[client_code]"
+                      name="client_code" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[matter_number]"
+                      name="matter_number" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[wip]"
+                      dataType="numeric"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[wip]"
+                      name="wip"
+                      precision="13"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[disbursement_balance]"
+                      dataType="numeric"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[disbursement_balance]"
+                      name="disbursement_balance"
+                      precision="13"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT_Copy from red_dw to red_dw_replication.Paths[OLE DB Source Output]"
+              endId="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST_Truncate fact_finance_summary on red_dw_replication"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{37C1EF76-F956-4633-B001-CCECB9647F3E}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST_Truncate fact_finance_summary on red_dw_replication"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A48EED3F-A2E1-45C6-9247-E9D5ECF11FD3}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE red_dw_replication.dbo.fact_finance_summary" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{AFC27DC1-5317-4B6D-83EB-63BCFBE6B8F8}"
+      DTS:From="Package\EST_Truncate fact_finance_summary on red_dw_replication"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT_Copy from red_dw to red_dw_replication" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="298,42"
+          Id="Package\DFT_Copy from red_dw to red_dw_replication"
+          TopLeft="339.057915069085,192.896612728234" />
+        <NodeLayout
+          Size="364,42"
+          Id="Package\EST_Truncate fact_finance_summary on red_dw_replication"
+          TopLeft="264.389660564989,56.1351734903298" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="446.389660564989,98.1351734903298">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="41.6682545040959,94.7614392379042"
+              Start="0,0"
+              End="41.6682545040959,87.2614392379042">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.3807196189521" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43.3807196189521"
+                    Point2="0,47.3807196189521"
+                    Point3="4,47.3807196189521" />
+                  <mssgle:LineSegment
+                    End="37.6682545040959,47.3807196189521" />
+                  <mssgle:CubicBezierSegment
+                    Point1="37.6682545040959,47.3807196189521"
+                    Point2="41.6682545040959,47.3807196189521"
+                    Point3="41.6682545040959,51.3807196189521" />
+                  <mssgle:LineSegment
+                    End="41.6682545040959,87.2614392379042" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT_Copy from red_dw to red_dw_replication">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="212,42"
+          Id="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary"
+          TopLeft="351,131" />
+        <NodeLayout
+          Size="219,42"
+          Id="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary"
+          TopLeft="400,296" />
+        <EdgeLayout
+          Id="Package\DFT_Copy from red_dw to red_dw_replication.Paths[OLE DB Source Output]"
+          TopLeft="457,173">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="52.5,123"
+              Start="0,0"
+              End="52.5,115.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,57.5"
+                    Point2="0,61.5"
+                    Point3="4,61.5" />
+                  <mssgle:LineSegment
+                    End="48.5,61.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="48.5,61.5"
+                    Point2="52.5,61.5"
+                    Point3="52.5,65.5" />
+                  <mssgle:LineSegment
+                    End="52.5,115.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Copy from red_dw to red_dw_replication\SRC_fact_finance_summary">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Copy from red_dw to red_dw_replication\DEST_fact_finance_summary">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

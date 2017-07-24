@@ -1,0 +1,2894 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/3/2015 10:11:48 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\DAbram"
+  DTS:DTSID="{54E6748C-EF39-4EAE-890D-B11A1E8A765B}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="dim_matter_header_current_HB"
+  DTS:PackageType="5"
+  DTS:VersionBuild="40"
+  DTS:VersionGUID="{2BBD7251-7A93-434E-B509-559433247188}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8A5A6F9D-717F-4970-9FD3-6FEA6C27BF9F}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Audit_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Audit_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008SVR;Initial Catalog=red_dw_replication;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Red_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0509BBED-4102-4D09-A012-985610E2C313}"
+      DTS:ObjectName="CM_Red_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Red_DW_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Red_DW_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dwh-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{45A5D3EA-2C0D-4786-A0B3-5FF0D24254FE}"
+      DTS:ObjectName="CM_Red_dw_Replication">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Red_dw_Replication_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Red_dw_Replication_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008SVR;Initial Catalog=red_dw_replication;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="ParentAuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{29577CF5-68B7-47AA-BF97-3E1F7A4D556D}"
+      DTS:ObjectName="ParentAuditID" />
+  </DTS:Configurations>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{55CA5239-CCB8-4C3B-A3BF-937E8EE1B63C}"
+      DTS:ObjectName="CM_Audit_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw_replication</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{1FF9AE6B-D3AB-4357-87AE-B786A16C4B4C}"
+      DTS:ObjectName="CM_Audit_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">SQL2008SVR</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{A632593F-4CC9-4A4C-B9D5-A1B43192FBEE}"
+      DTS:ObjectName="CM_Red_DW_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{226E0A16-41E3-49F3-862F-8FEFF11F30DA}"
+      DTS:ObjectName="CM_Red_dw_Replication_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw_replication</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{3FA53C20-9FF9-4A2B-A968-B832D5B32E0D}"
+      DTS:ObjectName="CM_Red_dw_Replication_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">SQL2008SVR</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{6DE4FE5C-0474-4522-8E3B-4D5EAAF0E39A}"
+      DTS:ObjectName="CM_Red_DW_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">svr-liv-dwh-01</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{85D6663D-126C-4BDC-8BA7-C145FF8A07F8}"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">0</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CFB43895-3BA2-40BA-AD00-5AF01DA5FDDD}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{58126A16-8984-46FC-B8D5-F538E8DE9DA1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9942B886-B1E9-4061-8342-FF74AB2258BB}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{57B7E1D7-9C6D-4AEC-AF2D-C893F07FD959}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1947FC59-A69E-44B6-A8B2-D115B7FE2D1A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B5C93F13-C770-4BD1-936A-75FE3FAAA558}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFullPath">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8C5B1C3B-5BEB-4E74-99B9-7FD6B8AD7C31}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8D505009-3868-4FB2-BF1D-3FEAC7A03F5C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4C3F16C8-CE66-4880-8933-00947B3FB583}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::ParentAuditID]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DF21CBD9-9455-4002-8181-2C238784380B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1E2CF0E0-2E31-4917-9A09-CCDA5A03A6D6}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountChanged">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C502D2CB-1619-4431-A341-9ECF3696F009}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountDeleted">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Charge Lookback Hours"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F91060E2-D4B5-42F6-A288-F9AB54DDB039}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Charge Lookback Hours"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{45A5D3EA-2C0D-4786-A0B3-5FF0D24254FE}"
+          SQLTask:SqlStatementSource="SELECT&#xA;value AS LookBackHours&#xA;FROM  [dbo].[ControlTable]&#xA;WHERE controlitem = 'Lookback_hours'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LookbackHours"
+            SQLTask:DtsVariableName="User::LookbackHours" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - dim_matter_header_current"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{8730CAD5-7468-442F-A0B3-A1EFFD95CE05}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - dim_matter_header_current"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_matter_header_current.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{8D49AD7B-581D-40F9-9DED-B00087241789}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{696DB858-4C50-42A4-A574-14FE02CA0636}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_matter_header_current.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{E793F756-77D1-44F3-8048-3E5565A4ED74}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{8A5A6F9D-717F-4970-9FD3-6FEA6C27BF9F}"
+                  SQLTask:SqlStatementSource="exec uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_CODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_DESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_matter_header_current.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{CB8EC64E-8B40-4072-AA0C-15F2180FC23A}"
+          DTS:EventID="685659520"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{B4F08C15-4589-4397-B001-632719F7722F}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_matter_header_current.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{EEC04528-1336-4E56-A9EB-8010B144D2FB}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{8A5A6F9D-717F-4970-9FD3-6FEA6C27BF9F}"
+                  SQLTask:SqlStatementSource="uspAuditEnd ?, ?, ?, null, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCount"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountChanged"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountExpired"
+                    SQLTask:DtsVariableName="User::RowCountDeleted"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_matter_header_current.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{23792696-E7DA-4718-8C6B-933384402498}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{4D05AB5F-3864-457C-8303-912ABC09ECFE}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_matter_header_current.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{A10B21F3-4402-4A4D-B354-3F7C9EF3C262}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{8A5A6F9D-717F-4970-9FD3-6FEA6C27BF9F}"
+                  SQLTask:SqlStatementSource="uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST - dim_matter_header_current"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_matter_header_current]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].Columns[dss_update_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dss_update_time"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].ExternalColumns[dss_update_time]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dss_update_time]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].Columns[dim_matter_header_curr_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_matter_header_curr_key"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].ExternalColumns[dim_matter_header_curr_key]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].Columns[source_system_id]"
+                      cachedDataType="i4"
+                      cachedName="source_system_id"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].ExternalColumns[source_system_id]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[source_system_id]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].Columns[matter_number]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter_number"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].ExternalColumns[matter_number]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[matter_number]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].ExternalColumns[source_system_id]"
+                      dataType="i4"
+                      name="source_system_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].ExternalColumns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      name="dim_matter_header_curr_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].ExternalColumns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="matter_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input].ExternalColumns[matter_reference]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="matter_reference" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current\Lookup"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[dim_matter_header_current]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[dim_matter_header_current]) [refTable]
+where [refTable].[dim_matter_header_curr_key] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">3072</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">4096</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="source_system_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="dim_matter_header_curr_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="dim_department_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="dim_office_bank_account_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="dim_matter_worktype_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="dim_matter_group_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="client_code" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="case_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="matter_number" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="date_closed_practice_management" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="date_opened_case_management" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="dss_update_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="client_group_code" dataType="DT_STR" length="40" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="client_group_name" dataType="DT_STR" length="40" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="client_name" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="matter_description" dataType="DT_STR" length="200" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="matter_reference" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="date_opened_practice_management" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="date_closed_case_management" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="branch_code" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="branch_name" dataType="DT_STR" length="40" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="matter_partner_code" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="matter_partner_full_name" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="fee_earner_code" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="matter_owner_full_name" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="department_code" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="fixed_fee" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="fixed_fee_amount" dataType="DT_NUMERIC" length="0" precision="13" scale="2" codePage="0"/&gt;&lt;referenceColumn name="delegated" dataType="DT_STR" length="60" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="dim_client_bank_account_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_matter_header_current\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\Lookup.Inputs[Lookup Input].Columns[dim_matter_header_curr_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_matter_header_curr_key"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">dim_matter_header_curr_key</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current\Lookup 1"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup 1"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[vw_dim_matter_header_current_lookup]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[vw_dim_matter_header_current_lookup]) [refTable]
+where [refTable].[HASHCOLUMN] = ? and [refTable].[dim_matter_header_curr_key] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">3072</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">4096</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="source_system_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="dim_matter_header_curr_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="matter_number" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="dss_update_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HASHCOLUMN" dataType="DT_BYTES" length="8000" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]};#{Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_matter_header_current\Lookup 1.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current\Lookup 1.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\Lookup 1.Inputs[Lookup Input].Columns[dim_matter_header_curr_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_matter_header_curr_key"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">dim_matter_header_curr_key</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\Lookup 1.Inputs[Lookup Input].Columns[HASHCOLUMN]"
+                      cachedDataType="bytes"
+                      cachedLength="8000"
+                      cachedName="HASHCOLUMN"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">HASHCOLUMN</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Lookup 1.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Lookup 1.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Lookup 1.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Lookup 1.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Lookup 1.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Lookup 1.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current\Row Count Changed"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count Changed">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountChanged</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current\Row Count Changed.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Row Count Changed.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Row Count Changed.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current\Row Count Inserted"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count Inserted">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCount</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current\Row Count Inserted.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Row Count Inserted.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Row Count Inserted.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - dim_matter_header_current"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_bank_account]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+     [source_system_id]
+      ,[dim_matter_header_curr_key]
+      ,[matter_number]
+      ,[dss_update_time]
+--      ,[matter_reference]
+--       ,[client_code]
+	  ,HASHBYTES('md5', (SELECT
+	  [source_system_id]
+--      ,[dim_matter_header_curr_key]
+      ,[matter_number]
+      ,[dss_update_time]
+--      ,[matter_reference] 
+--,[client_code]
+FOR XML RAW) ) AS HASHCOLUMN
+  FROM [dbo].[dim_matter_header_current]
+ WHERE DATEDIFF(HOUR, [dss_update_time], GETDATE()) &lt; ?</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"Parameter0:Input",{8D505009-3868-4FB2-BF1D-3FEAC7A03F5C};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dss_update_time]"
+                      name="dss_update_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]"
+                      dataType="bytes"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[HASHCOLUMN]"
+                      length="8000"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]"
+                      name="HASHCOLUMN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[dim_matter_header_curr_key]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]"
+                      name="dim_matter_header_curr_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[source_system_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[source_system_id]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[source_system_id]"
+                      name="source_system_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[matter_number]"
+                      length="8"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[matter_number]"
+                      name="matter_number"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[HASHCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      name="HASHCOLUMN" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      name="dim_matter_header_curr_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[source_system_id]"
+                      dataType="i4"
+                      name="source_system_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="matter_number" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[dim_matter_header_curr_key]"
+                      name="dim_matter_header_curr_key" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[source_system_id]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[source_system_id]"
+                      name="source_system_id" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[matter_number]"
+                      name="matter_number" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[dss_update_time]"
+                      name="dss_update_time" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[HASHCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[HASHCOLUMN]"
+                      name="HASHCOLUMN" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Update Changed Rows - dim_matter_header_current"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">exec dbo.usp_update_dim_matter_header_current ? ,? ,? ,? </property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].Columns[source_system_id]"
+                      cachedDataType="i4"
+                      cachedName="source_system_id"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].ExternalColumns[@source_system_id]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[source_system_id]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].Columns[dim_matter_header_curr_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_matter_header_curr_key"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].ExternalColumns[@dim_matter_header_curr_key]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].Columns[dss_update_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dss_update_time"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].ExternalColumns[@dss_update_time]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dss_update_time]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].Columns[matter_number]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="matter_number"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].ExternalColumns[@matter_number]"
+                      lineageId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[matter_number]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].ExternalColumns[@source_system_id]"
+                      dataType="i4"
+                      name="@source_system_id">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].ExternalColumns[@dim_matter_header_curr_key]"
+                      dataType="i4"
+                      name="@dim_matter_header_curr_key">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].ExternalColumns[@matter_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="@matter_number">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input].ExternalColumns[@dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="@dss_update_time">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - dim_matter_header_current.Paths[Lookup Match Output]"
+              endId="Package\DFT - dim_matter_header_current\Lookup 1.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT - dim_matter_header_current\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - dim_matter_header_current.Paths[Lookup No Match Output]"
+              endId="Package\DFT - dim_matter_header_current\Row Count Inserted.Inputs[Row Count Input 1]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - dim_matter_header_current\Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - dim_matter_header_current.Paths[Lookup No Match Output1]"
+              endId="Package\DFT - dim_matter_header_current\Row Count Changed.Inputs[Row Count Input 1]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - dim_matter_header_current\Lookup 1.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - dim_matter_header_current.Paths[OLE DB Source Output]"
+              endId="Package\DFT - dim_matter_header_current\Lookup.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_matter_header_current.Paths[Row Count Output 1]"
+              endId="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current.Inputs[OLE DB Command Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_matter_header_current\Row Count Changed.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - dim_matter_header_current.Paths[Row Count Output 11]"
+              endId="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_matter_header_current\Row Count Inserted.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - dim_matter_header_current_Deletes"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{8ABF9EE1-4FEF-45E0-ABFF-D5716E5257CB}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - dim_matter_header_current_Deletes"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{8D7D15BE-E605-48C1-9A22-1A4E6DA68CF4}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{09567F9E-3502-48C6-971D-CDB97033164C}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{BE4D26EC-2867-4068-8929-0EB3AECF478A}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{8A5A6F9D-717F-4970-9FD3-6FEA6C27BF9F}"
+                  SQLTask:SqlStatementSource="exec uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_CODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_DESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{439058FE-C74B-4A11-9817-6D8546F7329E}"
+          DTS:EventID="685659520"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{617A5627-D049-4B7E-89E0-D6B55890F25D}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{7DD48172-9B3E-43B1-8815-12F07F2FFA95}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{8A5A6F9D-717F-4970-9FD3-6FEA6C27BF9F}"
+                  SQLTask:SqlStatementSource="uspAuditEnd ?, ?, ?, null, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCount"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountChanged"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountExpired"
+                    SQLTask:DtsVariableName="User::RowCountDeleted"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{9EF5D19C-7CC5-46A2-8764-72BEA737AF0E}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{D3FE986C-3E22-472E-BC26-E27D82E17325}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{5C9550F5-8CAA-415D-91B5-A891D0A6F6D9}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{8A5A6F9D-717F-4970-9FD3-6FEA6C27BF9F}"
+                  SQLTask:SqlStatementSource="uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split"
+              componentClassID="{7F88F654-4E20-4D14-84F4-AF9C925D3087}"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Inputs[Conditional Split Input].Columns[DEST_dim_matter_header_curr_key]"
+                      cachedDataType="i4"
+                      cachedName="DEST_dim_matter_header_curr_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_matter_header_curr_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Inputs[Conditional Split Input].Columns[dim_matter_header_curr_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_matter_header_curr_key"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_matter_header_curr_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Outputs[DeletedRows]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="DeletedRows"
+                  synchronousInputId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_matter_header_curr_key]}) &amp;&amp; ![ISNULL](#{Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_matter_header_curr_key]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(dim_matter_header_curr_key) &amp;&amp; !ISNULL(DEST_dim_matter_header_curr_key)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Outputs[None]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="None"
+                  synchronousInputId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Delete Deleted Rows"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">delete from dim_matter_header_current where dim_matter_header_curr_key = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].Columns[DEST_dim_matter_header_curr_key]"
+                      cachedDataType="i4"
+                      cachedName="DEST_dim_matter_header_curr_key"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_matter_header_curr_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current_Deletes\Merge Join"
+              componentClassID="{14D43A4F-D7BD-489D-829E-6DE35750CFE4}"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Inputs[Merge Join Left Input].Columns[dim_matter_header_curr_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_matter_header_curr_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Inputs[Merge Join Right Input].Columns[dim_matter_header_curr_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_matter_header_curr_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_matter_header_curr_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_matter_header_curr_key]"
+                      name="DEST_dim_matter_header_curr_key"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - dim_matter_header_current_Deletes\Merge Join.Inputs[Merge Join Left Input].Columns[dim_matter_header_curr_key]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_matter_header_curr_key]"
+                      name="dim_matter_header_curr_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - dim_matter_header_current_Deletes\Merge Join.Inputs[Merge Join Right Input].Columns[dim_matter_header_curr_key]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current_Deletes\Row Count"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountDeleted</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_matter_header_current_Deletes\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - DEST_Dim_Matter_Header_current"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_matter_header_current]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT dim_matter_header_curr_key
+FROM dbo.dim_matter_header_current
+ORDER BY dim_matter_header_curr_key</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Output].ExternalColumns[dim_matter_header_curr_key]"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]"
+                      name="dim_matter_header_curr_key"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Output].ExternalColumns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      name="dim_matter_header_curr_key" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Error Output].Columns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Error Output].Columns[dim_matter_header_curr_key]"
+                      name="dim_matter_header_curr_key" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - dim_matter_header_current"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_matter_header_current]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT dim_matter_header_curr_key
+FROM dbo.dim_matter_header_current
+ORDER BY dim_matter_header_curr_key</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[dim_matter_header_curr_key]"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].Columns[dim_matter_header_curr_key]"
+                      name="dim_matter_header_curr_key"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Output].ExternalColumns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      name="dim_matter_header_curr_key" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[dim_matter_header_curr_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Error Output].Columns[dim_matter_header_curr_key]"
+                      name="dim_matter_header_curr_key" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - dim_matter_header_current_Deletes.Paths[DeletedRows]"
+              endId="Package\DFT - dim_matter_header_current_Deletes\Row Count.Inputs[Row Count Input 1]"
+              name="DeletedRows"
+              startId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Outputs[DeletedRows]" />
+            <path
+              refId="Package\DFT - dim_matter_header_current_Deletes.Paths[Merge Join Output]"
+              endId="Package\DFT - dim_matter_header_current_Deletes\Conditional Split.Inputs[Conditional Split Input]"
+              name="Merge Join Output"
+              startId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\DFT - dim_matter_header_current_Deletes.Paths[OLE DB Source Output]"
+              endId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Inputs[Merge Join Left Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_matter_header_current_Deletes.Paths[OLE DB Source Output1]"
+              endId="Package\DFT - dim_matter_header_current_Deletes\Merge Join.Inputs[Merge Join Right Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_matter_header_current_Deletes.Paths[Row Count Output 1]"
+              endId="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_matter_header_current_Deletes\Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{2CB8974C-228D-4BC1-94A3-500904F9173A}"
+      DTS:From="Package\Charge Lookback Hours"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - dim_matter_header_current" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{AC6C9042-0507-4AE1-9882-522233248DB5}"
+      DTS:From="Package\DFT - dim_matter_header_current"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DFT - dim_matter_header_current_Deletes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="283,42"
+          Id="Package\Charge Lookback Hours"
+          TopLeft="210.146489506638,66.2292046422385" />
+        <NodeLayout
+          Size="283,42"
+          Id="Package\DFT - dim_matter_header_current"
+          TopLeft="211.146489506638,160.614602321119" />
+        <NodeLayout
+          Size="283,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes"
+          TopLeft="210.146489506638,255" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="352.146489506638,108.229204642239">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,52.3853976788805"
+              Start="0,0"
+              End="0,44.8853976788805">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.8853976788805" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="352.146489506638,202.614602321119">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,52.385397678881"
+              Start="0,0"
+              End="0,44.885397678881">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.885397678881" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - dim_matter_header_current">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="243,42"
+          Id="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current"
+          TopLeft="38.6970478062403,45.4771195623929" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\DFT - dim_matter_header_current\Row Count Inserted"
+          TopLeft="38.6970478062403,222.676335845472" />
+        <NodeLayout
+          Size="115,42"
+          Id="Package\DFT - dim_matter_header_current\Lookup"
+          TopLeft="67,134" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\DFT - dim_matter_header_current\Row Count Changed"
+          TopLeft="343.854257480129,317.24470619277" />
+        <NodeLayout
+          Size="249,42"
+          Id="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current"
+          TopLeft="33.8586491917719,328.63526549136" />
+        <NodeLayout
+          Size="124,42"
+          Id="Package\DFT - dim_matter_header_current\Lookup 1"
+          TopLeft="294,156" />
+        <NodeLayout
+          Size="330,42"
+          Id="Package\DFT - dim_matter_header_current\Update Changed Rows - dim_matter_header_current"
+          TopLeft="297.258372558601,512.289753566896" />
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current.Paths[Row Count Output 11]"
+          TopLeft="141.69704780624,264.676335845472">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="16.6616013855316,63.9589296458878"
+              Start="0,0"
+              End="16.6616013855316,56.4589296458878">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.9794648229439" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.9794648229439"
+                    Point2="0,31.9794648229439"
+                    Point3="4,31.9794648229439" />
+                  <mssgle:LineSegment
+                    End="12.6616013855316,31.9794648229439" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12.6616013855316,31.9794648229439"
+                    Point2="16.6616013855316,31.9794648229439"
+                    Point3="16.6616013855316,35.9794648229439" />
+                  <mssgle:LineSegment
+                    End="16.6616013855316,56.4589296458878" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current.Paths[Row Count Output 1]"
+          TopLeft="432.354257480129,359.24470619277">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="29.9041150784722,153.045047374126"
+              Start="0,0"
+              End="29.9041150784722,145.545047374126">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.522523687063" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,72.522523687063"
+                    Point2="0,76.522523687063"
+                    Point3="4,76.522523687063" />
+                  <mssgle:LineSegment
+                    End="25.9041150784722,76.522523687063" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25.9041150784722,76.522523687063"
+                    Point2="29.9041150784722,76.522523687063"
+                    Point3="29.9041150784722,80.522523687063" />
+                  <mssgle:LineSegment
+                    End="29.9041150784722,145.545047374126" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current.Paths[OLE DB Source Output]"
+          TopLeft="160.19704780624,87.4771195623929">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-35.6970478062403,46.5228804376071"
+              Start="0,0"
+              End="-35.6970478062403,39.0228804376071">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.2614402188036" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.2614402188036"
+                    Point2="0,23.2614402188036"
+                    Point3="-4,23.2614402188036" />
+                  <mssgle:LineSegment
+                    End="-31.6970478062403,23.2614402188036" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-31.6970478062403,23.2614402188036"
+                    Point2="-35.6970478062403,23.2614402188036"
+                    Point3="-35.6970478062403,27.2614402188036" />
+                  <mssgle:LineSegment
+                    End="-35.6970478062403,39.0228804376071" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current.Paths[Lookup No Match Output1]"
+          TopLeft="356,198">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="76.3542574801289,119.24470619277"
+              Start="0,0"
+              End="76.3542574801289,111.74470619277">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.622353096385" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,55.622353096385"
+                    Point2="0,59.622353096385"
+                    Point3="4,59.622353096385" />
+                  <mssgle:LineSegment
+                    End="72.3542574801289,59.622353096385" />
+                  <mssgle:CubicBezierSegment
+                    Point1="72.3542574801289,59.622353096385"
+                    Point2="76.3542574801289,59.622353096385"
+                    Point3="76.3542574801289,63.622353096385" />
+                  <mssgle:LineSegment
+                    End="76.3542574801289,111.74470619277" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-17.6292579786856,64.622353096385,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current.Paths[Lookup No Match Output]"
+          TopLeft="124.5,176">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="17.1970478062403,46.676335845472"
+              Start="0,0"
+              End="17.1970478062403,39.176335845472">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.338167922736" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.338167922736"
+                    Point2="0,23.338167922736"
+                    Point3="4,23.338167922736" />
+                  <mssgle:LineSegment
+                    End="13.1970478062403,23.338167922736" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.1970478062403,23.338167922736"
+                    Point2="17.1970478062403,23.338167922736"
+                    Point3="17.1970478062403,27.338167922736" />
+                  <mssgle:LineSegment
+                    End="17.1970478062403,39.176335845472" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-47.2078628156299,28.338167922736,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current.Paths[Lookup Match Output]"
+          TopLeft="182,155">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="112,22"
+              Start="0,0"
+              End="104.5,22">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="52,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="52,0"
+                    Point2="56,0"
+                    Point3="56,4" />
+                  <mssgle:LineSegment
+                    End="56,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="56,18"
+                    Point2="56,22"
+                    Point3="60,22" />
+                  <mssgle:LineSegment
+                    End="104.5,22" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="7.80861328125,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_matter_header_current.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_matter_header_current.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_matter_header_current.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_matter_header_current.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_matter_header_current.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_matter_header_current.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_matter_header_current\SRC - dim_matter_header_current">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_matter_header_current\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[dim_matter_header_current]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_matter_header_current\DEST - dim_matter_header_current">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_matter_header_current\Lookup 1">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[vw_dim_matter_header_current_lookup]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">1</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT - dim_matter_header_current_Deletes">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="179,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes\Delete Deleted Rows"
+          TopLeft="384.901406828973,461" />
+        <NodeLayout
+          Size="243,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current"
+          TopLeft="393.982223646243,67.5587783123982" />
+        <NodeLayout
+          Size="276,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current"
+          TopLeft="39.3161415235239,73.310494361486" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes\Merge Join"
+          TopLeft="313,188" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes\Row Count"
+          TopLeft="405,373" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes\Conditional Split"
+          TopLeft="350,296" />
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current_Deletes.Paths[OLE DB Source Output]"
+          TopLeft="177.316141523524,115.310494361486">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="201.683858476476,72.689505638514"
+              Start="0,0"
+              End="201.683858476476,65.189505638514">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.344752819257" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.344752819257"
+                    Point2="0,36.344752819257"
+                    Point3="4,36.344752819257" />
+                  <mssgle:LineSegment
+                    End="197.683858476476,36.344752819257" />
+                  <mssgle:CubicBezierSegment
+                    Point1="197.683858476476,36.344752819257"
+                    Point2="201.683858476476,36.344752819257"
+                    Point3="201.683858476476,40.344752819257" />
+                  <mssgle:LineSegment
+                    End="201.683858476476,65.189505638514" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current_Deletes.Paths[Merge Join Output]"
+          TopLeft="379,230">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49.5,66"
+              Start="0,0"
+              End="49.5,58.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29"
+                    Point2="0,33"
+                    Point3="4,33" />
+                  <mssgle:LineSegment
+                    End="45.5,33" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45.5,33"
+                    Point2="49.5,33"
+                    Point3="49.5,37" />
+                  <mssgle:LineSegment
+                    End="49.5,58.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current_Deletes.Paths[DeletedRows]"
+          TopLeft="428.5,338">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="42.5,35"
+              Start="0,0"
+              End="42.5,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.5"
+                    Point2="0,17.5"
+                    Point3="4,17.5" />
+                  <mssgle:LineSegment
+                    End="38.5,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="38.5,17.5"
+                    Point2="42.5,17.5"
+                    Point3="42.5,21.5" />
+                  <mssgle:LineSegment
+                    End="42.5,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-7.907578125,22.5,58.31515625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current_Deletes.Paths[Row Count Output 1]"
+          TopLeft="472.700703414486,415">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46"
+              Start="0,0"
+              End="0,38.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_matter_header_current_Deletes.Paths[OLE DB Source Output1]"
+          TopLeft="515.482223646243,109.558778312398">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-115.815556979576,78.4412216876018"
+              Start="0,0"
+              End="-115.815556979576,70.9412216876018">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5010835154047" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,42.5010835154047"
+                    Point2="0,46.5010835154047"
+                    Point3="-4,46.5010835154047" />
+                  <mssgle:LineSegment
+                    End="-111.815556979576,46.5010835154047" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-111.815556979576,46.5010835154047"
+                    Point2="-115.815556979576,46.5010835154047"
+                    Point3="-115.815556979576,50.5010835154047" />
+                  <mssgle:LineSegment
+                    End="-115.815556979576,70.9412216876018" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_matter_header_current_Deletes.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_matter_header_current_Deletes\SRC - dim_matter_header_current">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_matter_header_current_Deletes\SRC - DEST_Dim_Matter_Header_current">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

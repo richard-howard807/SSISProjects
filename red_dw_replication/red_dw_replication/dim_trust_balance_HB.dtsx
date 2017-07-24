@@ -1,0 +1,3084 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/3/2015 10:11:48 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\DAbram"
+  DTS:DTSID="{E6A2015C-F9F3-4D30-9D06-59DFB3466C9D}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="dim_trust_balance_HB"
+  DTS:PackageType="5"
+  DTS:VersionBuild="33"
+  DTS:VersionGUID="{BFFBFF80-E6A7-460D-ADE3-979004F529F4}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{61030EF7-4C7E-42D5-B6C5-F83AC71DCD1E}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Audit_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Audit_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008SVR;Initial Catalog=red_dw_replication;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Red_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AA0B83B0-AE8F-4980-B117-B63DE86E7731}"
+      DTS:ObjectName="CM_Red_DW">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Red_DW_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Red_DW_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dwh-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2F1DE435-F4BC-4F45-BA2B-536BA9FF24E7}"
+      DTS:ObjectName="CM_Red_dw_Replication">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Package::CM_Red_dw_Replication_InitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::CM_Red_dw_Replication_ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQL2008SVR;Initial Catalog=red_dw_replication;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="ParentAuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{7032C19C-CD6D-4CAB-B24F-048CFB1794BD}"
+      DTS:ObjectName="ParentAuditID" />
+  </DTS:Configurations>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{6590F334-29F2-4881-9928-FE2084EDEA32}"
+      DTS:ObjectName="CM_Audit_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw_replication</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{649A1892-5616-4C88-A9AA-606555FD952E}"
+      DTS:ObjectName="CM_Audit_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">SQL2008SVR</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{38E88AEF-54EF-4694-9F4F-985F5D1D2CC9}"
+      DTS:ObjectName="CM_Red_DW_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{8F0E9328-C2C5-4CD3-B7EF-1DD60402D2AC}"
+      DTS:ObjectName="CM_Red_dw_Replication_InitialCatalog">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">red_dw_replication</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{4A184AD5-A3D5-4660-B946-1FCB4BD77A6B}"
+      DTS:ObjectName="CM_Red_dw_Replication_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">SQL2008SVR</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{CD2A29D7-C5D7-4AA9-A7C5-4933A5211466}"
+      DTS:ObjectName="CM_Red_DW_ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">svr-liv-dwh-01</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{7E6DB0A7-04BB-49FF-B2D9-5D3C5A857A59}"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">0</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1D48E5B7-38C2-4842-8714-C30568B1B6A3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DB40D3A9-CDD9-47BF-AEFA-E9AD9632BAED}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{36EE7578-2C9C-40F1-9549-C51D893A5664}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{75BC3C7E-13D1-4A67-9E7A-EAAE8F136939}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{05BC1625-69CC-485D-8EB9-50B6E6693F18}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F9376469-41BC-4BBD-A9D0-98485E56D6D8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFullPath">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B270BC63-7374-44CE-95C8-35882FC8A102}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E8F65C89-BA31-46F2-9402-889FC65DAD96}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{67C9A46F-88F1-4008-9961-B79BED5EEB2B}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::ParentAuditID]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F6997728-FDFA-4715-B64B-ADA484262A1E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0BB654E9-BB6D-4BB7-9755-A7C945D5B83C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountChanged">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BA4F044D-2C1A-45D7-A879-05400AAD543B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountDeleted">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Charge Lookback Hours"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{270404EF-F3B5-4D7B-98CF-F0E256BFAFB4}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Charge Lookback Hours"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2F1DE435-F4BC-4F45-BA2B-536BA9FF24E7}"
+          SQLTask:SqlStatementSource="SELECT&#xA;value AS LookBackHours&#xA;FROM  [dbo].[ControlTable]&#xA;WHERE controlitem = 'Lookback_hours'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LookbackHours"
+            SQLTask:DtsVariableName="User::LookbackHours" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - dim_trust_balance"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B0C47956-9EA7-4C38-9FA0-A37EEDEDB089}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - dim_trust_balance"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_trust_balance.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{9617DC7B-2736-4509-8E47-638752BA31CF}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{5914224A-2C95-4DE6-86FF-4576679BF88C}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_trust_balance.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{CEB533C4-7DCE-4015-AFD9-B43FAEB89739}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{61030EF7-4C7E-42D5-B6C5-F83AC71DCD1E}"
+                  SQLTask:SqlStatementSource="exec uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_CODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_DESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_trust_balance.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{CC514C6D-FCFF-49EB-ACE9-7F486B0D0B0E}"
+          DTS:EventID="685659520"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{3E6998F8-8DDD-4EF1-9DDB-34725C7CB9B0}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_trust_balance.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{813C01CC-5EE1-4241-9F28-0A59790E3CA7}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{61030EF7-4C7E-42D5-B6C5-F83AC71DCD1E}"
+                  SQLTask:SqlStatementSource="uspAuditEnd ?, ?, ?, null, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCount"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountChanged"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountExpired"
+                    SQLTask:DtsVariableName="User::RowCountDeleted"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_trust_balance.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{4DA65D5E-A2DE-4E0A-B75B-92B8CF85C339}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{A887AFD2-64A8-4B1C-B422-8B591BD0E172}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_trust_balance.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{DC0A33B6-02B7-49A4-B49C-72FEBE9936AA}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{61030EF7-4C7E-42D5-B6C5-F83AC71DCD1E}"
+                  SQLTask:SqlStatementSource="uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST - dim_bank_Account"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_trust_balance]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].Columns[source_system_id]"
+                      cachedDataType="i4"
+                      cachedName="source_system_id"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[source_system_id]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[source_system_id]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].Columns[dss_update_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dss_update_time"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[dss_update_time]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dss_update_time]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].Columns[dim_trust_balance_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_trust_balance_key"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[dim_trust_balance_key]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].Columns[reconciled]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="reconciled"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[reconciled]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[reconciled]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].Columns[reference_number]"
+                      cachedDataType="wstr"
+                      cachedLength="64"
+                      cachedName="reference_number"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[reference_number]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[reference_number]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].Columns[transaction_desc]"
+                      cachedDataType="nText"
+                      cachedName="transaction_desc"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[transaction_desc]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[transaction_desc]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].Columns[transaction_sequence_number]"
+                      cachedDataType="i4"
+                      cachedName="transaction_sequence_number"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[transaction_sequence_number]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[transaction_sequence_number]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].Columns[trust_transaction_type]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="trust_transaction_type"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[trust_transaction_type]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[trust_transaction_type]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[source_system_id]"
+                      dataType="i4"
+                      name="source_system_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[dim_trust_balance_key]"
+                      dataType="i4"
+                      name="dim_trust_balance_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[reconciled]"
+                      dataType="wstr"
+                      length="16"
+                      name="reconciled" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[reference_number]"
+                      dataType="wstr"
+                      length="64"
+                      name="reference_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[transaction_desc]"
+                      dataType="nText"
+                      name="transaction_desc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[transaction_sequence_number]"
+                      dataType="i4"
+                      name="transaction_sequence_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input].ExternalColumns[trust_transaction_type]"
+                      dataType="wstr"
+                      length="16"
+                      name="trust_transaction_type" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance\Lookup"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[dim_trust_balance]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[dim_trust_balance]) [refTable]
+where [refTable].[dim_trust_balance_key] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">3072</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">4096</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="dim_trust_balance_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="reconciled" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="source_system_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="reference_number" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="transaction_status" dataType="DT_STR" length="2" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="posting_reference" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="sequence_number" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="dss_update_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_trust_balance\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Lookup.Inputs[Lookup Input].Columns[dim_trust_balance_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_trust_balance_key"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">dim_trust_balance_key</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values"
+              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup Changed Hashed Values"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[vw_dim_trust_balance_lookup]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[vw_dim_trust_balance_lookup]) [refTable]
+where [refTable].[dim_trust_balance_key] = ? and [refTable].[HASHCOLUMN] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">3072</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">4096</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="dim_trust_balance_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="reconciled" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="source_system_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="reference_number" dataType="DT_STR" length="8" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="dss_update_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HASHCOLUMN" dataType="DT_BYTES" length="8000" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]};#{Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Inputs[Lookup Input].Columns[dim_trust_balance_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_trust_balance_key"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">dim_trust_balance_key</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Inputs[Lookup Input].Columns[HASHCOLUMN]"
+                      cachedDataType="bytes"
+                      cachedLength="8000"
+                      cachedName="HASHCOLUMN"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">HASHCOLUMN</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance\Row Count Changed"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count Changed">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountChanged</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance\Row Count Changed.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Row Count Changed.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Row Count Changed.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance\Row Count Inserted"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count Inserted">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCount</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance\Row Count Inserted.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Row Count Inserted.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Row Count Inserted.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - dim_trust_balance"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT [dim_trust_balance_key]
+      ,[reconciled]
+      ,[source_system_id]
+      ,[reference_number]
+      ,[transaction_sequence_number]
+      ,[transaction_desc]
+      ,[trust_transaction_type]
+      ,[dss_update_time]
+	  ,HASHBYTES('md5', (SELECT
+	  [reconciled]
+      ,[source_system_id]
+      ,[reference_number]
+      ,[transaction_sequence_number]
+      ,[transaction_desc]
+      ,[trust_transaction_type]
+      ,[dss_update_time] FOR XML RAW)) AS HASHCOLUMN
+  FROM [dbo].[dim_trust_balance]
+
+  WHERE DATEDIFF(HOUR, [dss_update_time], GETDATE()) &lt; ?</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"Parameter0:Input",{E8F65C89-BA31-46F2-9402-889FC65DAD96};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[dim_trust_balance_key]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]"
+                      name="dim_trust_balance_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[reconciled]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[reconciled]"
+                      length="16"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[reconciled]"
+                      name="reconciled"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[source_system_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[source_system_id]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[source_system_id]"
+                      name="source_system_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[reference_number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[reference_number]"
+                      length="64"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[reference_number]"
+                      name="reference_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dss_update_time]"
+                      name="dss_update_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]"
+                      dataType="bytes"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[HASHCOLUMN]"
+                      length="8000"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[HASHCOLUMN]"
+                      name="HASHCOLUMN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[transaction_sequence_number]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[transaction_sequence_number]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[transaction_sequence_number]"
+                      name="transaction_sequence_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[transaction_desc]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[transaction_desc]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[transaction_desc]"
+                      name="transaction_desc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[trust_transaction_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[trust_transaction_type]"
+                      length="16"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[trust_transaction_type]"
+                      name="trust_transaction_type"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[dim_trust_balance_key]"
+                      dataType="i4"
+                      name="dim_trust_balance_key" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[reconciled]"
+                      dataType="wstr"
+                      length="16"
+                      name="reconciled" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[source_system_id]"
+                      dataType="i4"
+                      name="source_system_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[reference_number]"
+                      dataType="wstr"
+                      length="64"
+                      name="reference_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="dss_update_time" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[HASHCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      name="HASHCOLUMN" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[transaction_sequence_number]"
+                      dataType="i4"
+                      name="transaction_sequence_number" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[transaction_desc]"
+                      dataType="nText"
+                      name="transaction_desc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[trust_transaction_type]"
+                      dataType="wstr"
+                      length="16"
+                      name="trust_transaction_type" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[dim_trust_balance_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[dim_trust_balance_key]"
+                      name="dim_trust_balance_key" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[reconciled]"
+                      dataType="wstr"
+                      length="16"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[reconciled]"
+                      name="reconciled" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[source_system_id]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[source_system_id]"
+                      name="source_system_id" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[reference_number]"
+                      dataType="wstr"
+                      length="64"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[reference_number]"
+                      name="reference_number" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[transaction_sequence_number]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[transaction_sequence_number]"
+                      name="transaction_sequence_number" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[transaction_desc]"
+                      dataType="nText"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[transaction_desc]"
+                      name="transaction_desc" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[trust_transaction_type]"
+                      dataType="wstr"
+                      length="16"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[trust_transaction_type]"
+                      name="trust_transaction_type" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[dss_update_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[dss_update_time]"
+                      name="dss_update_time" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[HASHCOLUMN]"
+                      dataType="bytes"
+                      length="8000"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[HASHCOLUMN]"
+                      name="HASHCOLUMN" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Update Changed Rows - dim_trust_balance"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">exec usp_update_dim_trust_balance ?, ?, ?, ?, ?,?, ?, ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].Columns[dim_trust_balance_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_trust_balance_key"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@dim_trust_balance_key]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].Columns[reconciled]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="reconciled"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@reconciled]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[reconciled]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].Columns[source_system_id]"
+                      cachedDataType="i4"
+                      cachedName="source_system_id"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@source_system_id]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[source_system_id]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].Columns[reference_number]"
+                      cachedDataType="wstr"
+                      cachedLength="64"
+                      cachedName="reference_number"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@reference_number]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[reference_number]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].Columns[dss_update_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="dss_update_time"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@dss_update_time]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dss_update_time]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].Columns[transaction_desc]"
+                      cachedDataType="nText"
+                      cachedName="transaction_desc"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@transaction_desc]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[transaction_desc]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].Columns[transaction_sequence_number]"
+                      cachedDataType="i4"
+                      cachedName="transaction_sequence_number"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@transaction_sequence_number]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[transaction_sequence_number]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].Columns[trust_transaction_type]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="trust_transaction_type"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@trust_transaction_type]"
+                      lineageId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[trust_transaction_type]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@dim_trust_balance_key]"
+                      dataType="i4"
+                      name="@dim_trust_balance_key">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@reconciled]"
+                      dataType="wstr"
+                      length="16"
+                      name="@reconciled">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@source_system_id]"
+                      dataType="i4"
+                      name="@source_system_id">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@reference_number]"
+                      dataType="wstr"
+                      length="64"
+                      name="@reference_number">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@dss_update_time]"
+                      dataType="dbTimeStamp"
+                      name="@dss_update_time">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@transaction_desc]"
+                      dataType="nText"
+                      name="@transaction_desc">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">193</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@transaction_sequence_number]"
+                      dataType="i4"
+                      name="@transaction_sequence_number">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input].ExternalColumns[@trust_transaction_type]"
+                      dataType="wstr"
+                      length="16"
+                      name="@trust_transaction_type">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - dim_trust_balance.Paths[Lookup Match Output]"
+              endId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT - dim_trust_balance\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - dim_trust_balance.Paths[Lookup No Match Output]"
+              endId="Package\DFT - dim_trust_balance\Row Count Inserted.Inputs[Row Count Input 1]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - dim_trust_balance\Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - dim_trust_balance.Paths[Lookup No Match Output1]"
+              endId="Package\DFT - dim_trust_balance\Row Count Changed.Inputs[Row Count Input 1]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - dim_trust_balance.Paths[OLE DB Source Output]"
+              endId="Package\DFT - dim_trust_balance\Lookup.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_trust_balance\SRC - dim_trust_balance.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_trust_balance.Paths[Row Count Output 1]"
+              endId="Package\DFT - dim_trust_balance\DEST - dim_bank_Account.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_trust_balance\Row Count Inserted.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - dim_trust_balance.Paths[Row Count Output 11]"
+              endId="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance.Inputs[OLE DB Command Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_trust_balance\Row Count Changed.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - dim_trust_balance_Deletes"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D00436B5-70FB-4DAE-83CF-98D863BB89CD}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - dim_trust_balance_Deletes"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{E9478DA5-DFF5-490F-BE3B-A109E90F30B6}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{5519F23A-8C39-46BB-A342-453DFD42C0F9}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{B91DEB53-96E9-41B6-B179-A51D966EF86C}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{61030EF7-4C7E-42D5-B6C5-F83AC71DCD1E}"
+                  SQLTask:SqlStatementSource="exec uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_CODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERROR_DESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{5F133A29-D1CE-49E6-8A37-B592FDA5970A}"
+          DTS:EventID="685659520"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{3DC6DB03-47B6-49DC-9EA4-9A5DB23D44EA}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{5FE3FCA3-7A2C-44B1-9FE2-133873B0F97C}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{61030EF7-4C7E-42D5-B6C5-F83AC71DCD1E}"
+                  SQLTask:SqlStatementSource="uspAuditEnd ?, ?, ?, null, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCount"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountChanged"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountExpired"
+                    SQLTask:DtsVariableName="User::RowCountDeleted"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{353B0232-1E1C-4E26-A7A8-F3BD05FF2490}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{20186941-0A16-4C65-882D-AE43F8720639}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{263F2FA0-7EB8-4E8E-81EC-15C0DCB43DC2}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{61030EF7-4C7E-42D5-B6C5-F83AC71DCD1E}"
+                  SQLTask:SqlStatementSource="uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - dim_trust_balance_Deletes\Conditional Split"
+              componentClassID="{7F88F654-4E20-4D14-84F4-AF9C925D3087}"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Inputs[Conditional Split Input].Columns[DEST_dim_trust_balance_key]"
+                      cachedDataType="i4"
+                      cachedName="DEST_dim_trust_balance_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_trust_balance_key]" />
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Inputs[Conditional Split Input].Columns[dim_trust_balance_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_trust_balance_key"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_trust_balance_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Outputs[DeletedRows]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="DeletedRows"
+                  synchronousInputId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_trust_balance_key]}) &amp;&amp; ![ISNULL](#{Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_trust_balance_key]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(dim_trust_balance_key) &amp;&amp; !ISNULL(DEST_dim_trust_balance_key)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Outputs[None]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="None"
+                  synchronousInputId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows"
+              componentClassID="{93FFEC66-CBC8-4C7F-9C6A-CB1C17A7567D}"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Delete Deleted Rows"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">delete from dim_trust_balance where dim_trust_balance_key = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].Columns[DEST_dim_trust_balance_key]"
+                      cachedDataType="i4"
+                      cachedName="DEST_dim_trust_balance_key"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_trust_balance_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance_Deletes\Merge Join"
+              componentClassID="{14D43A4F-D7BD-489D-829E-6DE35750CFE4}"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Inputs[Merge Join Left Input].Columns[dim_trust_balance_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_trust_balance_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Inputs[Merge Join Right Input].Columns[dim_trust_balance_key]"
+                      cachedDataType="i4"
+                      cachedName="dim_trust_balance_key"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_trust_balance_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output].Columns[DEST_dim_trust_balance_key]"
+                      name="DEST_dim_trust_balance_key"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - dim_trust_balance_Deletes\Merge Join.Inputs[Merge Join Left Input].Columns[dim_trust_balance_key]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_trust_balance_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output].Columns[dim_trust_balance_key]"
+                      name="dim_trust_balance_key">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - dim_trust_balance_Deletes\Merge Join.Inputs[Merge Join Right Input].Columns[dim_trust_balance_key]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance_Deletes\Row Count"
+              componentClassID="{E2697D8C-70DA-42B2-8208-A19CE3A9FE41}"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountDeleted</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - dim_trust_balance_Deletes\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - dim_trust_balance_Deletes\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - DEST_dim_trust_balance"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_trust_balance]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT dim_trust_balance_key
+FROM dbo.dim_trust_balance
+ORDER BY dim_trust_balance_key</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_dw_Replication]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[dim_trust_balance_key]"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]"
+                      name="dim_trust_balance_key"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[dim_trust_balance_key]"
+                      dataType="i4"
+                      name="dim_trust_balance_key" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[dim_trust_balance_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[dim_trust_balance_key]"
+                      name="dim_trust_balance_key" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - dim_trust_balance"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dim_trust_balance]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT dim_trust_balance_key
+FROM dbo.dim_trust_balance
+ORDER BY dim_trust_balance_key</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Red_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Red_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Output]"
+                  isSorted="true"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[dim_trust_balance_key]"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Output].Columns[dim_trust_balance_key]"
+                      name="dim_trust_balance_key"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Output].ExternalColumns[dim_trust_balance_key]"
+                      dataType="i4"
+                      name="dim_trust_balance_key" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[dim_trust_balance_key]"
+                      dataType="i4"
+                      lineageId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Error Output].Columns[dim_trust_balance_key]"
+                      name="dim_trust_balance_key" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - dim_trust_balance_Deletes.Paths[DeletedRows]"
+              endId="Package\DFT - dim_trust_balance_Deletes\Row Count.Inputs[Row Count Input 1]"
+              name="DeletedRows"
+              startId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Outputs[DeletedRows]" />
+            <path
+              refId="Package\DFT - dim_trust_balance_Deletes.Paths[Merge Join Output]"
+              endId="Package\DFT - dim_trust_balance_Deletes\Conditional Split.Inputs[Conditional Split Input]"
+              name="Merge Join Output"
+              startId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\DFT - dim_trust_balance_Deletes.Paths[OLE DB Source Output]"
+              endId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Inputs[Merge Join Left Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_trust_balance_Deletes.Paths[OLE DB Source Output1]"
+              endId="Package\DFT - dim_trust_balance_Deletes\Merge Join.Inputs[Merge Join Right Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - dim_trust_balance_Deletes.Paths[Row Count Output 1]"
+              endId="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows.Inputs[OLE DB Command Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - dim_trust_balance_Deletes\Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{A8FC0677-A5E9-43E8-A7CC-D11A7B9CF9FE}"
+      DTS:From="Package\Charge Lookback Hours"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - dim_trust_balance" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{26C73F6A-AA5D-48DD-9E38-9EEB349CA89E}"
+      DTS:From="Package\DFT - dim_trust_balance"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DFT - dim_trust_balance_Deletes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Charge Lookback Hours"
+          TopLeft="210.146489506638,66.2292046422385" />
+        <NodeLayout
+          Size="197,42"
+          Id="Package\DFT - dim_trust_balance"
+          TopLeft="218,153" />
+        <NodeLayout
+          Size="238,42"
+          Id="Package\DFT - dim_trust_balance_Deletes"
+          TopLeft="210.146489506638,255" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="292.646489506638,108.229204642239">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23.853510493362,44.7707953577615"
+              Start="0,0"
+              End="23.853510493362,37.2707953577615">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.3853976788808" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.3853976788808"
+                    Point2="0,22.3853976788808"
+                    Point3="4,22.3853976788808" />
+                  <mssgle:LineSegment
+                    End="19.853510493362,22.3853976788808" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19.853510493362,22.3853976788808"
+                    Point2="23.853510493362,22.3853976788808"
+                    Point3="23.853510493362,26.3853976788808" />
+                  <mssgle:LineSegment
+                    End="23.853510493362,37.2707953577615" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="316.5,195">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12.646489506638,60"
+              Start="0,0"
+              End="12.646489506638,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="8.64648950663798,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.64648950663798,30"
+                    Point2="12.646489506638,30"
+                    Point3="12.646489506638,34" />
+                  <mssgle:LineSegment
+                    End="12.646489506638,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - dim_trust_balance">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="197,42"
+          Id="Package\DFT - dim_trust_balance\SRC - dim_trust_balance"
+          TopLeft="74,37" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\DFT - dim_trust_balance\Row Count Inserted"
+          TopLeft="38.6970478062403,222.676335845472" />
+        <NodeLayout
+          Size="115,42"
+          Id="Package\DFT - dim_trust_balance\Lookup"
+          TopLeft="50.8554579840748,126.287892764022" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\DFT - dim_trust_balance\Row Count Changed"
+          TopLeft="296.728817109812,342.741250383317" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\DFT - dim_trust_balance\DEST - dim_bank_Account"
+          TopLeft="38.6970478062403,307.905079846687" />
+        <NodeLayout
+          Size="232,42"
+          Id="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values"
+          TopLeft="273,136" />
+        <NodeLayout
+          Size="285,42"
+          Id="Package\DFT - dim_trust_balance\Update Changed Rows - dim_trust_balance"
+          TopLeft="303.719768884083,483.256975336112" />
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance.Paths[Row Count Output 11]"
+          TopLeft="385.228817109812,384.741250383317">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="60.9909517742706,98.5157249527948"
+              Start="0,0"
+              End="60.9909517742706,91.0157249527948">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.2578624763974" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,45.2578624763974"
+                    Point2="0,49.2578624763974"
+                    Point3="4,49.2578624763974" />
+                  <mssgle:LineSegment
+                    End="56.9909517742706,49.2578624763974" />
+                  <mssgle:CubicBezierSegment
+                    Point1="56.9909517742706,49.2578624763974"
+                    Point2="60.9909517742706,49.2578624763974"
+                    Point3="60.9909517742706,53.2578624763974" />
+                  <mssgle:LineSegment
+                    End="60.9909517742706,91.0157249527948" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance.Paths[Row Count Output 1]"
+          TopLeft="141.69704780624,264.676335845472">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.228744001215"
+              Start="0,0"
+              End="0,35.728744001215">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.728744001215" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance.Paths[OLE DB Source Output]"
+          TopLeft="172.5,79">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-64.1445420159252,47.287892764022"
+              Start="0,0"
+              End="-64.1445420159252,39.787892764022">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.643946382011" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.643946382011"
+                    Point2="0,23.643946382011"
+                    Point3="-4,23.643946382011" />
+                  <mssgle:LineSegment
+                    End="-60.1445420159252,23.643946382011" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-60.1445420159252,23.643946382011"
+                    Point2="-64.1445420159252,23.643946382011"
+                    Point3="-64.1445420159252,27.643946382011" />
+                  <mssgle:LineSegment
+                    End="-64.1445420159252,39.787892764022" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance.Paths[Lookup No Match Output1]"
+          TopLeft="387.114408554906,178">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,164.741250383317"
+              Start="0,0"
+              End="0,157.241250383317">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,157.241250383317" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,72.8159376916586,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance.Paths[Lookup No Match Output]"
+          TopLeft="108.355457984075,168.287892764022">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="33.3415898221655,54.3884430814497"
+              Start="0,0"
+              End="33.3415898221655,46.8884430814497">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.1942215407249" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.1942215407249"
+                    Point2="0,27.1942215407249"
+                    Point3="4,27.1942215407249" />
+                  <mssgle:LineSegment
+                    End="29.3415898221655,27.1942215407249" />
+                  <mssgle:CubicBezierSegment
+                    Point1="29.3415898221655,27.1942215407249"
+                    Point2="33.3415898221655,27.1942215407249"
+                    Point3="33.3415898221655,31.1942215407249" />
+                  <mssgle:LineSegment
+                    End="33.3415898221655,46.8884430814497" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-39.1355918076672,32.1942215407249,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance.Paths[Lookup Match Output]"
+          TopLeft="165.855457984075,147.287892764022">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="107.144542015925,9.7121072359777"
+              Start="0,0"
+              End="99.6445420159252,9.7121072359777">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="49.5722710079626,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="49.5722710079626,0"
+                    Point2="53.5722710079626,0"
+                    Point3="53.5722710079626,4" />
+                  <mssgle:LineSegment
+                    End="53.5722710079626,5.7121072359777" />
+                  <mssgle:CubicBezierSegment
+                    Point1="53.5722710079626,5.7121072359777"
+                    Point2="53.5722710079626,9.7121072359777"
+                    Point3="57.5722710079626,9.7121072359777" />
+                  <mssgle:LineSegment
+                    End="99.6445420159252,9.7121072359777" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="5.3808842892126,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_trust_balance.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_trust_balance.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_trust_balance.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_trust_balance.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_trust_balance.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_trust_balance.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_trust_balance\SRC - dim_trust_balance">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_trust_balance\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[dim_trust_balance]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_trust_balance\DEST - dim_bank_Account">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_trust_balance\Lookup Changed Hashed Values">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[vw_dim_trust_balance_lookup]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">1</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT - dim_trust_balance_Deletes">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="179,42"
+          Id="Package\DFT - dim_trust_balance_Deletes\Delete Deleted Rows"
+          TopLeft="453.197907952403,487.313086669272" />
+        <NodeLayout
+          Size="197,42"
+          Id="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance"
+          TopLeft="441.329134413467,66.6073261385512" />
+        <NodeLayout
+          Size="228,42"
+          Id="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance"
+          TopLeft="167,63" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - dim_trust_balance_Deletes\Merge Join"
+          TopLeft="382,178" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - dim_trust_balance_Deletes\Row Count"
+          TopLeft="459,378" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\DFT - dim_trust_balance_Deletes\Conditional Split"
+          TopLeft="434,280" />
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance_Deletes.Paths[OLE DB Source Output]"
+          TopLeft="281,105">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="167,73"
+              Start="0,0"
+              End="167,65.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.5"
+                    Point2="0,36.5"
+                    Point3="4,36.5" />
+                  <mssgle:LineSegment
+                    End="163,36.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="163,36.5"
+                    Point2="167,36.5"
+                    Point3="167,40.5" />
+                  <mssgle:LineSegment
+                    End="167,65.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance_Deletes.Paths[Merge Join Output]"
+          TopLeft="448,220">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="64.5,60"
+              Start="0,0"
+              End="64.5,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="60.5,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="60.5,30"
+                    Point2="64.5,30"
+                    Point3="64.5,34" />
+                  <mssgle:LineSegment
+                    End="64.5,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance_Deletes.Paths[DeletedRows]"
+          TopLeft="512.5,322">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12.5,56"
+              Start="0,0"
+              End="12.5,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="4,28" />
+                  <mssgle:LineSegment
+                    End="8.5,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.5,28"
+                    Point2="12.5,28"
+                    Point3="12.5,32" />
+                  <mssgle:LineSegment
+                    End="12.5,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-22.907578125,33,58.31515625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance_Deletes.Paths[Row Count Output 1]"
+          TopLeft="525,420">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="17.6979079524031,67.3130866692721"
+              Start="0,0"
+              End="17.6979079524031,59.8130866692721">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.6565433346361" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.6565433346361"
+                    Point2="0,33.6565433346361"
+                    Point3="4,33.6565433346361" />
+                  <mssgle:LineSegment
+                    End="13.6979079524031,33.6565433346361" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.6979079524031,33.6565433346361"
+                    Point2="17.6979079524031,33.6565433346361"
+                    Point3="17.6979079524031,37.6565433346361" />
+                  <mssgle:LineSegment
+                    End="17.6979079524031,59.8130866692721" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - dim_trust_balance_Deletes.Paths[OLE DB Source Output1]"
+          TopLeft="539.829134413467,108.607326138551">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-71.1624677468001,69.3926738614488"
+              Start="0,0"
+              End="-71.1624677468001,61.8926738614488">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.1369743250505" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,37.1369743250505"
+                    Point2="0,41.1369743250505"
+                    Point3="-4,41.1369743250505" />
+                  <mssgle:LineSegment
+                    End="-67.1624677468001,41.1369743250505" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-67.1624677468001,41.1369743250505"
+                    Point2="-71.1624677468001,41.1369743250505"
+                    Point3="-71.1624677468001,45.1369743250505" />
+                  <mssgle:LineSegment
+                    End="-71.1624677468001,61.8926738614488" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - dim_trust_balance_Deletes.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_trust_balance_Deletes\SRC - dim_trust_balance">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - dim_trust_balance_Deletes\SRC - DEST_dim_trust_balance">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
