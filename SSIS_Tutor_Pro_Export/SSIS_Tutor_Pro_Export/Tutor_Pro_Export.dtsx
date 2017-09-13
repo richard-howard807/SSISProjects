@@ -1,0 +1,1487 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/13/2017 2:39:51 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="DEV-BI-CLIENT-8"
+  DTS:CreatorName="SBC\sgrego"
+  DTS:DTSID="{6115FF0B-AF1A-4AFC-8FDE-161B4BEC313D}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.3369.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Tutor_Pro_Export"
+  DTS:PackageType="5"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{048036AF-5A07-49AC-9F34-CF970DA91747}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{2EEDF3F4-E94D-4A4D-AD62-525DE5CBDE89}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\svr-liv-lms-01\cascadeData\Import_Learners.xls;Extended Properties=&quot;Excel 8.0;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Import_Learners.xls]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{D5DDAEFA-233B-47E4-8A28-81918411EA76}"
+      DTS:ObjectName="Import_Learners.xls">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="\\svr-liv-lms-01\cascadeData\Import_Learners.xls" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{81D4E0E8-0089-4368-B8D9-FC00C7E4B2FB}"
+      DTS:ObjectName="svr-liv-dwh-01.red_dw">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dwh-01;Initial Catalog=red_dw;Integrated Security=True;Application Name=SSIS-Package-{81D4E0E8-0089-4368-B8D9-FC00C7E4B2FB}svr-liv-dwh-01.red_dw;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Deletion Of Old Excel File"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="File System Task"
+      DTS:DTSID="{4EE06375-B8B1-49CA-8F1A-0439B6F54E28}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Deletion Of Old Excel File"
+      DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOperationType="DeleteFile"
+          TaskSourcePath="{D5DDAEFA-233B-47E4-8A28-81918411EA76}" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Re-create Excel"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C9E5B955-3FE3-4CB0-9908-7EB729D1C4C3}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Re-create Excel"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2EEDF3F4-E94D-4A4D-AD62-525DE5CBDE89}"
+          SQLTask:SqlStatementSource="CREATE TABLE `Import_Learners` (&#xA;    `TutorEnterprise_User_Identifier` LongText,&#xA;    `Client_User_Identifier` LongText,&#xA;    `User_Identifier` LongText,&#xA;    `Password` LongText,&#xA;    `First_Name` LongText,&#xA;    `Last_Name` LongText,&#xA;    `Title_Code` LongText,&#xA;    `Title_Description` LongText,&#xA;    `Profile_Code` LongText,&#xA;    `Profile_Description` LongText,&#xA;    `Department_Code` LongText,&#xA;    `Department_Description` LongText,&#xA;    `Practice_Area_Code` LongText,&#xA;    `Practice_Area_Description` LongText,&#xA;    `Location_Code` LongText,&#xA;    `Location_Description` LongText,&#xA;    `Status` LongText,&#xA;    `Telephone_Number` LongText,&#xA;    `Email_Address` LongText,&#xA;    `Start_Date` LongText,&#xA;    `End_Date` LongText,&#xA;    `Client_Manager_Identifier` LongText,&#xA;    `SecurityProfileCode` LongText,&#xA;    `Street1` LongText,&#xA;    `Street2` LongText,&#xA;    `City` LongText,&#xA;    `State` LongText,&#xA;    `Zip` LongText,&#xA;    `Country` LongText,&#xA;    `Birth_Date` LongText&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Transform and Populate Data"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{91F3385B-8AA9-4C37-8A11-A4CEC553E276}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Transform and Populate Data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Transform and Populate Data\ADO NET Source"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET Source"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT        TOP (1000) TutorEnterprise_User_Identifier, employeeid, windowsusername, Password, forename, surname, Title_Code, jobtitle, Profile_Code, Profile_Description, Department_Code, hierarchylevel4, 
+                         Practice_Area_Code, hierarchylevel3, Location_Code, locationidud, leaver, Telephone_Number, workemail, FORMAT(CAST(employeestartdate AS DATE), 'dd-MM-yyyy') AS employeestartdate, 
+                         FORMAT(CAST(leftdate AS DATE), 'dd-MM-yyyy') AS leftdate, Client_Manager_Identifier, SecurityProfileCode, Street1, Street2, City, State, Zip, Country, FORMAT(CAST(dateofbirth AS DATE), 'dd-MM-yyyy') 
+                         AS dateofbirth
+FROM            stage_TutorPro</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transform and Populate Data\ADO NET Source.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[TutorEnterprise_User_Identifier]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TutorEnterprise_User_Identifier]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[TutorEnterprise_User_Identifier]"
+                      name="TutorEnterprise_User_Identifier"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[employeeid]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[employeeid]"
+                      length="104"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[employeeid]"
+                      name="employeeid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[windowsusername]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[windowsusername]"
+                      length="104"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[windowsusername]"
+                      name="windowsusername"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Password]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Password]"
+                      length="20"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Password]"
+                      name="Password"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[forename]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[forename]"
+                      length="100"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[forename]"
+                      name="forename"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[surname]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[surname]"
+                      length="100"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[surname]"
+                      name="surname"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Title_Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Title_Code]"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Title_Code]"
+                      name="Title_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[jobtitle]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[jobtitle]"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[jobtitle]"
+                      name="jobtitle"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Profile_Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Profile_Code]"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Profile_Code]"
+                      name="Profile_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Profile_Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Profile_Description]"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Profile_Description]"
+                      name="Profile_Description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Department_Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Department_Code]"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Department_Code]"
+                      name="Department_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[hierarchylevel4]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[hierarchylevel4]"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[hierarchylevel4]"
+                      name="hierarchylevel4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Practice_Area_Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Practice_Area_Code]"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Practice_Area_Code]"
+                      name="Practice_Area_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[hierarchylevel3]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[hierarchylevel3]"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[hierarchylevel3]"
+                      name="hierarchylevel3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Location_Code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Location_Code]"
+                      length="64"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Location_Code]"
+                      name="Location_Code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[locationidud]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[locationidud]"
+                      length="64"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[locationidud]"
+                      name="locationidud"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[leaver]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[leaver]"
+                      length="3"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[leaver]"
+                      name="leaver"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Telephone_Number]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Telephone_Number]"
+                      length="18"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Telephone_Number]"
+                      name="Telephone_Number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[workemail]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[workemail]"
+                      length="359"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[workemail]"
+                      name="workemail"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[employeestartdate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[employeestartdate]"
+                      length="4000"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[employeestartdate]"
+                      name="employeestartdate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[leftdate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[leftdate]"
+                      length="4000"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[leftdate]"
+                      name="leftdate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Client_Manager_Identifier]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Client_Manager_Identifier]"
+                      length="104"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Client_Manager_Identifier]"
+                      name="Client_Manager_Identifier"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[SecurityProfileCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[SecurityProfileCode]"
+                      length="50"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[SecurityProfileCode]"
+                      name="SecurityProfileCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Street1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Street1]"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Street1]"
+                      name="Street1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Street2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Street2]"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Street2]"
+                      name="Street2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[City]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[City]"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[State]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[State]"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[State]"
+                      name="State"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Zip]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Zip]"
+                      length="25"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Zip]"
+                      name="Zip"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Country]"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Country]"
+                      name="Country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[dateofbirth]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[dateofbirth]"
+                      length="4000"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[dateofbirth]"
+                      name="dateofbirth"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TutorEnterprise_User_Identifier]"
+                      dataType="i4"
+                      name="TutorEnterprise_User_Identifier" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[employeeid]"
+                      dataType="wstr"
+                      length="104"
+                      name="employeeid" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[windowsusername]"
+                      dataType="wstr"
+                      length="104"
+                      name="windowsusername" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Password]"
+                      dataType="wstr"
+                      length="20"
+                      name="Password" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[forename]"
+                      dataType="wstr"
+                      length="100"
+                      name="forename" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[surname]"
+                      dataType="wstr"
+                      length="100"
+                      name="surname" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Title_Code]"
+                      dataType="wstr"
+                      length="256"
+                      name="Title_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[jobtitle]"
+                      dataType="wstr"
+                      length="256"
+                      name="jobtitle" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Profile_Code]"
+                      dataType="wstr"
+                      length="256"
+                      name="Profile_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Profile_Description]"
+                      dataType="wstr"
+                      length="256"
+                      name="Profile_Description" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Department_Code]"
+                      dataType="wstr"
+                      length="256"
+                      name="Department_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[hierarchylevel4]"
+                      dataType="wstr"
+                      length="256"
+                      name="hierarchylevel4" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Practice_Area_Code]"
+                      dataType="wstr"
+                      length="256"
+                      name="Practice_Area_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[hierarchylevel3]"
+                      dataType="wstr"
+                      length="256"
+                      name="hierarchylevel3" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Location_Code]"
+                      dataType="wstr"
+                      length="64"
+                      name="Location_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[locationidud]"
+                      dataType="wstr"
+                      length="64"
+                      name="locationidud" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[leaver]"
+                      dataType="wstr"
+                      length="3"
+                      name="leaver" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Telephone_Number]"
+                      dataType="wstr"
+                      length="18"
+                      name="Telephone_Number" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[workemail]"
+                      dataType="wstr"
+                      length="359"
+                      name="workemail" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[employeestartdate]"
+                      dataType="wstr"
+                      length="4000"
+                      name="employeestartdate" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[leftdate]"
+                      dataType="wstr"
+                      length="4000"
+                      name="leftdate" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Client_Manager_Identifier]"
+                      dataType="wstr"
+                      length="104"
+                      name="Client_Manager_Identifier" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[SecurityProfileCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="SecurityProfileCode" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Street1]"
+                      dataType="wstr"
+                      length="255"
+                      name="Street1" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Street2]"
+                      dataType="wstr"
+                      length="255"
+                      name="Street2" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[City]"
+                      dataType="wstr"
+                      length="255"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[State]"
+                      dataType="wstr"
+                      length="255"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Zip]"
+                      dataType="wstr"
+                      length="25"
+                      name="Zip" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Country]"
+                      dataType="wstr"
+                      length="255"
+                      name="Country" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[dateofbirth]"
+                      dataType="wstr"
+                      length="4000"
+                      name="dateofbirth" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TutorEnterprise_User_Identifier]"
+                      dataType="i4"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TutorEnterprise_User_Identifier]"
+                      name="TutorEnterprise_User_Identifier" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[employeeid]"
+                      dataType="wstr"
+                      length="104"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[employeeid]"
+                      name="employeeid" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[windowsusername]"
+                      dataType="wstr"
+                      length="104"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[windowsusername]"
+                      name="windowsusername" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Password]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Password]"
+                      name="Password" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[forename]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[forename]"
+                      name="forename" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[surname]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[surname]"
+                      name="surname" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Title_Code]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Title_Code]"
+                      name="Title_Code" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[jobtitle]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[jobtitle]"
+                      name="jobtitle" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Profile_Code]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Profile_Code]"
+                      name="Profile_Code" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Profile_Description]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Profile_Description]"
+                      name="Profile_Description" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Department_Code]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Department_Code]"
+                      name="Department_Code" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[hierarchylevel4]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[hierarchylevel4]"
+                      name="hierarchylevel4" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Practice_Area_Code]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Practice_Area_Code]"
+                      name="Practice_Area_Code" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[hierarchylevel3]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[hierarchylevel3]"
+                      name="hierarchylevel3" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Location_Code]"
+                      dataType="wstr"
+                      length="64"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Location_Code]"
+                      name="Location_Code" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[locationidud]"
+                      dataType="wstr"
+                      length="64"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[locationidud]"
+                      name="locationidud" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[leaver]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[leaver]"
+                      name="leaver" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Telephone_Number]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Telephone_Number]"
+                      name="Telephone_Number" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[workemail]"
+                      dataType="wstr"
+                      length="359"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[workemail]"
+                      name="workemail" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[employeestartdate]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[employeestartdate]"
+                      name="employeestartdate" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[leftdate]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[leftdate]"
+                      name="leftdate" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Client_Manager_Identifier]"
+                      dataType="wstr"
+                      length="104"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Client_Manager_Identifier]"
+                      name="Client_Manager_Identifier" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[SecurityProfileCode]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[SecurityProfileCode]"
+                      name="SecurityProfileCode" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Street1]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Street1]"
+                      name="Street1" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Street2]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Street2]"
+                      name="Street2" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[City]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[City]"
+                      name="City" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[State]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[State]"
+                      name="State" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Zip]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Zip]"
+                      name="Zip" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Country]"
+                      name="Country" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[dateofbirth]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[dateofbirth]"
+                      name="dateofbirth" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transform and Populate Data\Data Conversion"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Transform and Populate Data\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform and Populate Data\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Transform and Populate Data\Data Conversion.Inputs[Data Conversion Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform and Populate Data\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Transform and Populate Data\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transform and Populate Data\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transform and Populate Data\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transform and Populate Data\Excel Destination"
+              componentClassID="{1F5D5712-2FBA-4CB9-A95A-86C1F336E1DA}"
+              contactInfo="Excel Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Excel Destination"
+              name="Excel Destination"
+              usesDispositions="true">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Import_Learners</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transform and Populate Data\Excel Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Excel Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[TutorEnterprise_User_Identifier]"
+                      cachedDataType="i4"
+                      cachedName="TutorEnterprise_User_Identifier"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[TutorEnterprise_User_Identifier]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[TutorEnterprise_User_Identifier]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Password]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="Password"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Password]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Password]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Title_Code]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="Title_Code"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Title_Code]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Title_Code]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Profile_Code]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="Profile_Code"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Profile_Code]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Profile_Code]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Profile_Description]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="Profile_Description"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Profile_Description]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Profile_Description]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Department_Code]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="Department_Code"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Department_Code]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Department_Code]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Practice_Area_Code]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="Practice_Area_Code"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Practice_Area_Code]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Practice_Area_Code]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Location_Code]"
+                      cachedDataType="wstr"
+                      cachedLength="64"
+                      cachedName="Location_Code"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Location_Code]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Location_Code]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Telephone_Number]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="Telephone_Number"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Telephone_Number]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Telephone_Number]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Client_Manager_Identifier]"
+                      cachedDataType="wstr"
+                      cachedLength="104"
+                      cachedName="Client_Manager_Identifier"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Client_Manager_Identifier]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Client_Manager_Identifier]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[SecurityProfileCode]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SecurityProfileCode"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[SecurityProfileCode]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[SecurityProfileCode]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Street1]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Street1"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Street1]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Street1]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Street2]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Street2"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Street2]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Street2]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[City]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="City"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[City]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[City]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[State]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="State"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[State]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[State]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Zip]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="Zip"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Zip]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Zip]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[Country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Country"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Country]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[Country]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[employeeid]"
+                      cachedDataType="wstr"
+                      cachedLength="104"
+                      cachedName="employeeid"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Client_User_Identifier]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[employeeid]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[windowsusername]"
+                      cachedDataType="wstr"
+                      cachedLength="104"
+                      cachedName="windowsusername"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[User_Identifier]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[windowsusername]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[forename]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="forename"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[First_Name]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[forename]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[surname]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="surname"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Last_Name]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[surname]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[jobtitle]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="jobtitle"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Title_Description]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[jobtitle]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[hierarchylevel4]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="hierarchylevel4"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Department_Description]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[hierarchylevel4]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[hierarchylevel3]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="hierarchylevel3"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Practice_Area_Description]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[hierarchylevel3]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[locationidud]"
+                      cachedDataType="wstr"
+                      cachedLength="64"
+                      cachedName="locationidud"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Location_Description]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[locationidud]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[leaver]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="leaver"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Status]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[leaver]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[workemail]"
+                      cachedDataType="wstr"
+                      cachedLength="359"
+                      cachedName="workemail"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Email_Address]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[workemail]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[employeestartdate]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="employeestartdate"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Start_Date]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[employeestartdate]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[leftdate]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="leftdate"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[End_Date]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[leftdate]" />
+                    <inputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].Columns[dateofbirth]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="dateofbirth"
+                      externalMetadataColumnId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Birth_Date]"
+                      lineageId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output].Columns[dateofbirth]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[TutorEnterprise_User_Identifier]"
+                      dataType="nText"
+                      name="TutorEnterprise_User_Identifier" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Client_User_Identifier]"
+                      dataType="nText"
+                      name="Client_User_Identifier" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[User_Identifier]"
+                      dataType="nText"
+                      name="User_Identifier" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Password]"
+                      dataType="nText"
+                      name="Password" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[First_Name]"
+                      dataType="nText"
+                      name="First_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Last_Name]"
+                      dataType="nText"
+                      name="Last_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Title_Code]"
+                      dataType="nText"
+                      name="Title_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Title_Description]"
+                      dataType="nText"
+                      name="Title_Description" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Profile_Code]"
+                      dataType="nText"
+                      name="Profile_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Profile_Description]"
+                      dataType="nText"
+                      name="Profile_Description" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Department_Code]"
+                      dataType="nText"
+                      name="Department_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Department_Description]"
+                      dataType="nText"
+                      name="Department_Description" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Practice_Area_Code]"
+                      dataType="nText"
+                      name="Practice_Area_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Practice_Area_Description]"
+                      dataType="nText"
+                      name="Practice_Area_Description" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Location_Code]"
+                      dataType="nText"
+                      name="Location_Code" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Location_Description]"
+                      dataType="nText"
+                      name="Location_Description" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Status]"
+                      dataType="nText"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Telephone_Number]"
+                      dataType="nText"
+                      name="Telephone_Number" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Email_Address]"
+                      dataType="nText"
+                      name="Email_Address" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Start_Date]"
+                      dataType="nText"
+                      name="Start_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[End_Date]"
+                      dataType="nText"
+                      name="End_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Client_Manager_Identifier]"
+                      dataType="nText"
+                      name="Client_Manager_Identifier" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[SecurityProfileCode]"
+                      dataType="nText"
+                      name="SecurityProfileCode" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Street1]"
+                      dataType="nText"
+                      name="Street1" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Street2]"
+                      dataType="nText"
+                      name="Street2" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[City]"
+                      dataType="nText"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[State]"
+                      dataType="nText"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Zip]"
+                      dataType="nText"
+                      name="Zip" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Country]"
+                      dataType="nText"
+                      name="Country" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input].ExternalColumns[Birth_Date]"
+                      dataType="nText"
+                      name="Birth_Date" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform and Populate Data\Excel Destination.Outputs[Excel Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Excel Destination Error Output"
+                  synchronousInputId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Outputs[Excel Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transform and Populate Data\Excel Destination.Outputs[Excel Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transform and Populate Data\Excel Destination.Outputs[Excel Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transform and Populate Data\Excel Destination.Outputs[Excel Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Transform and Populate Data.Paths[ADO NET Source Output]"
+              endId="Package\Transform and Populate Data\Data Conversion.Inputs[Data Conversion Input]"
+              name="ADO NET Source Output"
+              startId="Package\Transform and Populate Data\ADO NET Source.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Transform and Populate Data.Paths[Data Conversion Output]"
+              endId="Package\Transform and Populate Data\Excel Destination.Inputs[Excel Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Transform and Populate Data\Data Conversion.Outputs[Data Conversion Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{B9AB64FF-1125-49FD-A664-D4FEA0909BFB}"
+      DTS:From="Package\Deletion Of Old Excel File"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Re-create Excel" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{10F01BFB-1D74-4007-8EE9-EAB89118395F}"
+      DTS:From="Package\Re-create Excel"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Transform and Populate Data" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Deletion Of Old Excel File"
+          TopLeft="33.7691626801663,18.258964013442" />
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Re-create Excel"
+          TopLeft="32.9744313775286,109.970356377351" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="113.621797028847,60.258964013442">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.7113923639092"
+              Start="0,0"
+              End="0,42.2113923639092">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.2113923639092" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="218,42"
+          Id="Package\Transform and Populate Data"
+          TopLeft="34.518300632449,208.278097087552" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="108.974431377529,151.970356377351">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="34.5438692549204,56.3077407102008"
+              Start="0,0"
+              End="34.5438692549204,48.8077407102008">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.1538703551004" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.1538703551004"
+                    Point2="0,28.1538703551004"
+                    Point3="4,28.1538703551004" />
+                  <mssgle:LineSegment
+                    End="30.5438692549204,28.1538703551004" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30.5438692549204,28.1538703551004"
+                    Point2="34.5438692549204,28.1538703551004"
+                    Point3="34.5438692549204,32.1538703551004" />
+                  <mssgle:LineSegment
+                    End="34.5438692549204,48.8077407102008" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Transform and Populate Data">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Transform and Populate Data\ADO NET Source"
+          TopLeft="56.6532444785092,32.0793499374097" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Transform and Populate Data\Data Conversion"
+          TopLeft="61.0742107888682,128.265772523143" />
+        <EdgeLayout
+          Id="Package\Transform and Populate Data.Paths[ADO NET Source Output]"
+          TopLeft="137.363727633689,74.0793499374097">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.1864225857338"
+              Start="0,0"
+              End="0,46.6864225857338">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.6864225857338" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-24.80947265625,17.7313948866169,49.6189453125,11.2236328125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="159,42"
+          Id="Package\Transform and Populate Data\Excel Destination"
+          TopLeft="66.4975137545541,243.600734959059" />
+        <EdgeLayout
+          Id="Package\Transform and Populate Data.Paths[Data Conversion Output]"
+          TopLeft="142.535862271711,170.265772523143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,73.3349624359153"
+              Start="0,0"
+              End="0,65.8349624359153">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,65.8349624359153" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-24.80947265625,27.3056648117076,49.6189453125,11.2236328125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transform and Populate Data\ADO NET Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transform and Populate Data\Excel Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
