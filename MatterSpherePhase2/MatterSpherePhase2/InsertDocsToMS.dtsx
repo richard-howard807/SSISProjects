@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="InsertDocsToMS"
   DTS:PackageType="5"
-  DTS:VersionBuild="100"
-  DTS:VersionGUID="{68255427-3492-425C-B7F7-EB426929A5FE}">
+  DTS:VersionBuild="101"
+  DTS:VersionGUID="{25540384-80D3-47C4-961B-EAE90CAB8D31}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -698,7 +698,7 @@ ELSE 'SHELL' END AS [docType]
  FROM DocumentStage
  LEFT OUTER JOIN dbo.Documentassociates as dbAssociates  ON DocumentStage.MSFileID=dbAssociates.fileID 
  AND assocOrder=0
- LEFT OUTER JOIN MS_Prod.dbo.dbDocumentType  AS docType
+ LEFT OUTER JOIN dbo.DocumentType  AS docType
   ON (CASE WHEN DocumentExtension = 'msg' THEN 'EMAIL'
 WHEN DocumentExtension = 'docx'  THEN 'DOCUMENT'
 WHEN  DocumentExtension = 'doc'  THEN 'DOCUMENT'
@@ -3150,6 +3150,10 @@ INNER JOIN config.dbDocument AS doc
           Size="228,42"
           Id="Package\ST - Import Into MatterSphere\EST - Update Version ID dbdoc"
           TopLeft="89.4995225731308,215.067068645582" />
+        <NodeLayout
+          Size="191,42"
+          Id="Package\ST - Import Into MatterSphere\PopulatePrecIDVariable"
+          TopLeft="115.479144114769,7.16373042250007" />
         <EdgeLayout
           Id="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint]"
           TopLeft="204.151912259931,124.061663468939">
@@ -3252,10 +3256,6 @@ INNER JOIN config.dbDocument AS doc
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="191,42"
-          Id="Package\ST - Import Into MatterSphere\PopulatePrecIDVariable"
-          TopLeft="115.479144114769,7.16373042250007" />
         <EdgeLayout
           Id="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint 3]"
           TopLeft="207.56552818735,49.1637304225001">
@@ -3306,6 +3306,10 @@ INNER JOIN config.dbDocument AS doc
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="156,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\Derived Column"
+          TopLeft="603,223" />
+        <NodeLayout
           Size="185,42"
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage"
           TopLeft="323,117" />
@@ -3321,78 +3325,6 @@ INNER JOIN config.dbDocument AS doc
           Size="158,42"
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\Data Conversion"
           TopLeft="593,284" />
-        <EdgeLayout
-          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[OLE DB Source Output]"
-          TopLeft="415.5,159">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-54.5,104"
-              Start="0,0"
-              End="-54.5,96.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,48" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,48"
-                    Point2="0,52"
-                    Point3="-4,52" />
-                  <mssgle:LineSegment
-                    End="-50.5,52" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-50.5,52"
-                    Point2="-54.5,52"
-                    Point3="-54.5,56" />
-                  <mssgle:LineSegment
-                    End="-54.5,96.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[Data Conversion Output]"
-          TopLeft="672,326">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-189.5,28"
-              Start="0,0"
-              End="-189.5,20.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,10" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,10"
-                    Point2="0,14"
-                    Point3="-4,14" />
-                  <mssgle:LineSegment
-                    End="-185.5,14" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-185.5,14"
-                    Point2="-189.5,14"
-                    Point3="-189.5,18" />
-                  <mssgle:LineSegment
-                    End="-189.5,20.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="156,42"
-          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\Derived Column"
-          TopLeft="603,223" />
         <EdgeLayout
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[Row Count Output 1]"
           TopLeft="427,284">
@@ -3419,6 +3351,40 @@ INNER JOIN config.dbDocument AS doc
                     Point3="92,-40" />
                   <mssgle:LineSegment
                     End="168.5,-40" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[OLE DB Source Output]"
+          TopLeft="415.5,159">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-54.5,104"
+              Start="0,0"
+              End="-54.5,96.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,48"
+                    Point2="0,52"
+                    Point3="-4,52" />
+                  <mssgle:LineSegment
+                    End="-50.5,52" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-50.5,52"
+                    Point2="-54.5,52"
+                    Point3="-54.5,56" />
+                  <mssgle:LineSegment
+                    End="-54.5,96.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3461,6 +3427,40 @@ INNER JOIN config.dbDocument AS doc
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument.Paths[Data Conversion Output]"
+          TopLeft="672,326">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-189.5,28"
+              Start="0,0"
+              End="-189.5,20.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10"
+                    Point2="0,14"
+                    Point3="-4,14" />
+                  <mssgle:LineSegment
+                    End="-185.5,14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-185.5,14"
+                    Point2="-189.5,14"
+                    Point3="-189.5,18" />
+                  <mssgle:LineSegment
+                    End="-189.5,20.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -3489,14 +3489,6 @@ INNER JOIN config.dbDocument AS doc
     </LayoutInfo>
   </DtsEventHandler>
   <PipelineComponentMetadata
-    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - MS DbDocument">
     <Properties>
       <Property>
@@ -3506,6 +3498,14 @@ INNER JOIN config.dbDocument AS doc
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
