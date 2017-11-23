@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="InsertDocsToMS"
   DTS:PackageType="5"
-  DTS:VersionBuild="102"
-  DTS:VersionGUID="{93362D8A-1E80-47F4-BA90-861FA99CBEDF}">
+  DTS:VersionBuild="103"
+  DTS:VersionGUID="{888179C3-9B21-4F79-934F-EFE63C2AF445}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -696,9 +696,13 @@ ELSE 'SHELL' END AS [docType]
 	,NULL AS [docIDExt] 
 	,0 AS [SecurityOptions] 
  FROM DocumentStage
- LEFT OUTER JOIN dbo.Documentassociates as dbAssociates  ON DocumentStage.MSFileID=dbAssociates.fileID 
- AND assocOrder=0 AND assoctype='CLIENT'
- LEFT OUTER JOIN dbo.DocumentType  AS docType
+ --LEFT OUTER JOIN dbo.Documentassociates as dbAssociates  ON --DocumentStage.MSFileID=dbAssociates.fileID 
+-- AND assocOrder=0 AND assoctype='CLIENT'
+  LEFT OUTER JOIN (SELECT fileid,[assocID],ROW_NUMBER() OVER (PARTITION BY fileid ORDER BY [assocID] DESC ) AS xOrder
+FROM dbo.Documentassociates
+WHERE assocOrder=0 AND assoctype='CLIENT') as dbAssociates  ON DocumentStage.MSFileID=dbAssociates.fileID  
+AND xOrder=1
+LEFT OUTER JOIN dbo.DocumentType  AS docType
   ON (CASE WHEN DocumentExtension = 'msg' THEN 'EMAIL'
 WHEN DocumentExtension = 'docx'  THEN 'DOCUMENT'
 WHEN  DocumentExtension = 'doc'  THEN 'DOCUMENT'
