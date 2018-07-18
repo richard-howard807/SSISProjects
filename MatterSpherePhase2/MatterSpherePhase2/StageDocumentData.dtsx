@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageDocumentData"
   DTS:PackageType="5"
-  DTS:VersionBuild="119"
-  DTS:VersionGUID="{36655C21-60C4-442A-8ECE-55D5C3CAB3F9}">
+  DTS:VersionBuild="120"
+  DTS:VersionGUID="{5E3AB71C-5D6D-4495-923C-8D5BD6BC1EB1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1218,6 +1218,12 @@
                       cachedName="DCT - DirectoryID"
                       externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DirectoryId]"
                       lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DirectoryID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[MSSecurityOption]"
+                      cachedDataType="i4"
+                      cachedName="MSSecurityOption"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSSecurityOption]"
+                      lineageId="Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[MSSecurityOption]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1389,6 +1395,10 @@
                       refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DirectoryId]"
                       dataType="i4"
                       name="DirectoryId" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSSecurityOption]"
+                      dataType="i8"
+                      name="MSSecurityOption" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1575,6 +1585,11 @@
                       cachedLength="1"
                       cachedName="IsCurrent"
                       lineageId="Package\DFT - GetDocumentStageData\SRT - Axxia01.Outputs[Sort Output].Columns[IsCurrent]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Merge Join.Inputs[Merge Join Left Input].Columns[MSSecurityOption]"
+                      cachedDataType="i4"
+                      cachedName="MSSecurityOption"
+                      lineageId="Package\DFT - GetDocumentStageData\SRT - Axxia01.Outputs[Sort Output].Columns[MSSecurityOption]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1970,6 +1985,19 @@
                           name="InputColumnID">#{Package\DFT - GetDocumentStageData\Merge Join.Inputs[Merge Join Left Input].Columns[IsCurrent]}</property>
                       </properties>
                     </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[MSSecurityOption]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\Merge Join.Outputs[Merge Join Output].Columns[MSSecurityOption]"
+                      name="MSSecurityOption">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - GetDocumentStageData\Merge Join.Inputs[Merge Join Left Input].Columns[MSSecurityOption]}</property>
+                      </properties>
+                    </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -2055,6 +2083,7 @@
 		RTRIM(cashdr.client) + '-' + RTRIM(cashdr.matter) AS FEDCode ,
 casact.case_id
 ,ISNULL(curver,'y') AS [IsCurrent]
+,CASE WHEN stream_no='ECAX' THEN 2 ELSE 0 END AS MSSecurityOption
 FROM    dbo.cashdr AS cashdr
 	    INNER JOIN DataTransferStaging.[dbo].[MSPhaseTwoMatters] AS Export
 	    ON cashdr.case_id=Export.case_id
@@ -2322,6 +2351,15 @@ WHERE   casact.document_no &gt; 0</property>
                       lineageId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[IsCurrent]"
                       name="IsCurrent"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[MSSecurityOption]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[MSSecurityOption]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[MSSecurityOption]"
+                      name="MSSecurityOption"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2433,6 +2471,10 @@ WHERE   casact.document_no &gt; 0</property>
                       dataType="str"
                       length="1"
                       name="IsCurrent" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Output].ExternalColumns[MSSecurityOption]"
+                      dataType="i4"
+                      name="MSSecurityOption" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -2570,6 +2612,11 @@ WHERE   casact.document_no &gt; 0</property>
                       length="1"
                       lineageId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[IsCurrent]"
                       name="IsCurrent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[MSSecurityOption]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[MSSecurityOption]"
+                      name="MSSecurityOption" />
                     <outputColumn
                       refId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -2982,6 +3029,22 @@ WHERE   casact.document_no &gt; 0</property>
                           name="NewSortKeyPosition">0</property>
                       </properties>
                     </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRT - Axxia01.Inputs[Sort Input].Columns[MSSecurityOption]"
+                      cachedDataType="i4"
+                      cachedName="MSSecurityOption"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[MSSecurityOption]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -3297,6 +3360,19 @@ WHERE   casact.document_no &gt; 0</property>
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
                           name="SortColumnId">#{Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[IsCurrent]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRT - Axxia01.Outputs[Sort Output].Columns[MSSecurityOption]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRT - Axxia01.Outputs[Sort Output].Columns[MSSecurityOption]"
+                      name="MSSecurityOption">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - GetDocumentStageData\SRC_axxia01.Outputs[OLE DB Source Output].Columns[MSSecurityOption]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
