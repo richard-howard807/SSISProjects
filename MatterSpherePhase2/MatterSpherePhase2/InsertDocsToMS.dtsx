@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="InsertDocsToMS"
   DTS:PackageType="5"
-  DTS:VersionBuild="105"
-  DTS:VersionGUID="{717A38BB-8F34-46A5-B070-2A81748054BD}">
+  DTS:VersionBuild="106"
+  DTS:VersionGUID="{6221FD16-E25C-40A9-8FF4-4AAE17A1959E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -695,6 +695,7 @@ ELSE 'SHELL' END AS [docType]
 	,NULL AS [docLastEditedBy] 
 	,NULL AS [docIDExt] 
 	,MSSecurityOption AS [SecurityOptions] 
+,CASE WHEN DocumentExtension = 'msg' THEN 'DEA8EA27-4506-451B-A05E-3E2ABFB41EAE' ELSE 'FF6DCD79-369F-47AB-B780-B99615005B73' END  AS [docFolderGUID]
  FROM DocumentStage
  --LEFT OUTER JOIN dbo.Documentassociates as dbAssociates  ON --DocumentStage.MSFileID=dbAssociates.fileID 
 -- AND assocOrder=0 AND assoctype='CLIENT'
@@ -1141,6 +1142,17 @@ ELSE 'SHELL' END)=docType.typeCode
                           lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Output].Columns[SecurityOptions]"
                           name="SecurityOptions"
                           truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Output].Columns[docFolderGUID]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Output].ExternalColumns[docFolderGUID]"
+                          length="36"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Output].Columns[docFolderGUID]"
+                          name="docFolderGUID"
+                          truncationRowDisposition="FailComponent" />
                       </outputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -1324,6 +1336,12 @@ ELSE 'SHELL' END)=docType.typeCode
                           refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Output].ExternalColumns[SecurityOptions]"
                           dataType="i8"
                           name="SecurityOptions" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Output].ExternalColumns[docFolderGUID]"
+                          codePage="1252"
+                          dataType="str"
+                          length="36"
+                          name="docFolderGUID" />
                       </externalMetadataColumns>
                     </output>
                     <output
@@ -1554,6 +1572,13 @@ ELSE 'SHELL' END)=docType.typeCode
                           dataType="i8"
                           lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Error Output].Columns[SecurityOptions]"
                           name="SecurityOptions" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Error Output].Columns[docFolderGUID]"
+                          codePage="1252"
+                          dataType="str"
+                          length="36"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Error Output].Columns[docFolderGUID]"
+                          name="docFolderGUID" />
                         <outputColumn
                           refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                           dataType="i4"
@@ -1901,6 +1926,14 @@ ELSE 'SHELL' END)=docType.typeCode
                           cachedName="DCT - PrecID"
                           externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - MS DbDocument.Inputs[OLE DB Destination Input].ExternalColumns[docprecID]"
                           lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\Derived Column.Outputs[Derived Column Output].Columns[DCT - PrecID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - MS DbDocument.Inputs[OLE DB Destination Input].Columns[docFolderGUID]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="36"
+                          cachedName="docFolderGUID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - MS DbDocument.Inputs[OLE DB Destination Input].ExternalColumns[docFolderGUID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - DocumentStage.Outputs[OLE DB Source Output].Columns[docFolderGUID]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -2108,6 +2141,10 @@ ELSE 'SHELL' END)=docType.typeCode
                           refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - MS DbDocument.Inputs[OLE DB Destination Input].ExternalColumns[docCreationExtEmailProcessed]"
                           dataType="bool"
                           name="docCreationExtEmailProcessed" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into dbDocument\SCR - MS DbDocument.Inputs[OLE DB Destination Input].ExternalColumns[docFolderGUID]"
+                          dataType="guid"
+                          name="docFolderGUID" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
