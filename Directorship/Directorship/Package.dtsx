@@ -1,0 +1,691 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/4/2018 11:17:23 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="L04658"
+  DTS:CreatorName="SBC\khanse"
+  DTS:DTSID="{9E4B7A0A-8488-47DA-BA56-D8C02CE2F5DB}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="2"
+  DTS:VersionGUID="{80822B77-7C6B-418C-80FF-572E3612D266}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{DCD76C22-8F95-450D-B97B-24856B04E9A1}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.15.0;Data Source=\\svr-liv-fs-03\Restricted\Business Services\Risk &amp; Compliance\Sue\Insurance\Directorships.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[svr-liv-dwh-01.SanctionsList]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{55BD09CA-4584-4F20-9000-9D8CF88FC859}"
+      DTS:ObjectName="svr-liv-dwh-01.SanctionsList">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dwh-01;Initial Catalog=SanctionsList;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Refresh Directorship"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7C687EAF-0590-4C5C-9CF4-1691BA33A7AB}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Refresh Directorship"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Refresh Directorship\Directorship"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Directorship"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Refresh Directorship\Directorship.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Name of Partner/employee]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Name of Partner/employee]"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Name of Partner/employee]"
+                      name="Name of Partner/employee"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Name of Company or Committee where position held]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Name of Company or Committee where position held]"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Name of Company or Committee where position held]"
+                      name="Name of Company or Committee where position held"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Exact Position held]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Exact Position held]"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Exact Position held]"
+                      name="Exact Position held"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Brief description of functions of the company, committee or inst]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Brief description of functions of the company, committee or inst]"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Brief description of functions of the company, committee or inst]"
+                      name="Brief description of functions of the company, committee or inst"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Charitable/ non profit making - Yes or No ]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Charitable/ non profit making - Yes or No ]"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Charitable/ non profit making - Yes or No ]"
+                      name="Charitable/ non profit making - Yes or No "
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Location]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Location]"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Location]"
+                      name="Location"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Does the company purchase D&amp;O insurance Yes or No]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Does the company purchase D&amp;O insurance Yes or No]"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Does the company purchase D&amp;O insurance Yes or No]"
+                      name="Does the company purchase D&amp;O insurance Yes or No"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Last Updated]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Last Updated]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Last Updated]"
+                      name="Last Updated"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Last Reviewed]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Last Reviewed]"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Last Reviewed]"
+                      name="Last Reviewed"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Name of Partner/employee]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name of Partner/employee" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Name of Company or Committee where position held]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name of Company or Committee where position held" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Exact Position held]"
+                      dataType="wstr"
+                      length="255"
+                      name="Exact Position held" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Brief description of functions of the company, committee or inst]"
+                      dataType="wstr"
+                      length="255"
+                      name="Brief description of functions of the company, committee or inst" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Charitable/ non profit making - Yes or No ]"
+                      dataType="wstr"
+                      length="255"
+                      name="Charitable/ non profit making - Yes or No " />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Location]"
+                      dataType="wstr"
+                      length="255"
+                      name="Location" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Does the company purchase D&amp;O insurance Yes or No]"
+                      dataType="wstr"
+                      length="255"
+                      name="Does the company purchase D&amp;O insurance Yes or No" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Last Updated]"
+                      dataType="date"
+                      name="Last Updated" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].ExternalColumns[Last Reviewed]"
+                      dataType="wstr"
+                      length="255"
+                      name="Last Reviewed" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Name of Partner/employee]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Name of Partner/employee]"
+                      name="Name of Partner/employee" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Name of Company or Committee where position held]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Name of Company or Committee where position held]"
+                      name="Name of Company or Committee where position held" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Exact Position held]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Exact Position held]"
+                      name="Exact Position held" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Brief description of functions of the company, committee or inst]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Brief description of functions of the company, committee or inst]"
+                      name="Brief description of functions of the company, committee or inst" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Charitable/ non profit making - Yes or No ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Charitable/ non profit making - Yes or No ]"
+                      name="Charitable/ non profit making - Yes or No " />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Location]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Location]"
+                      name="Location" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Does the company purchase D&amp;O insurance Yes or No]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Does the company purchase D&amp;O insurance Yes or No]"
+                      name="Does the company purchase D&amp;O insurance Yes or No" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Last Updated]"
+                      dataType="date"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Last Updated]"
+                      name="Last Updated" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Last Reviewed]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[Last Reviewed]"
+                      name="Last Reviewed" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Refresh Directorship\Insert Into Directorship"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Insert Into Directorship"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Directorships]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Refresh Directorship\Insert Into Directorship.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-dwh-01.SanctionsList]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-dwh-01.SanctionsList]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].Columns[Name of Partner/employee]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Name of Partner/employee"
+                      externalMetadataColumnId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Name of Partner/employee]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Name of Partner/employee]" />
+                    <inputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].Columns[Name of Company or Committee where position held]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Name of Company or Committee where position held"
+                      externalMetadataColumnId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Name of Company or Committee where position held]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Name of Company or Committee where position held]" />
+                    <inputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].Columns[Exact Position held]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Exact Position held"
+                      externalMetadataColumnId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Exact Position held]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Exact Position held]" />
+                    <inputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].Columns[Brief description of functions of the company, committee or inst]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Brief description of functions of the company, committee or inst"
+                      externalMetadataColumnId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Brief description of functions of the company, committee or inst]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Brief description of functions of the company, committee or inst]" />
+                    <inputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].Columns[Charitable/ non profit making - Yes or No ]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Charitable/ non profit making - Yes or No "
+                      externalMetadataColumnId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Charitable/ non profit making - Yes or No ]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Charitable/ non profit making - Yes or No ]" />
+                    <inputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].Columns[Location]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Location"
+                      externalMetadataColumnId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Location]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Location]" />
+                    <inputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].Columns[Does the company purchase D&amp;O insurance Yes or No]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Does the company purchase D&amp;O insurance Yes or No"
+                      externalMetadataColumnId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Does the company purchase D&amp;O insurance Yes or No]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Does the company purchase D&amp;O insurance Yes or No]" />
+                    <inputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].Columns[Last Updated]"
+                      cachedDataType="date"
+                      cachedName="Last Updated"
+                      externalMetadataColumnId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Last Updated]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Last Updated]" />
+                    <inputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].Columns[Last Reviewed]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Last Reviewed"
+                      externalMetadataColumnId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Last Reviewed]"
+                      lineageId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output].Columns[Last Reviewed]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Name of Partner/employee]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name of Partner/employee" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Name of Company or Committee where position held]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name of Company or Committee where position held" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Exact Position held]"
+                      dataType="wstr"
+                      length="255"
+                      name="Exact Position held" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Brief description of functions of the company, committee or inst]"
+                      dataType="wstr"
+                      length="255"
+                      name="Brief description of functions of the company, committee or inst" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Charitable/ non profit making - Yes or No ]"
+                      dataType="wstr"
+                      length="255"
+                      name="Charitable/ non profit making - Yes or No " />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Location]"
+                      dataType="wstr"
+                      length="255"
+                      name="Location" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Does the company purchase D&amp;O insurance Yes or No]"
+                      dataType="wstr"
+                      length="255"
+                      name="Does the company purchase D&amp;O insurance Yes or No" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Last Updated]"
+                      dataType="dbTimeStamp"
+                      name="Last Updated" />
+                    <externalMetadataColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input].ExternalColumns[Last Reviewed]"
+                      dataType="wstr"
+                      length="255"
+                      name="Last Reviewed" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Refresh Directorship\Insert Into Directorship.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Refresh Directorship\Insert Into Directorship.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Refresh Directorship\Insert Into Directorship.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Refresh Directorship\Insert Into Directorship.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Refresh Directorship.Paths[Excel Source Output]"
+              endId="Package\Refresh Directorship\Insert Into Directorship.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Refresh Directorship\Directorship.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Directorship"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B06A4997-A44D-4E8A-9890-96BF616B32A6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Directorship"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{55BD09CA-4584-4F20-9000-9D8CF88FC859}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE SanctionsList.dbo.Directorships" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{CF2FEBCA-0978-45C8-AF08-2D64B71055B1}"
+      DTS:From="Package\Truncate Directorship"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Refresh Directorship" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="176,42"
+          Id="Package\Refresh Directorship"
+          TopLeft="442,149" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\Truncate Directorship"
+          TopLeft="432,64" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="526.5,106">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Refresh Directorship">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="137,42"
+          Id="Package\Refresh Directorship\Directorship"
+          TopLeft="404,157" />
+        <NodeLayout
+          Size="191,42"
+          Id="Package\Refresh Directorship\Insert Into Directorship"
+          TopLeft="469,280" />
+        <EdgeLayout
+          Id="Package\Refresh Directorship.Paths[Excel Source Output]"
+          TopLeft="472.5,199">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="92,81"
+              Start="0,0"
+              End="92,73.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.5"
+                    Point2="0,40.5"
+                    Point3="4,40.5" />
+                  <mssgle:LineSegment
+                    End="88,40.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="88,40.5"
+                    Point2="92,40.5"
+                    Point3="92,44.5" />
+                  <mssgle:LineSegment
+                    End="92,73.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Refresh Directorship\Directorship">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Refresh Directorship\Insert Into Directorship">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
