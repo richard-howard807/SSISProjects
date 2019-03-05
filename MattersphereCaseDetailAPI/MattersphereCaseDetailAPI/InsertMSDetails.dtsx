@@ -1,0 +1,2468 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/4/2019 4:08:05 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="L04658"
+  DTS:CreatorName="SBC\khanse"
+  DTS:DTSID="{2E4C01F6-BCCC-42D3-955E-8BF6F54B5CA6}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="InsertMSDetails"
+  DTS:PackageType="5"
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{F5648673-EEDF-42E6-BD0E-CC623311A66F}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[APITemplate]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{5803C6D8-04F6-4B61-841C-D77F1E676956}"
+      DTS:ObjectName="APITemplate">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MattersphereDetailAPI\MS Detail API Template 04.02.19.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{287E8F97-50DA-47E1-8A68-80B183D214F1}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{598C45F7-EC78-42B8-8455-C2FC2723EA95}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6F0C02DC-66AA-46A0-8947-62587B1B84AD}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MS_Prod;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3D2377D7-7894-45BD-8BDB-DBBAEF1F4A47}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{377BF927-6193-41DC-992F-F1A6258B4831}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DCFCCFE0-D75D-4BEE-89F8-7FF584CBFD0D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E76A084F-065C-4B01-A51B-6975C6013021}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{496456DE-2534-4E63-AECF-7839CD096EC1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CA0ABF75-6A81-4434-838B-26C2B879D291}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FCA44419-EFA4-43E5-BD8C-D861CE466954}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6F6FD946-7785-4817-9899-B4EB0586A1E0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{82A94636-C3B5-49BD-96E2-865597229777}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7D93CE2C-6D5A-41A0-BD73-CC77314C2ECD}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{527EA743-090D-4C08-B04D-B731FBE00F60}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5C94DC98-01EB-43FB-9B83-0B5FF0BBE903}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{99C8DE9E-617B-412F-A3A6-466011111727}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CC9F09E0-F94E-47E9-B6DF-5CBD41DE28F7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Variable">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Insert into Failure"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{20E8CB93-DF62-4554-B488-2CBC896766BE}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Insert into Failure"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST - MS Detail Failure"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[MSDetailFailure]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[ID]"
+                      cachedDataType="i4"
+                      cachedName="ID"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[ID]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[fileID]"
+                      cachedDataType="i8"
+                      cachedName="fileID"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[fileID]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileID]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[clNo]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[fileNo]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="fileNo"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[fileNo]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileNo]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[MSCaseDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="MSCaseDate"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseDate]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseDate]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[MSCaseValue]"
+                      cachedDataType="numeric"
+                      cachedName="MSCaseValue"
+                      cachedPrecision="13"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseValue]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseValue]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[DetailDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DetailDesc"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[DetailDesc]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DetailDesc]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[DataType]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DataType"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[DataType]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DataType]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[Lookupcode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Lookupcode"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[Lookupcode]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Lookupcode]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[LookupTable]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="LookupTable"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[LookupTable]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[LookupTable]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[MScode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MScode"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MScode]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MScode]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[MSTable]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSTable"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MSTable]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSTable]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[InsertDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="InsertDate"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[InsertDate]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[Imported]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Imported"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Imported]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[StatusID]"
+                      cachedDataType="ui1"
+                      cachedName="StatusID"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[StatusID]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[error]"
+                      cachedDataType="i4"
+                      cachedName="error"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[error]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[errormsg]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2000"
+                      cachedName="errormsg"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[errormsg]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].Columns[MSCaseText]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSCaseText"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseText]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseText]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[fileID]"
+                      dataType="i8"
+                      name="fileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseDate]"
+                      dataType="dbTimeStamp"
+                      name="MSCaseDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseValue]"
+                      dataType="numeric"
+                      name="MSCaseValue"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[DetailDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="DetailDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[DataType]"
+                      dataType="wstr"
+                      length="255"
+                      name="DataType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[Lookupcode]"
+                      dataType="wstr"
+                      length="255"
+                      name="Lookupcode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[LookupTable]"
+                      dataType="wstr"
+                      length="255"
+                      name="LookupTable" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MScode]"
+                      dataType="wstr"
+                      length="255"
+                      name="MScode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MSTable]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSTable" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseText]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSCaseText" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Insert into Failure\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - Insert into Failure\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Insert into Failure\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - Insert into Failure\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Insert into Failure\SRC - StagedDetails"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - StagedDetails"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT [ID] ,
+	[fileID] ,
+	[clNo],
+	[fileNo],
+	[MSCaseDate],
+	[MSCaseValue],
+	[DetailDesc],
+	[DataType],
+	[Lookupcode],
+	[LookupTable],
+	[MScode],
+	[MSTable],
+	[InsertDate] ,
+	[Imported],
+	[StatusID],
+	[error],
+	[errormsg],
+	[MSCaseText]
+
+FROM MSDetailStage
+WHERE StatusID IN (6,9)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileID]"
+                      name="fileID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[clNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      length="12"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[clNo]"
+                      name="clNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      length="20"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      name="fileNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseDate]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseDate]"
+                      name="MSCaseDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseValue]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseValue]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseValue]"
+                      name="MSCaseValue"
+                      precision="13"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DetailDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[DetailDesc]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DetailDesc]"
+                      name="DetailDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DataType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[DataType]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DataType]"
+                      name="DataType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Lookupcode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[Lookupcode]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Lookupcode]"
+                      name="Lookupcode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[LookupTable]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[LookupTable]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[LookupTable]"
+                      name="LookupTable"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MScode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MScode]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MScode]"
+                      name="MScode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSTable]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSTable]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSTable]"
+                      name="MSTable"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      name="InsertDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Imported]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[Imported]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Imported]"
+                      name="Imported"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[StatusID]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[StatusID]"
+                      name="StatusID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[error]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[error]"
+                      name="error"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                      length="2000"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[errormsg]"
+                      name="errormsg"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseText]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseText]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseText]"
+                      name="MSCaseText"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
+                      dataType="i8"
+                      name="fileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseDate]"
+                      dataType="dbTimeStamp"
+                      name="MSCaseDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseValue]"
+                      dataType="numeric"
+                      name="MSCaseValue"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[DetailDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="DetailDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[DataType]"
+                      dataType="wstr"
+                      length="255"
+                      name="DataType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[Lookupcode]"
+                      dataType="wstr"
+                      length="255"
+                      name="Lookupcode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[LookupTable]"
+                      dataType="wstr"
+                      length="255"
+                      name="LookupTable" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MScode]"
+                      dataType="wstr"
+                      length="255"
+                      name="MScode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSTable]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSTable" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseText]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSCaseText" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[fileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[fileID]"
+                      name="fileID" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      name="clNo" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      name="fileNo" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseDate]"
+                      name="MSCaseDate" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseValue]"
+                      dataType="numeric"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseValue]"
+                      name="MSCaseValue"
+                      precision="13"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[DetailDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[DetailDesc]"
+                      name="DetailDesc" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[DataType]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[DataType]"
+                      name="DataType" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[Lookupcode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[Lookupcode]"
+                      name="Lookupcode" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[LookupTable]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[LookupTable]"
+                      name="LookupTable" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MScode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MScode]"
+                      name="MScode" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSTable]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSTable]"
+                      name="MSTable" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      name="InsertDate" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[Imported]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[Imported]"
+                      name="Imported" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                      dataType="ui1"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                      name="StatusID" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[error]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[error]"
+                      name="error" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                      name="errormsg" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseText]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseText]"
+                      name="MSCaseText" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Insert into Failure.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Insert into Failure\Row Count.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Insert into Failure\SRC - StagedDetails.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - Insert into Failure.Paths[Row Count Output 1]"
+              endId="Package\DFT - Insert into Failure\DEST - MS Detail Failure.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - Insert into Failure\Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Insert into Success"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C0ACA4C9-3E8B-421E-ADFE-B4A32E3D92E0}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Insert into Success"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Insert into Success\DEST - MS Detail Success"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST - MS Detail Success"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[MSDetailSuccess]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[ID]"
+                      cachedDataType="i4"
+                      cachedName="ID"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[ID]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[fileID]"
+                      cachedDataType="i8"
+                      cachedName="fileID"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[fileID]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileID]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[clNo]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[fileNo]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="fileNo"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[fileNo]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileNo]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[MSCaseDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="MSCaseDate"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseDate]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseDate]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[MSCaseValue]"
+                      cachedDataType="numeric"
+                      cachedName="MSCaseValue"
+                      cachedPrecision="13"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseValue]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseValue]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[DetailDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DetailDesc"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[DetailDesc]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DetailDesc]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[DataType]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DataType"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[DataType]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DataType]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[Lookupcode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Lookupcode"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[Lookupcode]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Lookupcode]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[LookupTable]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="LookupTable"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[LookupTable]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[LookupTable]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[MScode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MScode"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MScode]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MScode]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[MSTable]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSTable"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MSTable]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSTable]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[InsertDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="InsertDate"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[InsertDate]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[Imported]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Imported"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Imported]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[StatusID]"
+                      cachedDataType="ui1"
+                      cachedName="StatusID"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[StatusID]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[error]"
+                      cachedDataType="i4"
+                      cachedName="error"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[error]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[errormsg]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2000"
+                      cachedName="errormsg"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[errormsg]" />
+                    <inputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].Columns[MSCaseText]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSCaseText"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseText]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseText]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[fileID]"
+                      dataType="i8"
+                      name="fileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseDate]"
+                      dataType="dbTimeStamp"
+                      name="MSCaseDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseValue]"
+                      dataType="numeric"
+                      name="MSCaseValue"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[DetailDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="DetailDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[DataType]"
+                      dataType="wstr"
+                      length="255"
+                      name="DataType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[Lookupcode]"
+                      dataType="wstr"
+                      length="255"
+                      name="Lookupcode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[LookupTable]"
+                      dataType="wstr"
+                      length="255"
+                      name="LookupTable" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MScode]"
+                      dataType="wstr"
+                      length="255"
+                      name="MScode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MSTable]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSTable" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input].ExternalColumns[MSCaseText]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSCaseText" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Success\DEST - MS Detail Success.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\DEST - MS Detail Success.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Success\DEST - MS Detail Success.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Insert into Success\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCount</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - Insert into Success\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Insert into Success\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - Insert into Success\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Insert into Success\SRC - StagedDetails"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC - StagedDetails"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[MSDetailStage]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT [ID] ,
+	[fileID] ,
+	[clNo],
+	[fileNo],
+	[MSCaseDate],
+	[MSCaseValue],
+	[DetailDesc],
+	[DataType],
+	[Lookupcode],
+	[LookupTable],
+	[MScode],
+	[MSTable],
+	[InsertDate] ,
+	[Imported],
+	[StatusID],
+	[error],
+	[errormsg],
+	[MSCaseText]
+
+FROM MSDetailStage
+WHERE StatusID=7</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Insert into Success\SRC - StagedDetails.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileID]"
+                      name="fileID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[clNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      length="12"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[clNo]"
+                      name="clNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      length="20"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      name="fileNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseDate]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseDate]"
+                      name="MSCaseDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseValue]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseValue]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseValue]"
+                      name="MSCaseValue"
+                      precision="13"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DetailDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[DetailDesc]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DetailDesc]"
+                      name="DetailDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DataType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[DataType]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[DataType]"
+                      name="DataType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Lookupcode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[Lookupcode]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Lookupcode]"
+                      name="Lookupcode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[LookupTable]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[LookupTable]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[LookupTable]"
+                      name="LookupTable"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MScode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MScode]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MScode]"
+                      name="MScode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSTable]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSTable]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSTable]"
+                      name="MSTable"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      name="InsertDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Imported]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[Imported]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[Imported]"
+                      name="Imported"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[StatusID]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[StatusID]"
+                      name="StatusID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[error]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[error]"
+                      name="error"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                      length="2000"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[errormsg]"
+                      name="errormsg"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseText]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseText]"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].Columns[MSCaseText]"
+                      name="MSCaseText"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
+                      dataType="i8"
+                      name="fileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseDate]"
+                      dataType="dbTimeStamp"
+                      name="MSCaseDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseValue]"
+                      dataType="numeric"
+                      name="MSCaseValue"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[DetailDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="DetailDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[DataType]"
+                      dataType="wstr"
+                      length="255"
+                      name="DataType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[Lookupcode]"
+                      dataType="wstr"
+                      length="255"
+                      name="Lookupcode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[LookupTable]"
+                      dataType="wstr"
+                      length="255"
+                      name="LookupTable" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MScode]"
+                      dataType="wstr"
+                      length="255"
+                      name="MScode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSTable]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSTable" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output].ExternalColumns[MSCaseText]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSCaseText" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[fileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[fileID]"
+                      name="fileID" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      name="clNo" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      name="fileNo" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseDate]"
+                      name="MSCaseDate" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseValue]"
+                      dataType="numeric"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseValue]"
+                      name="MSCaseValue"
+                      precision="13"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[DetailDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[DetailDesc]"
+                      name="DetailDesc" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[DataType]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[DataType]"
+                      name="DataType" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[Lookupcode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[Lookupcode]"
+                      name="Lookupcode" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[LookupTable]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[LookupTable]"
+                      name="LookupTable" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MScode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MScode]"
+                      name="MScode" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSTable]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSTable]"
+                      name="MSTable" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      name="InsertDate" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[Imported]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[Imported]"
+                      name="Imported" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                      dataType="ui1"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                      name="StatusID" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[error]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[error]"
+                      name="error" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                      name="errormsg" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseText]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[MSCaseText]"
+                      name="MSCaseText" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Insert into Success.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Insert into Success\Row Count.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Insert into Success\SRC - StagedDetails.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - Insert into Success.Paths[Row Count Output 1]"
+              endId="Package\DFT - Insert into Success\DEST - MS Detail Success.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - Insert into Success\Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST - Add MS Details"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{31FB7855-7941-434D-BB8A-38BA59645657}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST - Add MS Details"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3D2377D7-7894-45BD-8BDB-DBBAEF1F4A47}"
+          SQLTask:SqlStatementSource="EXEC [dbo].[EXECDetailCursorNonFED]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST - DeleteSuccesfullyImportedDetails"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F7FFFAD1-B540-438B-ABDF-97984A39565C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST - DeleteSuccesfullyImportedDetails"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3D2377D7-7894-45BD-8BDB-DBBAEF1F4A47}"
+          SQLTask:SqlStatementSource="DELETE FROM MSDetailStage&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{623DE283-EC5F-4F06-AD90-3F271A2B12E9}"
+      DTS:From="Package\EST - Add MS Details"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - Insert into Success" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{EA21866E-5302-4126-BA18-700F16D507AF}"
+      DTS:From="Package\DFT - Insert into Success"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DFT - Insert into Failure" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{23AF2145-6728-4791-8333-5E2ABAF57CA9}"
+      DTS:From="Package\DFT - Insert into Failure"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\EST - DeleteSuccesfullyImportedDetails" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{120AD865-DC68-4A2E-B443-7F4E7CD6CCF1}"
+      DTS:EventID="3735597"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{BE40CD55-73F5-46A1-870E-2526FD2257EF}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{620CDE59-A563-4712-9A51-18C647C7789C}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{287E8F97-50DA-47E1-8A68-80B183D214F1}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnPostExecute]"
+      DTS:CreationName="OnPostExecute"
+      DTS:DTSID="{A4B493F7-18D2-4D45-9415-59A1A4289A71}"
+      DTS:EventID="-3"
+      DTS:EventName="OnPostExecute"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{E0180B31-0E48-4802-8E47-7B090D811D48}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnPostExecute]\EndAudit"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{B42D208A-2221-4330-81DD-D1BCB2FF0262}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EndAudit">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{287E8F97-50DA-47E1-8A68-80B183D214F1}"
+              SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@Audit_ID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@CountInserted"
+                SQLTask:DtsVariableName="User::RowCountInserts"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@CountChanged"
+                SQLTask:DtsVariableName="User::RowCountUpdates"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnPreExecute]"
+      DTS:CreationName="OnPreExecute"
+      DTS:DTSID="{CA20FEB0-AC63-4BE3-BA8C-572DF849459E}"
+      DTS:EventID="1816940592"
+      DTS:EventName="OnPreExecute"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{0F6D85B9-F4DC-4310-9304-95A553D15867}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnPreExecute]\StartAudit"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{58C81C6E-5EB2-4A4B-843B-DA2D91574877}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="StartAudit">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{287E8F97-50DA-47E1-8A68-80B183D214F1}"
+              SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="AuditID"
+                SQLTask:DtsVariableName="User::AuditID" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@PackageName"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@PackageStart"
+                SQLTask:DtsVariableName="System::StartTime"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="7"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@TaskName"
+                SQLTask:DtsVariableName="System::SourceName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@CreatedBy"
+                SQLTask:DtsVariableName="System::UserName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@DestinationTable"
+                SQLTask:DtsVariableName="User::DestinationTable"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ExtractFileName"
+                SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ExtractFolder"
+                SQLTask:DtsVariableName="User::ExtractFolder"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ParentAuditID"
+                SQLTask:DtsVariableName="User::ParentAuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="197,42"
+          Id="Package\DFT - Insert into Failure"
+          TopLeft="345,339" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\DFT - Insert into Success"
+          TopLeft="335.5,250.5" />
+        <NodeLayout
+          Size="188,42"
+          Id="Package\EST - Add MS Details"
+          TopLeft="339,161" />
+        <NodeLayout
+          Size="277,42"
+          Id="Package\EST - DeleteSuccesfullyImportedDetails"
+          TopLeft="307,431" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="435.5,203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.5"
+              Start="0,0"
+              End="0,40">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="440.75,292.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.5"
+              Start="0,0"
+              End="0,39">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="444.5,381">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50"
+              Start="0,0"
+              End="0,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="129,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="267,181" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="126,42"
+          Id="Package.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="336,160" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="129,42"
+          Id="Package.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="295,163" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT - Insert into Failure">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="135,42"
+          Id="Package\DFT - Insert into Failure\Row Count"
+          TopLeft="355,238" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\DFT - Insert into Failure\SRC - StagedDetails"
+          TopLeft="332,141" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\DFT - Insert into Failure\DEST - MS Detail Failure"
+          TopLeft="324,345" />
+        <EdgeLayout
+          Id="Package\DFT - Insert into Failure.Paths[Row Count Output 1]"
+          TopLeft="424.25,280">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,65"
+              Start="0,0"
+              End="0,57.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Insert into Failure.Paths[OLE DB Source Output]"
+          TopLeft="422.75,183">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,55"
+              Start="0,0"
+              End="0,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Insert into Failure\SRC - StagedDetails">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Insert into Failure\DEST - MS Detail Failure">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT - Insert into Success">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="135,42"
+          Id="Package\DFT - Insert into Success\Row Count"
+          TopLeft="367,193" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\DFT - Insert into Success\SRC - StagedDetails"
+          TopLeft="341,113" />
+        <NodeLayout
+          Size="212,42"
+          Id="Package\DFT - Insert into Success\DEST - MS Detail Success"
+          TopLeft="332,276" />
+        <EdgeLayout
+          Id="Package\DFT - Insert into Success.Paths[Row Count Output 1]"
+          TopLeft="436.25,235">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Insert into Success.Paths[OLE DB Source Output]"
+          TopLeft="433.25,155">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38"
+              Start="0,0"
+              End="0,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Insert into Success\SRC - StagedDetails">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Insert into Success\DEST - MS Detail Success">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
