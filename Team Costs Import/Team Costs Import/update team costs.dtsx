@@ -1,0 +1,651 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/27/2018 12:19:20 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DEV-BI-CLIENT-8"
+  DTS:CreatorName="SBC\sgrego"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{682ED53D-8FFF-4808-A990-AEBCF7298672}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="2057"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="update team costs"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{BC0F89F9-68A0-40CE-BBC3-DBAED020D98D}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{17976AE5-F9CA-4B68-8165-C63F6092C4DE}"
+      DTS:ObjectName="DestinationConnectionOLEDB">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dw-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=false;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{687127B2-D01F-46FD-A02A-79EAC91C4A57}"
+      DTS:ObjectName="SourceConnectionOLEDB">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dwh-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=false;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task 1"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{FC64D8FF-9A06-489C-BFCF-C73B28D787CA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task 1"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination - ds_mds_teamcosts"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[ds_mds_teamcosts]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].Columns[team]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="team"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[team]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[team]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].Columns[month]"
+                      cachedDataType="r8"
+                      cachedName="month"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[month]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[month]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].Columns[costsmonth]"
+                      cachedDataType="numeric"
+                      cachedName="costsmonth"
+                      cachedPrecision="13"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[costsmonth]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[costsmonth]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].Columns[costsytd]"
+                      cachedDataType="numeric"
+                      cachedName="costsytd"
+                      cachedPrecision="13"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[costsytd]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[costsytd]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].Columns[staffbudgetmonth]"
+                      cachedDataType="numeric"
+                      cachedName="staffbudgetmonth"
+                      cachedPrecision="13"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[staffbudgetmonth]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[staffbudgetmonth]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].Columns[previousyrcm]"
+                      cachedDataType="numeric"
+                      cachedName="previousyrcm"
+                      cachedPrecision="13"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[previousyrcm]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[previousyrcm]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].Columns[practicearea]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="practicearea"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[practicearea]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[practicearea]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].Columns[businessline]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="businessline"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[businessline]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[businessline]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[team]"
+                      dataType="wstr"
+                      length="255"
+                      name="team" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[month]"
+                      dataType="r8"
+                      name="month" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[costsmonth]"
+                      dataType="numeric"
+                      name="costsmonth"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[costsytd]"
+                      dataType="numeric"
+                      name="costsytd"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[staffbudgetmonth]"
+                      dataType="numeric"
+                      name="staffbudgetmonth"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[previousyrcm]"
+                      dataType="numeric"
+                      name="previousyrcm"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[practicearea]"
+                      dataType="wstr"
+                      length="255"
+                      name="practicearea" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input].ExternalColumns[businessline]"
+                      dataType="wstr"
+                      length="255"
+                      name="businessline" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Source - ds_mds_teamcosts"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[ds_mds_teamcosts]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[team]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[team]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[team]"
+                      name="team"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[month]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[month]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[month]"
+                      name="month"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[costsmonth]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[costsmonth]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[costsmonth]"
+                      name="costsmonth"
+                      precision="13"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[costsytd]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[costsytd]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[costsytd]"
+                      name="costsytd"
+                      precision="13"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[staffbudgetmonth]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[staffbudgetmonth]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[staffbudgetmonth]"
+                      name="staffbudgetmonth"
+                      precision="13"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[previousyrcm]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[previousyrcm]"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[previousyrcm]"
+                      name="previousyrcm"
+                      precision="13"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[practicearea]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[practicearea]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[practicearea]"
+                      name="practicearea"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[businessline]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[businessline]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].Columns[businessline]"
+                      name="businessline"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[team]"
+                      dataType="wstr"
+                      length="255"
+                      name="team" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[month]"
+                      dataType="r8"
+                      name="month" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[costsmonth]"
+                      dataType="numeric"
+                      name="costsmonth"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[costsytd]"
+                      dataType="numeric"
+                      name="costsytd"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[staffbudgetmonth]"
+                      dataType="numeric"
+                      name="staffbudgetmonth"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[previousyrcm]"
+                      dataType="numeric"
+                      name="previousyrcm"
+                      precision="13"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[practicearea]"
+                      dataType="wstr"
+                      length="255"
+                      name="practicearea" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output].ExternalColumns[businessline]"
+                      dataType="wstr"
+                      length="255"
+                      name="businessline" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[team]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[team]"
+                      name="team" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[month]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[month]"
+                      name="month" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[costsmonth]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[costsmonth]"
+                      name="costsmonth"
+                      precision="13"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[costsytd]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[costsytd]"
+                      name="costsytd"
+                      precision="13"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[staffbudgetmonth]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[staffbudgetmonth]"
+                      name="staffbudgetmonth"
+                      precision="13"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[previousyrcm]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[previousyrcm]"
+                      name="previousyrcm"
+                      precision="13"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[practicearea]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[practicearea]"
+                      name="practicearea" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[businessline]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[businessline]"
+                      name="businessline" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task 1.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task 1\Destination - ds_mds_teamcosts.Inputs[Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task 1\Source - ds_mds_teamcosts.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Preparation SQL Task 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7E277349-7CD2-4682-A4C5-D4852B553147}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Preparation SQL Task 1"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{17976AE5-F9CA-4B68-8165-C63F6092C4DE}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [dbo].[ds_mds_teamcosts]&#xA;GO&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{ED410430-4550-47ED-8926-B7B4E6693EC0\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{ED410430-4550-47ED-8926-B7B4E6693EC0}"
+      DTS:From="Package\Preparation SQL Task 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{ED410430-4550-47ED-8926-B7B4E6693EC0}"
+      DTS:To="Package\Data Flow Task 1" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="160,42"
+          Id="Package\Data Flow Task 1"
+          TopLeft="20.5,107.5" />
+        <NodeLayout
+          Size="190,42"
+          Id="Package\Preparation SQL Task 1"
+          TopLeft="5.50000000000001,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[{ED410430-4550-47ED-8926-B7B4E6693EC0\}]"
+          TopLeft="100.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task 1">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="232,42"
+          Id="Package\Data Flow Task 1\Destination - ds_mds_teamcosts"
+          TopLeft="5.50000000000001,107.5" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\Data Flow Task 1\Source - ds_mds_teamcosts"
+          TopLeft="16,5.5" />
+        <EdgeLayout
+          Id="Package\Data Flow Task 1.Paths[OLE DB Source Output]"
+          TopLeft="121.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
