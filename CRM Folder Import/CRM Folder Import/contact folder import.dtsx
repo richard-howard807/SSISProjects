@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="contact folder import"
   DTS:PackageType="5"
-  DTS:VersionBuild="92"
-  DTS:VersionGUID="{C17D1340-0AD8-4AD5-A3BF-663A3EB53A9B}">
+  DTS:VersionBuild="93"
+  DTS:VersionGUID="{7F5C6A86-2477-401B-88B4-4C8AC3A1023F}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -6927,6 +6927,22 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D2ABE9A0-83B8-4C0A-B659-3CD302634444}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{33ED0F3D-665E-4E10-B114-DC37EBF2CEC9}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.stage_client_matter_summary_02_merge&#xA;--GO&#xA;&#xA;INSERT INTO   stage_client_matter_summary_02_merge &#xA;&#xA;SELECT dim_client.client_group_name, client_group_name, dim_client.client_code, client_name&#xA;,matterheader.master_client_code, NULL,CASE WHEN matterheader.master_client_code IS NOT NULL THEN 'Company' ELSE 'Prospect'END ,'Active',GETDATE(), GETDATE()&#xA;  FROM [SVR-LIV-IASQ-01].[IAProcessing].[dbo].[contact_folder_import] &#xA;  INNER JOIN dbo.dim_client&#xA;  ON contact_folder_import.company_dim_client_key = dim_client.dim_client_key&#xA;  LEFT JOIN (SELECT DISTINCT client_code,master_client_code, ROW_NUMBER() OVER (PARTITION BY client_code ORDER BY master_matter_number DESC) matter_order&#xA;  FROM dbo.dim_matter_header_current &#xA;  WHERE reporting_exclusions = 0) matterheader&#xA;  ON contact_folder_import.company_client_code = matterheader.client_code COLLATE DATABASE_DEFAULT AND matter_order  =1 &#xA;  --WHERE contact_folder_import.dss_insert_time &gt;= '2019-05-17 11:31:57.253'&#xA;&#xA;&#xA;  GO&#xA;&#xA;INSERT INTO   stage_client_matter_summary_02_merge &#xA;&#xA;SELECT  dim_client.client_group_name, client_group_name, dim_client.client_code, client_name&#xA;,NULL, company_client_code,'Person','Active',GETDATE(), GETDATE()&#xA;  FROM [SVR-LIV-IASQ-01].[IAProcessing].[dbo].[contact_folder_import] &#xA;  INNER JOIN dbo.dim_client ON contact_folder_import.dim_client_key = dim_client.dim_client_key&#xA;  --WHERE contact_folder_import.dss_insert_time &gt;= '2019-04-18 15:15:19.450'&#xA;&#xA;  GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\Folder Update"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
@@ -7727,7 +7743,41 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </pipeline>
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate contact_folder_import"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{DB29CD19-8D7C-457B-A036-821E4CBF9E02}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate contact_folder_import"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{EEA061F2-2CE5-42FB-A74F-52B7BE2C37B1}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [IAProcessing].[dbo].[contact_folder_import]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{0A0947AC-DFF4-417B-8DC9-B00220BE42BC}"
+      DTS:From="Package\Truncate contact_folder_import"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Contacts Import" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{C4CEA3D4-0D17-4255-B30C-F4E9C1F7C6C0}"
+      DTS:From="Package\Contacts Import"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Execute SQL Task" />
+  </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
 <!--If you manually edit this section and make a mistake, you can delete it. -->
@@ -7739,7 +7789,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="157,42"
           Id="Package\Contacts Import"
@@ -7752,6 +7802,70 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           Size="104,42"
           Id="Package\Multi"
           TopLeft="330,133" />
+        <NodeLayout
+          Size="189,44"
+          Id="Package\Truncate contact_folder_import"
+          TopLeft="497,51" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="594.5,95">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51"
+              Start="0,0"
+              End="0,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="541,271" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="597.5,188">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26,83"
+              Start="0,0"
+              End="26,75.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,37.5"
+                    Point2="0,41.5"
+                    Point3="4,41.5" />
+                  <mssgle:LineSegment
+                    End="22,41.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22,41.5"
+                    Point2="26,41.5"
+                    Point3="26,45.5" />
+                  <mssgle:LineSegment
+                    End="26,75.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
