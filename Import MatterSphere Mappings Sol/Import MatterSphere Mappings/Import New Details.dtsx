@@ -7,12 +7,12 @@
   DTS:CreatorName="SBC\pdutto"
   DTS:DTSID="{E94EE2B7-A702-4E10-B49E-39F41246EF81}"
   DTS:ExecutableType="SSIS.Package.3"
-  DTS:LastModifiedProductVersion="11.0.6020.0"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
   DTS:LocaleID="2057"
   DTS:ObjectName="Import New Details"
   DTS:PackageType="5"
-  DTS:VersionBuild="40"
-  DTS:VersionGUID="{8B798580-4237-4DC1-83C9-E4E2F0EED2C2}">
+  DTS:VersionBuild="42"
+  DTS:VersionGUID="{30821199-8E9D-4CB2-AED2-A3EB1FC0AE48}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -33,7 +33,7 @@
       DTS:ObjectName="Excel Connection Manager 1">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\svr-liv-fs-03\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\Data Warehouse Project\New Detail Import\New Detail Import.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\svr-liv-fs-03\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\Data Warehouse Project\New Detail Import\New Detail Import.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -43,7 +43,7 @@
       DTS:ObjectName="NewDetailSpreadsheet">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=G:\Business Services\Information Systems\Teams\Development\Business Intelligence\Data Warehouse Project\New Detail Import\New Detail Import.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\Data Warehouse Project\New Detail Import\New Detail Import.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -63,7 +63,7 @@
       DTS:ObjectName="svr-liv-dwh-01.ReportMapping">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=svr-liv-dwh-01;Initial Catalog=ReportMapping;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=svr-liv-dw-01;Initial Catalog=ReportMapping;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -112,7 +112,7 @@
           <components>
             <component
               refId="Package\Identify if new details already exists\Conditional Split Fact and Dims"
-              componentClassID="{7F88F654-4E20-4D14-84F4-AF9C925D3087}"
+              componentClassID="DTSTransform.ConditionalSplit.3"
               contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
               description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
               name="Conditional Split Fact and Dims"
@@ -230,7 +230,7 @@
             </component>
             <component
               refId="Package\Identify if new details already exists\Data Conversion"
-              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              componentClassID="DTSTransform.DataConvert.3"
               contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
               description="Data Conversion"
               name="Data Conversion"
@@ -308,7 +308,7 @@
             </component>
             <component
               refId="Package\Identify if new details already exists\Data Conversion for Dodgy Data Types"
-              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              componentClassID="DTSTransform.DataConvert.3"
               contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
               description="Data Conversion"
               name="Data Conversion for Dodgy Data Types"
@@ -769,7 +769,7 @@
             </component>
             <component
               refId="Package\Identify if new details already exists\Import Table Source"
-              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              componentClassID="DTSAdapter.OLEDBSource.3"
               contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
               description="OLE DB Source"
               name="Import Table Source"
@@ -792,7 +792,23 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT  [field]
+      ,[type]
+      ,[fieldname]
+      ,[msphere_fieldname]
+      ,[msphere_detail_table]
+      ,[transformation]
+      ,[transformed_field_flag]
+      ,[detail_flag]
+      ,[process_attribute]
+      ,[dwh_group]
+      ,[process_ms_attribute]
+      ,[fact_finance_summary_flag]
+      ,[ticket]
+      ,[Raised_by]
+      ,[fact_dim]
+  FROM [ReportMapping].[dbo].[new_detail_import]
+where field is not null</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -809,7 +825,7 @@
                   dataType="System.Int32"
                   description="Specifies the mode used to access the database."
                   name="AccessMode"
-                  typeConverter="AccessMode">0</property>
+                  typeConverter="AccessMode">2</property>
                 <property
                   dataType="System.String"
                   description="The mappings between the parameters in the SQL command and variables."
@@ -1169,7 +1185,7 @@
             </component>
             <component
               refId="Package\Identify if new details already exists\Lookup to see if detail already exists based on Field and Transform flag dim"
-              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              componentClassID="DTSTransform.Lookup.3"
               contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
               description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
               name="Lookup to see if detail already exists based on Field and Transform flag dim"
@@ -1329,7 +1345,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
             </component>
             <component
               refId="Package\Identify if new details already exists\Lookup to see if detail already exists based on Field and Transform flag fact"
-              componentClassID="{671046B0-AA63-4C9F-90E4-C06E0B710CE3}"
+              componentClassID="DTSTransform.Lookup.3"
               contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
               description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
               name="Lookup to see if detail already exists based on Field and Transform flag fact"
@@ -1489,7 +1505,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
             </component>
             <component
               refId="Package\Identify if new details already exists\Populate new detail dims ready to be imported to master table"
-              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              componentClassID="DTSAdapter.OLEDBDestination.3"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
               name="Populate new detail dims ready to be imported to master table"
@@ -1724,7 +1740,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
             </component>
             <component
               refId="Package\Identify if new details already exists\Populate new detail fact ready to be imported to master table"
-              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              componentClassID="DTSAdapter.OLEDBDestination.3"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
               name="Populate new detail fact ready to be imported to master table"
@@ -2026,7 +2042,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
           <components>
             <component
               refId="Package\Import into master tables\Data Conversion"
-              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              componentClassID="DTSTransform.DataConvert.3"
               contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
               description="Data Conversion"
               name="Data Conversion"
@@ -2378,7 +2394,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
             </component>
             <component
               refId="Package\Import into master tables\Data Conversion 1"
-              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              componentClassID="DTSTransform.DataConvert.3"
               contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
               description="Data Conversion"
               name="Data Conversion 1"
@@ -2757,8 +2773,154 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
               </outputs>
             </component>
             <component
+              refId="Package\Import into master tables\Derived Column"
+              componentClassID="DTSTransform.DerivedColumn.3"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Import into master tables\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import into master tables\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Import into master tables\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import into master tables\Derived Column.Outputs[Derived Column Output].Columns[version]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Import into master tables\Derived Column.Outputs[Derived Column Output].Columns[version]"
+                      name="version"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">1</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">1</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Import into master tables\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Import into master tables\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import into master tables\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import into master tables\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import into master tables\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import into master tables\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import into master tables\Derived Column 1"
+              componentClassID="DTSTransform.DerivedColumn.3"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Import into master tables\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import into master tables\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Import into master tables\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import into master tables\Derived Column 1.Outputs[Derived Column Output].Columns[version]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Import into master tables\Derived Column 1.Outputs[Derived Column Output].Columns[version]"
+                      name="version"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">1</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">1</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Import into master tables\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Import into master tables\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import into master tables\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import into master tables\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import into master tables\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import into master tables\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\Import into master tables\Dim"
-              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              componentClassID="DTSAdapter.OLEDBSource.3"
               contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
               description="OLE DB Source"
               name="Dim"
@@ -3077,7 +3239,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
             </component>
             <component
               refId="Package\Import into master tables\Dimension mapped fields master"
-              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              componentClassID="DTSAdapter.OLEDBDestination.3"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
               name="Dimension mapped fields master"
@@ -3229,6 +3391,12 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
                       cachedName="Copy of detail_flag"
                       externalMetadataColumnId="Package\Import into master tables\Dimension mapped fields master.Inputs[OLE DB Destination Input].ExternalColumns[detail_flag]"
                       lineageId="Package\Import into master tables\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of detail_flag]" />
+                    <inputColumn
+                      refId="Package\Import into master tables\Dimension mapped fields master.Inputs[OLE DB Destination Input].Columns[version]"
+                      cachedDataType="i4"
+                      cachedName="version"
+                      externalMetadataColumnId="Package\Import into master tables\Dimension mapped fields master.Inputs[OLE DB Destination Input].ExternalColumns[version]"
+                      lineageId="Package\Import into master tables\Derived Column.Outputs[Derived Column Output].Columns[version]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -3295,6 +3463,14 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
                       dataType="str"
                       length="1"
                       name="process_ms_attribute" />
+                    <externalMetadataColumn
+                      refId="Package\Import into master tables\Dimension mapped fields master.Inputs[OLE DB Destination Input].ExternalColumns[has_code_lookup]"
+                      dataType="i4"
+                      name="has_code_lookup" />
+                    <externalMetadataColumn
+                      refId="Package\Import into master tables\Dimension mapped fields master.Inputs[OLE DB Destination Input].ExternalColumns[version]"
+                      dataType="i4"
+                      name="version" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -3325,7 +3501,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
             </component>
             <component
               refId="Package\Import into master tables\Fact"
-              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              componentClassID="DTSAdapter.OLEDBSource.3"
               contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
               description="OLE DB Source"
               name="Fact"
@@ -3665,7 +3841,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
             </component>
             <component
               refId="Package\Import into master tables\OLE DB Destination"
-              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              componentClassID="DTSAdapter.OLEDBDestination.3"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
               name="OLE DB Destination"
@@ -3929,14 +4105,24 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
           <paths>
             <path
               refId="Package\Import into master tables.Paths[Data Conversion Output]"
-              endId="Package\Import into master tables\Dimension mapped fields master.Inputs[OLE DB Destination Input]"
+              endId="Package\Import into master tables\Derived Column.Inputs[Derived Column Input]"
               name="Data Conversion Output"
               startId="Package\Import into master tables\Data Conversion.Outputs[Data Conversion Output]" />
             <path
               refId="Package\Import into master tables.Paths[Data Conversion Output1]"
-              endId="Package\Import into master tables\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              endId="Package\Import into master tables\Derived Column 1.Inputs[Derived Column Input]"
               name="Data Conversion Output"
               startId="Package\Import into master tables\Data Conversion 1.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Import into master tables.Paths[Derived Column Output]"
+              endId="Package\Import into master tables\Dimension mapped fields master.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Import into master tables\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Import into master tables.Paths[Derived Column Output1]"
+              endId="Package\Import into master tables\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Import into master tables\Derived Column 1.Outputs[Derived Column Output]" />
             <path
               refId="Package\Import into master tables.Paths[OLE DB Source Output]"
               endId="Package\Import into master tables\Data Conversion.Inputs[Data Conversion Input]"
@@ -3967,7 +4153,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
           <components>
             <component
               refId="Package\Populate Import Table\Excel Source"
-              componentClassID="{8C084929-27D1-479F-9641-ABB7CDADF1AC}"
+              componentClassID="DTSAdapter.ExcelSource.3"
               contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
               description="Excel Source"
               name="Excel Source"
@@ -4140,10 +4326,11 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
                       refId="Package\Populate Import Table\Excel Source.Outputs[Excel Source Output].Columns[ticket]"
-                      dataType="r8"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
                       externalMetadataColumnId="Package\Populate Import Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[ticket]"
+                      length="255"
                       lineageId="Package\Populate Import Table\Excel Source.Outputs[Excel Source Output].Columns[ticket]"
                       name="ticket"
                       truncationRowDisposition="FailComponent" />
@@ -4232,7 +4419,8 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
                       name="fact_finance_summary_flag" />
                     <externalMetadataColumn
                       refId="Package\Populate Import Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[ticket]"
-                      dataType="r8"
+                      dataType="wstr"
+                      length="255"
                       name="ticket" />
                     <externalMetadataColumn
                       refId="Package\Populate Import Table\Excel Source.Outputs[Excel Source Output].ExternalColumns[Raised_by]"
@@ -4325,7 +4513,8 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
                       name="fact_finance_summary_flag" />
                     <outputColumn
                       refId="Package\Populate Import Table\Excel Source.Outputs[Excel Source Error Output].Columns[ticket]"
-                      dataType="r8"
+                      dataType="wstr"
+                      length="255"
                       lineageId="Package\Populate Import Table\Excel Source.Outputs[Excel Source Error Output].Columns[ticket]"
                       name="ticket" />
                     <outputColumn
@@ -4359,7 +4548,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
             </component>
             <component
               refId="Package\Populate Import Table\OLE DB Destination"
-              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              componentClassID="DTSAdapter.OLEDBDestination.3"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
               description="OLE DB Destination"
               name="OLE DB Destination"
@@ -4515,7 +4704,8 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
                       lineageId="Package\Populate Import Table\Excel Source.Outputs[Excel Source Output].Columns[fact_finance_summary_flag]" />
                     <inputColumn
                       refId="Package\Populate Import Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ticket]"
-                      cachedDataType="r8"
+                      cachedDataType="wstr"
+                      cachedLength="255"
                       cachedName="ticket"
                       externalMetadataColumnId="Package\Populate Import Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ticket]"
                       lineageId="Package\Populate Import Table\Excel Source.Outputs[Excel Source Output].Columns[ticket]" />
@@ -5186,30 +5376,30 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
         <NodeLayout
           Size="99,42"
           Id="Package\Import into master tables\Fact"
-          TopLeft="335.5,5.5" />
+          TopLeft="340.5,5.5" />
         <NodeLayout
           Size="165,42"
           Id="Package\Import into master tables\Data Conversion 1"
-          TopLeft="302.5,107.5" />
+          TopLeft="307.5,107.5" />
         <NodeLayout
           Size="98,42"
           Id="Package\Import into master tables\Dim"
-          TopLeft="73,5.5" />
+          TopLeft="78,5.5" />
         <NodeLayout
           Size="156,42"
           Id="Package\Import into master tables\Data Conversion"
-          TopLeft="44.0000000000001,107.5" />
+          TopLeft="49.0000000000001,107.5" />
         <NodeLayout
           Size="233,42"
           Id="Package\Import into master tables\Dimension mapped fields master"
-          TopLeft="5.50000000000006,209.5" />
+          TopLeft="17.5000000000001,359.5" />
         <NodeLayout
           Size="171,42"
           Id="Package\Import into master tables\OLE DB Destination"
-          TopLeft="299.5,209.5" />
+          TopLeft="289.5,363.5" />
         <EdgeLayout
           Id="Package\Import into master tables.Paths[OLE DB Source Output1]"
-          TopLeft="385,47.5">
+          TopLeft="390,47.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5231,7 +5421,7 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Import into master tables.Paths[OLE DB Source Output]"
-          TopLeft="122,47.5">
+          TopLeft="127,47.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5251,42 +5441,106 @@ where [refTable].[field] = ? and [refTable].[transformed_field_flag] = ?</proper
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Import into master tables.Paths[Data Conversion Output1]"
-          TopLeft="385,149.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="154,47"
+          Id="Package\Import into master tables\Derived Column"
+          TopLeft="51,218" />
         <EdgeLayout
           Id="Package\Import into master tables.Paths[Data Conversion Output]"
-          TopLeft="122,149.5">
+          TopLeft="127.5,149.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60"
+              EndConnector="0,68.5"
               Start="0,0"
-              End="0,52.5">
+              End="0,61">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,52.5" />
+                    End="0,61" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Import into master tables.Paths[Derived Column Output]"
+          TopLeft="131,265">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,94.5"
+              Start="0,0"
+              End="0,87">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,87" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Import into master tables\Derived Column 1"
+          TopLeft="298,221" />
+        <EdgeLayout
+          Id="Package\Import into master tables.Paths[Data Conversion Output1]"
+          TopLeft="390,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-10.5,71.5"
+              Start="0,0"
+              End="-10.5,64">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.75"
+                    Point2="0,35.75"
+                    Point3="-4,35.75" />
+                  <mssgle:LineSegment
+                    End="-6.5,35.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-6.5,35.75"
+                    Point2="-10.5,35.75"
+                    Point3="-10.5,39.75" />
+                  <mssgle:LineSegment
+                    End="-10.5,64" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Import into master tables.Paths[Derived Column Output1]"
+          TopLeft="377.25,263">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,100.5"
+              Start="0,0"
+              End="0,93">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,93" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
