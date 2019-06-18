@@ -1,0 +1,2439 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/18/2019 11:09:47 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="L04647"
+  DTS:CreatorName="SBC\esmith01"
+  DTS:DTSID="{7066F628-FE01-4F8C-9646-85D99334FE45}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="SegmentTargetUploadPackage"
+  DTS:PackageType="5"
+  DTS:VersionBuild="23"
+  DTS:VersionGUID="{DB405AED-C3E7-4C6C-BDD7-6C29C1ED8163}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{3C214F51-6C91-4731-8BA0-185E48745E07}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.15.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Upload\Segment Target Upload.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager 1]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{9DA477B9-6D71-43D9-BE36-F8468E3B0788}"
+      DTS:ObjectName="Excel Connection Manager 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.15.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Workings\Segment Target Upload.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[svr-liv-dw-01.ExcelUpload]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C6CBFDFD-C5C7-4B19-8C29-96349CA4A451}"
+      DTS:ObjectName="svr-liv-dw-01.ExcelUpload">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dw-01;Initial Catalog=ExcelUpload;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[svr-liv-dw-01.red_dw]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A34B4253-AE5B-4571-8795-164DC2017419}"
+      DTS:ObjectName="svr-liv-dw-01.red_dw">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dw-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{740B697F-3847-423E-B190-2428FC43303D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::ArchivePath] + @[User::NewFileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ArchiveFilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Uploaded\Segment Target Upload 18-06-2019.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{90E32A06-6B03-48C3-AFE4-988D690AF941}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ArchivePath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Uploaded\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{43803D16-9526-435F-B38D-670D976F4133}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileName">
+      <DTS:VariableValue
+        DTS:DataType="8">Segment Target Upload</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E2BC063F-40D3-4526-ADA4-98BE5D8C4EB9}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Path]+ @[User::OldFileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Upload\Segment Target Upload.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{935A2CFD-FE76-4A8D-9578-2949A82D5735}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileType">
+      <DTS:VariableValue
+        DTS:DataType="8">.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{866BE78C-F1CC-4356-A572-35E1B6D1DA70}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::FileName]+ &quot; &quot;+RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , GETDATE()), 2) + &quot;-&quot; + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , GETDATE()), 2) + &quot;-&quot; +  (DT_STR, 4, 1252) DATEPART(&quot;yy&quot; , GETDATE())+@[User::FileType]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewFileName">
+      <DTS:VariableValue
+        DTS:DataType="8">Segment Target Upload 18-06-2019.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{20220947-C341-4555-9476-2B875F1B04AA}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::FileName]+&quot;&quot;+ @[User::FileType]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="OldFileName">
+      <DTS:VariableValue
+        DTS:DataType="8">Segment Target Upload.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DCD8967F-9A60-488F-A6D5-85A4BC4B54D8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Upload\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{27359916-6935-4A4D-B131-2A456F8DC770}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::WorkingPath]+ @[User::OldFileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="WorkingFilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Workings\Segment Target Upload.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5D8005FA-F868-4823-A5C9-7FCEF5C3DBE1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="WorkingPath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Workings\</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9A1CE728-CA5D-4225-9B09-DE36F9C53076}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A34B4253-AE5B-4571-8795-164DC2017419}"
+          SQLTask:SqlStatementSource="  DECLARE&#xA;                @v_result                   INT&#xA;                ,@v_return_code              VARCHAR(1)&#xA;                ,@v_return_msg               VARCHAR(256)&#xA;                , @p_sequence         integer&#xA;                , @p_job_name         varchar(256)&#xA;                , @p_task_name        varchar(256)&#xA;                , @p_job_id           integer&#xA;                , @p_task_id          integer&#xA;&#xA;EXEC Ws_Job_Release @p_sequence, @p_job_name, @p_task_name, @p_job_id, @p_task_id, 'segment_upload_manual', @v_return_code OUTPUT, @v_return_msg OUTPUT, @v_result OUTPUT&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Move to Uploaded folder"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="File System Task"
+      DTS:DTSID="{12FEC5A4-04D6-4237-B42A-3F18BC18A698}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Move to Uploaded folder"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOverwriteDestFile="True"
+          TaskSourcePath="User::WorkingFilePath"
+          TaskIsSourceVariable="True"
+          TaskDestinationPath="User::ArchiveFilePath"
+          TaskIsDestinationVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Move to working folder"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="File System Task"
+      DTS:DTSID="{0F17B968-DE92-49A5-A698-E7CF32CC7CE5}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Move to working folder"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOperationType="MoveFile"
+          TaskOverwriteDestFile="True"
+          TaskSourcePath="User::FilePath"
+          TaskIsSourceVariable="True"
+          TaskDestinationPath="User::WorkingFilePath"
+          TaskIsDestinationVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Data from ds_mds_segment_target_upload"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{75FA3A7B-5D04-48B8-9018-7D150487036B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Data from ds_mds_segment_target_upload"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A34B4253-AE5B-4571-8795-164DC2017419}"
+          SQLTask:SqlStatementSource="  TRUNCATE TABLE ds_mds_segment_target_upload" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Data from segment_upload_target_data"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{772E153A-F4C0-476F-A094-0C6CDAC60637}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Data from segment_upload_target_data"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C6CBFDFD-C5C7-4B19-8C29-96349CA4A451}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [ExcelUpload].[dbo].[segment_upload_target_data]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Upload and unpivot data to red"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B07965CF-7F73-4C22-A6EE-38189177AD31}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Upload and unpivot data to red"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Upload and unpivot data to red\ExcelUploads"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="ExcelUploads"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[segment_upload_target_data]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload and unpivot data to red\ExcelUploads.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-dw-01.ExcelUpload]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-dw-01.ExcelUpload]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SectorName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[SectorName]"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SectorName]"
+                      name="SectorName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[Total]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[Total]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[Total]"
+                      name="Total"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[MAY]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[MAY]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[MAY]"
+                      name="MAY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[JUN]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[JUN]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[JUN]"
+                      name="JUN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[JUL]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[JUL]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[JUL]"
+                      name="JUL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[AUG]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[AUG]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[AUG]"
+                      name="AUG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SEP]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[SEP]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SEP]"
+                      name="SEP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[OCT]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[OCT]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[OCT]"
+                      name="OCT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[NOV]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[NOV]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[NOV]"
+                      name="NOV"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[DEC]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[DEC]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[DEC]"
+                      name="DEC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[JAN]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[JAN]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[JAN]"
+                      name="JAN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[FEB]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[FEB]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[FEB]"
+                      name="FEB"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[MAR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[MAR]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[MAR]"
+                      name="MAR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[APR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[APR]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[APR]"
+                      name="APR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[Year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[Year]"
+                      name="Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SegmentID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[SegmentID]"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SegmentID]"
+                      name="SegmentID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SegmentName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[SegmentName]"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SegmentName]"
+                      name="SegmentName"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[SectorName]"
+                      dataType="wstr"
+                      length="255"
+                      name="SectorName" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[Total]"
+                      dataType="r8"
+                      name="Total" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[MAY]"
+                      dataType="r8"
+                      name="MAY" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[JUN]"
+                      dataType="r8"
+                      name="JUN" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[JUL]"
+                      dataType="r8"
+                      name="JUL" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[AUG]"
+                      dataType="r8"
+                      name="AUG" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[SEP]"
+                      dataType="r8"
+                      name="SEP" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[OCT]"
+                      dataType="r8"
+                      name="OCT" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[NOV]"
+                      dataType="r8"
+                      name="NOV" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[DEC]"
+                      dataType="r8"
+                      name="DEC" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[JAN]"
+                      dataType="r8"
+                      name="JAN" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[FEB]"
+                      dataType="r8"
+                      name="FEB" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[MAR]"
+                      dataType="r8"
+                      name="MAR" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[APR]"
+                      dataType="r8"
+                      name="APR" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[SegmentID]"
+                      dataType="wstr"
+                      length="255"
+                      name="SegmentID" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].ExternalColumns[SegmentName]"
+                      dataType="wstr"
+                      length="255"
+                      name="SegmentName" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[SegmentID]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[SegmentID]"
+                      name="SegmentID" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[SegmentName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[SegmentName]"
+                      name="SegmentName" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[SectorName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[SectorName]"
+                      name="SectorName" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[Total]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[Total]"
+                      name="Total" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[MAY]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[MAY]"
+                      name="MAY" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[JUN]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[JUN]"
+                      name="JUN" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[JUL]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[JUL]"
+                      name="JUL" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[AUG]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[AUG]"
+                      name="AUG" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[SEP]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[SEP]"
+                      name="SEP" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[OCT]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[OCT]"
+                      name="OCT" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[NOV]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[NOV]"
+                      name="NOV" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[DEC]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[DEC]"
+                      name="DEC" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[JAN]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[JAN]"
+                      name="JAN" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[FEB]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[FEB]"
+                      name="FEB" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[MAR]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[MAR]"
+                      name="MAR" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[APR]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[APR]"
+                      name="APR" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      dataType="i4"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      name="Year" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload and unpivot data to red\red_dw"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="red_dw"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[ds_mds_segment_target_upload]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload and unpivot data to red\red_dw.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-dw-01.red_dw]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-dw-01.red_dw]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].Columns[Month]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Month"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[month]"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[Month]" />
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].Columns[SectorName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="SectorName"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[sectorname]"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SectorName]" />
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].Columns[Year]"
+                      cachedDataType="i4"
+                      cachedName="Year"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[year]"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[Year]" />
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].Columns[TargetValue]"
+                      cachedDataType="r8"
+                      cachedName="TargetValue"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[target_value]"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]" />
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].Columns[SegmentID]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="SegmentID"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[segmentid]"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SegmentID]" />
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].Columns[SegmentName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="SegmentName"
+                      externalMetadataColumnId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[segmentname]"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SegmentName]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[month]"
+                      dataType="wstr"
+                      length="255"
+                      name="month" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[sectorname]"
+                      dataType="wstr"
+                      length="255"
+                      name="sectorname" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[year]"
+                      dataType="i4"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[target_value]"
+                      dataType="r8"
+                      name="target_value" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[segmentid]"
+                      dataType="wstr"
+                      length="255"
+                      name="segmentid" />
+                    <externalMetadataColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input].ExternalColumns[segmentname]"
+                      dataType="wstr"
+                      length="255"
+                      name="segmentname" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload and unpivot data to red\red_dw.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload and unpivot data to red\red_dw.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\red_dw.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload and unpivot data to red\red_dw.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload and unpivot data to red\Unpivot"
+              componentClassID="Microsoft.UnPivot"
+              contactInfo="Unpivot;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Expands an un-normalized data flow into a more normalized version. Values from multiple columns of a single record expand to multiple records in a single column. For example, expand a table that lists athletic scores with a column for each game to more records and a single score column."
+              name="Unpivot">
+              <inputs>
+                <input
+                  refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input]"
+                  hasSideEffects="true"
+                  name="Unpivot Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[MAY]"
+                      cachedDataType="r8"
+                      cachedName="MAY"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[MAY]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">05</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[JUN]"
+                      cachedDataType="r8"
+                      cachedName="JUN"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[JUN]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">06</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[JUL]"
+                      cachedDataType="r8"
+                      cachedName="JUL"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[JUL]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">07</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[AUG]"
+                      cachedDataType="r8"
+                      cachedName="AUG"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[AUG]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">08</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[SEP]"
+                      cachedDataType="r8"
+                      cachedName="SEP"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SEP]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">09</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[OCT]"
+                      cachedDataType="r8"
+                      cachedName="OCT"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[OCT]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">10</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[NOV]"
+                      cachedDataType="r8"
+                      cachedName="NOV"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[NOV]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">11</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[DEC]"
+                      cachedDataType="r8"
+                      cachedName="DEC"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[DEC]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">12</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[JAN]"
+                      cachedDataType="r8"
+                      cachedName="JAN"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[JAN]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">01</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[FEB]"
+                      cachedDataType="r8"
+                      cachedName="FEB"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[FEB]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">02</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[MAR]"
+                      cachedDataType="r8"
+                      cachedName="MAR"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[MAR]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">03</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[APR]"
+                      cachedDataType="r8"
+                      cachedName="APR"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[APR]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">04</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[SectorName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="SectorName"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SectorName]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SectorName]}</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[Year]"
+                      cachedDataType="i4"
+                      cachedName="Year"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[Year]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[Year]}</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[SegmentID]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="SegmentID"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SegmentID]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SegmentID]}</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input].Columns[SegmentName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="SegmentName"
+                      lineageId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output].Columns[SegmentName]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SegmentName]}</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output]"
+                  name="Unpivot Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[Month]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[Month]"
+                      name="Month">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">true</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SectorName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SectorName]"
+                      name="SectorName">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[Year]"
+                      dataType="i4"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[Year]"
+                      name="Year">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]"
+                      dataType="r8"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[TargetValue]"
+                      name="TargetValue">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SegmentID]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SegmentID]"
+                      name="SegmentID">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SegmentName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output].Columns[SegmentName]"
+                      name="SegmentName">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Upload and unpivot data to red.Paths[OLE DB Source Output]"
+              endId="Package\Upload and unpivot data to red\Unpivot.Inputs[Unpivot Input]"
+              name="OLE DB Source Output"
+              startId="Package\Upload and unpivot data to red\ExcelUploads.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Upload and unpivot data to red.Paths[Unpivot Output]"
+              endId="Package\Upload and unpivot data to red\red_dw.Inputs[OLE DB Destination Input]"
+              name="Unpivot Output"
+              startId="Package\Upload and unpivot data to red\Unpivot.Outputs[Unpivot Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Upload Data to Excel Uploads"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C171240F-DB2E-479D-BDD4-86331EFA53E2}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Upload Data to Excel Uploads"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Upload Data to Excel Uploads\ExcelUploads"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="ExcelUploads"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[segment_upload_target_data]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload Data to Excel Uploads\ExcelUploads.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-dw-01.ExcelUpload]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-dw-01.ExcelUpload]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[SectorName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="SectorName"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[SectorName]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SectorName]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[Total]"
+                      cachedDataType="r8"
+                      cachedName="Total"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[Total]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[Total]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[MAY]"
+                      cachedDataType="r8"
+                      cachedName="MAY"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[MAY]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[MAY]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[JUN]"
+                      cachedDataType="r8"
+                      cachedName="JUN"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[JUN]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[JUN]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[JUL]"
+                      cachedDataType="r8"
+                      cachedName="JUL"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[JUL]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[JUL]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[AUG]"
+                      cachedDataType="r8"
+                      cachedName="AUG"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[AUG]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[AUG]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[SEP]"
+                      cachedDataType="r8"
+                      cachedName="SEP"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[SEP]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SEP]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[OCT]"
+                      cachedDataType="r8"
+                      cachedName="OCT"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[OCT]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[OCT]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[NOV]"
+                      cachedDataType="r8"
+                      cachedName="NOV"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[NOV]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[NOV]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[DEC]"
+                      cachedDataType="r8"
+                      cachedName="DEC"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[DEC]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[DEC]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[JAN]"
+                      cachedDataType="r8"
+                      cachedName="JAN"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[JAN]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[JAN]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[FEB]"
+                      cachedDataType="r8"
+                      cachedName="FEB"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[FEB]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[FEB]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[MAR]"
+                      cachedDataType="r8"
+                      cachedName="MAR"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[MAR]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[MAR]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[APR]"
+                      cachedDataType="r8"
+                      cachedName="APR"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[APR]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[APR]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[Year]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Year"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[Year]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[SegmentID]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="SegmentID"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[SegmentID]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SegmentID]" />
+                    <inputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].Columns[SegmentName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="SegmentName"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[SegmentName]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SegmentName]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[SectorName]"
+                      dataType="wstr"
+                      length="255"
+                      name="SectorName" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[Total]"
+                      dataType="r8"
+                      name="Total" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[MAY]"
+                      dataType="r8"
+                      name="MAY" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[JUN]"
+                      dataType="r8"
+                      name="JUN" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[JUL]"
+                      dataType="r8"
+                      name="JUL" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[AUG]"
+                      dataType="r8"
+                      name="AUG" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[SEP]"
+                      dataType="r8"
+                      name="SEP" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[OCT]"
+                      dataType="r8"
+                      name="OCT" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[NOV]"
+                      dataType="r8"
+                      name="NOV" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[DEC]"
+                      dataType="r8"
+                      name="DEC" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[JAN]"
+                      dataType="r8"
+                      name="JAN" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[FEB]"
+                      dataType="r8"
+                      name="FEB" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[MAR]"
+                      dataType="r8"
+                      name="MAR" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[APR]"
+                      dataType="r8"
+                      name="APR" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[SegmentID]"
+                      dataType="wstr"
+                      length="255"
+                      name="SegmentID" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input].ExternalColumns[SegmentName]"
+                      dataType="wstr"
+                      length="255"
+                      name="SegmentName" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Data to Excel Uploads\ExcelUploads.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Data to Excel Uploads\ExcelUploads.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\ExcelUploads.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Data to Excel Uploads\ExcelUploads.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Data to Excel Uploads\Working file"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Working file"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">'Segment Upload$'</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload Data to Excel Uploads\Working file.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager 1]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager 1]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SectorName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[SectorName]"
+                      length="255"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SectorName]"
+                      name="SectorName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[Total]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[Total]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[Total]"
+                      name="Total"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[MAY]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[MAY]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[MAY]"
+                      name="MAY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[JUN]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[JUN]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[JUN]"
+                      name="JUN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[JUL]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[JUL]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[JUL]"
+                      name="JUL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[AUG]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[AUG]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[AUG]"
+                      name="AUG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SEP]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[SEP]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SEP]"
+                      name="SEP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[OCT]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[OCT]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[OCT]"
+                      name="OCT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[NOV]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[NOV]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[NOV]"
+                      name="NOV"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[DEC]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[DEC]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[DEC]"
+                      name="DEC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[JAN]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[JAN]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[JAN]"
+                      name="JAN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[FEB]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[FEB]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[FEB]"
+                      name="FEB"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[MAR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[MAR]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[MAR]"
+                      name="MAR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[APR]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[APR]"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[APR]"
+                      name="APR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[Year]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[Year]"
+                      length="255"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[Year]"
+                      name="Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SegmentID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[SegmentID]"
+                      length="255"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SegmentID]"
+                      name="SegmentID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SegmentName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[SegmentName]"
+                      length="255"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].Columns[SegmentName]"
+                      name="SegmentName"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[SectorName]"
+                      dataType="wstr"
+                      length="255"
+                      name="SectorName" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[Total]"
+                      dataType="r8"
+                      name="Total" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[MAY]"
+                      dataType="r8"
+                      name="MAY" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[JUN]"
+                      dataType="r8"
+                      name="JUN" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[JUL]"
+                      dataType="r8"
+                      name="JUL" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[AUG]"
+                      dataType="r8"
+                      name="AUG" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[SEP]"
+                      dataType="r8"
+                      name="SEP" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[OCT]"
+                      dataType="r8"
+                      name="OCT" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[NOV]"
+                      dataType="r8"
+                      name="NOV" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[DEC]"
+                      dataType="r8"
+                      name="DEC" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[JAN]"
+                      dataType="r8"
+                      name="JAN" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[FEB]"
+                      dataType="r8"
+                      name="FEB" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[MAR]"
+                      dataType="r8"
+                      name="MAR" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[APR]"
+                      dataType="r8"
+                      name="APR" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[Year]"
+                      dataType="wstr"
+                      length="255"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[SegmentID]"
+                      dataType="wstr"
+                      length="255"
+                      name="SegmentID" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[SegmentName]"
+                      dataType="wstr"
+                      length="255"
+                      name="SegmentName" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[SegmentID]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[SegmentID]"
+                      name="SegmentID" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[SegmentName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[SegmentName]"
+                      name="SegmentName" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[SectorName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[SectorName]"
+                      name="SectorName" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[Year]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[Year]"
+                      name="Year" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[Total]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[Total]"
+                      name="Total" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[MAY]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[MAY]"
+                      name="MAY" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[JUN]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[JUN]"
+                      name="JUN" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[JUL]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[JUL]"
+                      name="JUL" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[AUG]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[AUG]"
+                      name="AUG" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[SEP]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[SEP]"
+                      name="SEP" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[OCT]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[OCT]"
+                      name="OCT" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[NOV]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[NOV]"
+                      name="NOV" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[DEC]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[DEC]"
+                      name="DEC" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[JAN]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[JAN]"
+                      name="JAN" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[FEB]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[FEB]"
+                      name="FEB" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[MAR]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[MAR]"
+                      name="MAR" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[APR]"
+                      dataType="r8"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[APR]"
+                      name="APR" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Upload Data to Excel Uploads.Paths[Excel Source Output]"
+              endId="Package\Upload Data to Excel Uploads\ExcelUploads.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{2B1D70CC-EE7E-4754-9DE4-F0108F08AD85}"
+      DTS:From="Package\Truncate Data from segment_upload_target_data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Upload Data to Excel Uploads" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{A3F268F5-934F-4EEB-BD17-009003D7335A}"
+      DTS:From="Package\Upload Data to Excel Uploads"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Move to Uploaded folder" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{5BFB42DD-ADBC-4D44-8DB9-A91E310B1762}"
+      DTS:From="Package\Truncate Data from ds_mds_segment_target_upload"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Upload and unpivot data to red" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{866EA1F4-158A-47DC-A99E-67B3B35D90FF}"
+      DTS:From="Package\Move to working folder"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Truncate Data from segment_upload_target_data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{BB7C0DEF-CA6D-4BD7-917E-6CBBC5883A55}"
+      DTS:From="Package\Move to Uploaded folder"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Truncate Data from ds_mds_segment_target_upload" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{B8D9BC6E-0311-418F-A374-D5DA9A1D69A3}"
+      DTS:From="Package\Upload and unpivot data to red"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Execute SQL Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="315,42"
+          Id="Package\Truncate Data from segment_upload_target_data"
+          TopLeft="191,82" />
+        <NodeLayout
+          Size="220,42"
+          Id="Package\Upload Data to Excel Uploads"
+          TopLeft="366,176" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="351,124">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="125,52"
+              Start="0,0"
+              End="125,44.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22"
+                    Point2="0,26"
+                    Point3="4,26" />
+                  <mssgle:LineSegment
+                    End="121,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="121,26"
+                    Point2="125,26"
+                    Point3="125,30" />
+                  <mssgle:LineSegment
+                    End="125,44.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="228,42"
+          Id="Package\Upload and unpivot data to red"
+          TopLeft="672,446" />
+        <NodeLayout
+          Size="330,42"
+          Id="Package\Truncate Data from ds_mds_segment_target_upload"
+          TopLeft="436,350" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="601,392">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="185,54"
+              Start="0,0"
+              End="185,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23"
+                    Point2="0,27"
+                    Point3="4,27" />
+                  <mssgle:LineSegment
+                    End="181,27" />
+                  <mssgle:CubicBezierSegment
+                    Point1="181,27"
+                    Point2="185,27"
+                    Point3="185,31" />
+                  <mssgle:LineSegment
+                    End="185,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="189,42"
+          Id="Package\Move to working folder"
+          TopLeft="157,0" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="251.5,42">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="99.5,40"
+              Start="0,0"
+              End="99.5,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16"
+                    Point2="0,20"
+                    Point3="4,20" />
+                  <mssgle:LineSegment
+                    End="95.5,20" />
+                  <mssgle:CubicBezierSegment
+                    Point1="95.5,20"
+                    Point2="99.5,20"
+                    Point3="99.5,24" />
+                  <mssgle:LineSegment
+                    End="99.5,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="196,42"
+          Id="Package\Move to Uploaded folder"
+          TopLeft="427,272" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="476,218">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49,54"
+              Start="0,0"
+              End="49,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23"
+                    Point2="0,27"
+                    Point3="4,27" />
+                  <mssgle:LineSegment
+                    End="45,27" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45,27"
+                    Point2="49,27"
+                    Point3="49,31" />
+                  <mssgle:LineSegment
+                    End="49,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="525,314">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="76,36"
+              Start="0,0"
+              End="76,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14"
+                    Point2="0,18"
+                    Point3="4,18" />
+                  <mssgle:LineSegment
+                    End="72,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="72,18"
+                    Point2="76,18"
+                    Point3="76,22" />
+                  <mssgle:LineSegment
+                    End="76,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="853,547" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="786,488">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="149.5,59"
+              Start="0,0"
+              End="149.5,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.5"
+                    Point2="0,29.5"
+                    Point3="4,29.5" />
+                  <mssgle:LineSegment
+                    End="145.5,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="145.5,29.5"
+                    Point2="149.5,29.5"
+                    Point3="149.5,33.5" />
+                  <mssgle:LineSegment
+                    End="149.5,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Upload Data to Excel Uploads">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="137,42"
+          Id="Package\Upload Data to Excel Uploads\Working file"
+          TopLeft="401,115" />
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Upload Data to Excel Uploads\ExcelUploads"
+          TopLeft="534,261" />
+        <EdgeLayout
+          Id="Package\Upload Data to Excel Uploads.Paths[Excel Source Output]"
+          TopLeft="469.5,157">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="136,104"
+              Start="0,0"
+              End="136,96.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,48"
+                    Point2="0,52"
+                    Point3="4,52" />
+                  <mssgle:LineSegment
+                    End="132,52" />
+                  <mssgle:CubicBezierSegment
+                    Point1="132,52"
+                    Point2="136,52"
+                    Point3="136,56" />
+                  <mssgle:LineSegment
+                    End="136,96.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload Data to Excel Uploads\Working file">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload Data to Excel Uploads\ExcelUploads">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Upload and unpivot data to red">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Upload and unpivot data to red\ExcelUploads"
+          TopLeft="500,153" />
+        <NodeLayout
+          Size="117,42"
+          Id="Package\Upload and unpivot data to red\Unpivot"
+          TopLeft="579,303" />
+        <NodeLayout
+          Size="116,42"
+          Id="Package\Upload and unpivot data to red\red_dw"
+          TopLeft="675,444" />
+        <EdgeLayout
+          Id="Package\Upload and unpivot data to red.Paths[OLE DB Source Output]"
+          TopLeft="571.5,195">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="66,108"
+              Start="0,0"
+              End="66,100.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,50"
+                    Point2="0,54"
+                    Point3="4,54" />
+                  <mssgle:LineSegment
+                    End="62,54" />
+                  <mssgle:CubicBezierSegment
+                    Point1="62,54"
+                    Point2="66,54"
+                    Point3="66,58" />
+                  <mssgle:LineSegment
+                    End="66,100.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload and unpivot data to red.Paths[Unpivot Output]"
+          TopLeft="637.5,345">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="95.5,99"
+              Start="0,0"
+              End="95.5,91.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,45.5"
+                    Point2="0,49.5"
+                    Point3="4,49.5" />
+                  <mssgle:LineSegment
+                    End="91.5,49.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="91.5,49.5"
+                    Point2="95.5,49.5"
+                    Point3="95.5,53.5" />
+                  <mssgle:LineSegment
+                    End="95.5,91.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload and unpivot data to red\ExcelUploads">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload and unpivot data to red\red_dw">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
