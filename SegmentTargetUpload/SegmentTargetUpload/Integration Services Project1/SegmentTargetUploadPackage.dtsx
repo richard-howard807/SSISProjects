@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="SegmentTargetUploadPackage"
   DTS:PackageType="5"
-  DTS:VersionBuild="23"
-  DTS:VersionGUID="{DB405AED-C3E7-4C6C-BDD7-6C29C1ED8163}">
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{14BD5721-B826-4FB3-AE90-3CFB972250C7}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -23,7 +23,7 @@
       DTS:ObjectName="Excel Connection Manager">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.15.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Upload\Segment Target Upload.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.15.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Upload\Segment Target Upload.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -33,7 +33,7 @@
       DTS:ObjectName="Excel Connection Manager 1">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.15.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Workings\Segment Target Upload.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.15.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Workings\Segment Target Upload.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -67,7 +67,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="ArchiveFilePath">
       <DTS:VariableValue
-        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Uploaded\Segment Target Upload 18-06-2019.xlsx</DTS:VariableValue>
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\Uploaded\Segment Target Upload 22-07-2019.xlsx</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -116,7 +116,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="NewFileName">
       <DTS:VariableValue
-        DTS:DataType="8">Segment Target Upload 18-06-2019.xlsx</DTS:VariableValue>
+        DTS:DataType="8">Segment Target Upload 22-07-2019.xlsx</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -1810,8 +1810,7 @@
                       name="APR" />
                     <externalMetadataColumn
                       refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[Year]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="r8"
                       name="Year" />
                     <externalMetadataColumn
                       refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Output].ExternalColumns[SegmentID]"
@@ -1850,8 +1849,7 @@
                       name="SectorName" />
                     <outputColumn
                       refId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[Year]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="r8"
                       lineageId="Package\Upload Data to Excel Uploads\Working file.Outputs[Excel Source Error Output].Columns[Year]"
                       name="Year" />
                     <outputColumn
@@ -2011,9 +2009,29 @@
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="165,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="853,547" />
+        <NodeLayout
+          Size="196,42"
+          Id="Package\Move to Uploaded folder"
+          TopLeft="427,272" />
+        <NodeLayout
+          Size="189,42"
+          Id="Package\Move to working folder"
+          TopLeft="157,0" />
+        <NodeLayout
+          Size="330,42"
+          Id="Package\Truncate Data from ds_mds_segment_target_upload"
+          TopLeft="436,350" />
+        <NodeLayout
           Size="315,42"
           Id="Package\Truncate Data from segment_upload_target_data"
           TopLeft="191,82" />
+        <NodeLayout
+          Size="228,42"
+          Id="Package\Upload and unpivot data to red"
+          TopLeft="672,446" />
         <NodeLayout
           Size="220,42"
           Id="Package\Upload Data to Excel Uploads"
@@ -2052,14 +2070,40 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="228,42"
-          Id="Package\Upload and unpivot data to red"
-          TopLeft="672,446" />
-        <NodeLayout
-          Size="330,42"
-          Id="Package\Truncate Data from ds_mds_segment_target_upload"
-          TopLeft="436,350" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="476,218">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49,54"
+              Start="0,0"
+              End="49,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23"
+                    Point2="0,27"
+                    Point3="4,27" />
+                  <mssgle:LineSegment
+                    End="45,27" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45,27"
+                    Point2="49,27"
+                    Point3="49,31" />
+                  <mssgle:LineSegment
+                    End="49,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="601,392">
@@ -2094,10 +2138,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="189,42"
-          Id="Package\Move to working folder"
-          TopLeft="157,0" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
           TopLeft="251.5,42">
@@ -2124,44 +2164,6 @@
                     Point3="99.5,24" />
                   <mssgle:LineSegment
                     End="99.5,32.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="196,42"
-          Id="Package\Move to Uploaded folder"
-          TopLeft="427,272" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="476,218">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="49,54"
-              Start="0,0"
-              End="49,46.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,23" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,23"
-                    Point2="0,27"
-                    Point3="4,27" />
-                  <mssgle:LineSegment
-                    End="45,27" />
-                  <mssgle:CubicBezierSegment
-                    Point1="45,27"
-                    Point2="49,27"
-                    Point3="49,31" />
-                  <mssgle:LineSegment
-                    End="49,46.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2204,10 +2206,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="165,42"
-          Id="Package\Execute SQL Task"
-          TopLeft="853,547" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
           TopLeft="786,488">
@@ -2246,10 +2244,128 @@
     </LayoutInfo>
   </Package>
   <TaskHost
+    design-time-name="Package\Upload and unpivot data to red">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="117,42"
+          Id="Package\Upload and unpivot data to red\Unpivot"
+          TopLeft="579,303" />
+        <NodeLayout
+          Size="116,42"
+          Id="Package\Upload and unpivot data to red\red_dw"
+          TopLeft="675,444" />
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Upload and unpivot data to red\ExcelUploads"
+          TopLeft="500,153" />
+        <EdgeLayout
+          Id="Package\Upload and unpivot data to red.Paths[OLE DB Source Output]"
+          TopLeft="571.5,195">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="66,108"
+              Start="0,0"
+              End="66,100.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,50"
+                    Point2="0,54"
+                    Point3="4,54" />
+                  <mssgle:LineSegment
+                    End="62,54" />
+                  <mssgle:CubicBezierSegment
+                    Point1="62,54"
+                    Point2="66,54"
+                    Point3="66,58" />
+                  <mssgle:LineSegment
+                    End="66,100.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload and unpivot data to red.Paths[Unpivot Output]"
+          TopLeft="637.5,345">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="95.5,99"
+              Start="0,0"
+              End="95.5,91.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,45.5"
+                    Point2="0,49.5"
+                    Point3="4,49.5" />
+                  <mssgle:LineSegment
+                    End="91.5,49.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="91.5,49.5"
+                    Point2="95.5,49.5"
+                    Point3="95.5,53.5" />
+                  <mssgle:LineSegment
+                    End="95.5,91.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload and unpivot data to red\red_dw">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload and unpivot data to red\ExcelUploads">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
     design-time-name="Package\Upload Data to Excel Uploads">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="137,42"
           Id="Package\Upload Data to Excel Uploads\Working file"
@@ -2289,25 +2405,14 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Upload Data to Excel Uploads\Working file">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Upload Data to Excel Uploads\ExcelUploads">
     <Properties>
@@ -2321,109 +2426,8 @@
       </Property>
     </Properties>
   </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Upload and unpivot data to red">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="143,42"
-          Id="Package\Upload and unpivot data to red\ExcelUploads"
-          TopLeft="500,153" />
-        <NodeLayout
-          Size="117,42"
-          Id="Package\Upload and unpivot data to red\Unpivot"
-          TopLeft="579,303" />
-        <NodeLayout
-          Size="116,42"
-          Id="Package\Upload and unpivot data to red\red_dw"
-          TopLeft="675,444" />
-        <EdgeLayout
-          Id="Package\Upload and unpivot data to red.Paths[OLE DB Source Output]"
-          TopLeft="571.5,195">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="66,108"
-              Start="0,0"
-              End="66,100.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,50" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,50"
-                    Point2="0,54"
-                    Point3="4,54" />
-                  <mssgle:LineSegment
-                    End="62,54" />
-                  <mssgle:CubicBezierSegment
-                    Point1="62,54"
-                    Point2="66,54"
-                    Point3="66,58" />
-                  <mssgle:LineSegment
-                    End="66,100.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Upload and unpivot data to red.Paths[Unpivot Output]"
-          TopLeft="637.5,345">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="95.5,99"
-              Start="0,0"
-              End="95.5,91.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,45.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,45.5"
-                    Point2="0,49.5"
-                    Point3="4,49.5" />
-                  <mssgle:LineSegment
-                    End="91.5,49.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="91.5,49.5"
-                    Point2="95.5,49.5"
-                    Point3="95.5,53.5" />
-                  <mssgle:LineSegment
-                    End="95.5,91.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Upload and unpivot data to red\ExcelUploads">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Upload and unpivot data to red\red_dw">
+    design-time-name="Package\Upload Data to Excel Uploads\Working file">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
