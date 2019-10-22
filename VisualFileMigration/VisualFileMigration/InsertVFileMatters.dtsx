@@ -1,0 +1,2504 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2016 5:34:25 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\DAbram"
+  DTS:DTSID="{2BD5C30C-1D20-4130-B5DF-0BBE13123A7F}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="InsertVFileMatters"
+  DTS:PackageType="5"
+  DTS:VersionBuild="153"
+  DTS:VersionGUID="{5775E677-FA8B-456D-8664-4F52AE6A7022}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BA412ADA-E40A-40CA-91DF-C29415B632F4}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2DF2932C-0F22-4FA2-9C15-53E32C850253}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8B03AB75-6274-41CC-B844-A870E711F83B}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MS_Prod;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B144DA5C-F70E-43C7-8C32-F853EF86E831}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_VFile]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A9524BC6-4984-4483-AA1F-1901569B2C5E}"
+      DTS:ObjectName="CM_VFile">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_VFile]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=VFile_Streamlined;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[FeeEarner]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{29E3C13B-8AD8-4DFA-9E9D-5E79605B8A46}"
+      DTS:ObjectName="FeeEarner">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-mssq-01;Initial Catalog=MS_PROD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{2261DBE9-490D-476C-B258-8837EF3B0FA4}"
+      DTS:ObjectName="ParentAuditID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::AuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{B996EE77-F3C4-49A8-8CF5-BD262BFFEEA3}"
+      DTS:ObjectName="AuditID" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2B15C94D-17EC-439C-BC68-58BB14CEABE9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9063BCFE-CB5C-49F9-B0FB-AE2E91502DB0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9CC74B32-F279-4D7D-88D6-AF802E854202}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{80D07021-7FE0-492F-A8CA-D202C2067574}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BAA48334-A804-4292-94D1-182CD716BCC3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9371D77B-5DAE-44B0-B86D-5309A782025E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{49DC71BE-548A-44BA-88F4-32CD6475ECE3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BBD7C9CC-0E45-4A10-AC61-EF81D6510684}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C8849D58-030E-4C44-BED0-795B10D1C814}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CC0F5785-712D-4A77-83E1-8251BDFE8A89}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0D052890-01E3-4C8A-85D6-1E1B461851F3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C0F87510-165D-4E2F-8EAB-B01E1782D646}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Matters Failed"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C5C8E921-B09B-4EE8-8617-BEA0BD33DB58}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Matters Failed"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - Matters Failed.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{5495239D-C7E0-4AC1-9C9D-FEB3CF1C7D0B}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{E4354FD4-CDBE-4471-A8E8-D9CFA51039D8}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - Matters Failed.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:Disabled="True"
+              DTS:DTSID="{C6CCA357-E908-4621-90F4-4C4B8BEF1F49}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{BA412ADA-E40A-40CA-91DF-C29415B632F4}"
+                  SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@AuditID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="131"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ErrorCode"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="130"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ErrorDescription"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="130"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - Matters Failed.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{77698FB2-9BA5-49B4-8D15-E4CD066FA03D}"
+          DTS:EventID="3014771"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{86F9113A-2802-40D8-903D-7C16E20BBC6A}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - Matters Failed.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{310C0E57-C52B-46C6-8E5C-0DE5C9F43623}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{BA412ADA-E40A-40CA-91DF-C29415B632F4}"
+                  SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCountInserts"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountUpdates"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - Matters Failed.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{CAA2A078-0AEF-47AD-842B-086F8F58A21D}"
+          DTS:EventID="466490836"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{A1841475-D674-416D-9F8D-590ADEAA9070}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - Matters Failed.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{C1A73216-C185-45AD-AFB4-352FED49F72E}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{BA412ADA-E40A-40CA-91DF-C29415B632F4}"
+                  SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Matters Failed\EST - Matters Failed"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="EST - Matters Failed"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT * FROM  dbo.VFMatterCreationStage WHERE StatusID=4</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Matters Failed\EST - Matters Failed.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[clNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      length="12"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[clNo]"
+                      name="clNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      length="20"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      name="fileNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[extFileID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[extFileID]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[extFileID]"
+                      name="extFileID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileDesc]"
+                      length="255"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileDesc]"
+                      name="fileDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileResponsibleID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileResponsibleID]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileResponsibleID]"
+                      name="fileResponsibleID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[filePrincipleID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[filePrincipleID]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[filePrincipleID]"
+                      name="filePrincipleID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileDept]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileDept]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileDept]"
+                      name="fileDept"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileType]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileType]"
+                      name="fileType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileFundCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileFundCode]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileFundCode]"
+                      name="fileFundCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileCurISOCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileCurISOCode]"
+                      length="3"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileCurISOCode]"
+                      name="fileCurISOCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      name="fileStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileCreated]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileCreated]"
+                      name="fileCreated"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileUpdated]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileUpdated]"
+                      name="fileUpdated"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileClosed]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileClosed]"
+                      name="fileClosed"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileSource]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileSource]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileSource]"
+                      name="fileSource"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileSection]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileSection]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileSection]"
+                      name="fileSection"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileSectionGroup]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileSectionGroup]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[fileSectionGroup]"
+                      name="fileSectionGroup"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[MattIndex]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[MattIndex]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[MattIndex]"
+                      name="MattIndex"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[Office]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[Office]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[Office]"
+                      name="Office"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[brID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[brID]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[brID]"
+                      name="brID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[Partner]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[Partner]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[Partner]"
+                      name="Partner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      name="InsertDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[Imported]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[Imported]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[Imported]"
+                      name="Imported"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[StatusID]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[StatusID]"
+                      name="StatusID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[error]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[error]"
+                      name="error"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                      length="2000"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[errormsg]"
+                      name="errormsg"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[NewMatterNumber]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[NewMatterNumber]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[NewMatterNumber]"
+                      name="NewMatterNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[BusinessLine]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[BusinessLine]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[BusinessLine]"
+                      name="BusinessLine"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      length="50"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      name="FEDCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      name="SourceSystemID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[extFileID]"
+                      dataType="i8"
+                      name="extFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="fileDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileResponsibleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileResponsibleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[filePrincipleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="filePrincipleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileDept]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileDept" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileType]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileFundCode]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileFundCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileCurISOCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="fileCurISOCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      name="fileCreated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      name="fileUpdated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      name="fileClosed" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileSource]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSource" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileSection]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSection" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[fileSectionGroup]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSectionGroup" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[MattIndex]"
+                      dataType="i4"
+                      name="MattIndex" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[Office]"
+                      dataType="i4"
+                      name="Office" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[brID]"
+                      dataType="wstr"
+                      length="15"
+                      name="brID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[Partner]"
+                      dataType="i8"
+                      name="Partner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[NewMatterNumber]"
+                      dataType="i4"
+                      name="NewMatterNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[BusinessLine]"
+                      dataType="wstr"
+                      length="15"
+                      name="BusinessLine" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      name="clNo" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      name="fileNo" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[extFileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[extFileID]"
+                      name="extFileID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileDesc]"
+                      name="fileDesc" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileResponsibleID]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileResponsibleID]"
+                      name="fileResponsibleID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[filePrincipleID]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[filePrincipleID]"
+                      name="filePrincipleID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileDept]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileDept]"
+                      name="fileDept" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileType]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileType]"
+                      name="fileType" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileFundCode]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileFundCode]"
+                      name="fileFundCode" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileCurISOCode]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileCurISOCode]"
+                      name="fileCurISOCode" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      name="fileStatus" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileCreated]"
+                      name="fileCreated" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileUpdated]"
+                      name="fileUpdated" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileClosed]"
+                      name="fileClosed" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileSource]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileSource]"
+                      name="fileSource" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileSection]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileSection]"
+                      name="fileSection" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileSectionGroup]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[fileSectionGroup]"
+                      name="fileSectionGroup" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[MattIndex]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[MattIndex]"
+                      name="MattIndex" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[Office]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[Office]"
+                      name="Office" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[brID]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[brID]"
+                      name="brID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[Partner]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[Partner]"
+                      name="Partner" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      name="InsertDate" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[Imported]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[Imported]"
+                      name="Imported" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                      dataType="ui1"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                      name="StatusID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[error]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[error]"
+                      name="error" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                      name="errormsg" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[NewMatterNumber]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[NewMatterNumber]"
+                      name="NewMatterNumber" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[BusinessLine]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[BusinessLine]"
+                      name="BusinessLine" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      name="FEDCode" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      name="SourceSystemID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Matters Failed\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - Matters Failed\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Matters Failed\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - Matters Failed\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Matters Failed.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Matters Failed\Row Count.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Matters Failed\EST - Matters Failed.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Matters Inserted"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{CA013810-E32E-4317-8A6E-39B2D2394ED7}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Matters Inserted"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - Matters Inserted.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{87902821-A07E-4AC9-A9CA-E1B9F598183B}"
+          DTS:EventID="0"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{C24E91D0-2FF3-4EB4-83A4-920E721464EC}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - Matters Inserted.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:Disabled="True"
+              DTS:DTSID="{FEBC35AD-AA7F-405F-838C-0532E631ED6A}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{BA412ADA-E40A-40CA-91DF-C29415B632F4}"
+                  SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@AuditID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="131"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ErrorCode"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="130"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ErrorDescription"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="130"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - Matters Inserted.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{8F6B5936-1BFC-4A4B-871A-D3701344FBAF}"
+          DTS:EventID="3014771"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{A36B82C0-5531-454C-AE2C-A773251EB952}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - Matters Inserted.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{BEE0E2D0-E6B9-4597-9627-084B5B24A64F}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{BA412ADA-E40A-40CA-91DF-C29415B632F4}"
+                  SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCountInserts"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountUpdates"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - Matters Inserted.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{5E7EAD1C-6855-4B48-A603-5DE44AB1CFBA}"
+          DTS:EventID="466490836"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{86457D36-1419-4C4B-B738-56DCC1B5B61B}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - Matters Inserted.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{5821BB50-8706-4C31-BE23-8619156A7C20}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{BA412ADA-E40A-40CA-91DF-C29415B632F4}"
+                  SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Matters Inserted\EST - Matters Success"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="EST - Matters Success"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT * FROM  dbo.VFMatterCreationStage WHERE StatusID=2</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Matters Inserted\EST - Matters Success.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[clNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      length="12"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[clNo]"
+                      name="clNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      length="20"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      name="fileNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[extFileID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[extFileID]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[extFileID]"
+                      name="extFileID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileDesc]"
+                      length="255"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileDesc]"
+                      name="fileDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileResponsibleID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileResponsibleID]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileResponsibleID]"
+                      name="fileResponsibleID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[filePrincipleID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[filePrincipleID]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[filePrincipleID]"
+                      name="filePrincipleID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileDept]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileDept]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileDept]"
+                      name="fileDept"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileType]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileType]"
+                      name="fileType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileFundCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileFundCode]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileFundCode]"
+                      name="fileFundCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileCurISOCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileCurISOCode]"
+                      length="3"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileCurISOCode]"
+                      name="fileCurISOCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      name="fileStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileCreated]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileCreated]"
+                      name="fileCreated"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileUpdated]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileUpdated]"
+                      name="fileUpdated"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileClosed]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileClosed]"
+                      name="fileClosed"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileSource]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileSource]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileSource]"
+                      name="fileSource"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileSection]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileSection]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileSection]"
+                      name="fileSection"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileSectionGroup]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileSectionGroup]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[fileSectionGroup]"
+                      name="fileSectionGroup"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[MattIndex]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[MattIndex]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[MattIndex]"
+                      name="MattIndex"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[Office]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[Office]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[Office]"
+                      name="Office"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[brID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[brID]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[brID]"
+                      name="brID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[Partner]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[Partner]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[Partner]"
+                      name="Partner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      name="InsertDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[Imported]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[Imported]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[Imported]"
+                      name="Imported"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[StatusID]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[StatusID]"
+                      name="StatusID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[error]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[error]"
+                      name="error"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                      length="2000"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[errormsg]"
+                      name="errormsg"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[NewMatterNumber]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[NewMatterNumber]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[NewMatterNumber]"
+                      name="NewMatterNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[BusinessLine]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[BusinessLine]"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[BusinessLine]"
+                      name="BusinessLine"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      length="50"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      name="FEDCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      name="SourceSystemID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[extFileID]"
+                      dataType="i8"
+                      name="extFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="fileDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileResponsibleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileResponsibleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[filePrincipleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="filePrincipleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileDept]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileDept" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileType]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileFundCode]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileFundCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileCurISOCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="fileCurISOCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      name="fileCreated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      name="fileUpdated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      name="fileClosed" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileSource]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSource" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileSection]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSection" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[fileSectionGroup]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSectionGroup" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[MattIndex]"
+                      dataType="i4"
+                      name="MattIndex" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[Office]"
+                      dataType="i4"
+                      name="Office" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[brID]"
+                      dataType="wstr"
+                      length="15"
+                      name="brID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[Partner]"
+                      dataType="i8"
+                      name="Partner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[NewMatterNumber]"
+                      dataType="i4"
+                      name="NewMatterNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[BusinessLine]"
+                      dataType="wstr"
+                      length="15"
+                      name="BusinessLine" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      name="clNo" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      name="fileNo" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[extFileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[extFileID]"
+                      name="extFileID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileDesc]"
+                      name="fileDesc" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileResponsibleID]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileResponsibleID]"
+                      name="fileResponsibleID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[filePrincipleID]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[filePrincipleID]"
+                      name="filePrincipleID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileDept]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileDept]"
+                      name="fileDept" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileType]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileType]"
+                      name="fileType" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileFundCode]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileFundCode]"
+                      name="fileFundCode" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileCurISOCode]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileCurISOCode]"
+                      name="fileCurISOCode" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      name="fileStatus" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileCreated]"
+                      name="fileCreated" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileUpdated]"
+                      name="fileUpdated" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileClosed]"
+                      name="fileClosed" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileSource]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileSource]"
+                      name="fileSource" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileSection]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileSection]"
+                      name="fileSection" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileSectionGroup]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[fileSectionGroup]"
+                      name="fileSectionGroup" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[MattIndex]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[MattIndex]"
+                      name="MattIndex" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[Office]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[Office]"
+                      name="Office" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[brID]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[brID]"
+                      name="brID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[Partner]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[Partner]"
+                      name="Partner" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      name="InsertDate" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[Imported]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[Imported]"
+                      name="Imported" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                      dataType="ui1"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                      name="StatusID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[error]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[error]"
+                      name="error" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                      name="errormsg" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[NewMatterNumber]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[NewMatterNumber]"
+                      name="NewMatterNumber" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[BusinessLine]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[BusinessLine]"
+                      name="BusinessLine" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      name="FEDCode" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      name="SourceSystemID" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Matters Inserted\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - Matters Inserted\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Matters Inserted\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - Matters Inserted\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Matters Inserted.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Matters Inserted\Row Count.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Matters Inserted\EST - Matters Success.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST - Import VF Matters Into MS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AB0C2A95-6635-4D2E-9149-4827A23CF6F0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST - Import VF Matters Into MS"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B144DA5C-F70E-43C7-8C32-F853EF86E831}"
+          SQLTask:SqlStatementSource="EXEC [dbo].[CUR_RunVFileMatter]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{9CCE20B8-D387-498B-A7E1-CA8AC6BBB48F}"
+      DTS:From="Package\EST - Import VF Matters Into MS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - Matters Inserted" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{9E22BEEC-AF92-4524-969F-E4B2093CC409}"
+      DTS:From="Package\DFT - Matters Inserted"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DFT - Matters Failed" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{3FF4DED4-3228-4BFB-A588-B4F7CA284640}"
+      DTS:EventID="234406780"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{F95B93A5-D112-4A1A-A3F8-441746AB46FA}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{6555EE44-C4ED-4474-B1DF-B8B176164115}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{BA412ADA-E40A-40CA-91DF-C29415B632F4}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="177,42"
+          Id="Package\DFT - Matters Failed"
+          TopLeft="245,400" />
+        <NodeLayout
+          Size="188,42"
+          Id="Package\DFT - Matters Inserted"
+          TopLeft="264,298" />
+        <NodeLayout
+          Size="236,42"
+          Id="Package\EST - Import VF Matters Into MS"
+          TopLeft="245,188" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="360.5,230">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68"
+              Start="0,0"
+              End="0,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="358,340">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-24.5,60"
+              Start="0,0"
+              End="-24.5,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="-4,30" />
+                  <mssgle:LineSegment
+                    End="-20.5,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-20.5,30"
+                    Point2="-24.5,30"
+                    Point3="-24.5,34" />
+                  <mssgle:LineSegment
+                    End="-24.5,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT - Matters Failed">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="176,42"
+          Id="Package\DFT - Matters Failed\EST - Matters Failed"
+          TopLeft="484,154" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - Matters Failed\Row Count"
+          TopLeft="510,235" />
+        <EdgeLayout
+          Id="Package\DFT - Matters Failed.Paths[OLE DB Source Output]"
+          TopLeft="574,196">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - Matters Failed.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - Matters Failed.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="639,195" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - Matters Failed.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package\DFT - Matters Failed.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="637,205" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - Matters Failed.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="129,42"
+          Id="Package\DFT - Matters Failed.EventHandlers[OnError]\AuditError"
+          TopLeft="455,181" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Matters Failed\EST - Matters Failed">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DFT - Matters Inserted">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - Matters Inserted\Row Count"
+          TopLeft="510,235" />
+        <NodeLayout
+          Size="185,42"
+          Id="Package\DFT - Matters Inserted\EST - Matters Success"
+          TopLeft="484,154" />
+        <EdgeLayout
+          Id="Package\DFT - Matters Inserted.Paths[OLE DB Source Output]"
+          TopLeft="576.25,196">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - Matters Inserted.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - Matters Inserted.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="639,195" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - Matters Inserted.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package\DFT - Matters Inserted.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="637,205" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - Matters Inserted.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="129,42"
+          Id="Package\DFT - Matters Inserted.EventHandlers[OnError]\AuditError"
+          TopLeft="455,181" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Matters Inserted\EST - Matters Success">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

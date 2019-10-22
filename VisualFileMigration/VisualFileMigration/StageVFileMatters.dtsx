@@ -1,0 +1,2454 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2016 5:34:25 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\khanse"
+  DTS:DTSID="{DD1DF142-BF28-43B9-8F39-4107D343717D}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="StageVFileMatters"
+  DTS:PackageType="5"
+  DTS:VersionBuild="155"
+  DTS:VersionGUID="{AA244D65-ED0D-4F22-AA04-5083D1F545B9}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F94E8367-7B81-4539-8566-14AAFBCED781}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EC56E7E0-62E5-46A3-8A6D-7D70D34A5D86}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{169E2559-A10B-4F71-830F-5598C9A944D3}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MS_Prod;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D4EC86FB-2047-4218-9FC3-07A5998B02FC}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_VFile]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A88D4C13-C5DF-4982-917B-99C0BC888131}"
+      DTS:ObjectName="CM_VFile">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_VFile]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dw-01;Initial Catalog=VFile_Streamlined;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{382DAC7B-72BB-4154-8C28-7CB9DF18A319}"
+      DTS:ObjectName="ParentAuditID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::AuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{6D5998BF-C617-4DE0-B9A3-A4862009EA9B}"
+      DTS:ObjectName="AuditID" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6A96F487-A5C2-4F4C-BDD5-56E303829E0F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5BDD5014-0909-42BB-86EA-54E017F5E666}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0EFD7DD1-69A2-4611-BDD7-E4B25E31D4E9}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{03B69D90-4B95-4137-B278-F385FCCBF6EF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FACACFB5-9827-42E4-9300-3E88BCBC9337}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3435EA4A-29B5-40DC-A074-674B7FB094EF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EFAE4C6B-5FD6-44FF-ADDB-C75823C660C7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{81203D6D-2038-450A-8D53-A624C0598330}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{71CBAF8C-B360-4C18-9913-01165CB3228C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F60CF4FF-1FFB-435D-830D-367EDE3E732B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{520A53AA-E5C1-4178-AD2D-D613C4714742}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CD330F78-D63A-4C8A-8C62-BB74819EDEE7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - StageVFMatterCreation"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{6EA98DD3-F5CA-4166-845D-5884347D6AF6}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - StageVFMatterCreation"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - StageVFMatterCreation.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{C26A7715-26BB-450C-96CD-F86C9B8576F7}"
+          DTS:EventID="0"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{37EBBBF8-1D09-4AC5-BB57-92B73D9D24F9}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - StageVFMatterCreation.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{684F318F-558D-4378-A7EB-6CD983FD60BC}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F94E8367-7B81-4539-8566-14AAFBCED781}"
+                  SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCountInserts"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountUpdates"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - StageVFMatterCreation.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{F2EFA5BB-DEFA-4641-8F9C-793466A201BA}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{2BF6496B-ECE9-4FD5-97E6-04AC46D57570}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - StageVFMatterCreation.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{AABE20DB-1260-4BC2-BC7D-75F53E4126DC}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F94E8367-7B81-4539-8566-14AAFBCED781}"
+                  SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DFT - VF Matters To Stage"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[VFMatterCreationStage]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[clNo]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[fileStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="fileStatus"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[fileStatus]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[SourceSystemID]"
+                      cachedDataType="i8"
+                      cachedName="SourceSystemID"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[SourceSystemID]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[InsertDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="InsertDate"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[InsertDate]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[MatterDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MatterDescription"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileDesc]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterDescription]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[MatterOwner]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="MatterOwner"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[filePrincipleID]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[Deparment]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Deparment"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileDept]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[Deparment]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[Worktype]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Worktype"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileType]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[Worktype]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[DateOpened]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DateOpened"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileCreated]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[DateOpened]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[TM]"
+                      cachedDataType="wstr"
+                      cachedLength="36"
+                      cachedName="TM"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileResponsibleID]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[TM]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[Section]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="Section"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSection]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Section]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[SectionGroup]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="SectionGroup"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSectionGroup]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[SectionGroup]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[Department]"
+                      cachedDataType="wstr"
+                      cachedLength="16"
+                      cachedName="Department"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[BusinessLine]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Department]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[Office]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Office"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[brID]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Office]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].Columns[MatterPartner]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MatterPartner"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[Partner]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterPartner]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[extFileID]"
+                      dataType="i8"
+                      name="extFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="fileDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileResponsibleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileResponsibleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[filePrincipleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="filePrincipleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileDept]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileDept" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileType]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileFundCode]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileFundCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileCurISOCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="fileCurISOCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      name="fileCreated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      name="fileUpdated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      name="fileClosed" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSource]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSource" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSection]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSection" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSectionGroup]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSectionGroup" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[MattIndex]"
+                      dataType="i4"
+                      name="MattIndex" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[Office]"
+                      dataType="i4"
+                      name="Office" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[brID]"
+                      dataType="wstr"
+                      length="15"
+                      name="brID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[Partner]"
+                      dataType="i8"
+                      name="Partner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[NewMatterNumber]"
+                      dataType="i4"
+                      name="NewMatterNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[BusinessLine]"
+                      dataType="wstr"
+                      length="15"
+                      name="BusinessLine" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageVFMatterCreation\Failed VF Matters"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Failed VF Matters"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[VFMatterCreationFailure]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[clNo]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].Columns[fileStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="fileStatus"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[fileStatus]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].Columns[SourceSystemID]"
+                      cachedDataType="i8"
+                      cachedName="SourceSystemID"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[SourceSystemID]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].Columns[InsertDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="InsertDate"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[InsertDate]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].Columns[MatterDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MatterDescription"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileDesc]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterDescription]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].Columns[MatterOwner]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="MatterOwner"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[filePrincipleID]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].Columns[Deparment]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Deparment"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileDept]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[Deparment]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].Columns[Worktype]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Worktype"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileType]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[Worktype]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].Columns[DateOpened]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DateOpened"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileCreated]"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[DateOpened]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[extFileID]"
+                      dataType="i8"
+                      name="extFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="fileDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileResponsibleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileResponsibleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[filePrincipleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="filePrincipleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileDept]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileDept" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileType]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileFundCode]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileFundCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileCurISOCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="fileCurISOCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      name="fileCreated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      name="fileUpdated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      name="fileClosed" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileSource]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSource" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileSection]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSection" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileSectionGroup]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSectionGroup" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[MattIndex]"
+                      dataType="i4"
+                      name="MattIndex" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[Office]"
+                      dataType="i4"
+                      name="Office" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[brID]"
+                      dataType="wstr"
+                      length="15"
+                      name="brID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[Partner]"
+                      dataType="i8"
+                      name="Partner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[NewMatterNumber]"
+                      dataType="i4"
+                      name="NewMatterNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[BusinessLine]"
+                      dataType="wstr"
+                      length="15"
+                      name="BusinessLine" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageVFMatterCreation\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT MatterManager.usrAlias AS [Matter Owner],
+BCMUser.usrAlias AS TM,
+td.Section,
+s.SectionGroup,
+td.Department,
+dbBranch.brCode AS Office
+from dbFeeEarner fe
+INNER JOIN MS_PROD.dbo.dbUser AS MatterManager
+ ON fe.feeusrID = MatterManager.usrID
+INNER JOIN dbo.Syn3ETimeKeeper  t on fe.feeExtID = t.tkprindex
+Inner Join dbo.Syn3ETkprDate  TD	on fe.feeExtID = TD.timekeeperlkup
+Inner Join dbo.Syn3EnxUser  U		on U.NxUserID = T.TRE_User
+Inner Join dbo.Syn3EnxFWKUser NxFWKUser 	on NxFWKUser.NxFWKUserID = U.NxUserID
+INNER JOIN dbo.Syn3ESection  s	on s.code = td.Section
+INNER JOIN dbUser dbu on  fe.[feeusrID] = dbu.usrID
+
+-------SD 20160321 added this join to get the actual login for the users as the returned SupTkpr is in fact the index of the table and not the actual login
+LEFT JOIN dbo.Syn3ETimeKeeper  as BCM on TD.SupTkpr  = BCM.[TkprIndex] 
+LEFT JOIN dbUser as BCMUser on BCMUser.usrAlias collate database_default = BCM.Number collate database_default
+LEFT JOIN dbFeeEarner as BCMFeeEarner on BCMFeeEarner.[feeusrID] = BCMUser.usrID
+LEFT JOIN udDepartmentSectionLookup as DepartmentLookup on td.Section collate database_default = DepartmentLookup.section collate database_default and s.SectionGroup collate database_default = DepartmentLookup.sectiongroup collate database_default
+LEFT JOIN udDepartment as Department on DepartmentLookup.departmentcode = Department.[code]
+LEFT JOIN dbo.dbBranch ON td.Office COLLATE DATABASE_DEFAULT = dbBranch.brCode COLLATE DATABASE_DEFAULT
+
+
+Where getDate() BETWEEN (NxStartDate ) AND (NxEndDate)
+and t.tre_user is not null
+and t.tkprstatus = 'Active'
+AND MatterManager.usrActive=1
+
+ORDER BY MatterManager.usrAlias</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (SELECT MatterManager.usrAlias AS [Matter Owner],
+BCMUser.usrAlias AS TM,
+td.Section,
+s.SectionGroup,
+td.Department,
+dbBranch.brCode AS Office
+from dbFeeEarner fe
+INNER JOIN MS_PROD.dbo.dbUser AS MatterManager
+ ON fe.feeusrID = MatterManager.usrID
+INNER JOIN dbo.Syn3ETimeKeeper  t on fe.feeExtID = t.tkprindex
+Inner Join dbo.Syn3ETkprDate  TD	on fe.feeExtID = TD.timekeeperlkup
+Inner Join dbo.Syn3EnxUser  U		on U.NxUserID = T.TRE_User
+Inner Join dbo.Syn3EnxFWKUser NxFWKUser 	on NxFWKUser.NxFWKUserID = U.NxUserID
+INNER JOIN dbo.Syn3ESection  s	on s.code = td.Section
+INNER JOIN dbUser dbu on  fe.[feeusrID] = dbu.usrID
+
+-------SD 20160321 added this join to get the actual login for the users as the returned SupTkpr is in fact the index of the table and not the actual login
+LEFT JOIN dbo.Syn3ETimeKeeper  as BCM on TD.SupTkpr  = BCM.[TkprIndex] 
+LEFT JOIN dbUser as BCMUser on BCMUser.usrAlias collate database_default = BCM.Number collate database_default
+LEFT JOIN dbFeeEarner as BCMFeeEarner on BCMFeeEarner.[feeusrID] = BCMUser.usrID
+LEFT JOIN udDepartmentSectionLookup as DepartmentLookup on td.Section collate database_default = DepartmentLookup.section collate database_default and s.SectionGroup collate database_default = DepartmentLookup.sectiongroup collate database_default
+LEFT JOIN udDepartment as Department on DepartmentLookup.departmentcode = Department.[code]
+LEFT JOIN dbo.dbBranch ON td.Office COLLATE DATABASE_DEFAULT = dbBranch.brCode COLLATE DATABASE_DEFAULT
+
+
+Where getDate() BETWEEN (NxStartDate ) AND (NxEndDate)
+and t.tre_user is not null
+and t.tkprstatus = 'Active'
+AND MatterManager.usrActive=1
+
+ORDER BY MatterManager.usrAlias) [refTable]
+where [refTable].[Matter Owner] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Matter Owner" dataType="DT_WSTR" length="36" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TM" dataType="DT_WSTR" length="36" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Section" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SectionGroup" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Department" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Office" dataType="DT_WSTR" length="15" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageVFMatterCreation\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Mattersphere]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Mattersphere]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageVFMatterCreation\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Lookup.Inputs[Lookup Input].Columns[MatterOwner]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="MatterOwner"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Matter Owner</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - StageVFMatterCreation\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[TM]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="36"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[TM]"
+                      name="TM"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">TM</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Section]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="16"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Section]"
+                      name="Section"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Section</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[SectionGroup]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="16"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[SectionGroup]"
+                      name="SectionGroup"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">SectionGroup</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Department]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="16"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Department]"
+                      name="Department"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Department</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Office]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Office]"
+                      name="Office"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Office</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - StageVFMatterCreation\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - StageVFMatterCreation\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageVFMatterCreation\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCount</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageVFMatterCreation\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - StageVFMatterCreation\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageVFMatterCreation\Row Count 1"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count 1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageVFMatterCreation\Row Count 1.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\Row Count 1.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - StageVFMatterCreation\Row Count 1.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageVFMatterCreation\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[ID]"
+                      cachedDataType="i4"
+                      cachedName="ID"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[clNo]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[MatterDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MatterDescription"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterDescription]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[MatterOwner]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="MatterOwner"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterOwner]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[Deparment]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Deparment"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[Deparment]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[Worktype]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Worktype"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[Worktype]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[fileStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="fileStatus"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[fileStatus]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[DateOpened]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DateOpened"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[DateOpened]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[SourceSystemID]"
+                      cachedDataType="i8"
+                      cachedName="SourceSystemID"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[SourceSystemID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[InsertDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="InsertDate"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[InsertDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input].Columns[MatterPartner]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MatterPartner"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterPartner]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[ID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[ID]"
+                      name="ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[clNo]"
+                      name="clNo"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[clNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterDescription]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterDescription]"
+                      name="MatterDescription">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterDescription]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]"
+                      name="MatterOwner"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterOwner]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[Deparment]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[Deparment]"
+                      name="Deparment">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[Deparment]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[Worktype]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[Worktype]"
+                      name="Worktype">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[Worktype]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[fileStatus]"
+                      name="fileStatus">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[fileStatus]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[DateOpened]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[DateOpened]"
+                      name="DateOpened">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[DateOpened]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[SourceSystemID]"
+                      name="SourceSystemID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[SourceSystemID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[InsertDate]"
+                      name="InsertDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[InsertDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterPartner]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output].Columns[MatterPartner]"
+                      name="MatterPartner">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterPartner]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageVFMatterCreation\SRC_VFile"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_VFile"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT ID,
+       clNo,
+       MatterDescription,
+       MatterOwner,
+       Deparment,
+       Worktype,
+       fileStatus,
+       DateOpened,
+       SourceSystemID,
+	   '3409' AS MatterPartner,
+       InsertDate FROM [dbo].[VFToMSMatters]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_VFile]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_VFile]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[clNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      length="12"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[clNo]"
+                      name="clNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[MatterDescription]"
+                      length="255"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterDescription]"
+                      name="MatterDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterOwner]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[MatterOwner]"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterOwner]"
+                      name="MatterOwner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[Deparment]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[Deparment]"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[Deparment]"
+                      name="Deparment"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[Worktype]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[Worktype]"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[Worktype]"
+                      name="Worktype"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      name="fileStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[DateOpened]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[DateOpened]"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[DateOpened]"
+                      name="DateOpened"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      name="SourceSystemID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      name="InsertDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterPartner]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[MatterPartner]"
+                      length="4"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].Columns[MatterPartner]"
+                      name="MatterPartner"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[MatterDescription]"
+                      dataType="wstr"
+                      length="255"
+                      name="MatterDescription" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[MatterOwner]"
+                      dataType="wstr"
+                      length="15"
+                      name="MatterOwner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[Deparment]"
+                      dataType="wstr"
+                      length="15"
+                      name="Deparment" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[Worktype]"
+                      dataType="wstr"
+                      length="15"
+                      name="Worktype" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[DateOpened]"
+                      dataType="dbTimeStamp"
+                      name="DateOpened" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output].ExternalColumns[MatterPartner]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="MatterPartner" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      name="clNo" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[MatterDescription]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[MatterDescription]"
+                      name="MatterDescription" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[MatterOwner]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[MatterOwner]"
+                      name="MatterOwner" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[Deparment]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[Deparment]"
+                      name="Deparment" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[Worktype]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[Worktype]"
+                      name="Worktype" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      name="fileStatus" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[DateOpened]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[DateOpened]"
+                      name="DateOpened" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      name="SourceSystemID" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[MatterPartner]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[MatterPartner]"
+                      name="MatterPartner" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      name="InsertDate" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - StageVFMatterCreation.Paths[Lookup Match Output]"
+              endId="Package\DFT - StageVFMatterCreation\Row Count 1.Inputs[Row Count Input 1]"
+              name="Lookup Match Output"
+              startId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - StageVFMatterCreation.Paths[Lookup No Match Output]"
+              endId="Package\DFT - StageVFMatterCreation\Failed VF Matters.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - StageVFMatterCreation\Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - StageVFMatterCreation.Paths[OLE DB Source Output]"
+              endId="Package\DFT - StageVFMatterCreation\Row Count.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - StageVFMatterCreation\SRC_VFile.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - StageVFMatterCreation.Paths[Row Count Output 1]"
+              endId="Package\DFT - StageVFMatterCreation\Sort.Inputs[Sort Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - StageVFMatterCreation\Row Count.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - StageVFMatterCreation.Paths[Row Count Output 11]"
+              endId="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - StageVFMatterCreation\Row Count 1.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - StageVFMatterCreation.Paths[Sort Output]"
+              endId="Package\DFT - StageVFMatterCreation\Lookup.Inputs[Lookup Input]"
+              name="Sort Output"
+              startId="Package\DFT - StageVFMatterCreation\Sort.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{5E4FAA1B-9236-4591-ACAD-082DB79529DD}"
+      DTS:EventID="-3"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{CED72A4D-454B-4083-9D46-648687AB1858}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{98CBA991-71E5-45A5-8EA8-371FA00370D5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F94E8367-7B81-4539-8566-14AAFBCED781}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="219,42"
+          Id="Package\DFT - StageVFMatterCreation"
+          TopLeft="233.05703958826,199.466349634765" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="129,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="426,210" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT - StageVFMatterCreation">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="162,42"
+          Id="Package\DFT - StageVFMatterCreation\Failed VF Matters"
+          TopLeft="718,260" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - StageVFMatterCreation\Row Count"
+          TopLeft="434,86" />
+        <NodeLayout
+          Size="100,42"
+          Id="Package\DFT - StageVFMatterCreation\Sort"
+          TopLeft="454,178" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\DFT - StageVFMatterCreation\Row Count 1"
+          TopLeft="438,349" />
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - StageVFMatterCreation\SRC_VFile"
+          TopLeft="199.5,87.022919380743" />
+        <NodeLayout
+          Size="115,42"
+          Id="Package\DFT - StageVFMatterCreation\Lookup"
+          TopLeft="447,256" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage"
+          TopLeft="405,447" />
+        <EdgeLayout
+          Id="Package\DFT - StageVFMatterCreation.Paths[Lookup Match Output]"
+          TopLeft="506.5,298">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51"
+              Start="0,0"
+              End="0,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,15.9453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageVFMatterCreation.Paths[Sort Output]"
+          TopLeft="504.25,220">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36"
+              Start="0,0"
+              End="0,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageVFMatterCreation.Paths[Row Count Output 11]"
+          TopLeft="508.25,391">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,56"
+              Start="0,0"
+              End="0,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageVFMatterCreation.Paths[Row Count Output 1]"
+          TopLeft="502,128">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50"
+              Start="0,0"
+              End="0,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageVFMatterCreation.Paths[OLE DB Source Output]"
+          TopLeft="327.5,107.511459690372">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="106.5,0"
+              Start="0,0"
+              End="99,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="99,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageVFMatterCreation.Paths[Lookup No Match Output]"
+          TopLeft="562,279">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="156,0"
+              Start="0,0"
+              End="148.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="148.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="18.44361328125,5,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - StageVFMatterCreation.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - StageVFMatterCreation.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="462,189" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - StageVFMatterCreation.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package\DFT - StageVFMatterCreation.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="410,169" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageVFMatterCreation\Failed VF Matters">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageVFMatterCreation\SRC_VFile">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageVFMatterCreation\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageVFMatterCreation\DFT - VF Matters To Stage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

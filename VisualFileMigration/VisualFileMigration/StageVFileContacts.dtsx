@@ -1,0 +1,1848 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2016 5:34:25 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\khanse"
+  DTS:DTSID="{5B6BDD29-2919-4222-AB40-4D920E1C9449}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="StageVFileContacts"
+  DTS:PackageType="5"
+  DTS:VersionBuild="161"
+  DTS:VersionGUID="{7D1B4694-1A5B-4D32-AAE2-AC488F5E6910}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4FB4E858-ED46-4875-96C8-6D4210CBB88F}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BD294EBD-91BE-4267-85C6-3C0B56044236}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{308E62A0-8A64-4D0D-8425-55A11DF3FEAB}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MS_Prod;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BA2B58DE-DBA5-421C-AE9E-20BF84B7993F}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_VFile]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9D079EA2-C6F5-4028-A256-AEAE951891CF}"
+      DTS:ObjectName="CM_VFile">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_VFile]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dw-01;Initial Catalog=VFile_Streamlined;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{B32FC8A7-727B-4961-A342-8EF99CE9963D}"
+      DTS:ObjectName="ParentAuditID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::AuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{84ED9153-A360-4188-A88B-C2E2D69FBC56}"
+      DTS:ObjectName="AuditID" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C054372B-2D41-4E72-928B-797314E66139}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{479535EC-5774-4390-A46C-5A3304A51241}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{52EBEA0A-4292-40DA-B143-610CFE47B479}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B9E93685-2724-4067-972B-3D96FFD27F21}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B57C7305-5029-472C-B3C8-C3CEF46FE7B9}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E141D7DA-E852-411B-858C-98B3197A2536}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{580B5FB3-3B94-43BB-9FF5-93BBDEFFA532}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CE5BAB69-409F-4BE1-951B-3898FA1B4454}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2B2088BD-7311-466B-B856-E997980DD53B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{33B319C0-CA5D-4E9E-8FF4-2597BF82AA42}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{33E7F080-F5FB-43AD-9842-F05A5081C625}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{039A21BC-B9AE-4786-B85E-231798A0FEEE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - StageVFContacts"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{E68815DF-7B83-415E-8331-D3423C6A7556}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - StageVFContacts"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - StageVFContacts.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{B6A8AEE1-5EC5-453F-9F71-06E551CF32B5}"
+          DTS:EventID="0"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{812492CC-2860-4C53-9832-DD36639487CB}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - StageVFContacts.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{5BFB5A5C-7FB2-489E-8490-49D2FF0E6115}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{4FB4E858-ED46-4875-96C8-6D4210CBB88F}"
+                  SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCountInserts"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountUpdates"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - StageVFContacts.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{014F5A6F-1C70-4D46-8AC4-BBF88F820582}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{F0046689-6133-46C4-92DC-3B8B08724B90}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - StageVFContacts.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{16A80A32-EDBD-43B8-896F-4A451E07C7E9}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{4FB4E858-ED46-4875-96C8-6D4210CBB88F}"
+                  SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - StageVFContacts\DFT - StageVFContacts"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="DFT - StageVFContacts"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT CASE WHEN CAST(LEFT(RTRIM(REPLACE(LEFT(AllData.[Name], CHARINDEX(':', AllData.[Name]) ),':','')),50) AS NVARCHAR(50))='' THEN CAST(LEFT(RTRIM(AllData.Name),50) AS NVARCHAR(50)) ELSE CAST(LEFT(RTRIM(REPLACE(LEFT(AllData.[Name], CHARINDEX(':', AllData.[Name]) ),':','')),50) AS NVARCHAR(50)) END  AS [clName]
+,CAST(LEFT(RTRIM(AllData.Address1),50) AS NVARCHAR(50)) AS [addLine1]
+,CAST(LEFT(RTRIM(AllData.Address2),50) AS NVARCHAR(50))  AS [addLine2]
+,CAST(LEFT(RTRIM(AllData.Address3),50) AS NVARCHAR(50))  AS [addLine3]
+,CAST(LEFT(RTRIM(AllData.Address4),50) AS NVARCHAR(50))  AS [addLine4]
+,CAST(NULL AS NVARCHAR(50)) AS [addLine5]
+,CAST(LEFT(RTRIM(AllData.PostCode),15) AS NVARCHAR(15)) AS [addPostCode]
+,NULL AS [addDXCode]
+,CAST(CASE WHEN ISNULL(AllData.Title,'')&lt;&gt;'' THEN 'INDIVIDUAL' ELSE 'ORGANISATION'  END AS NVARCHAR(12))  AS [contType]
+,CAST(LEFT(RTRIM(AllData.Name),50) AS NVARCHAR(50)) AS [contSalut]
+,CAST(LEFT(RTRIM(CASE WHEN ISNULL(AllData.Title,'')&lt;&gt;'' THEN   RTRIM(AllData.Title) ELSE NULL END),10) AS NVARCHAR(10))  AS [contTitle]
+,CAST(LEFT(RTRIM(CASE WHEN ISNULL(AllData.Title,'')&lt;&gt;'' THEN  RTRIM(AllData.Forename) ELSE NULL END),50) AS NVARCHAR(50))  AS [contFirstNames]
+,CAST(LEFT(RTRIM(CASE WHEN ISNULL(AllData.Title,'')&lt;&gt;'' THEN   RTRIM(AllData.Surname) ELSE NULL END),50) AS NVARCHAR(50))  AS [contSurname]
+,GETDATE() AS [contCreated]
+,NULL AS [contEmail]
+,CAST(LEFT(RTRIM(AllData.HomeTelephone),30) AS NVARCHAR(30)) AS [contTelHome]
+,CAST(LEFT(RTRIM(AllData.WorkTelephone),30) AS NVARCHAR(30)) AS [contTelWork]
+,CAST(LEFT(RTRIM(AllData.Mobile),30) AS NVARCHAR(30)) AS [contTelMob]
+,CAST(LEFT(RTRIM(AllData.Fax),30) AS NVARCHAR(30)) AS [contFAX]
+,'No' AS [IsClient]
+,CAST(CASE WHEN ISNULL(AllData.Title,'')&lt;&gt;'' THEN 'INDIVIDUAL' ELSE 'ORGANISATION'  END AS NVARCHAR(12)) AS contSubType
+,CAST(LEFT(RTRIM(name),50) AS NVARCHAR(50)) AS contAddressee
+,Code AS VFileEntityCode
+FROM 
+				(SELECT  CAST(matdb.mt_int_code AS INT) AS mt_int_code ,
+                        CAST(CASE WHEN to_subcode = ';DTOR;1;DEB;19'
+                                  THEN 'Primary Debtor'
+                                  WHEN to_subcode = ';DTOR;2;DEB;19'
+                                  THEN 'Secondary Debtor'
+                                  WHEN to_subcode = ';DTOR;3;DEB;19'
+                                  THEN 'Third Debtor'
+                                  WHEN to_subcode = ';ATTA;1;DEM;17'
+                                  THEN 'Primary Debtor Employeer'
+                                  WHEN to_subcode = ';ATTA;2;DEM;17'
+                                  THEN 'Secondary Debtor Employeer'
+                                  WHEN to_subcode = ';ATTA;3;DEM;17'
+                                  THEN 'Third Debtor Employeer'
+                                  ELSE from_to_name
+                             END AS VARCHAR(50)) AS ContactType ,
+                        CAST(RTRIM(LTRIM(Entities.name)) AS VARCHAR(200)) AS Name ,
+                        CAST(DateOfBirth AS DATE) AS DateofBirth ,
+                        CAST(a_title AS VARCHAR(20)) AS Title ,
+                        CAST(a_name AS VARCHAR(100)) AS Surname ,
+                        CAST(a_forename AS VARCHAR(50)) AS Forename ,
+                        CAST(a_sex AS VARCHAR(1)) AS Sex ,
+                        CAST(a_address1 AS VARCHAR(100)) AS Address1 ,
+                        CAST(a_address2 AS VARCHAR(70)) AS Address2 ,
+                        CAST(a_address3 AS VARCHAR(70)) AS Address3 ,
+                        CAST(a_address4 AS VARCHAR(70)) AS Address4 ,
+                        CAST(a_postcode AS VARCHAR(70)) AS PostCode ,
+                        CAST(telephone1 AS VARCHAR(40)) AS Telephone1 ,
+                        CAST(telephone2 AS VARCHAR(40)) AS Telephone2 ,
+                        CAST(fax_number AS VARCHAR(40)) AS Fax ,
+                        CAST(b_title AS VARCHAR(20)) AS Second_Title ,
+                        CAST(b_name AS VARCHAR(100)) AS Second_Surname ,
+                        CAST(b_forename AS VARCHAR(50)) AS Second_Forename ,
+                        CAST(b_sex AS VARCHAR(1)) AS Second_Sex ,
+                        CAST(b_address1 AS VARCHAR(100)) AS Second_Address1 ,
+                        CAST(b_address2 AS VARCHAR(70)) AS Second_Address2 ,
+                        CAST(b_address3 AS VARCHAR(70)) AS Second_Address3 ,
+                        CAST(b_address4 AS VARCHAR(70)) AS Second_Address4 ,
+                        CAST(b_postcode AS VARCHAR(70)) AS Second_PostCode ,
+                        HomeTelephone ,
+                        WorkTelephone ,
+                        Contact.Mobile,
+						Entities.Code
+                FROM    dbo.matdb AS matdb WITH ( NOLOCK )
+                        INNER JOIN dbo.link link WITH ( NOLOCK ) ON matdb.mt_int_code = link.to_owner_code
+                        INNER JOIN dbo.Entities Entities WITH ( NOLOCK ) ON link.from_owner_code = Entities.Code
+                        INNER  JOIN dbo.relation AS R ON link.relation_int_code = r.relation_int_code
+                        LEFT OUTER JOIN ( SELECT    mt_int_code AS From_owner_code ,
+                                                    [ud_field##1] AS HomeTelephone ,
+                                                    [ud_field##2] AS WorkTelephone ,
+                                                    [ud_field##3] AS Mobile
+                                          FROM      dbo.[uddetail] WITH ( NOLOCK )
+                                          WHERE     [uds_type] = 'CON'
+                                        ) AS Contact ON Entities.Code = Contact.From_owner_code
+                        LEFT OUTER JOIN ( SELECT    matdb.mt_int_code ,
+                                                    CASE WHEN link.to_subcode = ';DTOR;1;DEB;17'
+                                                         THEN ';DTOR;1;DEB;19'
+                                                         WHEN link.to_subcode = ';DTOR;2;DEB;17'
+                                                         THEN ';DTOR;2;DEB;19'
+                                                         WHEN link.to_subcode = ';DTOR;3;DEB;17'
+                                                         THEN ';DTOR;3;DEB;19'
+                                                    END AS Debtorlink ,
+                                                    DOB.DateOfBirth AS DateOfBirth
+                                          FROM      dbo.matdb AS matdb WITH ( NOLOCK )
+                                                    INNER JOIN dbo.link AS link
+                                                    WITH ( NOLOCK )
+                                                    INNER JOIN dbo.Entities AS Entities
+                                                    WITH ( NOLOCK ) ON link.from_owner_code = Entities.Code ON matdb.mt_int_code = link.to_owner_code
+                                                    LEFT OUTER JOIN ( SELECT
+                                                              u.mt_int_code AS [owner_code] ,
+                                                              CONVERT(DATE, dbo.VarcharToDate(u.ud_field##5), 103) AS DateOfBirth
+                                                              FROM
+                                                              dbo.uddetail u
+                                                              WITH ( NOLOCK )
+                                                              WHERE
+                                                              u.uds_type = 'MIS'
+                                                              ) DOB ON Entities.Code = DOB.owner_code
+                                          WHERE     link.to_subcode IN (
+                                                    ';DTOR;1;DEB;17',
+                                                    ';DTOR;2;DEB;17',
+                                                    'DTOR;3;DEB;17' )
+                                        ) AS DateOfBirth ON matdb.mt_int_code = DateOfBirth.mt_int_code
+                                                            AND RTRIM(to_subcode) = RTRIM(Debtorlink)
+							) AS AllData
+							INNER JOIN  dbo.VFToMSMatters
+							 ON AllData.mt_int_code=SourceSystemID
+	WHERE CAST(LEFT(RTRIM(AllData.Name),50) AS NVARCHAR(50)) NOT  IN (':','&lt;No Details Entered&gt;','*:','.','.:')
+	AND AllData.ContactType IN 
+	('3rd Party Interest','3rd Party Interest in','3rd Party Interest''s Contact'
+,'Claimant','Claimant in','Creditor','Creditor in','Creditor''s Contact','Creditor''s Contact in','Debt Agency'
+,'Primary Debtor','Primary Debtor Employeer','Secondary Debtor')
+AND AllData.PostCode &lt;&gt;''
+UNION
+SELECT DISTINCT 
+[clName]
+,[addLine1]
+,CAST(CASE WHEN AllData.col2 &lt;&gt; AllData.addPostCode THEN AllData.col2 ELSE NULL END AS NVARCHAR(50)) AS [addLine2]
+,CAST(CASE WHEN AllData.col3 &lt;&gt; AllData.addPostCode THEN AllData.col3 ELSE NULL END AS NVARCHAR(50))  AS [addLine3]
+,CAST(CASE WHEN AllData.col4 &lt;&gt; AllData.addPostCode THEN AllData.col4 ELSE NULL END AS NVARCHAR(50))  AS [addLine4]
+,CAST(CASE WHEN AllData.col5 &lt;&gt; AllData.addPostCode THEN AllData.col5 
+WHEN  AllData.col6 &lt;&gt; AllData.addPostCode THEN AllData.col6  
+ELSE NULL END AS NVARCHAR(50))  AS [addLine5]
+
+,[addPostCode]
+,[addDXCode]
+,[contType]
+,[contSalut]
+,[contTitle]
+,[contFirstNames]
+,[contSurname]
+,[contCreated]
+,[contEmail]
+,[contTelHome]
+,[contTelWork]
+,[contTelMob]
+,[contFAX]
+,[IsClient]
+,contSubType
+,contAddressee
+,VFileEntityCode
+FROM (
+
+SELECT DISTINCT 
+ CAST(LEFT(RTRIM([clName]),50) AS NVARCHAR(50)) AS [clName]
+,CAST(LEFT(RTRIM(col1),50) AS NVARCHAR(50)) [addLine1]
+,CAST(LEFT(RTRIM(CASE WHEN DebtorOffice.NoLines=2 THEN DebtorOffice.col2
+WHEN DebtorOffice.NoLines=3 THEN DebtorOffice.col3
+WHEN DebtorOffice.NoLines=4 THEN DebtorOffice.col4
+WHEN DebtorOffice.NoLines=5 THEN DebtorOffice.col5
+WHEN DebtorOffice.NoLines=6 THEN DebtorOffice.col6
+WHEN DebtorOffice.NoLines=7 THEN DebtorOffice.col7 
+END),15) AS NVARCHAR(15)) AS [addPostCode]
+,NULL AS [addDXCode]
+,CAST('ORGANISATION' AS NVARCHAR(12))  AS [contType]
+,CAST(LEFT(RTRIM(clname),50) AS NVARCHAR(50)) AS [contSalut]
+,CAST(LEFT(RTRIM(NULL),10) AS NVARCHAR(10))  AS [contTitle]
+,CAST(LEFT(RTRIM(NULL),50) AS NVARCHAR(50))  AS [contFirstNames]
+,CAST(LEFT(RTRIM(NULL),50) AS NVARCHAR(50))  AS [contSurname]
+,GETDATE() AS [contCreated]
+,NULL AS [contEmail]
+,CAST(LEFT(RTRIM(NULL),30) AS NVARCHAR(30)) AS [contTelHome]
+,CAST(LEFT(RTRIM(NULL),30) AS NVARCHAR(30)) AS [contTelWork]
+,CAST(LEFT(RTRIM(NULL),30) AS NVARCHAR(30)) AS [contTelMob]
+,CAST(LEFT(RTRIM(NULL),30) AS NVARCHAR(30)) AS [contFAX]
+,'No' AS [IsClient]
+,CAST('ORGANISATION' AS NVARCHAR(12)) AS contSubType
+,CAST(LEFT(RTRIM(clname),50) AS NVARCHAR(50)) AS contAddressee
+,id AS VFileEntityCode
+,DebtorOffice.col2,DebtorOffice.col3,col4,DebtorOffice.col5,DebtorOffice.col6,DebtorOffice.col7
+FROM (
+SELECT id,LTRIM(clname) AS clname,LTRIM(col1) AS col1,LTRIM(col2) AS col2,LTRIM(col3) AS col3,LTRIM(col4) AS col4,LTRIM(col5) AS col5,LTRIM(col6) AS col6,LTRIM(col7) AS col7
+,CASE WHEN col1 IS NOT NULL THEN 1 ELSE 0 END +
+CASE WHEN col2 IS NOT NULL THEN 1 ELSE 0 END +
+CASE WHEN col3 IS NOT NULL THEN 1 ELSE 0 END +
+CASE WHEN col4 IS NOT NULL THEN 1 ELSE 0 END +
+CASE WHEN col5 IS NOT NULL THEN 1 ELSE 0 END +
+CASE WHEN col6 IS NOT NULL THEN 1 ELSE 0 END +
+CASE WHEN col7 IS NOT NULL THEN 1 ELSE 0 END  AS [NoLines]
+FROM  DebtorOfficeAddress
+
+
+) AS DebtorOffice
+) AS AllData
+WHERE  NOT ( patindex('[A-Z][0-9] [0-9][A-Z][A-Z]', LTRIM(AllData.addPostCode)) = 0 and  
+patindex('[A-Z][0-9][0-9] [0-9][A-Z][A-Z]', LTRIM(AllData.addPostCode)) = 0 and
+patindex('[A-Z][A-Z][0-9] [0-9][A-Z][A-Z]', LTRIM(AllData.addPostCode)) = 0 and
+patindex('[A-Z][A-Z][0-9][0-9] [0-9][A-Z][A-Z]', LTRIM(AllData.addPostCode)) = 0 and
+patindex('[A-Z][0-9][A-Z] [0-9][A-Z][A-Z]', LTRIM(AllData.addPostCode)) = 0 and
+patindex('[A-Z][A-Z][0-9][A-Z] [0-9][A-Z][A-Z]', LTRIM(AllData.addPostCode)) = 0)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_VFile]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_VFile]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[clName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[clName]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[clName]"
+                      name="clName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine1]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine1]"
+                      name="addLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine2]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine2]"
+                      name="addLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine3]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine3]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine3]"
+                      name="addLine3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine4]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine4]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine4]"
+                      name="addLine4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine5]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine5]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine5]"
+                      name="addLine5"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addPostCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addPostCode]"
+                      length="15"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addPostCode]"
+                      name="addPostCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addDXCode]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addDXCode]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addDXCode]"
+                      name="addDXCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contType]"
+                      length="12"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contType]"
+                      name="contType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contSalut]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contSalut]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contSalut]"
+                      name="contSalut"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTitle]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contTitle]"
+                      length="10"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTitle]"
+                      name="contTitle"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contFirstNames]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contFirstNames]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contFirstNames]"
+                      name="contFirstNames"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contSurname]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contSurname]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contSurname]"
+                      name="contSurname"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contCreated]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contCreated]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contCreated]"
+                      name="contCreated"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contEmail]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contEmail]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contEmail]"
+                      name="contEmail"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTelHome]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contTelHome]"
+                      length="30"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTelHome]"
+                      name="contTelHome"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTelWork]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contTelWork]"
+                      length="30"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTelWork]"
+                      name="contTelWork"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTelMob]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contTelMob]"
+                      length="30"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTelMob]"
+                      name="contTelMob"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contFAX]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contFAX]"
+                      length="30"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contFAX]"
+                      name="contFAX"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[IsClient]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[IsClient]"
+                      length="2"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[IsClient]"
+                      name="IsClient"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contSubType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contSubType]"
+                      length="12"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contSubType]"
+                      name="contSubType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contAddressee]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contAddressee]"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contAddressee]"
+                      name="contAddressee"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[VFileEntityCode]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[VFileEntityCode]"
+                      length="10"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[VFileEntityCode]"
+                      name="VFileEntityCode"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[clName]"
+                      dataType="wstr"
+                      length="50"
+                      name="clName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine1]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine1" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine2]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine3]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine3" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine4]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addLine5]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine5" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addPostCode]"
+                      dataType="wstr"
+                      length="15"
+                      name="addPostCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[addDXCode]"
+                      dataType="i4"
+                      name="addDXCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contType]"
+                      dataType="wstr"
+                      length="12"
+                      name="contType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contSalut]"
+                      dataType="wstr"
+                      length="50"
+                      name="contSalut" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contTitle]"
+                      dataType="wstr"
+                      length="10"
+                      name="contTitle" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contFirstNames]"
+                      dataType="wstr"
+                      length="50"
+                      name="contFirstNames" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contSurname]"
+                      dataType="wstr"
+                      length="50"
+                      name="contSurname" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contCreated]"
+                      dataType="dbTimeStamp"
+                      name="contCreated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contEmail]"
+                      dataType="i4"
+                      name="contEmail" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contTelHome]"
+                      dataType="wstr"
+                      length="30"
+                      name="contTelHome" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contTelWork]"
+                      dataType="wstr"
+                      length="30"
+                      name="contTelWork" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contTelMob]"
+                      dataType="wstr"
+                      length="30"
+                      name="contTelMob" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contFAX]"
+                      dataType="wstr"
+                      length="30"
+                      name="contFAX" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[IsClient]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="IsClient" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contSubType]"
+                      dataType="wstr"
+                      length="12"
+                      name="contSubType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[contAddressee]"
+                      dataType="wstr"
+                      length="50"
+                      name="contAddressee" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].ExternalColumns[VFileEntityCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="VFileEntityCode" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[clName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[clName]"
+                      name="clName" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine1]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine1]"
+                      name="addLine1" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine2]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine2]"
+                      name="addLine2" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine3]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine3]"
+                      name="addLine3" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine4]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine4]"
+                      name="addLine4" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine5]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addLine5]"
+                      name="addLine5" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addPostCode]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addPostCode]"
+                      name="addPostCode" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addDXCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[addDXCode]"
+                      name="addDXCode" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contType]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contType]"
+                      name="contType" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contSalut]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contSalut]"
+                      name="contSalut" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contTitle]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contTitle]"
+                      name="contTitle" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contFirstNames]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contFirstNames]"
+                      name="contFirstNames" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contSurname]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contSurname]"
+                      name="contSurname" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contCreated]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contCreated]"
+                      name="contCreated" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contEmail]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contEmail]"
+                      name="contEmail" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contTelHome]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contTelHome]"
+                      name="contTelHome" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contTelWork]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contTelWork]"
+                      name="contTelWork" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contTelMob]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contTelMob]"
+                      name="contTelMob" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contFAX]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contFAX]"
+                      name="contFAX" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[IsClient]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[IsClient]"
+                      name="IsClient" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contSubType]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contSubType]"
+                      name="contSubType" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contAddressee]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[contAddressee]"
+                      name="contAddressee" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[VFileEntityCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[VFileEntityCode]"
+                      name="VFileEntityCode" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DFT - VF ContactsToStage"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[VFContactStage]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[clName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="clName"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[clName]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[clName]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[addLine1]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="addLine1"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine1]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine1]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[addLine2]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="addLine2"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine2]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine2]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[addLine3]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="addLine3"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine3]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine3]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[addLine4]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="addLine4"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine4]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine4]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[addLine5]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="addLine5"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine5]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addLine5]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[addPostCode]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="addPostCode"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addPostCode]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addPostCode]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[addDXCode]"
+                      cachedDataType="i4"
+                      cachedName="addDXCode"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addDXCode]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[addDXCode]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contType]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="contType"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contType]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contType]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contSalut]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="contSalut"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contSalut]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contSalut]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contTitle]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="contTitle"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contTitle]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTitle]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contFirstNames]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="contFirstNames"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contFirstNames]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contFirstNames]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contSurname]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="contSurname"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contSurname]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contSurname]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contCreated]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="contCreated"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contCreated]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contCreated]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contEmail]"
+                      cachedDataType="i4"
+                      cachedName="contEmail"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contEmail]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contEmail]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contTelHome]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="contTelHome"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contTelHome]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTelHome]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contTelWork]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="contTelWork"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contTelWork]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTelWork]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contTelMob]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="contTelMob"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contTelMob]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contTelMob]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contFAX]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="contFAX"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contFAX]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contFAX]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[IsClient]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="IsClient"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[IsClient]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[IsClient]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contSubType]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="contSubType"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contSubType]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contSubType]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[contAddressee]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="contAddressee"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contAddressee]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[contAddressee]" />
+                    <inputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].Columns[VFileEntityCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="VFileEntityCode"
+                      externalMetadataColumnId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[VFileEntityCode]"
+                      lineageId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output].Columns[VFileEntityCode]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[extContID]"
+                      dataType="wstr"
+                      length="20"
+                      name="extContID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[clName]"
+                      dataType="wstr"
+                      length="80"
+                      name="clName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[cbocligrp]"
+                      dataType="wstr"
+                      length="50"
+                      name="cbocligrp" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[cbopartner]"
+                      dataType="i8"
+                      name="cbopartner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addid]"
+                      dataType="i8"
+                      name="addid" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine1]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine1" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine2]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine3]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine3" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine4]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addLine5]"
+                      dataType="wstr"
+                      length="50"
+                      name="addLine5" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addPostCode]"
+                      dataType="wstr"
+                      length="15"
+                      name="addPostCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addCountry]"
+                      dataType="wstr"
+                      length="50"
+                      name="addCountry" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[addDXCode]"
+                      dataType="wstr"
+                      length="80"
+                      name="addDXCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contType]"
+                      dataType="wstr"
+                      length="12"
+                      name="contType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contSalut]"
+                      dataType="wstr"
+                      length="50"
+                      name="contSalut" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contTitle]"
+                      dataType="wstr"
+                      length="10"
+                      name="contTitle" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contFirstNames]"
+                      dataType="wstr"
+                      length="50"
+                      name="contFirstNames" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contSurname]"
+                      dataType="wstr"
+                      length="60"
+                      name="contSurname" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contSex]"
+                      dataType="wstr"
+                      length="1"
+                      name="contSex" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contNotes]"
+                      dataType="wstr"
+                      length="1000"
+                      name="contNotes" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contCreated]"
+                      dataType="dbTimeStamp"
+                      name="contCreated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contEmail]"
+                      dataType="wstr"
+                      length="200"
+                      name="contEmail" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contTelHome]"
+                      dataType="wstr"
+                      length="30"
+                      name="contTelHome" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contTelWork]"
+                      dataType="wstr"
+                      length="30"
+                      name="contTelWork" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contTelMob]"
+                      dataType="wstr"
+                      length="30"
+                      name="contTelMob" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contFAX]"
+                      dataType="wstr"
+                      length="30"
+                      name="contFAX" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[brID]"
+                      dataType="i4"
+                      name="brID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contSubType]"
+                      dataType="wstr"
+                      length="15"
+                      name="contSubType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[IsClient]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      name="IsClient" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[NewClientID]"
+                      dataType="wstr"
+                      length="12"
+                      name="NewClientID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[clType]"
+                      dataType="i4"
+                      name="clType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[NewContactID]"
+                      dataType="i8"
+                      name="NewContactID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[contAddressee]"
+                      dataType="wstr"
+                      length="50"
+                      name="contAddressee" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input].ExternalColumns[VFileEntityCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="VFileEntityCode" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageVFContacts\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageVFContacts\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageVFContacts\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - StageVFContacts\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - StageVFContacts.Paths[OLE DB Source Output]"
+              endId="Package\DFT - StageVFContacts\Row Count.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - StageVFContacts\DFT - StageVFContacts.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - StageVFContacts.Paths[Row Count Output 1]"
+              endId="Package\DFT - StageVFContacts\DFT - VF ContactsToStage.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - StageVFContacts\Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{4114ED21-1CE3-4488-BA07-EF06EBA4EB5B}"
+      DTS:EventID="-3"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{0D0C076A-D9C5-43A7-A7A4-9FCB10157BCD}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{1038E5B2-E901-4015-B234-85F246748E08}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{4FB4E858-ED46-4875-96C8-6D4210CBB88F}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="190,42"
+          Id="Package\DFT - StageVFContacts"
+          TopLeft="233.05703958826,199.466349634765" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="129,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="426,210" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT - StageVFContacts">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - StageVFContacts\Row Count"
+          TopLeft="429,250" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\DFT - StageVFContacts\DFT - VF ContactsToStage"
+          TopLeft="396,342" />
+        <NodeLayout
+          Size="190,42"
+          Id="Package\DFT - StageVFContacts\DFT - StageVFContacts"
+          TopLeft="398,161" />
+        <EdgeLayout
+          Id="Package\DFT - StageVFContacts.Paths[Row Count Output 1]"
+          TopLeft="496.75,292">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50"
+              Start="0,0"
+              End="0,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageVFContacts.Paths[OLE DB Source Output]"
+          TopLeft="494,203">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47"
+              Start="0,0"
+              End="0,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - StageVFContacts.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - StageVFContacts.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="462,189" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - StageVFContacts.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package\DFT - StageVFContacts.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="410,169" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageVFContacts\DFT - VF ContactsToStage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageVFContacts\DFT - StageVFContacts">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
