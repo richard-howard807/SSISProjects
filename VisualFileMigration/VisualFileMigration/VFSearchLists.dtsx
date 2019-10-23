@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="VFSearchLists"
   DTS:PackageType="5"
-  DTS:VersionBuild="215"
-  DTS:VersionGUID="{95820315-4D15-445D-A9C1-9335BF6036E2}">
+  DTS:VersionBuild="216"
+  DTS:VersionGUID="{122BD694-D462-4C86-AC81-91E77E113187}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1968,17 +1968,28 @@ FROM
       ,0 AS [curClient]
       ,NULL AS [txtPayorPaye]
       ,CASE WHEN TransactionType='COST' THEN '2'
+	  WHEN TransactionType='DISB' THEN '1'
 	  WHEN TransactionType='INVO' THEN '3' END 	   AS [cboCatDesc]
 	   ,ItemCode,ItemDescription,TransactionType
   FROM VFile_Streamlined.dbo.DebtLedger
   INNER JOIN VFile_Streamlined.dbo.VFToMSMatters
     ON SourceSystemID=mt_int_code
   WHERE DebtOrLedger='Debt'
-  AND TransactionType IN ('COST','INVO')
+  AND TransactionType IN ('COST','INVO','DISB')
   UNION All
-  
-
-  SELECT SourceSystemID
+   SELECT Ledger.SourceSystemID,
+         Ledger.dtePosted,
+         Ledger.txtItemCode,
+         Ledger.txtItemDesc,
+         Ledger.curOffice,
+         Ledger.curClient,
+         Ledger.txtPayorPaye,
+         Ledger.cboCatDesc,
+         Ledger.ItemCode,
+         Ledger.ItemDescription,
+         Ledger.TransactionType
+ FROM 
+  (SELECT SourceSystemID
       ,VFile_Streamlined.dbo.DebtLedger.PostedDate AS [dtePosted]
       ,ItemCode AS [txtItemCode]
 	  ,ItemDescription AS [txtItemDesc]
@@ -1997,6 +2008,28 @@ FROM
 LEFT OUTER JOIN VFile_Streamlined.dbo.trdef
  ON ItemCode=tr_code
   WHERE DebtOrLedger='Ledger'
+  ) AS Ledger
+WHERE Ledger.cboCatDesc  IN ('5','0') -- Payments And Unrecoverable 
+
+--  SELECT SourceSystemID
+--      ,VFile_Streamlined.dbo.DebtLedger.PostedDate AS [dtePosted]
+--      ,ItemCode AS [txtItemCode]
+--	  ,ItemDescription AS [txtItemDesc]
+--      ,CASE WHEN TransactionType&lt;&gt;'CR' THEN Amount ELSE 0 END AS [curOffice]
+--      ,CASE WHEN TransactionType='CR' THEN Amount ELSE 0 END AS [curClient]
+--      ,NULL AS [txtPayorPaye]
+--      ,CASE 
+--	  WHEN TransactionType='CR' THEN '5'
+--	  WHEN (recoverable=1 OR ItemCode IN ('NRCA','LRBI','LRCH')) THEN '1'	
+--	  WHEN NOT (recoverable=1 OR ItemCode IN ('NRCA','LRBI','LRCH')) THEN '0'	
+--	  WHEN ItemCode='' THEN '0'  END  AS [cboCatDesc]
+--	  ,ItemCode,ItemDescription,TransactionType
+--  FROM VFile_Streamlined.dbo.DebtLedger
+--  INNER JOIN VFile_Streamlined.dbo.VFToMSMatters
+--    ON SourceSystemID=mt_int_code
+--LEFT OUTER JOIN VFile_Streamlined.dbo.trdef
+-- ON ItemCode=tr_code
+--  WHERE DebtOrLedger='Ledger'
 ) AS AllData
 
 
