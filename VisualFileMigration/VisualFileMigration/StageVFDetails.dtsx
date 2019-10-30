@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageVFDetails"
   DTS:PackageType="5"
-  DTS:VersionBuild="217"
-  DTS:VersionGUID="{CE90DF0B-62D4-4946-B9BC-5616C7FDE7EC}">
+  DTS:VersionBuild="218"
+  DTS:VersionGUID="{E7AEDB0F-87CA-4A5A-8B3A-BBC69F51807A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2898,7 +2898,21 @@ WHEN UPPER(CaseText)='YES' THEN 'Yes'
 
 FROM  VFile_Streamlined.dbo.VFMIBits 
  LEFT OUTER JOIN VFile_Streamlined.dbo.VFDetailMapping
-  ON RTRIM(Detail)=RTRIM([VF Field Name])</property>
+  ON RTRIM(Detail)=RTRIM([VF Field Name])
+UNION
+
+SELECT SourceSystemID,
+       CAST('SourceSystemID' AS NVARCHAR(255)) AS [Detail Desc],
+       
+	   CAST(SourceSystemID AS NVARCHAR(255))  AS CaseText,
+	   NULL AS CaseDate,
+       NULL AS CaseValue,
+       NULL AS [Lookup code / Datalist table],
+       NULL AS [Lookup Table],
+       'CRSystemSourceID' AS [MS Code],
+       'udExtFile' AS [MS Table],	
+	   'nvarchar(255)' AS [Data Type]
+FROM VFile_Streamlined.dbo.VFToMSMatters</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
