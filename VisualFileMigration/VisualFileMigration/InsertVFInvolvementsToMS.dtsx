@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="InsertInvolvementsToMS"
   DTS:PackageType="5"
-  DTS:VersionBuild="98"
-  DTS:VersionGUID="{9D22E461-3ED3-4D90-A5AE-FBD43CCE5515}">
+  DTS:VersionBuild="104"
+  DTS:VersionGUID="{A5BF838C-28F7-4B84-A104-6F2CB9CD6D8C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2244,16 +2244,171 @@ WHERE StatusID = 7	--Pick only the results that have passed validation.</propert
               SQLTask:SqlStatementSource="delete&#xA;FROM dbo.InvolvementStage&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{82b70332-88cb-47a1-b5c5-ab0ded69ebe8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EST - MergeIntoExtAssoc"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:EventHandlers>
+            <DTS:EventHandler
+              DTS:refId="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc.EventHandlers[OnPostExecute]"
+              DTS:CreationName="OnPostExecute"
+              DTS:DTSID="{ee3a634e-2876-4dab-87ee-858fbe495b44}"
+              DTS:EventID="785801444"
+              DTS:EventName="OnPostExecute"
+              DTS:LocaleID="-1">
+              <DTS:Variables>
+                <DTS:Variable
+                  DTS:CreationName=""
+                  DTS:Description="The propagate property of the event"
+                  DTS:DTSID="{360a9718-076a-472c-b7cf-b9139b869a66}"
+                  DTS:IncludeInDebugDump="6789"
+                  DTS:Namespace="System"
+                  DTS:ObjectName="Propagate">
+                  <DTS:VariableValue
+                    DTS:DataType="11">-1</DTS:VariableValue>
+                </DTS:Variable>
+              </DTS:Variables>
+              <DTS:Executables>
+                <DTS:Executable
+                  DTS:refId="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc.EventHandlers[OnPostExecute]\EndAudit"
+                  DTS:CreationName="Microsoft.ExecuteSQLTask"
+                  DTS:Description="Execute SQL Task"
+                  DTS:DTSID="{4a34b5b2-7e7d-4ed4-9344-d34a23aae4c7}"
+                  DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                  DTS:LocaleID="-1"
+                  DTS:ObjectName="EndAudit"
+                  DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                  <DTS:Variables />
+                  <DTS:ObjectData>
+                    <SQLTask:SqlTaskData
+                      SQLTask:Connection="{1B008A33-C2BC-48EB-8A05-A14409F6BB36}"
+                      SQLTask:SqlStatementSource="config.uspAuditEnd ?, 0, 0, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@Audit_ID"
+                        SQLTask:DtsVariableName="User::AuditID"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                    </SQLTask:SqlTaskData>
+                  </DTS:ObjectData>
+                </DTS:Executable>
+              </DTS:Executables>
+            </DTS:EventHandler>
+            <DTS:EventHandler
+              DTS:refId="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc.EventHandlers[OnPreExecute]"
+              DTS:CreationName="OnPreExecute"
+              DTS:DTSID="{5a3d632e-afe5-4685-97bb-87567249d9d3}"
+              DTS:EventID="785799364"
+              DTS:EventName="OnPreExecute"
+              DTS:LocaleID="-1">
+              <DTS:Variables>
+                <DTS:Variable
+                  DTS:CreationName=""
+                  DTS:Description="The propagate property of the event"
+                  DTS:DTSID="{dad3ba6e-6b54-499b-82a9-449b10fe90fe}"
+                  DTS:IncludeInDebugDump="6789"
+                  DTS:Namespace="System"
+                  DTS:ObjectName="Propagate">
+                  <DTS:VariableValue
+                    DTS:DataType="11">-1</DTS:VariableValue>
+                </DTS:Variable>
+              </DTS:Variables>
+              <DTS:Executables>
+                <DTS:Executable
+                  DTS:refId="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc.EventHandlers[OnPreExecute]\StartAudit"
+                  DTS:CreationName="Microsoft.ExecuteSQLTask"
+                  DTS:Description="Execute SQL Task"
+                  DTS:DTSID="{b95f95e0-27a1-4562-bb78-453978ea9b65}"
+                  DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                  DTS:LocaleID="-1"
+                  DTS:ObjectName="StartAudit"
+                  DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                  <DTS:Variables />
+                  <DTS:ObjectData>
+                    <SQLTask:SqlTaskData
+                      SQLTask:Connection="{1B008A33-C2BC-48EB-8A05-A14409F6BB36}"
+                      SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                      SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                      <SQLTask:ResultBinding
+                        SQLTask:ResultName="AuditID"
+                        SQLTask:DtsVariableName="User::AuditID" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@PackageName"
+                        SQLTask:DtsVariableName="System::PackageName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@PackageStart"
+                        SQLTask:DtsVariableName="System::StartTime"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="7"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@TaskName"
+                        SQLTask:DtsVariableName="System::SourceName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@CreatedBy"
+                        SQLTask:DtsVariableName="System::UserName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@DestinationTable"
+                        SQLTask:DtsVariableName="User::DestinationTable"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ExtractFileName"
+                        SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ExtractFolder"
+                        SQLTask:DtsVariableName="User::ExtractFolder"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ParentAuditID"
+                        SQLTask:DtsVariableName="User::ParentAuditID"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                    </SQLTask:SqlTaskData>
+                  </DTS:ObjectData>
+                </DTS:Executable>
+              </DTS:Executables>
+            </DTS:EventHandler>
+          </DTS:EventHandlers>
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{AA9898D2-D942-421F-9A1A-28F31652C85E}"
+              SQLTask:SqlStatementSource="&#xA;MERGE.dbo.udExtAssociate DEST&#xA;USING&#xA;(&#xA;SELECT  dbas.assocID,CASE WHEN succ.assocType='PRIMDEBTOR'  THEN '1' WHEN  succ.assocType='SECONDDEBTOR' THEN '2' END cboDefendantNo&#xA;FROM    config.dbAssociates dbas&#xA;        INNER JOIN MattersphereStaging.dbo.InvolvementStage succ &#xA;ON succ.FileID = dbas.fileID&#xA; AND succ.contID = dbas.contID&#xA; AND succ.assocOrder = dbas.assocOrder&#xA;WHERE dbas.assocType='DEFENDANT'&#xA;&#x9; &#xA;) AS src&#xA;ON DEST.assocID = src.assocID&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET DEST.cboDefendantNo = src.cboDefendantNo&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT&#xA;    (&#xA;        assocID,&#xA;        cboDefendantNo&#xA;    )&#xA;    VALUES&#xA;    (assocID, src.cboDefendantNo);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
       </DTS:Executables>
       <DTS:PrecedenceConstraints>
         <DTS:PrecedenceConstraint
           DTS:refId="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint]"
           DTS:CreationName=""
-          DTS:DTSID="{D250382E-B702-4E34-82B9-C37CEF4D6771}"
+          DTS:DTSID="{6BB264BA-0C7B-4B51-BC49-F2B13B7DB300}"
           DTS:From="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint"
-          DTS:To="Package\ST - Import Into MatterSphere\DFT - Insert into Success" />
+          DTS:To="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc" />
         <DTS:PrecedenceConstraint
           DTS:refId="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint 1]"
           DTS:CreationName=""
@@ -2262,6 +2417,14 @@ WHERE StatusID = 7	--Pick only the results that have passed validation.</propert
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 1"
           DTS:To="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{DC45B8B5-199B-47DE-84FD-2B6C8FAA1B5F}"
+          DTS:From="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\ST - Import Into MatterSphere\DFT - Insert into Success" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
   </DTS:Executables>
@@ -2343,36 +2506,14 @@ WHERE StatusID = 7	--Pick only the results that have passed validation.</propert
         <NodeLayout
           Size="200,42"
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success"
-          TopLeft="97.2867989074904,135.659801471448" />
+          TopLeft="101.28679890749,226.659801471448" />
         <NodeLayout
           Size="298,42"
           Id="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements"
-          TopLeft="50.4560426253272,224.852675842839" />
-        <EdgeLayout
-          Id="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint]"
-          TopLeft="200.67784308595,96.1161100506878">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,39.5436914207602"
-              Start="0,0"
-              End="0,32.0436914207602">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,32.0436914207602" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          TopLeft="54.4560426253272,315.852675842839" />
         <EdgeLayout
           Id="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint 1]"
-          TopLeft="198.371420766409,177.659801471448">
+          TopLeft="202.371420766409,268.659801471448">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -2392,11 +2533,59 @@ WHERE StatusID = 7	--Pick only the results that have passed validation.</propert
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <NodeLayout
+          Size="200,42"
+          Id="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc"
+          TopLeft="101,128" />
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint]"
+          TopLeft="202.534443632205,96.1161100506878">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31.8838899493122"
+              Start="0,0"
+              End="0,24.3838899493122">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.3838899493122" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint 2]"
+          TopLeft="201.143399453745,170">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,56.659801471448"
+              Start="0,0"
+              End="0,49.159801471448">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.159801471448" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="373,322"
-          Size="373,365"
+          PanelSize="439,479"
+          Size="439,522"
           Id="Package\ST - Import Into MatterSphere"
           TopLeft="123,104" />
       </GraphLayout>
@@ -2551,7 +2740,7 @@ WHERE StatusID = 7	--Pick only the results that have passed validation.</propert
     design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into Success">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="206,42"
           Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements"
@@ -2583,9 +2772,7 @@ WHERE StatusID = 7	--Pick only the results that have passed validation.</propert
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2607,9 +2794,7 @@ WHERE StatusID = 7	--Pick only the results that have passed validation.</propert
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -2680,6 +2865,30 @@ WHERE StatusID = 7	--Pick only the results that have passed validation.</propert
         <NodeLayout
           Size="128,42"
           Id="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\ST - Import Into MatterSphere\EST - MergeIntoExtAssoc.EventHandlers[OnPostExecute]\EndAudit"
           TopLeft="60,60" />
       </GraphLayout>
     </LayoutInfo>
