@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageDocumentData"
   DTS:PackageType="5"
-  DTS:VersionBuild="127"
-  DTS:VersionGUID="{C743F78C-7A6A-4F3E-888D-7ABBE39EA3FF}">
+  DTS:VersionBuild="128"
+  DTS:VersionGUID="{7349231D-ECE6-476D-B3CC-F8A4289998CC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2049,8 +2049,13 @@
 ,LEFT(dm.TITLE,150)  AS [DocumentTitle]
 ,LEFT(TITLE,150)  AS [AlternateDocDescription] 
 ,dm.ORIGINAL_VERSION_DIWOR AS [DocumentNumber]
---,dm.FILE_EXTENSION AS [DocumentExtension]  
-,RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1)  AS [DocumentExtension] --dm.FILE_EXTENSION
+,CASE WHEN dm.FILE_EXTENSION ='DOC' AND RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1)='DOCX' THEN 'DOCX'  
+WHEN dm.FILE_EXTENSION ='XLS' AND RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1)='XLSX' THEN 'XLSX' 
+WHEN dm.FILE_EXTENSION ='PPT' AND RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1)='PPTX' THEN 'PPTX' 
+WHEN dm.FILE_EXTENSION ='DOT' AND RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1)='DOTX' THEN 'DOTX'
+WHEN dm.FILE_EXTENSION ='JPE' AND RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1)='JPEG' THEN 'JPEG' 
+ELSE RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1) END AS [DocumentExtension]  
+
 ,'Converted Documents' AS [DocWallet] 
 ,1 AS [DocDirection]
 ,NULL AS [Author]
@@ -2075,7 +2080,8 @@ INNER JOIN (SELECT SourceSystemID AS DIWOR FROM dbo.LSToMSMatters) AS Matters
     INNER JOIN Lawsoft.dbo.DM_DOCUMENTS dm
         ON dm.ENTITY_DIWOR = mm.DIWOR
            AND dm.ENTITY_TYPE = 'M'
-		   WHERE dm.FILEPATH &lt;&gt;''
+		   WHERE dm.FILEPATH &lt;&gt;'' AND dm.FILE_EXTENSION &lt;&gt;''
+
 
 
 	ORDER BY dm.ORIGINAL_VERSION_DIWOR,VersionNumber ASC</property>
