@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageDocumentData"
   DTS:PackageType="5"
-  DTS:VersionBuild="132"
-  DTS:VersionGUID="{63CC3F75-4344-418B-A921-66A59F3BF0A3}">
+  DTS:VersionBuild="134"
+  DTS:VersionGUID="{4E4B497E-44D9-49AE-A7E7-A83DAF8C96B9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2266,6 +2266,7 @@ WHEN dm.FILE_EXTENSION ='XLS' AND RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPAT
 WHEN dm.FILE_EXTENSION ='PPT' AND RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1)='PPTX' THEN 'PPTX' 
 WHEN dm.FILE_EXTENSION ='DOT' AND RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1)='DOTX' THEN 'DOTX'
 WHEN dm.FILE_EXTENSION ='JPE' AND RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1)='JPEG' THEN 'JPEG' 
+WHEN LEN(RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1))&gt;4 THEN dm.FILE_EXTENSION
 ELSE RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1) END AS [DocumentExtension]  
 
 ,'Converted Documents' AS [DocWallet] 
@@ -2894,7 +2895,8 @@ AND Exceptions.ORIGINAL_VERSION_DIWOR IS NULL
 		FROM config.dbClient 
 		INNER JOIN config.dbFile ON dbFile.clID = dbClient.clID
 		INNER JOIN dbo.udExtFile ON udExtFile.fileID = dbFile.fileID
-		WHERE FEDCode LIKE 'WB%') AS MS</property>
+		--WHERE FEDCode LIKE 'WB%'
+) AS MS</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
