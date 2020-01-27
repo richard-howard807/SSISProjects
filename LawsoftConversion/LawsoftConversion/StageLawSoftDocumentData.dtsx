@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageDocumentData"
   DTS:PackageType="5"
-  DTS:VersionBuild="131"
-  DTS:VersionGUID="{371BBCD1-C6D5-4569-BA34-F05218724EA1}">
+  DTS:VersionBuild="132"
+  DTS:VersionGUID="{63CC3F75-4344-418B-A921-66A59F3BF0A3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2279,7 +2279,7 @@ ELSE RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1) END AS [DocumentExte
 ,NULL AS [DocReceived] 
 ,NULL AS [DocSubject] 
 ,dm.SYSTEM_DATE AS [ModifiedDate]
-,CAST('WB'+REPLACE(mm.MATTERCODE,'.','-') AS NVARCHAR(255)) AS FEDCode 
+,Matters.LSMatter AS FEDCode 
 ,mm.DIWOR AS case_id
 ,CASE WHEN dm.IS_LATEST_VERSION=1 THEN 'y' ELSE 'n'  END AS [IsCurrent]
 ,2 AS MSSecurityOption
@@ -2287,16 +2287,12 @@ ELSE RIGHT(FILEPATH, CHARINDEX('.', REVERSE(FILEPATH)) - 1) END AS [DocumentExte
 
 
 FROM Lawsoft.dbo.MATTER_MASTER mm
-INNER JOIN (SELECT SourceSystemID AS DIWOR FROM dbo.LSToMSMatters) AS Matters
+INNER JOIN (SELECT SourceSystemID AS DIWOR,LSMatter FROM dbo.LSToMSMatters) AS Matters
  ON Matters.DIWOR = mm.DIWOR
     INNER JOIN Lawsoft.dbo.DM_DOCUMENTS dm
         ON dm.ENTITY_DIWOR = mm.DIWOR
            AND dm.ENTITY_TYPE = 'M'
--------------------------------------------------
-WHERE dm.FILEPATH &lt;&gt;'' AND dm.FILE_EXTENSION &lt;&gt;''
-		   AND dm.ORIGINAL_VERSION_DIWOR NOT IN 
-		   (
-		   SELECT List.ORIGINAL_VERSION_DIWOR FROM(SELECT Documents.ORIGINAL_VERSION_DIWOR,COUNT(1) AS Number FROM (
+LEFT OUTER JOIN (SELECT List.ORIGINAL_VERSION_DIWOR FROM(SELECT Documents.ORIGINAL_VERSION_DIWOR,COUNT(1) AS Number FROM (
 SELECT DISTINCT dm.ORIGINAL_VERSION_DIWOR,mm.MATTERCODE FROM Lawsoft.dbo.MATTER_MASTER mm
 INNER JOIN (SELECT SourceSystemID AS DIWOR FROM dbo.LSToMSMatters) AS Matters
 ON Matters.DIWOR = mm.DIWOR
@@ -2307,7 +2303,12 @@ ON Matters.DIWOR = mm.DIWOR
 
 ) AS Documents
 GROUP BY Documents.ORIGINAL_VERSION_DIWOR
-HAVING COUNT(1)&gt;1) AS List )
+HAVING COUNT(1)&gt;1) AS List) AS Exceptions
+  ON Exceptions.ORIGINAL_VERSION_DIWOR = dm.ORIGINAL_VERSION_DIWOR
+
+WHERE dm.FILEPATH &lt;&gt;'' AND dm.FILE_EXTENSION &lt;&gt;''
+-------------------------------------------------
+AND Exceptions.ORIGINAL_VERSION_DIWOR IS NULL
 --------------------------------------------------------
 
 
@@ -2677,7 +2678,7 @@ HAVING COUNT(1)&gt;1) AS List )
                     <externalMetadataColumn
                       refId="Package\DFT - GetDocumentStageData\SRC_LawSoftDocs.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
                       dataType="wstr"
-                      length="255"
+                      length="20"
                       name="FEDCode" />
                     <externalMetadataColumn
                       refId="Package\DFT - GetDocumentStageData\SRC_LawSoftDocs.Outputs[OLE DB Source Output].ExternalColumns[case_id]"
@@ -2816,7 +2817,7 @@ HAVING COUNT(1)&gt;1) AS List )
                     <outputColumn
                       refId="Package\DFT - GetDocumentStageData\SRC_LawSoftDocs.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
                       dataType="wstr"
-                      length="255"
+                      length="20"
                       lineageId="Package\DFT - GetDocumentStageData\SRC_LawSoftDocs.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
                       name="FEDCode" />
                     <outputColumn
