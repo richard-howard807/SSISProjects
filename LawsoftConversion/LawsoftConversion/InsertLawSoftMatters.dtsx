@@ -8,12 +8,12 @@
   DTS:DTSID="{E4D560B8-445F-4F39-8381-EE634D02DA8E}"
   DTS:EnableConfig="True"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
   DTS:LocaleID="2057"
   DTS:ObjectName="InsertVFileMatters"
   DTS:PackageType="5"
-  DTS:VersionBuild="157"
-  DTS:VersionGUID="{5081159D-10A7-4FBD-B7F4-EB9FB53EA6FD}">
+  DTS:VersionBuild="158"
+  DTS:VersionGUID="{1A86AF44-2C92-41CF-87B6-5D6F94633DE5}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -451,7 +451,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT * FROM  dbo.LSMatterCreationStage WHERE StatusID=4</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM  dbo.LSMatterCreationStage WHERE StatusID=4</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -1431,7 +1431,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT * FROM  dbo.[LSMatterCreationStage] WHERE StatusID=2</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM  dbo.[LSMatterCreationStage] WHERE StatusID=2</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -2196,7 +2196,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{5BDDAA54-9A96-4151-A6A7-6F54A756C7D8}"
-          SQLTask:SqlStatementSource="MERGE.dbo.udExtFile DEST&#xA;USING&#xA;(&#xA;SELECT MS.fileID,'WB'+REPLACE(LSMatter,'.','-') AS FEDCode FROM MattersphereStaging.dbo.LSMatterCreationStage&#xA;INNER JOIN (SELECT clNo,fileNo,fileID FROM MS_PROD.config.dbClient INNER JOIN MS_PROD.config.dbFile ON dbFile.clID = dbClient.clID) AS MS&#xA; ON MS.clNo = LSMatterCreationStage.clNo&#xA; AND MS.fileNo = CAST(LSMatterCreationStage.NewMatterNumber AS NVARCHAR(100))&#xA;WHERE StatusID=2&#xA;) AS src&#xA;ON DEST.fileID = src.fileID&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET DEST.FEDCode = src.FEDCode&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT&#xA;    (&#xA;        fileID,&#xA;        FEDCode&#xA;    )&#xA;    VALUES&#xA;    (fileID, src.FEDCode);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="MERGE.dbo.udExtFile DEST&#xA;USING&#xA;(&#xA;SELECT MS.fileID,LSMatter AS FEDCode FROM MattersphereStaging.dbo.LSMatterCreationStage&#xA;INNER JOIN (SELECT clNo,fileNo,fileID FROM MS_PROD.config.dbClient INNER JOIN MS_PROD.config.dbFile ON dbFile.clID = dbClient.clID) AS MS&#xA; ON MS.clNo = LSMatterCreationStage.clNo&#xA; AND MS.fileNo = CAST(LSMatterCreationStage.NewMatterNumber AS NVARCHAR(100))&#xA;WHERE StatusID=2&#xA;) AS src&#xA;ON DEST.fileID = src.fileID&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET DEST.FEDCode = src.FEDCode&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT&#xA;    (&#xA;        fileID,&#xA;        FEDCode&#xA;    )&#xA;    VALUES&#xA;    (fileID, src.FEDCode);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -2309,6 +2309,10 @@
           Size="261,42"
           Id="Package\EST - Import LawSoft Matters Into MS"
           TopLeft="244,126" />
+        <NodeLayout
+          Size="195,42"
+          Id="Package\EST - Updated FEDCode"
+          TopLeft="282,453" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="377.25,168">
@@ -2353,10 +2357,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="195,42"
-          Id="Package\EST - Updated FEDCode"
-          TopLeft="282,453" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="380,405">
