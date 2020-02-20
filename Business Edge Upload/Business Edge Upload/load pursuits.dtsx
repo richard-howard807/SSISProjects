@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="load pursuits"
   DTS:PackageType="5"
-  DTS:VersionBuild="27"
-  DTS:VersionGUID="{2447AE7A-7771-4618-828B-22A1B68B1068}">
+  DTS:VersionBuild="28"
+  DTS:VersionGUID="{3E3F2A9F-0931-4B83-B347-E607E4E83978}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1340,34 +1340,13 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\File System Task"
-      DTS:CreationName="Microsoft.FileSystemTask"
-      DTS:Description="File System Task"
-      DTS:DTSID="{1AD9750A-472A-4872-B06D-6C746D969ACE}"
-      DTS:ExecutableType="Microsoft.FileSystemTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="File System Task"
-      DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="1">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <FileSystemData
-          TaskOperationType="MoveFile"
-          TaskOverwriteDestFile="True"
-          TaskSourcePath="User::sourcefile"
-          TaskIsSourceVariable="True"
-          TaskDestinationPath="User::loaddestination"
-          TaskIsDestinationVariable="True" />
-      </DTS:ObjectData>
-    </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\File System Task 1"
+      DTS:refId="Package\Move file to failed"
       DTS:CreationName="Microsoft.FileSystemTask"
       DTS:Description="File System Task"
       DTS:DTSID="{2D067A67-C1EE-49FC-816A-5925A446B9A5}"
       DTS:ExecutableType="Microsoft.FileSystemTask"
       DTS:LocaleID="-1"
-      DTS:ObjectName="File System Task 1"
+      DTS:ObjectName="Move file to failed"
       DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
       DTS:ThreadHint="0">
       <DTS:Variables />
@@ -1378,6 +1357,27 @@
           TaskSourcePath="User::sourcefile"
           TaskIsSourceVariable="True"
           TaskDestinationPath="User::faileddestination"
+          TaskIsDestinationVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Move file to loaded"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="File System Task"
+      DTS:DTSID="{1AD9750A-472A-4872-B06D-6C746D969ACE}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Move file to loaded"
+      DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOperationType="MoveFile"
+          TaskOverwriteDestFile="True"
+          TaskSourcePath="User::sourcefile"
+          TaskIsSourceVariable="True"
+          TaskDestinationPath="User::loaddestination"
           TaskIsDestinationVariable="True" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1407,7 +1407,7 @@
       DTS:From="Package\Data Flow Task"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
-      DTS:To="Package\File System Task" />
+      DTS:To="Package\Move file to loaded" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
@@ -1415,7 +1415,7 @@
       DTS:From="Package\Data Flow Task"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
-      DTS:To="Package\File System Task 1"
+      DTS:To="Package\Move file to failed"
       DTS:Value="1" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
@@ -1443,12 +1443,12 @@
           Id="Package\Data Flow Task"
           TopLeft="209.499999962747,152.466666139762" />
         <NodeLayout
-          Size="158,42"
-          Id="Package\File System Task"
+          Size="168,42"
+          Id="Package\Move file to loaded"
           TopLeft="102.499999962747,267.466666139762" />
         <NodeLayout
-          Size="167,42"
-          Id="Package\File System Task 1"
+          Size="163,42"
+          Id="Package\Move file to failed"
           TopLeft="314.499999962747,266.466666139762" />
         <NodeLayout
           Size="164,43"
@@ -1460,9 +1460,9 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-79.6666666666667,73"
+              EndConnector="-74.6666666666667,73"
               Start="0,0"
-              End="-79.6666666666667,65.5">
+              End="-74.6666666666667,65.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -1473,13 +1473,13 @@
                     Point2="0,29.6592398427261"
                     Point3="-4,29.6592398427261" />
                   <mssgle:LineSegment
-                    End="-75.6666666666667,29.6592398427261" />
+                    End="-70.6666666666667,29.6592398427261" />
                   <mssgle:CubicBezierSegment
-                    Point1="-75.6666666666667,29.6592398427261"
-                    Point2="-79.6666666666667,29.6592398427261"
-                    Point3="-79.6666666666667,33.6592398427261" />
+                    Point1="-70.6666666666667,29.6592398427261"
+                    Point2="-74.6666666666667,29.6592398427261"
+                    Point3="-74.6666666666667,33.6592398427261" />
                   <mssgle:LineSegment
-                    End="-79.6666666666667,65.5" />
+                    End="-74.6666666666667,65.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1494,9 +1494,9 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="89.1666666666667,72"
+              EndConnector="87.1666666666667,72"
               Start="0,0"
-              End="89.1666666666667,64.5">
+              End="87.1666666666667,64.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -1507,20 +1507,20 @@
                     Point2="0,29.2529488859764"
                     Point3="4,29.2529488859764" />
                   <mssgle:LineSegment
-                    End="85.1666666666667,29.2529488859764" />
+                    End="83.1666666666667,29.2529488859764" />
                   <mssgle:CubicBezierSegment
-                    Point1="85.1666666666667,29.2529488859764"
-                    Point2="89.1666666666667,29.2529488859764"
-                    Point3="89.1666666666667,33.2529488859764" />
+                    Point1="83.1666666666667,29.2529488859764"
+                    Point2="87.1666666666667,29.2529488859764"
+                    Point3="87.1666666666667,33.2529488859764" />
                   <mssgle:LineSegment
-                    End="89.1666666666667,64.5" />
+                    End="87.1666666666667,64.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="29.3419856770833,34.2529488859764,30.4826953125,9.7490234375"
+              BoundingBox="28.3419856770833,34.2529488859764,30.4826953125,9.7490234375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
