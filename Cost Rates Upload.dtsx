@@ -1,0 +1,1368 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/21/2018 2:12:58 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DEV-BI-CLIENT-8"
+  DTS:CreatorName="SBC\sgrego"
+  DTS:DTSID="{CC575A75-4BF7-47F3-9FD8-4E410207F8B7}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="2057"
+  DTS:MaxErrorCount="2"
+  DTS:ObjectName="Cost Rates Upload"
+  DTS:PackageType="5"
+  DTS:VersionBuild="86"
+  DTS:VersionGUID="{00468006-D9DA-4E69-A5A0-610F9AF371C5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{6D66FB97-43F4-4A7F-9974-3AF5CAAD04BF}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\KPI Upload\ExcelUploads\Processing\Cost Rates.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{56C2A0F0-E2E4-49DD-A681-7525B26C85DE}"
+      DTS:ObjectName="svr-liv-dwh-01.red_dw">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dw-01;Initial Catalog=red_dw;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2C94CB26-9E9A-4769-ADD2-7BEC4B22741F}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::ArchivePath] +  @[User::FileNamePrefix] +&quot;_&quot;+(DT_WSTR,4)Year(getdate()) + &quot;_&quot;+(DT_WSTR,2)Month(getdate())+&quot;_&quot;+(DT_WSTR,2)day(getdate())+&quot;.&quot;+@[User::FileExtension]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ArchiveFile">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\ExcelUploads\Archive\Cost Rates_2020_3_3.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0D4B921A-2A56-4361-90D5-DAC4E61C89E5}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Drive] +  @[User::Path] + &quot;Archive\\&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ArchivePath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\ExcelUploads\Archive\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DBFFF573-05F3-4A25-89E4-D577091DCEA5}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="count">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C61C8E7A-73A5-41F4-8F56-B2295D421865}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Drive">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0CD250F6-9410-435A-A953-56056420D0E2}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::DropPath] +  @[User::FileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DropFile">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\ExcelUploads\Cost Rates.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BBE74C55-4B27-4457-A6B5-1706766F47E2}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Drive] +  @[User::Path]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DropPath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\ExcelUploads\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5DD93FBB-DD37-4650-B3B6-97383619A54E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileExtension">
+      <DTS:VariableValue
+        DTS:DataType="8">xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{822A601E-5D01-45C8-87CA-97B32140E1D2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B975F196-2ABE-4F91-B8BC-50883D0D4B0C}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::FileNamePrefix] + &quot;*.&quot; + @[User::FileExtension]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileMask">
+      <DTS:VariableValue
+        DTS:DataType="8">Cost Rates*.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{59F2AC54-68D0-45F0-9168-42A206181810}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileName">
+      <DTS:VariableValue
+        DTS:DataType="8">Cost Rates.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E3ED65E5-54AF-4D12-99F3-492AFF0DCAB0}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileNamePrefix">
+      <DTS:VariableValue
+        DTS:DataType="8">Cost Rates</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3C9AACB9-F59E-45C9-B1B1-F9660C4966B7}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::DropPath]+ @[User::FileMask]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileSourcePathFind">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\ExcelUploads\Cost Rates*.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7A80820D-5CCD-401D-BE1F-C6EB016DA7B2}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::FileNamePrefix] +&quot;_&quot;+(DT_WSTR,4)Year(getdate()) + &quot;_&quot;+(DT_WSTR,2)Month(getdate())+&quot;_&quot;+(DT_WSTR,2)day(getdate())+&quot;.&quot;+@[User::FileExtension]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewFileName">
+      <DTS:VariableValue
+        DTS:DataType="8">Cost Rates_2020_3_3.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1C6527B6-02E4-4C95-AEEA-C0CDA52BC725}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Path">
+      <DTS:VariableValue
+        DTS:DataType="8">\ExcelUploads\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1F99437E-A582-4744-8C66-CDDFD5F9646F}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::ProcessingPath] +  @[User::FileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ProcessingFile">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\ExcelUploads\Processing\Cost Rates.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{69D5CFBF-CFB8-4E02-A281-CBDAB3C7D20C}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Drive] +  @[User::Path] + &quot;Processing\\&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ProcessingPath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\KPI Upload\ExcelUploads\Processing\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{84350C09-6B94-4375-A1DD-0A412D0AD569}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;INSERT INTO [ExcelUpload].[dbo].[file_audit] ([file_old_name], [file_new_name] ) VALUES ('&quot; +@[User::FileName]+&quot;','&quot;+ @[User::NewFileName] +&quot;')&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLInsertProcessing">
+      <DTS:VariableValue
+        DTS:DataType="8">INSERT INTO [ExcelUpload].[dbo].[file_audit] ([file_old_name], [file_new_name] ) VALUES ('Cost Rates.xlsx','Cost Rates_2020_3_3.xlsx')</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{27A9F9C8-44CE-4A36-9018-043EDC594569}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="StaggingTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">stage_ds_mds_cost_rates</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0F7B922E-F257-43A0-9ED4-614124445A18}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;truncate table [red_dw].dbo. &quot; + @[User::StaggingTableName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TruncateStageTable">
+      <DTS:VariableValue
+        DTS:DataType="8">truncate table [red_dw].dbo. stage_ds_mds_cost_rates</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CB22BD99-9447-4B67-B424-4B1FE90DE6DB}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;SELECT * FROM __InstanceCreationEvent WITHIN 5 WHERE TargetInstance ISA 'CIM_DataFile' AND TargetInstance.Drive ='&quot;+@[User::Drive]+&quot;' AND TargetInstance.Path = '&quot;+ REPLACE( @[User::Path], &quot;\\&quot;, &quot;\\\\&quot;)  +&quot;' AND TargetInstance.FileName LIKE '&quot;+ @[User::FileNamePrefix] +&quot;%' AND TargetInstance.Extension = '&quot;+ @[User::FileExtension] +&quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="WqlQuerySource">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT * FROM __InstanceCreationEvent WITHIN 5 WHERE TargetInstance ISA 'CIM_DataFile' AND TargetInstance.Drive ='\\sbc.root\usershares\Restricted\Business Services\KPI Upload' AND TargetInstance.Path = '\\ExcelUploads\\' AND TargetInstance.FileName LIKE 'Cost Rates%' AND TargetInstance.Extension = 'xlsx'</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete Existing"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Delete Existing"
+      DTS:DTSID="{30C61E97-A7AC-4A8B-BF98-6F0FC261AC85}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete Existing"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{56C2A0F0-E2E4-49DD-A681-7525B26C85DE}"
+          SQLTask:SqlStatementSource="delete&#xA;FROM ds_mds_cost_rates&#xA;WHERE [year] IN (SELECT [year] FROM stage_ds_mds_cost_rates)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert into stagging"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{55567528-74E1-4476-8225-15266E5F0FE4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert into stagging"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\Insert into stagging.EventHandlers[OnPreValidate]"
+          DTS:CreationName="OnPreValidate"
+          DTS:DTSID="{62D33CD0-A2C6-4463-B812-04DFC8553150}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreValidate"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{5E3CD2C8-6623-45E2-B360-050B79565362}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables />
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Insert into stagging\File To Be Uploaded"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="File To Be Uploaded"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">'Charge Rates by Fee Earner$'</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into stagging\File To Be Uploaded.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[ID]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[ID]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[year]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[year]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[year]"
+                      name="year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[Staff Cost Rate]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[Staff Cost Rate]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[Staff Cost Rate]"
+                      name="Staff Cost Rate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[Other Costs Rate]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[Other Costs Rate]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[Other Costs Rate]"
+                      name="Other Costs Rate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[Total Cost Rate]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[Total Cost Rate]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[Total Cost Rate]"
+                      name="Total Cost Rate"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[ID]"
+                      dataType="r8"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[year]"
+                      dataType="r8"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[Staff Cost Rate]"
+                      dataType="r8"
+                      name="Staff Cost Rate" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[Other Costs Rate]"
+                      dataType="r8"
+                      name="Other Costs Rate" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].ExternalColumns[Total Cost Rate]"
+                      dataType="r8"
+                      name="Total Cost Rate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[ID]"
+                      dataType="r8"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[year]"
+                      dataType="r8"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[year]"
+                      name="year" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[Staff Cost Rate]"
+                      dataType="r8"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[Staff Cost Rate]"
+                      name="Staff Cost Rate" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[Other Costs Rate]"
+                      dataType="r8"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[Other Costs Rate]"
+                      name="Other Costs Rate" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[Total Cost Rate]"
+                      dataType="r8"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[Total Cost Rate]"
+                      name="Total Cost Rate" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Insert into stagging\Upload Data"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Upload Data"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[stage_ds_mds_cost_rates]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Insert into stagging\Upload Data.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].Columns[ID]"
+                      cachedDataType="r8"
+                      cachedName="ID"
+                      externalMetadataColumnId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[ID]" />
+                    <inputColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].Columns[year]"
+                      cachedDataType="r8"
+                      cachedName="year"
+                      externalMetadataColumnId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[year]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[year]" />
+                    <inputColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].Columns[Staff Cost Rate]"
+                      cachedDataType="r8"
+                      cachedName="Staff Cost Rate"
+                      externalMetadataColumnId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[Staff Cost Rate]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[Staff Cost Rate]" />
+                    <inputColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].Columns[Other Costs Rate]"
+                      cachedDataType="r8"
+                      cachedName="Other Costs Rate"
+                      externalMetadataColumnId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[Other Costs Rate]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[Other Costs Rate]" />
+                    <inputColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].Columns[Total Cost Rate]"
+                      cachedDataType="r8"
+                      cachedName="Total Cost Rate"
+                      externalMetadataColumnId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[Total Cost Rate]"
+                      lineageId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output].Columns[Total Cost Rate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="r8"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[year]"
+                      dataType="r8"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[Staff Cost Rate]"
+                      dataType="r8"
+                      name="Staff Cost Rate" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[Other Costs Rate]"
+                      dataType="r8"
+                      name="Other Costs Rate" />
+                    <externalMetadataColumn
+                      refId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input].ExternalColumns[Total Cost Rate]"
+                      dataType="r8"
+                      name="Total Cost Rate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Insert into stagging\Upload Data.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Insert into stagging\Upload Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Insert into stagging\Upload Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Insert into stagging\Upload Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Insert into stagging\Upload Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Insert into stagging.Paths[Excel Source Output]"
+              endId="Package\Insert into stagging\Upload Data.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Insert into stagging\File To Be Uploaded.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Move Data File To Archiving Directory and Rename"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="Move Data File To Processing Directory"
+      DTS:DTSID="{21F57A99-7129-4D8A-B4DE-99B0B4171F57}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Move Data File To Archiving Directory and Rename"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOverwriteDestFile="True"
+          TaskSourcePath="User::ProcessingFile"
+          TaskIsSourceVariable="True"
+          TaskDestinationPath="User::ArchiveFile"
+          TaskIsDestinationVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\move to processing"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="move to processing"
+      DTS:DTSID="{2217FB38-8A56-4751-8B64-C9F3F30901D3}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="move to processing"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOperationType="MoveFile"
+          TaskOverwriteDestFile="True"
+          TaskSourcePath="User::DropFile"
+          TaskIsSourceVariable="True"
+          TaskDestinationPath="User::ProcessingPath"
+          TaskIsDestinationVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Move to Red_DW"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{EF4C3319-18E1-4D71-940D-FFDF724F9E9D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Move to Red_DW"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Move to Red_DW\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[ds_mds_cost_rates]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Move to Red_DW\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ID]"
+                      cachedDataType="r8"
+                      cachedName="ID"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID]" />
+                    <inputColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[year]"
+                      cachedDataType="r8"
+                      cachedName="year"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[year]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[year]" />
+                    <inputColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Staff Cost Rate]"
+                      cachedDataType="r8"
+                      cachedName="Staff Cost Rate"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Staff Cost Rate]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Staff Cost Rate]" />
+                    <inputColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Other Costs Rate]"
+                      cachedDataType="r8"
+                      cachedName="Other Costs Rate"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Other Costs Rate]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Other Costs Rate]" />
+                    <inputColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Total Cost Rate]"
+                      cachedDataType="r8"
+                      cachedName="Total Cost Rate"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total Cost Rate]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total Cost Rate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="r8"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[year]"
+                      dataType="r8"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Staff Cost Rate]"
+                      dataType="r8"
+                      name="Staff Cost Rate" />
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Other Costs Rate]"
+                      dataType="r8"
+                      name="Other Costs Rate" />
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total Cost Rate]"
+                      dataType="r8"
+                      name="Total Cost Rate" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Move to Red_DW\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Move to Red_DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Move to Red_DW\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Move to Red_DW\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[stage_ds_mds_cost_rates]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Move to Red_DW\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  connectionManagerRefId="Package.ConnectionManagers[svr-liv-dwh-01.red_dw]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[year]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[year]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[year]"
+                      name="year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Staff Cost Rate]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Staff Cost Rate]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Staff Cost Rate]"
+                      name="Staff Cost Rate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Other Costs Rate]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Other Costs Rate]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Other Costs Rate]"
+                      name="Other Costs Rate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total Cost Rate]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Total Cost Rate]"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total Cost Rate]"
+                      name="Total Cost Rate"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      dataType="r8"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[year]"
+                      dataType="r8"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Staff Cost Rate]"
+                      dataType="r8"
+                      name="Staff Cost Rate" />
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Other Costs Rate]"
+                      dataType="r8"
+                      name="Other Costs Rate" />
+                    <externalMetadataColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Total Cost Rate]"
+                      dataType="r8"
+                      name="Total Cost Rate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      dataType="r8"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[year]"
+                      dataType="r8"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[year]"
+                      name="year" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Staff Cost Rate]"
+                      dataType="r8"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Staff Cost Rate]"
+                      name="Staff Cost Rate" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Other Costs Rate]"
+                      dataType="r8"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Other Costs Rate]"
+                      name="Other Costs Rate" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Total Cost Rate]"
+                      dataType="r8"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Total Cost Rate]"
+                      name="Total Cost Rate" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Move to Red_DW.Paths[OLE DB Source Output]"
+              endId="Package\Move to Red_DW\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Move to Red_DW\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Stage Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AD53BD1A-2F57-4CA3-9705-D3259885BAB3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Stage Table"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{56C2A0F0-E2E4-49DD-A681-7525B26C85DE}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::TruncateStageTable" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{8224A2AD-810D-407A-968A-72379F7CCB23}"
+      DTS:From="Package\move to processing"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Truncate Stage Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{C99A33FE-1445-41AD-8E49-70413D039E97}"
+      DTS:From="Package\Move to Red_DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Move Data File To Archiving Directory and Rename" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{B82DF835-8846-4065-B499-C681D140EEDF}"
+      DTS:From="Package\Insert into stagging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Delete Existing" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{61BAD5FB-142F-4EAC-A72C-CCCEC5A406CB}"
+      DTS:From="Package\Truncate Stage Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Insert into stagging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{A9E94CC5-B931-4F35-AC6A-431F28D5B874}"
+      DTS:From="Package\Delete Existing"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Move to Red_DW" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Insert into stagging"
+          TopLeft="176.5,330.333333333333" />
+        <NodeLayout
+          Size="319,42"
+          Id="Package\Move Data File To Archiving Directory and Rename"
+          TopLeft="98.5,582.333333333333" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Move to Red_DW"
+          TopLeft="176.5,486.333333333333" />
+        <NodeLayout
+          Size="180,42"
+          Id="Package\Truncate Stage Table"
+          TopLeft="173.25,243" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="257.5,528.333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54"
+              Start="0,0"
+              End="0,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="262.625,285">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.333333333333"
+              Start="0,0"
+              End="0,37.833333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.833333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Delete Existing"
+          TopLeft="174,410" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="258.75,372.333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37.666666666667"
+              Start="0,0"
+              End="0,30.166666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.166666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="256.25,452">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.333333333333"
+              Start="0,0"
+              End="0,26.833333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.833333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="158,42"
+          Id="Package\move to processing"
+          TopLeft="184,122" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="263.125,164">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79"
+              Start="0,0"
+              End="0,71.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,71.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Insert into stagging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="137,42"
+          Id="Package\Insert into stagging\Upload Data"
+          TopLeft="142,264" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Insert into stagging\File To Be Uploaded"
+          TopLeft="119,91" />
+        <EdgeLayout
+          Id="Package\Insert into stagging.Paths[Excel Source Output]"
+          TopLeft="208,133">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,131"
+              Start="0,0"
+              End="0,123.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,123.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into stagging\File To Be Uploaded">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert into stagging\Upload Data">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Move to Red_DW">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Move to Red_DW\OLE DB Destination"
+          TopLeft="174,264" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Move to Red_DW\OLE DB Source"
+          TopLeft="177,80" />
+        <EdgeLayout
+          Id="Package\Move to Red_DW.Paths[OLE DB Source Output]"
+          TopLeft="255.75,122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,142"
+              Start="0,0"
+              End="0,134.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,134.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Move to Red_DW\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Move to Red_DW\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
