@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageLawSoftClientDocuments"
   DTS:PackageType="5"
-  DTS:VersionBuild="135"
-  DTS:VersionGUID="{92C96BB3-BD5C-4804-8957-3A4346EA9D46}">
+  DTS:VersionBuild="136"
+  DTS:VersionGUID="{19A5FAAC-CB83-4D04-B121-611CF88F399E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2882,18 +2882,14 @@ AND Exceptions.ORIGINAL_VERSION_DIWOR IS NULL
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  MS.clNo ,
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  clNo AS clNo ,
         MS.clID,
         MS.fileNo ,
-        CAST( FEDCode AS NVARCHAR(255)) AS FEDCode ,
+        CAST(AltNumber AS NVARCHAR(255)) AS FEDCode,
         MS.fileID
-
-		FROM (SELECT clNo,dbClient.clID,fileno,dbfile.fileid,FEDCode
-		FROM config.dbClient 
-		INNER JOIN config.dbFile ON dbFile.clID = dbClient.clID
-		INNER JOIN dbo.udExtFile ON udExtFile.fileID = dbFile.fileID
-		--WHERE FEDCode LIKE 'WB%'
-) AS MS</property>
+FROM  dbo.udEnvisionMatterBridge AS MS
+LEFT OUTER JOIN config.dbClient
+ ON dbClient.clID = MS.clID</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
