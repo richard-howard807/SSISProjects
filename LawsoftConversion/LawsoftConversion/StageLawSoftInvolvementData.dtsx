@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageInvolvementData"
   DTS:PackageType="5"
-  DTS:VersionBuild="150"
-  DTS:VersionGUID="{EC92D09F-0E2A-4772-B1B0-EE0ACA8044CA}">
+  DTS:VersionBuild="152"
+  DTS:VersionGUID="{953CA975-B041-4200-8B13-F0C158178FE7}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -3684,11 +3684,11 @@ where [refTable].[EnvisionEntity] = ?</property>
                       </properties>
                     </inputColumn>
                     <inputColumn
-                      refId="Package\DFT - Get Lawsoft Involvement data\Sort 2.Inputs[Sort Input].Columns[filedesc]"
+                      refId="Package\DFT - Get Lawsoft Involvement data\Sort 2.Inputs[Sort Input].Columns[fileDesc]"
                       cachedDataType="wstr"
                       cachedLength="255"
-                      cachedName="filedesc"
-                      lineageId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[filedesc]">
+                      cachedName="fileDesc"
+                      lineageId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileDesc]">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3790,7 +3790,7 @@ where [refTable].[EnvisionEntity] = ?</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[filedesc]}</property>
+                          name="SortColumnId">#{Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileDesc]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -4134,20 +4134,16 @@ AND NAME_ID &lt;&gt;0</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  MS.clNo ,
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  clNo AS clNo ,
         MS.clID,
         MS.fileNo ,
-        CAST( FEDCode AS NVARCHAR(255)) AS FEDCode ,
-        MS.fileID AS FileID
-,filedesc
-
-		FROM (SELECT clNo,dbClient.clID,fileno,dbfile.fileid,FEDCode,filedesc
-		FROM config.dbClient 
-		INNER JOIN config.dbFile ON dbFile.clID = dbClient.clID
-		INNER JOIN dbo.udExtFile ON udExtFile.fileID = dbFile.fileID
-		WHERE FEDCode IS NOT NULL
-		AND LEN(FEDCode)=12
-) AS MS</property>
+        CAST(AltNumber AS NVARCHAR(255)) AS FEDCode,
+        MS.fileID AS FileID,fileDesc
+FROM  dbo.udEnvisionMatterBridge AS MS
+LEFT OUTER JOIN config.dbClient
+ ON dbClient.clID = MS.clID	
+LEFT OUTER JOIN config.dbFile
+ ON dbFile.fileID = MS.fileID</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -4232,14 +4228,14 @@ AND NAME_ID &lt;&gt;0</property>
                       name="FileID"
                       truncationRowDisposition="FailComponent" />
                     <outputColumn
-                      refId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[filedesc]"
+                      refId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileDesc]"
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[filedesc]"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[fileDesc]"
                       length="255"
-                      lineageId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[filedesc]"
-                      name="filedesc"
+                      lineageId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileDesc]"
+                      name="fileDesc"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
@@ -4268,10 +4264,10 @@ AND NAME_ID &lt;&gt;0</property>
                       dataType="i8"
                       name="FileID" />
                     <externalMetadataColumn
-                      refId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[filedesc]"
+                      refId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[fileDesc]"
                       dataType="wstr"
                       length="255"
-                      name="filedesc" />
+                      name="fileDesc" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -4308,11 +4304,11 @@ AND NAME_ID &lt;&gt;0</property>
                       lineageId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[FileID]"
                       name="FileID" />
                     <outputColumn
-                      refId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[filedesc]"
+                      refId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[fileDesc]"
                       dataType="wstr"
                       length="255"
-                      lineageId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[filedesc]"
-                      name="filedesc" />
+                      lineageId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[fileDesc]"
+                      name="fileDesc" />
                     <outputColumn
                       refId="Package\DFT - Get Lawsoft Involvement data\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
