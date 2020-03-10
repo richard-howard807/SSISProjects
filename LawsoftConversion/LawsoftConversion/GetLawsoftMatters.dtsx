@@ -1,0 +1,1859 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2016 5:34:25 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\khanse"
+  DTS:DTSID="{105B9F31-BBC9-4B7E-91FE-77FC26342020}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="GetLawsoftMatters"
+  DTS:PackageType="5"
+  DTS:VersionBuild="169"
+  DTS:VersionGUID="{7C1739F8-9DCA-4C35-BBE8-6FB5597DC123}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6FDB4A65-739E-4901-8336-A0E80787FEC1}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AA9E4779-4A5F-4381-9B27-E328416CB2FD}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Lawsoft]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F2B5614F-B3BD-4764-B776-46CF929AA62C}"
+      DTS:ObjectName="CM_Lawsoft">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Lawsoft]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-LIV-SQL-02\WB;Initial Catalog=LawsoftStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{163EC0E8-D095-43BB-9204-06AF2094F34C}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MS_PROD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BBD8D67B-D0FD-4193-89ED-EB40048AAA98}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{F6E1CDDB-EE8B-4098-9010-E72352E5E4E5}"
+      DTS:ObjectName="ParentAuditID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::AuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{FD4CC324-4642-4AC1-AB3A-D6D3553C989B}"
+      DTS:ObjectName="AuditID" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E27D8BC2-D02A-46D5-8D62-71202903203F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BFE81AC2-4782-45A7-934C-8E4271A26712}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{051E865E-EA16-4DFC-8363-D89DB33E2070}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E3F51E56-8585-4BAF-947E-B7D7A365CC13}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AE786076-5D85-48AB-A6E2-E06A7D6AB3FC}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C1381E04-F3FF-483E-A105-2403E211B975}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{145C66F1-C1CA-465A-A30A-AFD3C1C02ACD}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ADB8E09A-A853-418D-B189-8175B3E5BEAF}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1EA1D300-EE37-430C-93EA-99B59E968CC7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{15E1F2A3-1474-4387-A10C-45933A5DF68D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{06E90A7E-ABBE-47A0-9CD2-EAEC6E218047}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C766B016-1931-4F09-B224-372EF0888646}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Get Lawsoft Matters"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B6F054F7-0000-460B-A121-29DEE2CAA2C3}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Get Lawsoft Matters"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - Get Lawsoft Matters.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{F2018E8E-98B2-48A3-A0DC-76C65691A1D3}"
+          DTS:EventID="0"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{07409E22-C02D-4971-B6D5-C2C16A19FC3C}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - Get Lawsoft Matters.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{30991133-0048-4B32-A4B8-EB21D6B72E58}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{6FDB4A65-739E-4901-8336-A0E80787FEC1}"
+                  SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCountInserts"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountUpdates"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - Get Lawsoft Matters.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{325AAD6C-32B7-4A2E-BF47-130A22C6100C}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{5DFADAE7-6845-41F7-9D94-CB75B76D9080}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - Get Lawsoft Matters.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{C63101F0-5275-468C-95B5-57E68614D558}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{6FDB4A65-739E-4901-8336-A0E80787FEC1}"
+                  SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DES_LStoMSMatters"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[LSToMSMatters]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Lawsoft]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Lawsoft]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].Columns[EnvisionMatterDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="EnvisionMatterDesc"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[EnvisionMatterDesc]"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[EnvisionMatterDesc]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].Columns[SourceSystemID]"
+                      cachedDataType="i4"
+                      cachedName="SourceSystemID"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[SourceSystemID]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].Columns[LSMatter]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LSMatter"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[LSMatter]"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[LSMatter]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].Columns[MSMatterDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSMatterDesc"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[MSMatterDesc]"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[MSMatterDesc]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[MSMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSMatterDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[LSMatter]"
+                      dataType="wstr"
+                      length="50"
+                      name="LSMatter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input].ExternalColumns[EnvisionMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="EnvisionMatterDesc" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Get Lawsoft Matters\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[LSMatter]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LSMatter"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[LSMatter]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[fileID]"
+                      cachedDataType="i8"
+                      cachedName="fileID"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[fileID]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[fileNo]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="fileNo"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[fileNo]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[clID]"
+                      cachedDataType="i8"
+                      cachedName="clID"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[clID]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[MSMatterDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSMatterDesc"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[MSMatterDesc]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Right Input].Columns[LSMatter]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LSMatter"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output].Columns[LSMatter]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Right Input].Columns[EnvisionMatterDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="EnvisionMatterDesc"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output].Columns[EnvisionMatterDesc]" />
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Right Input].Columns[SourceSystemID]"
+                      cachedDataType="i4"
+                      cachedName="SourceSystemID"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output].Columns[SourceSystemID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[fileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[fileID]"
+                      name="fileID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[fileID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[fileNo]"
+                      name="fileNo">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[fileNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[clID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[clID]"
+                      name="clID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[clID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[LSMatter]"
+                      name="LSMatter"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[LSMatter]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[MSMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[MSMatterDesc]"
+                      name="MSMatterDesc">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input].Columns[MSMatterDesc]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[EnvisionMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[EnvisionMatterDesc]"
+                      name="EnvisionMatterDesc">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Right Input].Columns[EnvisionMatterDesc]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[SourceSystemID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output].Columns[SourceSystemID]"
+                      name="SourceSystemID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Right Input].Columns[SourceSystemID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Get Lawsoft Matters\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - Get Lawsoft Matters\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Get Lawsoft Matters\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - Get Lawsoft Matters\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Get Lawsoft Matters\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - Get Lawsoft Matters\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort.Inputs[Sort Input].Columns[LSMatter]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LSMatter"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[LSMatter]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort.Inputs[Sort Input].Columns[EnvisionMatterDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="EnvisionMatterDesc"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[EnvisionMatterDesc]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort.Inputs[Sort Input].Columns[SourceSystemID]"
+                      cachedDataType="i4"
+                      cachedName="SourceSystemID"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[SourceSystemID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output].Columns[LSMatter]"
+                      name="LSMatter"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[LSMatter]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output].Columns[EnvisionMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output].Columns[EnvisionMatterDesc]"
+                      name="EnvisionMatterDesc">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[EnvisionMatterDesc]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output].Columns[SourceSystemID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output].Columns[SourceSystemID]"
+                      name="SourceSystemID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[SourceSystemID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Get Lawsoft Matters\Sort 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - Get Lawsoft Matters\Sort 1.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Inputs[Sort Input].Columns[fileID]"
+                      cachedDataType="i8"
+                      cachedName="fileID"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Inputs[Sort Input].Columns[fileNo]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="fileNo"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileNo]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Inputs[Sort Input].Columns[clID]"
+                      cachedDataType="i8"
+                      cachedName="clID"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[clID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Inputs[Sort Input].Columns[LSMatter]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="LSMatter"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[LSMatter]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Inputs[Sort Input].Columns[MSMatterDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSMatterDesc"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[MSMatterDesc]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[fileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[fileID]"
+                      name="fileID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[fileNo]"
+                      name="fileNo">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[clID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[clID]"
+                      name="clID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[clID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[LSMatter]"
+                      name="LSMatter"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[LSMatter]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[MSMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output].Columns[MSMatterDesc]"
+                      name="MSMatterDesc">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[MSMatterDesc]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_Lawsoft"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT CAST(REPLACE(MATTERCODE,'.','-') AS NVARCHAR(50)) AS LSMatter
+,CAST(MATTERDESC AS NVARCHAR(255)) AS EnvisionMatterDesc
+,DIWOR AS [SourceSystemID]
+FROM  lawsoft.dbo.MATTER_MASTER</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Lawsoft]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Lawsoft]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].ExternalColumns[LSMatter]"
+                      length="50"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[LSMatter]"
+                      name="LSMatter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[EnvisionMatterDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].ExternalColumns[EnvisionMatterDesc]"
+                      length="255"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[EnvisionMatterDesc]"
+                      name="EnvisionMatterDesc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      name="SourceSystemID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].ExternalColumns[LSMatter]"
+                      dataType="wstr"
+                      length="50"
+                      name="LSMatter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].ExternalColumns[EnvisionMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="EnvisionMatterDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      dataType="i4"
+                      name="SourceSystemID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[LSMatter]"
+                      name="LSMatter" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[EnvisionMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[EnvisionMatterDesc]"
+                      name="EnvisionMatterDesc" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      name="SourceSystemID" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_Mattersphere"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT dbo.udEnvisionMatterBridge.fileID,
+       AltNumber AS LSMatter,
+       dbo.udEnvisionMatterBridge.fileNo,
+       dbo.udEnvisionMatterBridge.clID
+	   ,fileDesc AS MSMatterDesc 
+	   FROM MS_PROD.dbo.udEnvisionMatterBridge
+	   LEFT OUTER JOIN MS_PROD.config.dbFile
+	    ON dbFile.fileID = udEnvisionMatterBridge.fileID</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Mattersphere]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Mattersphere]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileID]"
+                      name="fileID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      length="20"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[fileNo]"
+                      name="fileNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[clID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[clID]"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[clID]"
+                      name="clID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[LSMatter]"
+                      length="50"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[LSMatter]"
+                      name="LSMatter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[MSMatterDesc]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[MSMatterDesc]"
+                      length="255"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[MSMatterDesc]"
+                      name="MSMatterDesc"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
+                      dataType="i8"
+                      name="fileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[clID]"
+                      dataType="i8"
+                      name="clID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[LSMatter]"
+                      dataType="wstr"
+                      length="50"
+                      name="LSMatter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[MSMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSMatterDesc" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[fileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[fileID]"
+                      name="fileID" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[LSMatter]"
+                      name="LSMatter" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[fileNo]"
+                      name="fileNo" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[clID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[clID]"
+                      name="clID" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[MSMatterDesc]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[MSMatterDesc]"
+                      name="MSMatterDesc" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Get Lawsoft Matters.Paths[Merge Join Output]"
+              endId="Package\DFT - Get Lawsoft Matters\Row Count.Inputs[Row Count Input 1]"
+              name="Merge Join Output"
+              startId="Package\DFT - Get Lawsoft Matters\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\DFT - Get Lawsoft Matters.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Get Lawsoft Matters\Sort 1.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - Get Lawsoft Matters.Paths[OLE DB Source Output1]"
+              endId="Package\DFT - Get Lawsoft Matters\Sort.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - Get Lawsoft Matters.Paths[Row Count Output 1]"
+              endId="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - Get Lawsoft Matters\Row Count.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - Get Lawsoft Matters.Paths[Sort Output]"
+              endId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\DFT - Get Lawsoft Matters\Sort 1.Outputs[Sort Output]" />
+            <path
+              refId="Package\DFT - Get Lawsoft Matters.Paths[Sort Output1]"
+              endId="Package\DFT - Get Lawsoft Matters\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\DFT - Get Lawsoft Matters\Sort.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate LSMatterStage"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E6644751-FF83-45ED-ACCE-A0CACC781954}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate LSMatterStage"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F2B5614F-B3BD-4764-B776-46CF929AA62C}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.LSToMSMatters" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{3DA4591A-9F88-4137-99C7-78AD24414738}"
+      DTS:From="Package\Truncate LSMatterStage"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - Get Lawsoft Matters" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{FD51BB08-60F4-46F2-A051-980F84E8322E}"
+      DTS:EventID="-3"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{9CDA1F85-0A62-4231-8A1C-EFDE5170B2FD}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{7F0A505B-FE68-47A6-92D3-E016EDD6483D}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{6FDB4A65-739E-4901-8336-A0E80787FEC1}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="203,42"
+          Id="Package\DFT - Get Lawsoft Matters"
+          TopLeft="291.05703958826,139.466349634765" />
+        <NodeLayout
+          Size="192,42"
+          Id="Package\Truncate LSMatterStage"
+          TopLeft="292,39" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="390.27851979413,81">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58.466349634765"
+              Start="0,0"
+              End="0,50.966349634765">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.966349634765" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="129,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="426,210" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT - Get Lawsoft Matters">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="166,42"
+          Id="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere"
+          TopLeft="165,35" />
+        <NodeLayout
+          Size="98,42"
+          Id="Package\DFT - Get Lawsoft Matters\Sort"
+          TopLeft="452,121" />
+        <NodeLayout
+          Size="107,42"
+          Id="Package\DFT - Get Lawsoft Matters\Sort 1"
+          TopLeft="198.5,117.5" />
+        <EdgeLayout
+          Id="Package\DFT - Get Lawsoft Matters.Paths[OLE DB Source Output]"
+          TopLeft="250,77">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.5"
+              Start="0,0"
+              End="0,33">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="174,42"
+          Id="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters"
+          TopLeft="292,388" />
+        <NodeLayout
+          Size="140,42"
+          Id="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft"
+          TopLeft="436,37" />
+        <EdgeLayout
+          Id="Package\DFT - Get Lawsoft Matters.Paths[OLE DB Source Output1]"
+          TopLeft="503.5,79">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="130,42"
+          Id="Package\DFT - Get Lawsoft Matters\Merge Join"
+          TopLeft="313.5,193.966417910447" />
+        <EdgeLayout
+          Id="Package\DFT - Get Lawsoft Matters.Paths[Sort Output]"
+          TopLeft="252,159.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="126.5,34.4664179104474"
+              Start="0,0"
+              End="126.5,26.9664179104474">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.2332089552237" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.2332089552237"
+                    Point2="0,17.2332089552237"
+                    Point3="4,17.2332089552237" />
+                  <mssgle:LineSegment
+                    End="122.5,17.2332089552237" />
+                  <mssgle:CubicBezierSegment
+                    Point1="122.5,17.2332089552237"
+                    Point2="126.5,17.2332089552237"
+                    Point3="126.5,21.2332089552237" />
+                  <mssgle:LineSegment
+                    End="126.5,26.9664179104474" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Lawsoft Matters.Paths[Sort Output1]"
+          TopLeft="501,163">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-102.166666666667,30.9664179104474"
+              Start="0,0"
+              End="-102.166666666667,23.4664179104474">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.3539559043685" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.3539559043685"
+                    Point2="0,18.3539559043685"
+                    Point3="-4,18.3539559043685" />
+                  <mssgle:LineSegment
+                    End="-98.1666666666667,18.3539559043685" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-98.1666666666667,18.3539559043685"
+                    Point2="-102.166666666667,18.3539559043685"
+                    Point3="-102.166666666667,22.3539559043685" />
+                  <mssgle:LineSegment
+                    End="-102.166666666667,23.4664179104474" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="130,42"
+          Id="Package\DFT - Get Lawsoft Matters\Row Count"
+          TopLeft="317,278" />
+        <EdgeLayout
+          Id="Package\DFT - Get Lawsoft Matters.Paths[Merge Join Output]"
+          TopLeft="380.25,235.966417910447">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.0335820895526"
+              Start="0,0"
+              End="0,34.5335820895526">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5335820895526" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Lawsoft Matters.Paths[Row Count Output 1]"
+          TopLeft="380.5,320">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68"
+              Start="0,0"
+              End="0,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - Get Lawsoft Matters.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - Get Lawsoft Matters.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="462,189" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - Get Lawsoft Matters.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package\DFT - Get Lawsoft Matters.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="410,169" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Lawsoft Matters\SRC_Mattersphere">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Lawsoft Matters\DES_LStoMSMatters">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Get Lawsoft Matters\SRC_Lawsoft">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
