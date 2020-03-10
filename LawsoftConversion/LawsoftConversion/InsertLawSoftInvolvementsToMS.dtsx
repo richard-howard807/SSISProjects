@@ -1,0 +1,2676 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2016 5:34:25 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\khanse"
+  DTS:DTSID="{F76B5994-0CCE-4B86-8FD1-01DCB33E94D9}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="InsertInvolvementsToMS"
+  DTS:PackageType="5"
+  DTS:VersionBuild="110"
+  DTS:VersionGUID="{8D82D68F-B7F9-43EB-BE68-280D050538CA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8BFA5A72-BC4C-49E9-A6F6-C1A9C0C1761C}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{885B2269-CCD7-4D5A-B3C2-5E08AB1834AC}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9193E7D6-BA56-4B70-B3D6-DC7D455360C4}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MS_PROD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{625A5F4B-6499-46A8-8730-E6CA53538E68}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{6F698EAA-5A03-42C0-BAC9-32B4D5F84017}"
+      DTS:ObjectName="ParentAuditID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::AuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{1E72FC38-611D-4BC5-B929-A5672E2EBB89}"
+      DTS:ObjectName="AuditID" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{207C3F4D-711B-4EA3-9DB5-30DC680E266B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B36E4177-2651-4188-88F3-64F0FE7DC0F9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7C025BF7-9D0D-487D-A28A-984FC80D148C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{76E1EA48-E26C-4A04-A4B5-05BB4A7C640D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{421181F0-7C56-4DFB-84A2-804B75FCB15E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{18A0637E-065D-405B-ABE1-8652E3AB0EE0}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F64DFEF3-BF6E-4CA9-B501-649675D0B22B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4B128C87-F607-4C2B-B222-4402E79485B2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8A6B96EC-A865-4533-886A-77A8E3BBCEFA}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F5CDA44D-0254-4503-8B92-3DAFD4708918}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C930E6DC-FD2E-45AB-B41E-9355C6C66E1E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E3A4BF1F-2744-4A8A-A706-E1D7367732A2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\ST - Import Into MatterSphere"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{C0A9EBB2-7623-470B-B12E-A30C3FF61714}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ST - Import Into MatterSphere">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{6126E1C7-40DF-4BD0-BD2E-7CFDC226093B}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT - Insert into MatterSphere"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:EventHandlers>
+            <DTS:EventHandler
+              DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.EventHandlers[OnPostExecute]"
+              DTS:CreationName="OnPostExecute"
+              DTS:DTSID="{7A367F1C-B29B-4D7D-BC09-57661D6C2AD3}"
+              DTS:EventID="785790628"
+              DTS:EventName="OnPostExecute"
+              DTS:LocaleID="-1">
+              <DTS:Variables>
+                <DTS:Variable
+                  DTS:CreationName=""
+                  DTS:Description="The propagate property of the event"
+                  DTS:DTSID="{8BD9B49D-AF27-48F5-A7FD-3ACC6886D119}"
+                  DTS:IncludeInDebugDump="6789"
+                  DTS:Namespace="System"
+                  DTS:ObjectName="Propagate">
+                  <DTS:VariableValue
+                    DTS:DataType="11">-1</DTS:VariableValue>
+                </DTS:Variable>
+              </DTS:Variables>
+              <DTS:Executables>
+                <DTS:Executable
+                  DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.EventHandlers[OnPostExecute]\EndAudit"
+                  DTS:CreationName="Microsoft.ExecuteSQLTask"
+                  DTS:Description="Execute SQL Task"
+                  DTS:DTSID="{317E3D51-CE81-4470-8946-364035AA4D2E}"
+                  DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                  DTS:LocaleID="-1"
+                  DTS:ObjectName="EndAudit"
+                  DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                  <DTS:Variables />
+                  <DTS:ObjectData>
+                    <SQLTask:SqlTaskData
+                      SQLTask:Connection="{8BFA5A72-BC4C-49E9-A6F6-C1A9C0C1761C}"
+                      SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@Audit_ID"
+                        SQLTask:DtsVariableName="User::AuditID"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@CountInserted"
+                        SQLTask:DtsVariableName="User::RowCountInserts"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@CountChanged"
+                        SQLTask:DtsVariableName="User::RowCountUpdates"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                    </SQLTask:SqlTaskData>
+                  </DTS:ObjectData>
+                </DTS:Executable>
+              </DTS:Executables>
+            </DTS:EventHandler>
+            <DTS:EventHandler
+              DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.EventHandlers[OnPreExecute]"
+              DTS:CreationName="OnPreExecute"
+              DTS:DTSID="{4C8A345F-66EF-43A5-A018-8F1C1A31C854}"
+              DTS:EventID="785801028"
+              DTS:EventName="OnPreExecute"
+              DTS:LocaleID="-1">
+              <DTS:Variables>
+                <DTS:Variable
+                  DTS:CreationName=""
+                  DTS:Description="The propagate property of the event"
+                  DTS:DTSID="{09193446-8FCF-4CE8-A53E-9ACCA4A38685}"
+                  DTS:IncludeInDebugDump="6789"
+                  DTS:Namespace="System"
+                  DTS:ObjectName="Propagate">
+                  <DTS:VariableValue
+                    DTS:DataType="11">-1</DTS:VariableValue>
+                </DTS:Variable>
+              </DTS:Variables>
+              <DTS:Executables>
+                <DTS:Executable
+                  DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.EventHandlers[OnPreExecute]\StartAudit"
+                  DTS:CreationName="Microsoft.ExecuteSQLTask"
+                  DTS:Description="Execute SQL Task"
+                  DTS:DTSID="{C475259B-F6F7-4BD9-8EED-4FA64B9CEDBE}"
+                  DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                  DTS:LocaleID="-1"
+                  DTS:ObjectName="StartAudit"
+                  DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                  <DTS:Variables />
+                  <DTS:ObjectData>
+                    <SQLTask:SqlTaskData
+                      SQLTask:Connection="{8BFA5A72-BC4C-49E9-A6F6-C1A9C0C1761C}"
+                      SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                      SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                      <SQLTask:ResultBinding
+                        SQLTask:ResultName="AuditID"
+                        SQLTask:DtsVariableName="User::AuditID" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@PackageName"
+                        SQLTask:DtsVariableName="System::PackageName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@PackageStart"
+                        SQLTask:DtsVariableName="System::StartTime"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="7"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@TaskName"
+                        SQLTask:DtsVariableName="System::SourceName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@CreatedBy"
+                        SQLTask:DtsVariableName="System::UserName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@DestinationTable"
+                        SQLTask:DtsVariableName="User::DestinationTable"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ExtractFileName"
+                        SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ExtractFolder"
+                        SQLTask:DtsVariableName="User::ExtractFolder"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ParentAuditID"
+                        SQLTask:DtsVariableName="User::ParentAuditID"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                    </SQLTask:SqlTaskData>
+                  </DTS:ObjectData>
+                </DTS:Executable>
+              </DTS:Executables>
+            </DTS:EventHandler>
+          </DTS:EventHandlers>
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="DEST - dbAssoc"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[config].[dbAssociates]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[CM_Mattersphere]"
+                      connectionManagerRefId="Package.ConnectionManagers[CM_Mattersphere]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].Columns[FileID]"
+                          cachedDataType="i8"
+                          cachedName="FileID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[fileID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[FileID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].Columns[contID]"
+                          cachedDataType="i8"
+                          cachedName="contID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[contID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[contID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].Columns[assocdefaultaddID]"
+                          cachedDataType="i8"
+                          cachedName="assocdefaultaddID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocdefaultaddID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocdefaultaddID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].Columns[assocType]"
+                          cachedDataType="wstr"
+                          cachedLength="15"
+                          cachedName="assocType"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocType]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocType]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].Columns[assocHeading]"
+                          cachedDataType="wstr"
+                          cachedLength="200"
+                          cachedName="assocHeading"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocHeading]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocHeading]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].Columns[assocOrder]"
+                          cachedDataType="i2"
+                          cachedName="assocOrder"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocOrder]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocOrder]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].Columns[assocSalut]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="assocSalut"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocSalut]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocSalut]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].Columns[assocRef]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="assocRef"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocRef]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocRef]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].Columns[assocUseDx]"
+                          cachedDataType="bool"
+                          cachedName="assocUseDx"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocUseDX]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocUseDx]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[fileID]"
+                          dataType="i8"
+                          name="fileID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[Created]"
+                          dataType="dbTimeStamp"
+                          name="Created" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[CreatedBy]"
+                          dataType="i4"
+                          name="CreatedBy" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[Updated]"
+                          dataType="dbTimeStamp"
+                          name="Updated" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[UpdatedBy]"
+                          dataType="i4"
+                          name="UpdatedBy" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[rowguid]"
+                          dataType="guid"
+                          name="rowguid" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocID]"
+                          dataType="i8"
+                          name="assocID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[contID]"
+                          dataType="i8"
+                          name="contID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocDefAddSetting]"
+                          dataType="bool"
+                          name="assocDefAddSetting" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocdefaultaddID]"
+                          dataType="i8"
+                          name="assocdefaultaddID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocEmployeeID]"
+                          dataType="i8"
+                          name="assocEmployeeID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocOrder]"
+                          dataType="i2"
+                          name="assocOrder" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocType]"
+                          dataType="wstr"
+                          length="15"
+                          name="assocType" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocHeading]"
+                          dataType="wstr"
+                          length="200"
+                          name="assocHeading" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocSalut]"
+                          dataType="wstr"
+                          length="100"
+                          name="assocSalut" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocAddressee]"
+                          dataType="wstr"
+                          length="100"
+                          name="assocAddressee" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocRef]"
+                          dataType="wstr"
+                          length="50"
+                          name="assocRef" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocNotes]"
+                          dataType="wstr"
+                          length="200"
+                          name="assocNotes" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocUseDX]"
+                          dataType="bool"
+                          name="assocUseDX" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocActive]"
+                          dataType="bool"
+                          name="assocActive" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocDDI]"
+                          dataType="wstr"
+                          length="30"
+                          name="assocDDI" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocFax]"
+                          dataType="wstr"
+                          length="30"
+                          name="assocFax" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocEmail]"
+                          dataType="wstr"
+                          length="200"
+                          name="assocEmail" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocMobile]"
+                          dataType="wstr"
+                          length="30"
+                          name="assocMobile" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocPrefContactMethod]"
+                          dataType="wstr"
+                          length="15"
+                          name="assocPrefContactMethod" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[assocExtTxtID]"
+                          dataType="wstr"
+                          length="36"
+                          name="assocExtTxtID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[ASSOCNEEDEXPORT]"
+                          dataType="bool"
+                          name="ASSOCNEEDEXPORT" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input].ExternalColumns[uIsPayor]"
+                          dataType="bool"
+                          name="uIsPayor" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\Row Count"
+                  componentClassID="Microsoft.RowCount"
+                  contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+                  name="Row Count">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable to hold the row count."
+                      name="VariableName">User::RowCountInserts</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\Row Count.Inputs[Row Count Input 1]"
+                      hasSideEffects="true"
+                      name="Row Count Input 1">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\Row Count.Outputs[Row Count Output 1]"
+                      name="Row Count Output 1"
+                      synchronousInputId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\Row Count.Inputs[Row Count Input 1]">
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="SRC - StagedInvolvementData"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+FEDClient
+,FEDMatter
+,MSClientID
+,MSFileID
+,FileID
+,contID
+,assocOrder
+,assocType AS  assocType
+,assocHeading
+,assocdefaultaddID
+,assocSalut
+,assocRef
+,assocUseDx
+FROM [MattersphereStaging].[dbo].[InvolvementStage] 
+WHERE StatusID = 7	--Pick only the results that have passed validation.</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                      connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[FEDClient]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[FEDClient]"
+                          length="8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[FEDClient]"
+                          name="FEDClient"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[FEDMatter]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[FEDMatter]"
+                          length="8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[FEDMatter]"
+                          name="FEDMatter"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[MSClientID]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[MSClientID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[MSClientID]"
+                          name="MSClientID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[MSFileID]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[MSFileID]"
+                          length="20"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[MSFileID]"
+                          name="MSFileID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[FileID]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[FileID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[FileID]"
+                          name="FileID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[contID]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[contID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[contID]"
+                          name="contID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocOrder]"
+                          dataType="i2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocOrder]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocOrder]"
+                          name="assocOrder"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocType]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocType]"
+                          length="15"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocType]"
+                          name="assocType"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocHeading]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocHeading]"
+                          length="200"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocHeading]"
+                          name="assocHeading"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocdefaultaddID]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocdefaultaddID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocdefaultaddID]"
+                          name="assocdefaultaddID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocSalut]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocSalut]"
+                          length="100"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocSalut]"
+                          name="assocSalut"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocRef]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocRef]"
+                          length="50"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocRef]"
+                          name="assocRef"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocUseDx]"
+                          dataType="bool"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocUseDx]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].Columns[assocUseDx]"
+                          name="assocUseDx"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[FEDClient]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          name="FEDClient" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[FEDMatter]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          name="FEDMatter" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[MSClientID]"
+                          dataType="i8"
+                          name="MSClientID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[MSFileID]"
+                          dataType="wstr"
+                          length="20"
+                          name="MSFileID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[FileID]"
+                          dataType="i8"
+                          name="FileID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[contID]"
+                          dataType="i8"
+                          name="contID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocOrder]"
+                          dataType="i2"
+                          name="assocOrder" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocType]"
+                          dataType="wstr"
+                          length="15"
+                          name="assocType" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocHeading]"
+                          dataType="wstr"
+                          length="200"
+                          name="assocHeading" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocdefaultaddID]"
+                          dataType="i8"
+                          name="assocdefaultaddID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocSalut]"
+                          dataType="wstr"
+                          length="100"
+                          name="assocSalut" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocRef]"
+                          dataType="wstr"
+                          length="50"
+                          name="assocRef" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output].ExternalColumns[assocUseDx]"
+                          dataType="bool"
+                          name="assocUseDx" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[FEDClient]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[FEDClient]"
+                          name="FEDClient" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[FEDMatter]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[FEDMatter]"
+                          name="FEDMatter" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[MSClientID]"
+                          dataType="i8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[MSClientID]"
+                          name="MSClientID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[MSFileID]"
+                          dataType="wstr"
+                          length="20"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[MSFileID]"
+                          name="MSFileID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[FileID]"
+                          dataType="i8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[FileID]"
+                          name="FileID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[contID]"
+                          dataType="i8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[contID]"
+                          name="contID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocOrder]"
+                          dataType="i2"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocOrder]"
+                          name="assocOrder" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocType]"
+                          dataType="wstr"
+                          length="15"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocType]"
+                          name="assocType" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocHeading]"
+                          dataType="wstr"
+                          length="200"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocHeading]"
+                          name="assocHeading" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocdefaultaddID]"
+                          dataType="i8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocdefaultaddID]"
+                          name="assocdefaultaddID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocSalut]"
+                          dataType="wstr"
+                          length="100"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocSalut]"
+                          name="assocSalut" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocRef]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocRef]"
+                          name="assocRef" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocUseDx]"
+                          dataType="bool"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[assocUseDx]"
+                          name="assocUseDx" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.Paths[OLE DB Source Output]"
+                  endId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\Row Count.Inputs[Row Count Input 1]"
+                  name="OLE DB Source Output"
+                  startId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.Paths[Row Count Output 1]"
+                  endId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc.Inputs[OLE DB Destination Input]"
+                  name="Row Count Output 1"
+                  startId="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\Row Count.Outputs[Row Count Output 1]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{7D63B564-BD2D-41EF-AE79-DEE8F1419BF6}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT - Insert into Success"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:EventHandlers>
+            <DTS:EventHandler
+              DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success.EventHandlers[OnPostExecute]"
+              DTS:CreationName="OnPostExecute"
+              DTS:DTSID="{B243A73B-604E-4948-9E63-CE9E6A5C66A8}"
+              DTS:EventID="785796660"
+              DTS:EventName="OnPostExecute"
+              DTS:LocaleID="-1">
+              <DTS:Variables>
+                <DTS:Variable
+                  DTS:CreationName=""
+                  DTS:Description="The propagate property of the event"
+                  DTS:DTSID="{64147BBE-942B-4463-AB7F-CAE63018D204}"
+                  DTS:IncludeInDebugDump="6789"
+                  DTS:Namespace="System"
+                  DTS:ObjectName="Propagate">
+                  <DTS:VariableValue
+                    DTS:DataType="11">-1</DTS:VariableValue>
+                </DTS:Variable>
+              </DTS:Variables>
+              <DTS:Executables>
+                <DTS:Executable
+                  DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success.EventHandlers[OnPostExecute]\EndAudit"
+                  DTS:CreationName="Microsoft.ExecuteSQLTask"
+                  DTS:Description="Execute SQL Task"
+                  DTS:DTSID="{9A8E1585-27FE-4830-93A4-0FD2201E8400}"
+                  DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                  DTS:LocaleID="-1"
+                  DTS:ObjectName="EndAudit"
+                  DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                  <DTS:Variables />
+                  <DTS:ObjectData>
+                    <SQLTask:SqlTaskData
+                      SQLTask:Connection="{8BFA5A72-BC4C-49E9-A6F6-C1A9C0C1761C}"
+                      SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@Audit_ID"
+                        SQLTask:DtsVariableName="User::AuditID"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@CountInserted"
+                        SQLTask:DtsVariableName="User::RowCountInserts"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@CountChanged"
+                        SQLTask:DtsVariableName="User::RowCountUpdates"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                    </SQLTask:SqlTaskData>
+                  </DTS:ObjectData>
+                </DTS:Executable>
+              </DTS:Executables>
+            </DTS:EventHandler>
+            <DTS:EventHandler
+              DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success.EventHandlers[OnPreExecute]"
+              DTS:CreationName="OnPreExecute"
+              DTS:DTSID="{795A5DFA-F03C-4F63-9CDF-7A6E146DF6F0}"
+              DTS:EventID="784756396"
+              DTS:EventName="OnPreExecute"
+              DTS:LocaleID="-1">
+              <DTS:Variables>
+                <DTS:Variable
+                  DTS:CreationName=""
+                  DTS:Description="The propagate property of the event"
+                  DTS:DTSID="{35643396-9782-4430-80E5-4032B236CB79}"
+                  DTS:IncludeInDebugDump="6789"
+                  DTS:Namespace="System"
+                  DTS:ObjectName="Propagate">
+                  <DTS:VariableValue
+                    DTS:DataType="11">-1</DTS:VariableValue>
+                </DTS:Variable>
+              </DTS:Variables>
+              <DTS:Executables>
+                <DTS:Executable
+                  DTS:refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success.EventHandlers[OnPreExecute]\StartAudit"
+                  DTS:CreationName="Microsoft.ExecuteSQLTask"
+                  DTS:Description="Execute SQL Task"
+                  DTS:DTSID="{010C89F4-9812-4E3E-9EF2-3E8CB9A2F510}"
+                  DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                  DTS:LocaleID="-1"
+                  DTS:ObjectName="StartAudit"
+                  DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                  <DTS:Variables />
+                  <DTS:ObjectData>
+                    <SQLTask:SqlTaskData
+                      SQLTask:Connection="{8BFA5A72-BC4C-49E9-A6F6-C1A9C0C1761C}"
+                      SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                      SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                      <SQLTask:ResultBinding
+                        SQLTask:ResultName="AuditID"
+                        SQLTask:DtsVariableName="User::AuditID" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@PackageName"
+                        SQLTask:DtsVariableName="System::PackageName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@PackageStart"
+                        SQLTask:DtsVariableName="System::StartTime"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="7"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@TaskName"
+                        SQLTask:DtsVariableName="System::SourceName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@CreatedBy"
+                        SQLTask:DtsVariableName="System::UserName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@DestinationTable"
+                        SQLTask:DtsVariableName="User::DestinationTable"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ExtractFileName"
+                        SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ExtractFolder"
+                        SQLTask:DtsVariableName="User::ExtractFolder"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ParentAuditID"
+                        SQLTask:DtsVariableName="User::ParentAuditID"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                    </SQLTask:SqlTaskData>
+                  </DTS:ObjectData>
+                </DTS:Executable>
+              </DTS:Executables>
+            </DTS:EventHandler>
+          </DTS:EventHandlers>
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="DEST - TasksImportSuccess"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[InvolvementSuccess]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                      connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[ID]"
+                          cachedDataType="i4"
+                          cachedName="ID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[ID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[InsertDate]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="InsertDate"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[InsertDate]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[StatusID]"
+                          cachedDataType="ui1"
+                          cachedName="StatusID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[StatusID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[error]"
+                          cachedDataType="i4"
+                          cachedName="error"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[error]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[errormsg]"
+                          cachedDataType="wstr"
+                          cachedLength="2000"
+                          cachedName="errormsg"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[errormsg]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[FEDClient]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="8"
+                          cachedName="FEDClient"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[FEDClient]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[FEDClient]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[FEDMatter]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="8"
+                          cachedName="FEDMatter"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[FEDMatter]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[FEDMatter]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[MSClientID]"
+                          cachedDataType="i8"
+                          cachedName="MSClientID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[MSClientID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[MSClientID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[MSFileID]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="MSFileID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[MSFileID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[MSFileID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[FileID]"
+                          cachedDataType="i8"
+                          cachedName="FileID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[FileID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[FileID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[contID]"
+                          cachedDataType="i8"
+                          cachedName="contID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[contID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[contID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[assocOrder]"
+                          cachedDataType="i2"
+                          cachedName="assocOrder"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocOrder]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocOrder]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[assocType]"
+                          cachedDataType="wstr"
+                          cachedLength="15"
+                          cachedName="assocType"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocType]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocType]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[assocHeading]"
+                          cachedDataType="wstr"
+                          cachedLength="200"
+                          cachedName="assocHeading"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocHeading]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocHeading]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[assocdefaultaddID]"
+                          cachedDataType="i8"
+                          cachedName="assocdefaultaddID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocdefaultaddID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocdefaultaddID]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[assocSalut]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="assocSalut"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocSalut]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocSalut]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[assocRef]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="assocRef"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocRef]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocRef]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[assocUseDX]"
+                          cachedDataType="bool"
+                          cachedName="assocUseDX"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocUseDX]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocUseDX]" />
+                        <inputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].Columns[AuditID]"
+                          cachedDataType="i4"
+                          cachedName="AuditID"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[AuditID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[AuditID]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                          dataType="i4"
+                          name="ID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                          dataType="dbTimeStamp"
+                          name="InsertDate" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                          dataType="ui1"
+                          name="StatusID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                          dataType="i4"
+                          name="error" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                          dataType="wstr"
+                          length="2000"
+                          name="errormsg" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[FEDClient]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          name="FEDClient" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[FEDMatter]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          name="FEDMatter" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[MSClientID]"
+                          dataType="i8"
+                          name="MSClientID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[MSFileID]"
+                          dataType="wstr"
+                          length="20"
+                          name="MSFileID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[FileID]"
+                          dataType="i8"
+                          name="FileID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[contID]"
+                          dataType="i8"
+                          name="contID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocOrder]"
+                          dataType="i2"
+                          name="assocOrder" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocType]"
+                          dataType="wstr"
+                          length="15"
+                          name="assocType" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocHeading]"
+                          dataType="wstr"
+                          length="200"
+                          name="assocHeading" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocdefaultaddID]"
+                          dataType="i8"
+                          name="assocdefaultaddID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocSalut]"
+                          dataType="wstr"
+                          length="100"
+                          name="assocSalut" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocRef]"
+                          dataType="wstr"
+                          length="50"
+                          name="assocRef" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[assocUseDX]"
+                          dataType="bool"
+                          name="assocUseDX" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input].ExternalColumns[AuditID]"
+                          dataType="i4"
+                          name="AuditID" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\Row Count"
+                  componentClassID="Microsoft.RowCount"
+                  contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+                  name="Row Count">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable to hold the row count."
+                      name="VariableName">User::RowCount</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\Row Count.Inputs[Row Count Input 1]"
+                      hasSideEffects="true"
+                      name="Row Count Input 1">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\Row Count.Outputs[Row Count Output 1]"
+                      name="Row Count Output 1"
+                      synchronousInputId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\Row Count.Inputs[Row Count Input 1]">
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="SRC - StagedInvolvements"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [ID]
+      ,[FEDClient]
+      ,[FEDMatter]
+      ,[MSClientID]
+      ,[MSFileID]
+      ,[FileID]
+      ,[contID]
+      ,[assocOrder]
+      ,[assocType]
+      ,[assocHeading]
+      ,[assocdefaultaddID]
+      ,[assocSalut]
+      ,[assocRef]
+      ,[assocUseDX]
+      ,[AuditID]
+      ,[InsertDate]
+      ,[StatusID]
+      ,[error]
+      ,[errormsg]
+  FROM [MattersphereStaging].[dbo].[InvolvementStage]
+WHERE StatusID = 7	--Pick only the results that have passed validation.</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                      connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[ID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[ID]"
+                          name="ID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                          dataType="dbTimeStamp"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                          name="InsertDate"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[StatusID]"
+                          dataType="ui1"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[StatusID]"
+                          name="StatusID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[error]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[error]"
+                          name="error"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[errormsg]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                          length="2000"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[errormsg]"
+                          name="errormsg"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[FEDClient]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[FEDClient]"
+                          length="8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[FEDClient]"
+                          name="FEDClient"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[FEDMatter]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[FEDMatter]"
+                          length="8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[FEDMatter]"
+                          name="FEDMatter"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[MSClientID]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[MSClientID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[MSClientID]"
+                          name="MSClientID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[MSFileID]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[MSFileID]"
+                          length="20"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[MSFileID]"
+                          name="MSFileID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[FileID]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[FileID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[FileID]"
+                          name="FileID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[contID]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[contID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[contID]"
+                          name="contID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocOrder]"
+                          dataType="i2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocOrder]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocOrder]"
+                          name="assocOrder"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocType]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocType]"
+                          length="15"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocType]"
+                          name="assocType"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocHeading]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocHeading]"
+                          length="200"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocHeading]"
+                          name="assocHeading"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocdefaultaddID]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocdefaultaddID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocdefaultaddID]"
+                          name="assocdefaultaddID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocSalut]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocSalut]"
+                          length="100"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocSalut]"
+                          name="assocSalut"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocRef]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocRef]"
+                          length="50"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocRef]"
+                          name="assocRef"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocUseDX]"
+                          dataType="bool"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocUseDX]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[assocUseDX]"
+                          name="assocUseDX"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[AuditID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[AuditID]"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].Columns[AuditID]"
+                          name="AuditID"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                          dataType="i4"
+                          name="ID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                          dataType="dbTimeStamp"
+                          name="InsertDate" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[StatusID]"
+                          dataType="ui1"
+                          name="StatusID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[error]"
+                          dataType="i4"
+                          name="error" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[errormsg]"
+                          dataType="wstr"
+                          length="2000"
+                          name="errormsg" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[FEDClient]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          name="FEDClient" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[FEDMatter]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          name="FEDMatter" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[MSClientID]"
+                          dataType="i8"
+                          name="MSClientID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[MSFileID]"
+                          dataType="wstr"
+                          length="20"
+                          name="MSFileID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[FileID]"
+                          dataType="i8"
+                          name="FileID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[contID]"
+                          dataType="i8"
+                          name="contID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocOrder]"
+                          dataType="i2"
+                          name="assocOrder" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocType]"
+                          dataType="wstr"
+                          length="15"
+                          name="assocType" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocHeading]"
+                          dataType="wstr"
+                          length="200"
+                          name="assocHeading" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocdefaultaddID]"
+                          dataType="i8"
+                          name="assocdefaultaddID" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocSalut]"
+                          dataType="wstr"
+                          length="100"
+                          name="assocSalut" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocRef]"
+                          dataType="wstr"
+                          length="50"
+                          name="assocRef" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[assocUseDX]"
+                          dataType="bool"
+                          name="assocUseDX" />
+                        <externalMetadataColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output].ExternalColumns[AuditID]"
+                          dataType="i4"
+                          name="AuditID" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[ID]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[ID]"
+                          name="ID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[FEDClient]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[FEDClient]"
+                          name="FEDClient" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[FEDMatter]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[FEDMatter]"
+                          name="FEDMatter" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[MSClientID]"
+                          dataType="i8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[MSClientID]"
+                          name="MSClientID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[MSFileID]"
+                          dataType="wstr"
+                          length="20"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[MSFileID]"
+                          name="MSFileID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[FileID]"
+                          dataType="i8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[FileID]"
+                          name="FileID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[contID]"
+                          dataType="i8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[contID]"
+                          name="contID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocOrder]"
+                          dataType="i2"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocOrder]"
+                          name="assocOrder" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocType]"
+                          dataType="wstr"
+                          length="15"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocType]"
+                          name="assocType" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocHeading]"
+                          dataType="wstr"
+                          length="200"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocHeading]"
+                          name="assocHeading" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocdefaultaddID]"
+                          dataType="i8"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocdefaultaddID]"
+                          name="assocdefaultaddID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocSalut]"
+                          dataType="wstr"
+                          length="100"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocSalut]"
+                          name="assocSalut" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocRef]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocRef]"
+                          name="assocRef" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocUseDX]"
+                          dataType="bool"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[assocUseDX]"
+                          name="assocUseDX" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[AuditID]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[AuditID]"
+                          name="AuditID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                          dataType="dbTimeStamp"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                          name="InsertDate" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                          dataType="ui1"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[StatusID]"
+                          name="StatusID" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[error]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[error]"
+                          name="error" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                          dataType="wstr"
+                          length="2000"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[errormsg]"
+                          name="errormsg" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success.Paths[OLE DB Source Output]"
+                  endId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\Row Count.Inputs[Row Count Input 1]"
+                  name="OLE DB Source Output"
+                  startId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\ST - Import Into MatterSphere\DFT - Insert into Success.Paths[Row Count Output 1]"
+                  endId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess.Inputs[OLE DB Destination Input]"
+                  name="Row Count Output 1"
+                  startId="Package\ST - Import Into MatterSphere\DFT - Insert into Success\Row Count.Outputs[Row Count Output 1]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{07D5E1D3-8557-4820-8EEF-29CB6477368F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="EST - DeleteSuccesfullyImportedInvolvements"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:EventHandlers>
+            <DTS:EventHandler
+              DTS:refId="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements.EventHandlers[OnPostExecute]"
+              DTS:CreationName="OnPostExecute"
+              DTS:DTSID="{7D6B4087-B12C-4681-BC6C-B7F2964ADE9D}"
+              DTS:EventID="785801444"
+              DTS:EventName="OnPostExecute"
+              DTS:LocaleID="-1">
+              <DTS:Variables>
+                <DTS:Variable
+                  DTS:CreationName=""
+                  DTS:Description="The propagate property of the event"
+                  DTS:DTSID="{843EEF8B-8EEC-411E-9AE1-385CB5F8926E}"
+                  DTS:IncludeInDebugDump="6789"
+                  DTS:Namespace="System"
+                  DTS:ObjectName="Propagate">
+                  <DTS:VariableValue
+                    DTS:DataType="11">-1</DTS:VariableValue>
+                </DTS:Variable>
+              </DTS:Variables>
+              <DTS:Executables>
+                <DTS:Executable
+                  DTS:refId="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements.EventHandlers[OnPostExecute]\EndAudit"
+                  DTS:CreationName="Microsoft.ExecuteSQLTask"
+                  DTS:Description="Execute SQL Task"
+                  DTS:DTSID="{49500601-D150-4F6A-8167-ADD8B64BFBE9}"
+                  DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                  DTS:LocaleID="-1"
+                  DTS:ObjectName="EndAudit"
+                  DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                  <DTS:Variables />
+                  <DTS:ObjectData>
+                    <SQLTask:SqlTaskData
+                      SQLTask:Connection="{8BFA5A72-BC4C-49E9-A6F6-C1A9C0C1761C}"
+                      SQLTask:SqlStatementSource="config.uspAuditEnd ?, 0, 0, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@Audit_ID"
+                        SQLTask:DtsVariableName="User::AuditID"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                    </SQLTask:SqlTaskData>
+                  </DTS:ObjectData>
+                </DTS:Executable>
+              </DTS:Executables>
+            </DTS:EventHandler>
+            <DTS:EventHandler
+              DTS:refId="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements.EventHandlers[OnPreExecute]"
+              DTS:CreationName="OnPreExecute"
+              DTS:DTSID="{B076B2A1-ACF2-4E51-B010-33CC0793F40F}"
+              DTS:EventID="785799364"
+              DTS:EventName="OnPreExecute"
+              DTS:LocaleID="-1">
+              <DTS:Variables>
+                <DTS:Variable
+                  DTS:CreationName=""
+                  DTS:Description="The propagate property of the event"
+                  DTS:DTSID="{62F2D9F9-CD63-44DA-980F-0F7D14BC1518}"
+                  DTS:IncludeInDebugDump="6789"
+                  DTS:Namespace="System"
+                  DTS:ObjectName="Propagate">
+                  <DTS:VariableValue
+                    DTS:DataType="11">-1</DTS:VariableValue>
+                </DTS:Variable>
+              </DTS:Variables>
+              <DTS:Executables>
+                <DTS:Executable
+                  DTS:refId="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements.EventHandlers[OnPreExecute]\StartAudit"
+                  DTS:CreationName="Microsoft.ExecuteSQLTask"
+                  DTS:Description="Execute SQL Task"
+                  DTS:DTSID="{A5390741-47D5-49FB-8E7A-CBB49D6BFE87}"
+                  DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                  DTS:LocaleID="-1"
+                  DTS:ObjectName="StartAudit"
+                  DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                  <DTS:Variables />
+                  <DTS:ObjectData>
+                    <SQLTask:SqlTaskData
+                      SQLTask:Connection="{8BFA5A72-BC4C-49E9-A6F6-C1A9C0C1761C}"
+                      SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                      SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                      <SQLTask:ResultBinding
+                        SQLTask:ResultName="AuditID"
+                        SQLTask:DtsVariableName="User::AuditID" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@PackageName"
+                        SQLTask:DtsVariableName="System::PackageName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@PackageStart"
+                        SQLTask:DtsVariableName="System::StartTime"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="7"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@TaskName"
+                        SQLTask:DtsVariableName="System::SourceName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@CreatedBy"
+                        SQLTask:DtsVariableName="System::UserName"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@DestinationTable"
+                        SQLTask:DtsVariableName="User::DestinationTable"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ExtractFileName"
+                        SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ExtractFolder"
+                        SQLTask:DtsVariableName="User::ExtractFolder"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="129"
+                        SQLTask:ParameterSize="-1" />
+                      <SQLTask:ParameterBinding
+                        SQLTask:ParameterName="@ParentAuditID"
+                        SQLTask:DtsVariableName="User::ParentAuditID"
+                        SQLTask:ParameterDirection="Input"
+                        SQLTask:DataType="3"
+                        SQLTask:ParameterSize="-1" />
+                    </SQLTask:SqlTaskData>
+                  </DTS:ObjectData>
+                </DTS:Executable>
+              </DTS:Executables>
+            </DTS:EventHandler>
+          </DTS:EventHandlers>
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{625A5F4B-6499-46A8-8730-E6CA53538E68}"
+              SQLTask:SqlStatementSource="delete&#xA;FROM dbo.InvolvementStage&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{38C79C1F-F0D1-48A6-9CF8-C1170EBDD74E}"
+          DTS:From="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\ST - Import Into MatterSphere\DFT - Insert into Success" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{398ED5BC-8EB7-4E6B-ADBB-CA999B0C92C3}"
+          DTS:From="Package\ST - Import Into MatterSphere\DFT - Insert into Success"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{B89F484E-47E7-41D3-916D-0FC34D28CF0A}"
+      DTS:EventID="234406780"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{5EF7F8BC-21AC-4A73-90CC-EB94F2039E52}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{85C080D2-EC96-4282-AC89-C7DBAF2E9DBA}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8BFA5A72-BC4C-49E9-A6F6-C1A9C0C1761C}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="226,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere"
+          TopLeft="91.0688872644095,54.1161100506878" />
+        <NodeLayout
+          Size="200,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success"
+          TopLeft="101.28679890749,226.659801471448" />
+        <NodeLayout
+          Size="298,42"
+          Id="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements"
+          TopLeft="54.4560426253272,315.852675842839" />
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint]"
+          TopLeft="202.67784308595,96.1161100506878">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,130.54369142076"
+              Start="0,0"
+              End="0,123.04369142076">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,123.04369142076" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere.PrecedenceConstraints[Constraint 1]"
+          TopLeft="202.371420766409,268.659801471448">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.192874371391"
+              Start="0,0"
+              End="0,39.692874371391">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.692874371391" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="439,479"
+          Size="439,522"
+          Id="Package\ST - Import Into MatterSphere"
+          TopLeft="123,104" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="224,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData"
+          TopLeft="267,147" />
+        <NodeLayout
+          Size="153,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc"
+          TopLeft="306,394" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\Row Count"
+          TopLeft="295,263" />
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.Paths[Row Count Output 1]"
+          TopLeft="361,305">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="21.5,89"
+              Start="0,0"
+              End="21.5,81.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,40.5"
+                    Point2="0,44.5"
+                    Point3="4,44.5" />
+                  <mssgle:LineSegment
+                    End="17.5,44.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.5,44.5"
+                    Point2="21.5,44.5"
+                    Point3="21.5,48.5" />
+                  <mssgle:LineSegment
+                    End="21.5,81.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.Paths[OLE DB Source Output]"
+          TopLeft="379,189">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-18,74"
+              Start="0,0"
+              End="-18,66.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33"
+                    Point2="0,37"
+                    Point3="-4,37" />
+                  <mssgle:LineSegment
+                    End="-14,37" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-14,37"
+                    Point2="-18,37"
+                    Point3="-18,41" />
+                  <mssgle:LineSegment
+                    End="-18,66.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\SRC - StagedInvolvementData">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into MatterSphere\DEST - dbAssoc">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into Success">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="206,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements"
+          TopLeft="229,95" />
+        <NodeLayout
+          Size="213,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess"
+          TopLeft="217.973595436857,346.204731200649" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success\Row Count"
+          TopLeft="263,191" />
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success.Paths[Row Count Output 1]"
+          TopLeft="326.736797718428,233">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,113.204731200649"
+              Start="0,0"
+              End="0,105.704731200649">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,105.704731200649" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success.Paths[OLE DB Source Output]"
+          TopLeft="330.5,137">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54"
+              Start="0,0"
+              End="0,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into Success.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into Success.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\ST - Import Into MatterSphere\DFT - Insert into Success.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into Success\SRC - StagedInvolvements">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\ST - Import Into MatterSphere\DFT - Insert into Success\DEST - TasksImportSuccess">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <DtsEventHandler
+    design-time-name="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\ST - Import Into MatterSphere\EST - DeleteSuccesfullyImportedInvolvements.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
