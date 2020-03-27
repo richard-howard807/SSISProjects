@@ -1,0 +1,1212 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2016 5:34:25 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\khanse"
+  DTS:DTSID="{9344453E-0326-4450-A0B7-087D261321FD}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="BringOnWorkflow"
+  DTS:PackageType="5"
+  DTS:VersionBuild="231"
+  DTS:VersionGUID="{785BD5CD-1299-44AD-9B74-19F1BFEEB7D9}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{545EC634-534C-4538-9516-71120327F04E}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0118C035-2794-40AC-990C-AC6A42B2DA26}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Lawsoft]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{54D8D26C-5E70-4C39-9E4D-985B19942A7A}"
+      DTS:ObjectName="CM_Lawsoft">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Lawsoft]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-SQLU-01;Initial Catalog=LawsoftStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1FD08501-5653-49AE-805C-FFED6B260337}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MS_PROD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A6F25034-B88F-4E86-9402-3A991D42C84E}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{4E9C9146-F210-4109-BDD3-B14EC1DDE364}"
+      DTS:ObjectName="ParentAuditID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::AuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{B8949C2F-80BE-43CE-A778-3FA8875CF4E7}"
+      DTS:ObjectName="AuditID" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E60E691E-5256-4AF2-8CB5-E3F6DA79DD09}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6832D44C-0A6E-45D0-A90E-76237CD9C15F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E8017D55-51BC-40AD-A0EB-1012FE029BBA}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DB4BC7D4-A017-47FE-B074-DA53CDEC6778}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B77F6827-584B-42AE-992D-1781C81C1590}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{78F74E1C-8BB2-4745-832F-1253C1E2099D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5A09398B-CD03-49B4-BE05-F4D3EC1AD281}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AED67A65-51D5-4F24-B920-C301F20B06F9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EA2523DD-13F1-4009-B21A-A8C0E55DB9C1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8B1FCFD0-2FA4-45BC-8D50-DDEBE8C9370A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{59337D72-A1A4-4103-BCA0-03C071908FE7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5CD6D753-CB5B-4140-A47F-A0E9F8679CD7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - StageBringon"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{c9974aae-9d87-4507-a4cb-1467754f21cc}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - StageBringon"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - StageBringon.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{bf97899a-9bb8-49fc-ae72-67cad1283e9a}"
+          DTS:EventID="0"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{07a0199d-968e-49df-a17e-ef2f97f2b3b9}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - StageBringon.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{27cda74a-fad4-491b-abe9-866145e6421f}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{3E124710-695A-4DA1-9521-830A23B759ED}"
+                  SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCountInserts"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountUpdates"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - StageBringon.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{2a578054-77f2-4eac-bae5-9fa9e887763e}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{137ea18d-6032-412a-81a7-7751980d1f3b}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - StageBringon.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{292ed39b-8e72-44b1-b8b1-8c50a37c6cdf}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{3E124710-695A-4DA1-9521-830A23B759ED}"
+                  SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - StageBringon\DFT - Bringon"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DFT - Bringon"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[EnvisonBringonWorkFlow]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageBringon\DFT - Bringon.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Audit]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Audit]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].Columns[Matter No]"
+                      cachedDataType="wstr"
+                      cachedLength="33"
+                      cachedName="Matter No"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[Matter No]"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[Matter No]" />
+                    <inputColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].Columns[MSFileID]"
+                      cachedDataType="i8"
+                      cachedName="MSFileID"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[MSFileID]"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[MSFileID]" />
+                    <inputColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].Columns[WorkType]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="WorkType"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[WorkType]"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[WorkType]" />
+                    <inputColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].Columns[MSAppCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSAppCode"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[MSAppCode]"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[MSAppCode]" />
+                    <inputColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].Columns[MSPlanCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSPlanCode"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[MSPlanCode]"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[MSPlanCode]" />
+                    <inputColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].Columns[Exclude]"
+                      cachedDataType="i4"
+                      cachedName="Exclude"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[Exclude]"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[Exclude]" />
+                    <inputColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].Columns[fileStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="fileStatus"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[fileStatus]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[Matter No]"
+                      dataType="wstr"
+                      length="33"
+                      name="Matter No" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[MSFileID]"
+                      dataType="i8"
+                      name="MSFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[WorkType]"
+                      dataType="wstr"
+                      length="15"
+                      name="WorkType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[MSAppCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSAppCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[MSPlanCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSPlanCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[Exclude]"
+                      dataType="i4"
+                      name="Exclude" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageBringon\DFT - Bringon.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageBringon\DFT - Bringon.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - Bringon.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageBringon\DFT - Bringon.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageBringon\DFT - StageBringon"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="DFT - StageBringon"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT clNo + '-' + dbFile.fileNo AS [Matter No],
+       dbFile.fileID AS MSFileID ,
+       dbFile.fileType AS WorkType,
+       AppCode AS MSAppCode,
+       [PLAN code] AS MSPlanCode,
+       NULL AS Exclude
+	   ,MS_PROD.config.dbFile.fileStatus
+FROM MS_PROD.dbo.udEnvisionMatterBridge
+INNER JOIN MS_PROD.config.dbFile
+ ON dbFile.fileID = udEnvisionMatterBridge.fileID
+INNER JOIN MS_PROD.config.dbClient
+ ON dbClient.clID = dbFile.clID
+LEFT OUTER JOIN dbo.EnvisonWorkflows
+ ON EnvisonWorkflows.fileType = dbFile.fileType
+
+WHERE dbFile.fileNo &lt;&gt;'0'
+AND dbfile.fileType NOT IN ('ZZZZ')
+AND fileStatus='LIVE'</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageBringon\DFT - StageBringon.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[Matter No]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[Matter No]"
+                      length="33"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[Matter No]"
+                      name="Matter No"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[MSFileID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[MSFileID]"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[MSFileID]"
+                      name="MSFileID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[WorkType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[WorkType]"
+                      length="15"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[WorkType]"
+                      name="WorkType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[MSAppCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[MSAppCode]"
+                      length="255"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[MSAppCode]"
+                      name="MSAppCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[MSPlanCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[MSPlanCode]"
+                      length="255"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[MSPlanCode]"
+                      name="MSPlanCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[Exclude]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[Exclude]"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[Exclude]"
+                      name="Exclude"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      length="15"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      name="fileStatus"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[Matter No]"
+                      dataType="wstr"
+                      length="33"
+                      name="Matter No" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[MSFileID]"
+                      dataType="i8"
+                      name="MSFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[WorkType]"
+                      dataType="wstr"
+                      length="15"
+                      name="WorkType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[MSAppCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSAppCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[MSPlanCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="MSPlanCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[Exclude]"
+                      dataType="i4"
+                      name="Exclude" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[Matter No]"
+                      dataType="wstr"
+                      length="33"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[Matter No]"
+                      name="Matter No" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[MSFileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[MSFileID]"
+                      name="MSFileID" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[WorkType]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[WorkType]"
+                      name="WorkType" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[MSAppCode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[MSAppCode]"
+                      name="MSAppCode" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[MSPlanCode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[MSPlanCode]"
+                      name="MSPlanCode" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[Exclude]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[Exclude]"
+                      name="Exclude" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      name="fileStatus" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageBringon\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageBringon\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageBringon\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - StageBringon\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - StageBringon.Paths[OLE DB Source Output]"
+              endId="Package\DFT - StageBringon\Row Count.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - StageBringon\DFT - StageBringon.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - StageBringon.Paths[Row Count Output 1]"
+              endId="Package\DFT - StageBringon\DFT - Bringon.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - StageBringon\Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST - EnvisonBringonWorkFlow"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{3cb2878a-48b6-4036-b524-b3a587e84647}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST - EnvisonBringonWorkFlow"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A6F25034-B88F-4E86-9402-3A991D42C84E}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.EnvisonBringonWorkFlow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST - MergeFileAppData"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{7925216b-e0f0-490c-b3d3-7b9348744d1e}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST - MergeFileAppData"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{20CFC438-7EEE-40D7-87C3-693A01676CCE}"
+          SQLTask:SqlStatementSource="MERGE.dbo.udCRCore DEST&#xA;USING&#xA;(&#xA;   SELECT MS.fileID,&#xA;       CAST(txtCurenStatNot AS NVARCHAR(MAX)) AS [txtCurenStatNot]&#xA;   FROM MattersphereStaging.[dbo].[FWNotesUnstructured]&#xA;   INNER JOIN MattersphereStaging.dbo.FWMatterCreationStage&#xA;    ON [FWNotesUnstructured].SourceSystemID=FWMatterCreationStage.SourceSystemID&#xA;   INNER JOIN (SELECT clNo,fileno,fileID FROM config.dbFile INNER JOIN config.dbClient ON dbClient.clID = dbFile.clID) AS MS&#xA;    ON MS.clNo = FWMatterCreationStage.clNo&#xA;    AND MS.fileNo = CAST(FWMatterCreationStage.NewMatterNumber AS NVARCHAR(MAX))&#xA; WHERE CAST(txtCurenStatNot AS NVARCHAR(MAX)) &lt;&gt;''&#xA;) AS src&#xA;ON DEST.fileID = src.fileID&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET DEST.[txtCurenStatNot] = src.[txtCurenStatNot]&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT&#xA;    (&#xA;        fileID,&#xA;        [txtCurenStatNot]&#xA;    )&#xA;    VALUES&#xA;    (fileID, src.[txtCurenStatNot]);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\EST - MergeOMS2K"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{4efa6049-e7c2-40cc-b759-851e6d01d797}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="EST - MergeOMS2K"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1FD08501-5653-49AE-805C-FFED6B260337}"
+          SQLTask:SqlStatementSource="MERGE dbo.dbMSData_OMS2K AS DEST USING&#xA;(&#xA;SELECT&#xA;DISTINCT MSFileID AS fileid, MSPlanCode AS MSCode, @MSNextDueDate AS MSNextDueDate,1 AS MSNextDueStage, @MSStage1Due AS MSStage1Due&#xA;FROM MattersphereStaging.dbo.Armour20200206&#xA;&#xA;WHERE Exclude IS NULL&#xA;) AS SRC ON DEST.fileid = SRC.fileid&#xA;--If there isn't a record in the dbMSData_OMS2K table for the imported recrods this inserts one&#xA;WHEN NOT MATCHED THEN INSERT (fileID, MSCode, MSNextDueDate, MSNextDueStage, MSStage1Due)&#xA;VALUES (SRC.fileid, SRC.MSCode, SRC.MSNextDueDate, SRC.MSNextDueStage, SRC.MSStage1Due)&#xA;--If there is a record, this sets the data correctly.&#xA;WHEN  MATCHED THEN UPDATE SET&#xA;DEST.MSCode = SRC.MSCode, &#xA;DEST.MSNextDueDate = SRC.MSNextDueDate, &#xA;DEST.MSNextDueStage = SRC.MSNextDueStage,&#xA;DEST.MSStage1Due = SRC.MSStage1Due;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{3F256667-35DF-4E0C-B676-326F2C94C182}"
+      DTS:From="Package\EST - MergeFileAppData"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\EST - MergeOMS2K" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{38de0a8f-a716-4884-98be-39bd1693bd46}"
+      DTS:From="Package\EST - EnvisonBringonWorkFlow"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\DFT - StageBringon" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{6f0c9304-4925-440b-a65f-c84809e0f62b}"
+      DTS:From="Package\DFT - StageBringon"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\EST - MergeFileAppData" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{D30280A0-7C7C-4A8C-B2A1-CDABB2EF8107}"
+      DTS:EventID="-3"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{4801897A-997B-447F-8DAE-E1A539CAFB2B}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{876E7D37-F6DB-46D3-B0FE-040E07E8732F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{545EC634-534C-4538-9516-71120327F04E}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\DFT - StageBringon"
+          TopLeft="217,109.466349634765" />
+        <NodeLayout
+          Size="193,42"
+          Id="Package\EST - MergeFileAppData"
+          TopLeft="431.94296041174,114" />
+        <NodeLayout
+          Size="226,42"
+          Id="Package\EST - EnvisonBringonWorkFlow"
+          TopLeft="185.94296041174,20" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="300.72148020587,62">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.466349634765"
+              Start="0,0"
+              End="0,39.966349634765">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.966349634765" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="388,132.733174817382">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="43.9429604117399,0"
+              Start="0,0"
+              End="36.4429604117399,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="36.4429604117399,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171,42"
+          Id="Package\EST - MergeOMS2K"
+          TopLeft="438,190" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="525.97148020587,156">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="129,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="426,210" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT - StageBringon">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\DFT - StageBringon\DFT - StageBringon"
+          TopLeft="163,54" />
+        <NodeLayout
+          Size="145,42"
+          Id="Package\DFT - StageBringon\DFT - Bringon"
+          TopLeft="169,224" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\DFT - StageBringon\Row Count"
+          TopLeft="181,135" />
+        <EdgeLayout
+          Id="Package\DFT - StageBringon.Paths[OLE DB Source Output]"
+          TopLeft="247.25,96">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageBringon.Paths[Row Count Output 1]"
+          TopLeft="243.75,177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47"
+              Start="0,0"
+              End="0,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - StageBringon.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - StageBringon.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="462,189" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - StageBringon.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package\DFT - StageBringon.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="410,169" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageBringon\DFT - StageBringon">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageBringon\DFT - Bringon">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
