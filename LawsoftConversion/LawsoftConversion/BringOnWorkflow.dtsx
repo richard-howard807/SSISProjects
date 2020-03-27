@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="BringOnWorkflow"
   DTS:PackageType="5"
-  DTS:VersionBuild="235"
-  DTS:VersionGUID="{CB178F7E-B610-4297-9FA2-E474818FC099}">
+  DTS:VersionBuild="236"
+  DTS:VersionGUID="{48BAF140-F0DE-4E1C-9202-25B2F81599E5}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1550,7 +1550,7 @@ AND fileStatus='LIVE'</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{1FD08501-5653-49AE-805C-FFED6B260337}"
-          SQLTask:SqlStatementSource="MERGE.dbo.udCRCore DEST&#xA;USING&#xA;(&#xA;   SELECT MS.fileID,&#xA;       CAST(txtCurenStatNot AS NVARCHAR(MAX)) AS [txtCurenStatNot]&#xA;   FROM MattersphereStaging.[dbo].[FWNotesUnstructured]&#xA;   INNER JOIN MattersphereStaging.dbo.FWMatterCreationStage&#xA;    ON [FWNotesUnstructured].SourceSystemID=FWMatterCreationStage.SourceSystemID&#xA;   INNER JOIN (SELECT clNo,fileno,fileID FROM config.dbFile INNER JOIN config.dbClient ON dbClient.clID = dbFile.clID) AS MS&#xA;    ON MS.clNo = FWMatterCreationStage.clNo&#xA;    AND MS.fileNo = CAST(FWMatterCreationStage.NewMatterNumber AS NVARCHAR(MAX))&#xA; WHERE CAST(txtCurenStatNot AS NVARCHAR(MAX)) &lt;&gt;''&#xA;) AS src&#xA;ON DEST.fileID = src.fileID&#xA;WHEN MATCHED THEN&#xA;    UPDATE SET DEST.[txtCurenStatNot] = src.[txtCurenStatNot]&#xA;WHEN NOT MATCHED THEN&#xA;    INSERT&#xA;    (&#xA;        fileID,&#xA;        [txtCurenStatNot]&#xA;    )&#xA;    VALUES&#xA;    (fileID, src.[txtCurenStatNot]);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="MERGE dbo.dbFileManagementAppData AS DEST USING&#xA;(&#xA;--Gets the latest MS fileids that were imported&#xA;SELECT&#xA;DISTINCT MSFileID AS fileid, MSAppCode AS Appcode&#xA;FROM MattersphereStaging.dbo.EnvisonBringonWorkFlow&#xA;WHERE Exclude IS NULL&#xA;&#xA;) AS SRC ON DEST.fileid = SRC.fileid&#xA;--If there isn't a record in the dbFileManagementAppData table for the imported recrods this inserts one&#xA;WHEN NOT MATCHED THEN INSERT (fileid, appcode)&#xA;VALUES (SRC.fileid, SRC.Appcode)&#xA;--If there is a record, this sets the appcode to what it is in the variable&#xA;WHEN MATCHED THEN UPDATE SET&#xA;DEST.appcode = SRC.Appcode;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -1566,7 +1566,7 @@ AND fileStatus='LIVE'</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{1FD08501-5653-49AE-805C-FFED6B260337}"
-          SQLTask:SqlStatementSource="MERGE dbo.dbMSData_OMS2K AS DEST USING&#xA;(&#xA;SELECT&#xA;DISTINCT MSFileID AS fileid, MSPlanCode AS MSCode, @MSNextDueDate AS MSNextDueDate,1 AS MSNextDueStage, @MSStage1Due AS MSStage1Due&#xA;FROM MattersphereStaging.dbo.Armour20200206&#xA;&#xA;WHERE Exclude IS NULL&#xA;) AS SRC ON DEST.fileid = SRC.fileid&#xA;--If there isn't a record in the dbMSData_OMS2K table for the imported recrods this inserts one&#xA;WHEN NOT MATCHED THEN INSERT (fileID, MSCode, MSNextDueDate, MSNextDueStage, MSStage1Due)&#xA;VALUES (SRC.fileid, SRC.MSCode, SRC.MSNextDueDate, SRC.MSNextDueStage, SRC.MSStage1Due)&#xA;--If there is a record, this sets the data correctly.&#xA;WHEN  MATCHED THEN UPDATE SET&#xA;DEST.MSCode = SRC.MSCode, &#xA;DEST.MSNextDueDate = SRC.MSNextDueDate, &#xA;DEST.MSNextDueStage = SRC.MSNextDueStage,&#xA;DEST.MSStage1Due = SRC.MSStage1Due;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="DECLARE @MSNextDueDate DATE&#xA;SET @MSNextDueDate =  CONVERT(DATE,GETDATE(),103)&#xA;&#xA;DECLARE @MSStage1Due DATE&#xA;SET @MSStage1Due =  CONVERT(DATE,GETDATE(),103)&#xA;&#xA;&#xA;MERGE MS_PROD.dbo.dbMSData_OMS2K AS DEST USING&#xA;(&#xA;SELECT&#xA;DISTINCT MSFileID AS fileid, MSPlanCode AS MSCode, @MSNextDueDate AS MSNextDueDate,1 AS MSNextDueStage, @MSStage1Due AS MSStage1Due&#xA;FROM MattersphereStaging.dbo.EnvisonBringonWorkFlow&#xA;&#xA;WHERE Exclude IS NULL&#xA;) AS SRC ON DEST.fileid = SRC.fileid&#xA;--If there isn't a record in the dbMSData_OMS2K table for the imported recrods this inserts one&#xA;WHEN NOT MATCHED THEN INSERT (fileID, MSCode, MSNextDueDate, MSNextDueStage, MSStage1Due)&#xA;VALUES (SRC.fileid, SRC.MSCode, SRC.MSNextDueDate, SRC.MSNextDueStage, SRC.MSStage1Due)&#xA;--If there is a record, this sets the data correctly.&#xA;WHEN  MATCHED THEN UPDATE SET&#xA;DEST.MSCode = SRC.MSCode, &#xA;DEST.MSNextDueDate = SRC.MSNextDueDate, &#xA;DEST.MSNextDueStage = SRC.MSNextDueStage,&#xA;DEST.MSStage1Due = SRC.MSStage1Due;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
