@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="00 PackageIndex"
   DTS:PackageType="5"
-  DTS:VersionBuild="13"
-  DTS:VersionGUID="{9CE333FD-B0BC-4516-9751-0F8CD0DDA8B3}">
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{BCA8F86A-A283-45A4-946B-15DA178642F3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables>
@@ -137,7 +137,7 @@
                     <connection
                       refId="Package\INSERT\Insert Import &amp; Audit\audit_insert_tsu.Connections[OleDbConnection]"
                       connectionManagerID="{E85926D6-5458-44A3-A92D-27B5A3373C36}:external"
-                      connectionManagerRefId="Project.ConnectionManagers[red_dw_dev]"
+                      connectionManagerRefId="Project.ConnectionManagers[red_dw]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -679,7 +679,7 @@ getdate() LastUpdated
                     <connection
                       refId="Package\INSERT\Insert Import &amp; Audit\insert_tsu.Connections[OleDbConnection]"
                       connectionManagerID="{E85926D6-5458-44A3-A92D-27B5A3373C36}:external"
-                      connectionManagerRefId="Project.ConnectionManagers[red_dw_dev]"
+                      connectionManagerRefId="Project.ConnectionManagers[red_dw]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -1435,13 +1435,47 @@ getdate() LastUpdated
                     </output>
                   </outputs>
                 </component>
+                <component
+                  refId="Package\INSERT\Insert Import &amp; Audit\Row Count"
+                  componentClassID="Microsoft.RowCount"
+                  contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+                  name="Row Count">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable to hold the row count."
+                      name="VariableName">User::Insert_RecordCount</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\INSERT\Insert Import &amp; Audit\Row Count.Inputs[Row Count Input 1]"
+                      hasSideEffects="true"
+                      name="Row Count Input 1">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\INSERT\Insert Import &amp; Audit\Row Count.Outputs[Row Count Output 1]"
+                      name="Row Count Output 1"
+                      synchronousInputId="Package\INSERT\Insert Import &amp; Audit\Row Count.Inputs[Row Count Input 1]">
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
               </components>
               <paths>
                 <path
                   refId="Package\INSERT\Insert Import &amp; Audit.Paths[OLE DB Source Output]"
-                  endId="Package\INSERT\Insert Import &amp; Audit\audit_insert_tsu.Inputs[OLE DB Destination Input]"
+                  endId="Package\INSERT\Insert Import &amp; Audit\Row Count.Inputs[Row Count Input 1]"
                   name="OLE DB Source Output"
                   startId="Package\INSERT\Insert Import &amp; Audit\insert_tsu.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\INSERT\Insert Import &amp; Audit.Paths[Row Count Output 1]"
+                  endId="Package\INSERT\Insert Import &amp; Audit\audit_insert_tsu.Inputs[OLE DB Destination Input]"
+                  name="Row Count Output 1"
+                  startId="Package\INSERT\Insert Import &amp; Audit\Row Count.Outputs[Row Count Output 1]" />
               </paths>
             </pipeline>
           </DTS:ObjectData>
@@ -1561,7 +1595,7 @@ getdate() LastUpdated
                     <connection
                       refId="Package\UPDATE\Update Import &amp; Audit\audit_tsu_update.Connections[OleDbConnection]"
                       connectionManagerID="{E85926D6-5458-44A3-A92D-27B5A3373C36}:external"
-                      connectionManagerRefId="Project.ConnectionManagers[red_dw_dev]"
+                      connectionManagerRefId="Project.ConnectionManagers[red_dw]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -2449,6 +2483,35 @@ getdate() LastUpdated
                   </outputs>
                 </component>
                 <component
+                  refId="Package\UPDATE\Update Import &amp; Audit\Row Count"
+                  componentClassID="Microsoft.RowCount"
+                  contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+                  name="Row Count">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable to hold the row count."
+                      name="VariableName">User::Update_RecordCount</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\UPDATE\Update Import &amp; Audit\Row Count.Inputs[Row Count Input 1]"
+                      hasSideEffects="true"
+                      name="Row Count Input 1">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\UPDATE\Update Import &amp; Audit\Row Count.Outputs[Row Count Output 1]"
+                      name="Row Count Output 1"
+                      synchronousInputId="Package\UPDATE\Update Import &amp; Audit\Row Count.Inputs[Row Count Input 1]">
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
                   refId="Package\UPDATE\Update Import &amp; Audit\tsu_update"
                   componentClassID="Microsoft.OLEDBSource"
                   contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
@@ -2573,7 +2636,7 @@ getdate() LastUpdated
                     <connection
                       refId="Package\UPDATE\Update Import &amp; Audit\tsu_update.Connections[OleDbConnection]"
                       connectionManagerID="{E85926D6-5458-44A3-A92D-27B5A3373C36}:external"
-                      connectionManagerRefId="Project.ConnectionManagers[red_dw_dev]"
+                      connectionManagerRefId="Project.ConnectionManagers[red_dw]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -4095,9 +4158,14 @@ getdate() LastUpdated
               <paths>
                 <path
                   refId="Package\UPDATE\Update Import &amp; Audit.Paths[OLE DB Source Output]"
-                  endId="Package\UPDATE\Update Import &amp; Audit\audit_tsu_update.Inputs[OLE DB Destination Input]"
+                  endId="Package\UPDATE\Update Import &amp; Audit\Row Count.Inputs[Row Count Input 1]"
                   name="OLE DB Source Output"
                   startId="Package\UPDATE\Update Import &amp; Audit\tsu_update.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\UPDATE\Update Import &amp; Audit.Paths[Row Count Output 1]"
+                  endId="Package\UPDATE\Update Import &amp; Audit\audit_tsu_update.Inputs[OLE DB Destination Input]"
+                  name="Row Count Output 1"
+                  startId="Package\UPDATE\Update Import &amp; Audit\Row Count.Outputs[Row Count Output 1]" />
               </paths>
             </pipeline>
           </DTS:ObjectData>
@@ -4138,7 +4206,7 @@ getdate() LastUpdated
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
         <NodeLayout
           Size="213.333333333334,41.3333333333334"
           Id="Package\INSERT\Execute 01 IBInsert Package"
@@ -4152,7 +4220,7 @@ getdate() LastUpdated
           TopLeft="185.516326544514,45.7680684746343">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{x:Null}"
+              StartConnector="{assembly:Null}"
               EndConnector="54.3510243855135,0"
               Start="0,0"
               End="46.8510243855135,0">
@@ -4191,7 +4259,7 @@ getdate() LastUpdated
           TopLeft="186.117007470015,46.1994435920692">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{x:Null}"
+              StartConnector="{assembly:Null}"
               EndConnector="52.1523851466019,0"
               Start="0,0"
               End="44.6523851466019,0">
@@ -4213,7 +4281,7 @@ getdate() LastUpdated
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="484,145.333333333334"
+          PanelSize="484,146"
           Size="484,188.666666666667"
           Id="Package\UPDATE"
           TopLeft="94.3673485458418,306.581516779712" />
@@ -4222,7 +4290,7 @@ getdate() LastUpdated
           TopLeft="337.421770338183,263.903642775416">
           <EdgeLayout.Curve>
             <mssgle:Curve
-              StartConnector="{x:Null}"
+              StartConnector="{assembly:Null}"
               EndConnector="0,42.6778740042963"
               Start="0,0"
               End="0,35.1778740042963">
@@ -4261,41 +4329,67 @@ getdate() LastUpdated
     design-time-name="Package\INSERT\Insert Import &amp; Audit">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="153.333333333334,41.3333333333334"
-          Id="Package\INSERT\Insert Import &amp; Audit\audit_insert_tsu"
-          TopLeft="230.285718207457,231.105883451152" />
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="151.333333333334,41.3333333333334"
           Id="Package\INSERT\Insert Import &amp; Audit\insert_tsu"
           TopLeft="116.000001975468,25.6941180074091" />
+        <NodeLayout
+          Size="161.333333333334,41.3333333333334"
+          Id="Package\INSERT\Insert Import &amp; Audit\audit_insert_tsu"
+          TopLeft="230.285718207457,231.105883451152" />
+        <NodeLayout
+          Size="131.333333333334,42.6666666666667"
+          Id="Package\INSERT\Insert Import &amp; Audit\Row Count"
+          TopLeft="247.499996311963,122.199997814894" />
         <EdgeLayout
           Id="Package\INSERT\Insert Import &amp; Audit.Paths[OLE DB Source Output]"
           TopLeft="191.666668642135,67.0274513407424">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{x:Null}"
-              EndConnector="115.285716231989,164.07843211041"
+              EndConnector="121.499994336495,55.1725464741513"
               Start="0,0"
-              End="115.285716231989,156.57843211041">
+              End="121.499994336495,47.6725464741513">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,78.0392160552048" />
+                    End="0,23.5862732370757" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,78.0392160552048"
-                    Point2="0,82.0392160552048"
-                    Point3="4,82.0392160552048" />
+                    Point1="0,23.5862732370757"
+                    Point2="0,27.5862732370757"
+                    Point3="4,27.5862732370757" />
                   <mssgle:LineSegment
-                    End="111.285716231989,82.0392160552048" />
+                    End="117.499994336495,27.5862732370757" />
                   <mssgle:CubicBezierSegment
-                    Point1="111.285716231989,82.0392160552048"
-                    Point2="115.285716231989,82.0392160552048"
-                    Point3="115.285716231989,86.0392160552048" />
+                    Point1="117.499994336495,27.5862732370757"
+                    Point2="121.499994336495,27.5862732370757"
+                    Point3="121.499994336495,31.5862732370757" />
                   <mssgle:LineSegment
-                    End="115.285716231989,156.57843211041" />
+                    End="121.499994336495,47.6725464741513" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\INSERT\Insert Import &amp; Audit.Paths[Row Count Output 1]"
+          TopLeft="312.059523926377,164.86666448156">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,66.2392189695916"
+              Start="0,0"
+              End="0,58.7392189695916">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.7392189695916" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4332,41 +4426,79 @@ getdate() LastUpdated
     design-time-name="Package\UPDATE\Update Import &amp; Audit">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="160,41.3333333333334"
-          Id="Package\UPDATE\Update Import &amp; Audit\audit_tsu_update"
-          TopLeft="313.9047619372,96.0156842439645" />
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="131.333333333334,41.3333333333334"
           Id="Package\UPDATE\Update Import &amp; Audit\tsu_update"
           TopLeft="146.4,27.2" />
+        <NodeLayout
+          Size="160,41.3333333333334"
+          Id="Package\UPDATE\Update Import &amp; Audit\audit_tsu_update"
+          TopLeft="329.238095270533,150.015684243965" />
+        <NodeLayout
+          Size="131.333333333334,42.6666666666667"
+          Id="Package\UPDATE\Update Import &amp; Audit\Row Count"
+          TopLeft="471.333333333333,52.6666666666667" />
         <EdgeLayout
           Id="Package\UPDATE\Update Import &amp; Audit.Paths[OLE DB Source Output]"
-          TopLeft="212.066666666667,68.5333333333333">
+          TopLeft="277.733333333333,47.8666666666667">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{x:Null}"
-              EndConnector="181.838095270533,27.4823509106312"
+              EndConnector="193.6,26.1333333333333"
               Start="0,0"
-              End="181.838095270533,19.9823509106312">
+              End="186.1,26.1333333333333">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,9.74117545531558" />
+                    End="92.8,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,9.74117545531558"
-                    Point2="0,13.7411754553156"
-                    Point3="4,13.7411754553156" />
+                    Point1="92.8,0"
+                    Point2="96.8,0"
+                    Point3="96.8,4" />
                   <mssgle:LineSegment
-                    End="177.838095270533,13.7411754553156" />
+                    End="96.8,22.1333333333333" />
                   <mssgle:CubicBezierSegment
-                    Point1="177.838095270533,13.7411754553156"
-                    Point2="181.838095270533,13.7411754553156"
-                    Point3="181.838095270533,17.7411754553156" />
+                    Point1="96.8,22.1333333333333"
+                    Point2="96.8,26.1333333333333"
+                    Point3="100.8,26.1333333333333" />
                   <mssgle:LineSegment
-                    End="181.838095270533,19.9823509106312" />
+                    End="186.1,26.1333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\UPDATE\Update Import &amp; Audit.Paths[Row Count Output 1]"
+          TopLeft="537,95.3333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-127.761904729467,54.6823509106312"
+              Start="0,0"
+              End="-127.761904729467,47.1823509106312">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.3411754553156" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.3411754553156"
+                    Point2="0,27.3411754553156"
+                    Point3="-4,27.3411754553156" />
+                  <mssgle:LineSegment
+                    End="-123.761904729467,27.3411754553156" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-123.761904729467,27.3411754553156"
+                    Point2="-127.761904729467,27.3411754553156"
+                    Point3="-127.761904729467,31.3411754553156" />
+                  <mssgle:LineSegment
+                    End="-127.761904729467,47.1823509106312" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
