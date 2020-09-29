@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="02 IBUpdates"
   DTS:PackageType="5"
-  DTS:VersionBuild="183"
-  DTS:VersionGUID="{5E69C1D4-1D2C-4A01-8525-F517CBAD5CC6}">
+  DTS:VersionBuild="185"
+  DTS:VersionGUID="{B62CFFC8-3379-4F0E-B7A4-FEC5BF2A8209}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables>
@@ -19736,34 +19736,6 @@ AAAAAAAA</BinaryItem>
               </DTS:ObjectData>
             </DTS:Executable>
             <DTS:Executable
-              DTS:refId="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Get BCM Timekeeper"
-              DTS:CreationName="Microsoft.ExecuteSQLTask"
-              DTS:Description="Execute SQL Task"
-              DTS:DTSID="{efb9730e-a0d8-4e65-8e4f-355d66bf4cec}"
-              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-              DTS:LocaleID="-1"
-              DTS:ObjectName="Get BCM Timekeeper"
-              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-              DTS:ThreadHint="0">
-              <DTS:Variables />
-              <DTS:ObjectData>
-                <SQLTask:SqlTaskData
-                  SQLTask:Connection="{0B7FF1C6-E65D-4994-87EA-C6555B9E96AE}"
-                  SQLTask:SqlStatementSource="SELECT DISTINCT Entity &#xA;FROM Timekeeper&#xA;&#xA;WHERE TkprIndex = ?"
-                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
-                  <SQLTask:ResultBinding
-                    SQLTask:ResultName="0"
-                    SQLTask:DtsVariableName="User::Update_BCMTimeKeeperID" />
-                  <SQLTask:ParameterBinding
-                    SQLTask:ParameterName="0"
-                    SQLTask:DtsVariableName="User::payrollid_BCM_POST"
-                    SQLTask:ParameterDirection="Input"
-                    SQLTask:DataType="131"
-                    SQLTask:ParameterSize="0" />
-                </SQLTask:SqlTaskData>
-              </DTS:ObjectData>
-            </DTS:Executable>
-            <DTS:Executable
               DTS:refId="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Get BCM UsrID"
               DTS:CreationName="Microsoft.ExecuteSQLTask"
               DTS:Description="Execute SQL Task"
@@ -19777,14 +19749,20 @@ AAAAAAAA</BinaryItem>
               <DTS:ObjectData>
                 <SQLTask:SqlTaskData
                   SQLTask:Connection="{E85926D6-5458-44A3-A92D-27B5A3373C36}"
-                  SQLTask:SqlStatementSource="SELECT ms_usrid&#xA;FROM   ds_sh_3e_user_sync&#xA;WHERE (entity = ?)"
+                  SQLTask:SqlStatementSource="SELECT TOP 1 ISNULL(ds_sh_3e_user_sync.ms_usrid, &#xA;&#x9;&#x9;&#x9;( SELECT TOP 1 dbUser.usrID FROM TE_3E_Prod..Timekeeper&#xA;&#x9;&#x9;&#x9;INNER JOIN MS_Prod..dbUser ON Timekeeper.Entity = dbUser.usrExtID WHERE Timekeeper.TkprIndex = ?) )&#xA;FROM dbo.ds_sh_3e_user_sync&#xA;WHERE ds_sh_3e_user_sync.timekeeperindex =  ?"
                   SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
                   <SQLTask:ResultBinding
                     SQLTask:ResultName="0"
                     SQLTask:DtsVariableName="User::Update_BCMUsrID" />
                   <SQLTask:ParameterBinding
                     SQLTask:ParameterName="0"
-                    SQLTask:DtsVariableName="User::Update_BCMTimeKeeperID"
+                    SQLTask:DtsVariableName="User::payrollid_BCM_POST"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="0" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="1"
+                    SQLTask:DtsVariableName="User::payrollid_BCM_POST"
                     SQLTask:ParameterDirection="Input"
                     SQLTask:DataType="3"
                     SQLTask:ParameterSize="0" />
@@ -20123,8 +20101,8 @@ AAAAAAAA</BinaryItem>
             <DTS:PrecedenceConstraint
               DTS:refId="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container.PrecedenceConstraints[Constraint 1]"
               DTS:CreationName=""
-              DTS:DTSID="{CB7AD50F-1F8F-4EB7-BF38-F069685105D5}"
-              DTS:From="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Get BCM Timekeeper"
+              DTS:DTSID="{0F744654-EA94-4FB3-81D3-EFA4A01AC3E5}"
+              DTS:From="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Edit Timekeeper WebCall"
               DTS:LogicalAnd="True"
               DTS:ObjectName="Constraint 1"
               DTS:To="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Get BCM UsrID" />
@@ -20200,14 +20178,6 @@ AAAAAAAA</BinaryItem>
               DTS:LogicalAnd="True"
               DTS:ObjectName="Constraint 6"
               DTS:To="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Edit Timekeeper WebCall" />
-            <DTS:PrecedenceConstraint
-              DTS:refId="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container.PrecedenceConstraints[Constraint 7]"
-              DTS:CreationName=""
-              DTS:DTSID="{6FE3D451-2B25-4659-A6B2-5A6303545C1E}"
-              DTS:From="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Edit Timekeeper WebCall"
-              DTS:LogicalAnd="True"
-              DTS:ObjectName="Constraint 7"
-              DTS:To="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Get BCM Timekeeper" />
           </DTS:PrecedenceConstraints>
           <DTS:ForEachVariableMappings>
             <DTS:ForEachVariableMapping
@@ -20484,10 +20454,6 @@ AAAAAAAA</BinaryItem>
           Id="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Get 3e effec date"
           TopLeft="263.208328537022,220.583328626057" />
         <NodeLayout
-          Size="178.666666666667,42.6666666666667"
-          Id="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Get BCM Timekeeper"
-          TopLeft="196.803406064047,560.267370072831" />
-        <NodeLayout
           Size="148.666666666667,41.3333333333334"
           Id="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container\Get BCM UsrID"
           TopLeft="213.94626345992,650.633757894808" />
@@ -20529,28 +20495,6 @@ AAAAAAAA</BinaryItem>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="228.115640536299,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container.PrecedenceConstraints[Constraint 1]"
-          TopLeft="287.208168095317,602.934036739498">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{x:Null}"
-              EndConnector="0,47.6997211553104"
-              Start="0,0"
-              End="0,40.1997211553104">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,40.1997211553104" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -20806,31 +20750,31 @@ AAAAAAAA</BinaryItem>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container.PrecedenceConstraints[Constraint 7]"
+          Id="Package\UPDATE CONTAINER\UPDATES - Foreach Loop Container.PrecedenceConstraints[Constraint 1]"
           TopLeft="485.402204441218,490.263740454479">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{x:Null}"
-              EndConnector="-199.265465043837,70.0036296183523"
+              EndConnector="-197.122607647964,160.370017440329"
               Start="0,0"
-              End="-199.265465043837,62.5036296183523">
+              End="-197.122607647964,152.870017440329">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,31.0018148091762" />
+                    End="0,76.1850087201647" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,31.0018148091762"
-                    Point2="0,35.0018148091762"
-                    Point3="-4,35.0018148091762" />
+                    Point1="0,76.1850087201647"
+                    Point2="0,80.1850087201647"
+                    Point3="-4,80.1850087201647" />
                   <mssgle:LineSegment
-                    End="-195.265465043837,35.0018148091762" />
+                    End="-193.122607647964,80.1850087201647" />
                   <mssgle:CubicBezierSegment
-                    Point1="-195.265465043837,35.0018148091762"
-                    Point2="-199.265465043837,35.0018148091762"
-                    Point3="-199.265465043837,39.0018148091762" />
+                    Point1="-193.122607647964,80.1850087201647"
+                    Point2="-197.122607647964,80.1850087201647"
+                    Point3="-197.122607647964,84.1850087201647" />
                   <mssgle:LineSegment
-                    End="-199.265465043837,62.5036296183523" />
+                    End="-197.122607647964,152.870017440329" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
