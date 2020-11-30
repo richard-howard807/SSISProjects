@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageLawSoftClientDocuments"
   DTS:PackageType="5"
-  DTS:VersionBuild="138"
-  DTS:VersionGUID="{79CDC2D0-DAEB-4F73-93EF-97EC9DA1FC7C}">
+  DTS:VersionBuild="139"
+  DTS:VersionGUID="{F4FE6B7E-CA66-4F80-908D-2DB69CE565CC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2889,7 +2889,19 @@ AND Exceptions.ORIGINAL_VERSION_DIWOR IS NULL
         MS.fileID
 FROM  dbo.udEnvisionMatterBridge AS MS
 LEFT OUTER JOIN config.dbClient
- ON dbClient.clID = MS.clID</property>
+ ON dbClient.clID = MS.clID
+UNION
+SELECT  clNo AS clNo ,
+        MS.clID,
+        MS.fileNo ,
+        CAST(EnvisonClientMerge.FEDCode AS NVARCHAR(255)) AS FEDCode,
+        MS.fileID
+FROM MattersphereStaging.dbo.EnvisonClientMerge
+ INNER JOIN (SELECT RTRIM(clno)+'-'+RTRIM(fileno) AS FEDCode
+ ,dbClient.clID,fileNo,fileID,clNo
+ FROM config.dbFile INNER JOIN config.dbClient
+  ON dbClient.clID = dbFile.clID WHERE fileNo='0') AS MS
+   ON MS.FEDCode = EnvisonClientMerge.FEDCode</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
