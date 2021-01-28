@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageInvolvementData"
   DTS:PackageType="5"
-  DTS:VersionBuild="162"
-  DTS:VersionGUID="{0C75A49A-279C-41DC-BC0B-AAA71431AD13}">
+  DTS:VersionBuild="163"
+  DTS:VersionGUID="{439816A1-D5A8-4732-A3B7-3A32163BD327}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1997,7 +1997,7 @@ where [refTable].[EnvisionAddID] = ? and [refTable].[contid] = ?</property>
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\DFT - Get Lawsoft Involvement data\645:invalid};#{Package\DFT - Get Lawsoft Involvement data\LKP_MSContID.Outputs[Lookup Match Output].Columns[LKP-ContID]};</property>
+                  name="ParameterMap">#{Package\DFT - Get Lawsoft Involvement data\647:invalid};#{Package\DFT - Get Lawsoft Involvement data\LKP_MSContID.Outputs[Lookup Match Output].Columns[LKP-ContID]};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -3963,7 +3963,7 @@ where [refTable].[EnvisionEntity] = ?</property>
 ,'xxxENxxx' AS [matter] 
 ,ROW_NUMBER() OVER (PARTITION BY LSMatter ORDER BY COMM_ENTRY.DIWOR) AS seq_no
 ,COMM_ENTRY.ENTRY_TYPE_ID AS [EntityType]
-,ISNULL(SolOrg.solOrd_id,COMM_ENTRY.NAME_ID) AS [entity_code]
+,COMM_ENTRY.NAME_ID AS [entity_code]
 ,COMM_ENTRY.ADDRESS_ID AS EnvisionAddID
 
 ,CAST(CASE WHEN COMM_ENTRY.ENTRY_TYPE_ID='WAYLEA'  THEN WayLeave.WAYLEAVE_REF 
@@ -3987,21 +3987,21 @@ ON Lawsoft.dbo.MATTER.MATTER_DIWOR=SourceSystemID
 LEFT OUTER JOIN Lawsoft.dbo.CONTACT
  ON NAME_ID=NAME_DIWOR
  ---------Get Solicitor AS organisation --------------
-LEFT OUTER JOIN 
-(
-select COMM_ENTRY.DIWOR
-,matter.matter_diwor 'Matter_ID', matter.matter_code, comm_entry.entry_type_id, contact.contact_full_name, contact.name_diwor 'Contact_id',
-       solfirmcontact.contact_full_name 'SolOrg', solfirmcontact.name_diwor 'solOrd_id'
-from Lawsoft.dbo.comm_entry
-join Lawsoft.dbo.matter on comm_entry.linked_table_id = matter.matter_diwor
-join Lawsoft.dbo.contact on comm_entry.name_id = contact.name_diwor
-left outer join Lawsoft.dbo.comm_entry solfirm on comm_entry.name_id = solfirm.name_id and solfirm.entry_type_id = 'EMPLYE'
-left outer join Lawsoft.dbo.contact solfirmcontact on solfirm.linked_table_id = solfirmcontact.name_diwor
-where comm_entry.entry_type_id in ('LESSOL','GRASOL','OSSOL','TRASOL','OWNSOL','PURSOL','TENSOL','SELSOL')
-and comm_entry.table_id = 'M'
-AND solfirmcontact.NAME_DIWOR IS NOT NULL
-) AS SolOrg
- ON SolOrg.DIWOR = COMM_ENTRY.DIWOR
+--LEFT OUTER JOIN 
+--(
+--select COMM_ENTRY.DIWOR
+--,matter.matter_diwor 'Matter_ID', matter.matter_code, comm_entry.entry_type_id, contact.contact_full_name, contact.name_diwor 'Contact_id',
+--       solfirmcontact.contact_full_name 'SolOrg', solfirmcontact.name_diwor 'solOrd_id'
+--from Lawsoft.dbo.comm_entry
+--join Lawsoft.dbo.matter on comm_entry.linked_table_id = matter.matter_diwor
+--join Lawsoft.dbo.contact on comm_entry.name_id = contact.name_diwor
+--left outer join Lawsoft.dbo.comm_entry solfirm on comm_entry.name_id = solfirm.name_id and solfirm.entry_type_id = 'EMPLYE'
+--left outer join Lawsoft.dbo.contact solfirmcontact on solfirm.linked_table_id = solfirmcontact.name_diwor
+--where comm_entry.entry_type_id in ('LESSOL','GRASOL','OSSOL','TRASOL','OWNSOL','PURSOL','TENSOL','SELSOL')
+--and comm_entry.table_id = 'M'
+--AND solfirmcontact.NAME_DIWOR IS NOT NULL
+--) AS SolOrg
+-- ON SolOrg.DIWOR = COMM_ENTRY.DIWOR
 
 LEFT OUTER JOIN (SELECT MATTER_DIWOR,WAYLEAVE_REF FROM Lawsoft.dbo.DEED_OF_GRANT WHERE ISNULL(WAYLEAVE_REF,'')&lt;&gt;'') WayLeave
  ON WayLeave.MATTER_DIWOR = MATTER.MATTER_DIWOR
@@ -4540,14 +4540,14 @@ LEFT OUTER JOIN config.dbFile
               startId="Package\DFT - Get Lawsoft Involvement data\LKP_AssociateExtraDetail.Outputs[Lookup Match Output]" />
             <path
               refId="Package\DFT - Get Lawsoft Involvement data.Paths[Lookup No Match Output1]"
-              endId="Package\DFT - Get Lawsoft Involvement data\DCT - Unmatched AssociateCode.Inputs[Derived Column Input]"
-              name="Lookup No Match Output"
-              startId="Package\DFT - Get Lawsoft Involvement data\LKP_AssociateCode.Outputs[Lookup No Match Output]" />
-            <path
-              refId="Package\DFT - Get Lawsoft Involvement data.Paths[Lookup No Match Output]"
               endId="Package\DFT - Get Lawsoft Involvement data\DCT - Unmatched ContID.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
               startId="Package\DFT - Get Lawsoft Involvement data\LKP_MSContID.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - Get Lawsoft Involvement data.Paths[Lookup No Match Output]"
+              endId="Package\DFT - Get Lawsoft Involvement data\DCT - Unmatched AssociateCode.Inputs[Derived Column Input]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - Get Lawsoft Involvement data\LKP_AssociateCode.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\DFT - Get Lawsoft Involvement data.Paths[Merge Join Output]"
               endId="Package\DFT - Get Lawsoft Involvement data\LKP_AssociateCode.Inputs[Lookup Input]"
@@ -4981,42 +4981,6 @@ LEFT OUTER JOIN config.dbFile
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - Get Lawsoft Involvement data.Paths[Lookup No Match Output1]"
-          TopLeft="997.87576687626,498.813995851795">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-165.59513421845,-37.561362088736"
-              Start="0,0"
-              End="-165.59513421845,-30.061362088736">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-14.8412461254258" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-14.8412461254258"
-                    Point2="0,-18.8412461254258"
-                    Point3="-4,-18.8412461254258" />
-                  <mssgle:LineSegment
-                    End="-161.59513421845,-18.8412461254258" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-161.59513421845,-18.8412461254258"
-                    Point2="-165.59513421845,-18.8412461254258"
-                    Point3="-165.59513421845,-22.8412461254258" />
-                  <mssgle:LineSegment
-                    End="-165.59513421845,-30.061362088736" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-138.603953827975,-13.8412461254258,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - Get Lawsoft Involvement data.Paths[Lookup No Match Output]"
           TopLeft="1073,603">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -5048,6 +5012,42 @@ LEFT OUTER JOIN config.dbFile
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="60.9201512604866,-10.5776320327699,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - Get Lawsoft Involvement data.Paths[Lookup No Match Output]"
+          TopLeft="997.87576687626,498.813995851795">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-165.59513421845,-37.561362088736"
+              Start="0,0"
+              End="-165.59513421845,-30.061362088736">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-14.8412461254258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-14.8412461254258"
+                    Point2="0,-18.8412461254258"
+                    Point3="-4,-18.8412461254258" />
+                  <mssgle:LineSegment
+                    End="-161.59513421845,-18.8412461254258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-161.59513421845,-18.8412461254258"
+                    Point2="-165.59513421845,-18.8412461254258"
+                    Point3="-165.59513421845,-22.8412461254258" />
+                  <mssgle:LineSegment
+                    End="-165.59513421845,-30.061362088736" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-138.603953827975,-13.8412461254258,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
