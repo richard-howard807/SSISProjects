@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="6"
-  DTS:VersionGUID="{B66D0E65-C4F3-45DD-AE77-51A8D5CDE882}">
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{63075A1E-A5D0-48D3-BDDC-700EDA0341C6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables>
@@ -25,7 +25,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="ControlDate">
       <DTS:VariableValue
-        DTS:DataType="8">2021-05-13</DTS:VariableValue>
+        DTS:DataType="8">2021-05-14</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -64,7 +64,6 @@
       DTS:refId="Package\Execute Staging"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:Disabled="True"
       DTS:DTSID="{A91CBE13-05FD-45C4-A942-6FEFC1BE3926}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
@@ -75,15 +74,9 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{628AA1D9-0318-4A87-B973-D3C337EB33A4}"
-          SQLTask:SqlStatementSource="exec Staging.ETL_EastWest_9_ZurichClaimsZN @ControlDate = ? -- SHOULD BE DATE RUN &#xA;                                         , @Datasetid = ?           -- Current month datasetID from   select * from Config.DataSet" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          SQLTask:SqlStatementSource="exec Staging.ETL_EastWest_9_ZurichClaimsZN @ControlDate = cast(GETDATE() as date) -- SHOULD BE DATE RUN &#xA;                                         , @Datasetid = ?           -- Current month datasetID from   select * from Config.DataSet" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
-            SQLTask:DtsVariableName="User::ControlDate"
-            SQLTask:ParameterDirection="Input"
-            SQLTask:DataType="7"
-            SQLTask:ParameterSize="-1" />
-          <SQLTask:ParameterBinding
-            SQLTask:ParameterName="1"
             SQLTask:DtsVariableName="User::DataSetID"
             SQLTask:ParameterDirection="Input"
             SQLTask:DataType="131"
@@ -108,7 +101,7 @@
           SQLTask:SqlStatementSource="select DataSet.DatasetID from [EastWest].Config.DataSet WHERE DataSet.ReportingPeriod = CAST(YEAR(GETDATE()) AS VARCHAR(4))&#x9;+ RIGHT('0' + CAST(MONTH(GETDATE()) AS varchar(2)), 2) &#xA;"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
-            SQLTask:ResultName="NewResultName"
+            SQLTask:ResultName="0"
             SQLTask:DtsVariableName="User::DataSetID" />
         </SQLTask:SqlTaskData>
       </DTS:ObjectData>
@@ -127,7 +120,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{628AA1D9-0318-4A87-B973-D3C337EB33A4}"
-          SQLTask:SqlStatementSource="Truncate table ref.claimshandler;&#xA;&#xA;Truncate table reporting.EastWestClaimsRegister;&#xA;&#xA;Truncate tablelanding.EastWest_ZurichClaimsGN;&#xA;&#xA;Truncate table reporting.TransactionDataPolygonal&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="Truncate table ref.claimshandler;&#xA;&#xA;Truncate table reporting.EastWestClaimsRegister;&#xA;&#xA;Truncate table landing.EastWest_ZurichClaimsGN;&#xA;&#xA;Truncate table reporting.TransactionDataPolygonal&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -374,7 +367,7 @@ ON CD.[Claim Number] = CH.Claim_No</property>
                 <property
                   dataType="System.String"
                   description="The mappings between the parameters in the SQL command and variables."
-                  name="ParameterMapping">"FromDate:Input",{13AD6995-42D0-4245-86E4-ECCB3ADAEB54};"ToDate:Input",{6F813181-7BFA-42C3-9CBD-1C05DA978D8A};</property>
+                  name="ParameterMapping">"@FromPeriod:Input",{13AD6995-42D0-4245-86E4-ECCB3ADAEB54};"@ToPeriod:Input",{6F813181-7BFA-42C3-9CBD-1C05DA978D8A};</property>
               </properties>
               <connections>
                 <connection
@@ -4075,7 +4068,7 @@ ON CD.[Claim Number] = CH.Claim_No</property>
                 <property
                   dataType="System.String"
                   description="The mappings between the parameters in the SQL command and variables."
-                  name="ParameterMapping">"FromDate:Input",{13AD6995-42D0-4245-86E4-ECCB3ADAEB54};"ToDate:Input",{6F813181-7BFA-42C3-9CBD-1C05DA978D8A};</property>
+                  name="ParameterMapping">"@FromPeriod:Input",{13AD6995-42D0-4245-86E4-ECCB3ADAEB54};"@ToPeriod:Input",{6F813181-7BFA-42C3-9CBD-1C05DA978D8A};</property>
               </properties>
               <connections>
                 <connection
@@ -7060,6 +7053,14 @@ From TransactionList T
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="163,42"
+          Id="Package\Execute Staging"
+          TopLeft="309,593" />
+        <NodeLayout
+          Size="119,42"
+          Id="Package\GetSetid"
+          TopLeft="309,507" />
+        <NodeLayout
           Size="194,42"
           Id="Package\Truncate Claims Handler"
           TopLeft="200,38" />
@@ -7067,6 +7068,18 @@ From TransactionList T
           Size="188,42"
           Id="Package\UpDate Claims Handler"
           TopLeft="210.5,139.5" />
+        <NodeLayout
+          Size="226,42"
+          Id="Package\UpDateEastWestClaimsRegister"
+          TopLeft="225,251" />
+        <NodeLayout
+          Size="216,42"
+          Id="Package\UpdateEastWestZurichClaims"
+          TopLeft="253,343" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\UploadDataPolygonal"
+          TopLeft="283,423" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="300.75,80">
@@ -7089,10 +7102,6 @@ From TransactionList T
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="226,42"
-          Id="Package\UpDateEastWestClaimsRegister"
-          TopLeft="225,251" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="304.5,181.5">
@@ -7127,10 +7136,6 @@ From TransactionList T
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="216,42"
-          Id="Package\UpdateEastWestZurichClaims"
-          TopLeft="253,343" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="338,293">
@@ -7165,10 +7170,6 @@ From TransactionList T
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="179,42"
-          Id="Package\UploadDataPolygonal"
-          TopLeft="283,423" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
           TopLeft="361,385">
@@ -7203,40 +7204,20 @@ From TransactionList T
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="163,42"
-          Id="Package\Execute Staging"
-          TopLeft="316,561" />
-        <NodeLayout
-          Size="163,42"
-          Id="Package\GetSetid"
-          TopLeft="309,507" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="372.5,465">
+          TopLeft="370.5,465">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="18,42"
+              EndConnector="0,42"
               Start="0,0"
-              End="18,34.5">
+              End="0,34.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,17" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,17"
-                    Point2="0,21"
-                    Point3="4,21" />
-                  <mssgle:LineSegment
-                    End="14,21" />
-                  <mssgle:CubicBezierSegment
-                    Point1="14,21"
-                    Point2="18,21"
-                    Point3="18,25" />
-                  <mssgle:LineSegment
-                    End="18,34.5" />
+                    End="0,34.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7247,30 +7228,30 @@ From TransactionList T
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
-          TopLeft="309,528">
+          TopLeft="368.5,549">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="7,54"
+              EndConnector="22,44"
               Start="0,0"
-              End="-0.5,54">
+              End="22,36.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-18.5,0" />
+                    End="0,18" />
                   <mssgle:CubicBezierSegment
-                    Point1="-18.5,0"
-                    Point2="-22.5,0"
-                    Point3="-22.5,4" />
+                    Point1="0,18"
+                    Point2="0,22"
+                    Point3="4,22" />
                   <mssgle:LineSegment
-                    End="-22.5,50" />
+                    End="18,22" />
                   <mssgle:CubicBezierSegment
-                    Point1="-22.5,50"
-                    Point2="-22.5,54"
-                    Point3="-18.5,54" />
+                    Point1="18,22"
+                    Point2="22,22"
+                    Point3="22,26" />
                   <mssgle:LineSegment
-                    End="-0.5,54" />
+                    End="22,36.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7333,14 +7314,6 @@ From TransactionList T
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\UpDate Claims Handler\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\UpDate Claims Handler\OLE DB Destination">
     <Properties>
       <Property>
@@ -7350,6 +7323,14 @@ From TransactionList T
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\UpDate Claims Handler\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -7392,14 +7373,6 @@ From TransactionList T
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\UpDateEastWestClaimsRegister\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\UpDateEastWestClaimsRegister\OLE DB Destination">
     <Properties>
       <Property>
@@ -7409,6 +7382,14 @@ From TransactionList T
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\UpDateEastWestClaimsRegister\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -7463,14 +7444,6 @@ From TransactionList T
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\UpdateEastWestZurichClaims\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\UpdateEastWestZurichClaims\OLE DB Destination">
     <Properties>
       <Property>
@@ -7480,6 +7453,14 @@ From TransactionList T
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\UpdateEastWestZurichClaims\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -7522,14 +7503,6 @@ From TransactionList T
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\UploadDataPolygonal\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\UploadDataPolygonal\OLE DB Destination">
     <Properties>
       <Property>
@@ -7539,6 +7512,14 @@ From TransactionList T
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\UploadDataPolygonal\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
