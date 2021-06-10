@@ -1,0 +1,2227 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/18/2021 8:55:08 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="L08289"
+  DTS:CreatorName="SBC\6422"
+  DTS:DTSID="{EDD43D21-AB37-4DAC-96C7-F98BEDFB6AC8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Stage"
+  DTS:PackageType="5"
+  DTS:VersionBuild="17"
+  DTS:VersionGUID="{9DC06AB1-8EF0-4516-A56C-B82BDF4D55D8}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[AXA XL Data Submission API Template.xlsx 1]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{2BA0F8DD-B464-4E29-BF63-930E278DA940}"
+      DTS:ObjectName="AXA XL Data Submission API Template.xlsx 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\AXAXLDataSubmission\AXA XL Data Submission API Template.xlsx" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{18D9F635-71AC-4D66-9399-6675310A7174}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\AXAXLDataSubmission\AXA XL Data Submission API Template.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[svr-liv-dw-01.Reporting]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EB01A0A4-83A7-445A-8F9D-556CF42CDC54}"
+      DTS:ObjectName="svr-liv-dw-01.Reporting">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-liv-dw-01;Initial Catalog=Reporting;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6DA51561-98FB-4EFF-9207-489154AB2D4B}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::ExcelPath]  +  &quot;AXAXLSubmissionData&quot; + (DT_WSTR,4)YEAR(GETDATE()) + &quot;_&quot; + (DT_WSTR,4)MONTH(GETDATE()) + &quot;_&quot; + (DT_WSTR,4)DAY(GETDATE()) + &quot;.xls&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExcelFileName">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\AXAXLDataSubmission\Backups\AXAXLSubmissionData2021_6_10.xls</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6FC59860-7C2C-4609-B592-0376A49D4CC5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExcelPath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\AXAXLDataSubmission\Backups\</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\File System Task"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="File System Task"
+      DTS:DTSID="{B6F5CEED-6D60-4416-B59A-5BCC4BA1FA76}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="File System Task"
+      DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskSourcePath="{2BA0F8DD-B464-4E29-BF63-930E278DA940}"
+          TaskDestinationPath="User::ExcelFileName"
+          TaskIsDestinationVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Stage Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{E951D07B-D4B5-42CE-9DF9-0E659FF30DE0}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Stage Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Stage Container\Stage"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{CF48EAEB-E484-4A36-BB91-D098F8AB0B1F}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Stage"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Stage Container\Stage\API Template"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Excel Source"
+                  name="API Template"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">'AXA XL Data Submission$'</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mapping from parameters in the SQL command to variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Stage Container\Stage\API Template.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                      connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output]"
+                      name="Excel Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Status]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Status]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Status]"
+                          name="Status"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL Claim Number]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[AXA XL Claim Number]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL Claim Number]"
+                          name="AXA XL Claim Number"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Law Firm Matter Number]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Law Firm Matter Number]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Law Firm Matter Number]"
+                          name="Law Firm Matter Number"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Line of Business]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Line of Business]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Line of Business]"
+                          name="Line of Business"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Product Type]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Product Type]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Product Type]"
+                          name="Product Type"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Insured Name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Insured Name]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Insured Name]"
+                          name="Insured Name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL Percentage line share of loss expenses recovery]"
+                          dataType="cy"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[AXA XL Percentage line share of loss expenses recovery]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL Percentage line share of loss expenses recovery]"
+                          name="AXA XL Percentage line share of loss expenses recovery"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL Claims Handler]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[AXA XL Claims Handler]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL Claims Handler]"
+                          name="AXA XL Claims Handler"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Third Party Administrator]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Third Party Administrator]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Third Party Administrator]"
+                          name="Third Party Administrator"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Coverage defence ]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Coverage defence ]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Coverage defence ]"
+                          name="Coverage defence "
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Law firm handling office city ]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Law firm handling office city ]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Law firm handling office city ]"
+                          name="Law firm handling office city "
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Instructed]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date Instructed]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Instructed]"
+                          name="Date Instructed"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Opposing Side's Solicitor Firm Name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Opposing Side's Solicitor Firm Name]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Opposing Side's Solicitor Firm Name]"
+                          name="Opposing Side's Solicitor Firm Name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Reason For instruction]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Reason For instruction]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Reason For instruction]"
+                          name="Reason For instruction"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Fee Scale]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Fee Scale]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Fee Scale]"
+                          name="Fee Scale"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Damages Claimed]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Damages Claimed]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Damages Claimed]"
+                          name="Damages Claimed"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[First acknowledgement Date]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[First acknowledgement Date]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[First acknowledgement Date]"
+                          name="First acknowledgement Date"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Report Date]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Report Date]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Report Date]"
+                          name="Report Date"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Proceedings Issued]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date Proceedings Issued]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Proceedings Issued]"
+                          name="Date Proceedings Issued"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL as defendant]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[AXA XL as defendant]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL as defendant]"
+                          name="AXA XL as defendant"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Reason for proceedings]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Reason for proceedings]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Reason for proceedings]"
+                          name="Reason for proceedings"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Proceeding Track]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Proceeding Track]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Proceeding Track]"
+                          name="Proceeding Track"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Trial date]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Trial date]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Trial date]"
+                          name="Trial date"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Damages Reserve]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Damages Reserve]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Damages Reserve]"
+                          name="Damages Reserve"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Opposing sides costs reserve]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Opposing sides costs reserve]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Opposing sides costs reserve]"
+                          name="Opposing sides costs reserve"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Panel budget reserve]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Panel budget reserve]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Panel budget reserve]"
+                          name="Panel budget reserve"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Reason for panel budget change if occurred]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Reason for panel budget change if occurred]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Reason for panel budget change if occurred]"
+                          name="Reason for panel budget change if occurred"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Panel Fees Paid]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Panel Fees Paid]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Panel Fees Paid]"
+                          name="Panel Fees Paid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Counsel Paid]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Counsel Paid]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Counsel Paid]"
+                          name="Counsel Paid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Other Disbursements Paid]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Other Disbursements Paid]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Other Disbursements Paid]"
+                          name="Other Disbursements Paid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Opposing sides Costs Claimed]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Opposing sides Costs Claimed]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Opposing sides Costs Claimed]"
+                          name="Opposing sides Costs Claimed"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[First_name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[First_name]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[First_name]"
+                          name="First_name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Last_name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Last_name]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Last_name]"
+                          name="Last_name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Unique timekeeper ID per timekeeper]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Unique timekeeper ID per timekeeper]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Unique timekeeper ID per timekeeper]"
+                          name="Unique timekeeper ID per timekeeper"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Level solicitor partner ]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Level solicitor partner ]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Level solicitor partner ]"
+                          name="Level solicitor partner "
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[PQE]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[PQE]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[PQE]"
+                          name="PQE"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Hours spent on case]"
+                          dataType="cy"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Hours spent on case]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Hours spent on case]"
+                          name="Hours spent on case"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date closed]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date closed]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date closed]"
+                          name="Date closed"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date of Final Panel Invoice]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date of Final Panel Invoice]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date of Final Panel Invoice]"
+                          name="Date of Final Panel Invoice"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Damages settled]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date Damages settled]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Damages settled]"
+                          name="Date Damages settled"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Final Damages Amount]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Final Damages Amount]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Final Damages Amount]"
+                          name="Final Damages Amount"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Claimants Costs Handled by Panel ]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Claimants Costs Handled by Panel ]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Claimants Costs Handled by Panel ]"
+                          name="Claimants Costs Handled by Panel "
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Claimants costs settled]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date Claimants costs settled]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Claimants costs settled]"
+                          name="Date Claimants costs settled"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Final Claimants Costs Amount]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Final Claimants Costs Amount]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Final Claimants Costs Amount]"
+                          name="Final Claimants Costs Amount"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Mediated outcome Select from list]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Mediated outcome Select from list]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Mediated outcome Select from list]"
+                          name="Mediated outcome Select from list"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Outcome of Instruction Select from list]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Outcome of Instruction Select from list]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Outcome of Instruction Select from list]"
+                          name="Outcome of Instruction Select from list"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Was litigation avoidable Select from list]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Was litigation avoidable Select from list]"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Was litigation avoidable Select from list]"
+                          name="Was litigation avoidable Select from list"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Row Order]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Row Order]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Row Order]"
+                          name="Row Order"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Status]"
+                          dataType="wstr"
+                          length="255"
+                          name="Status" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[AXA XL Claim Number]"
+                          dataType="wstr"
+                          length="255"
+                          name="AXA XL Claim Number" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Law Firm Matter Number]"
+                          dataType="wstr"
+                          length="255"
+                          name="Law Firm Matter Number" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Line of Business]"
+                          dataType="wstr"
+                          length="255"
+                          name="Line of Business" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Product Type]"
+                          dataType="wstr"
+                          length="255"
+                          name="Product Type" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Insured Name]"
+                          dataType="wstr"
+                          length="255"
+                          name="Insured Name" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[AXA XL Percentage line share of loss expenses recovery]"
+                          dataType="cy"
+                          name="AXA XL Percentage line share of loss expenses recovery" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[AXA XL Claims Handler]"
+                          dataType="wstr"
+                          length="255"
+                          name="AXA XL Claims Handler" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Third Party Administrator]"
+                          dataType="wstr"
+                          length="255"
+                          name="Third Party Administrator" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Coverage defence ]"
+                          dataType="wstr"
+                          length="255"
+                          name="Coverage defence " />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Law firm handling office city ]"
+                          dataType="wstr"
+                          length="255"
+                          name="Law firm handling office city " />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date Instructed]"
+                          dataType="date"
+                          name="Date Instructed" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Opposing Side's Solicitor Firm Name]"
+                          dataType="wstr"
+                          length="255"
+                          name="Opposing Side's Solicitor Firm Name" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Reason For instruction]"
+                          dataType="wstr"
+                          length="255"
+                          name="Reason For instruction" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Fee Scale]"
+                          dataType="wstr"
+                          length="255"
+                          name="Fee Scale" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Damages Claimed]"
+                          dataType="wstr"
+                          length="255"
+                          name="Damages Claimed" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[First acknowledgement Date]"
+                          dataType="date"
+                          name="First acknowledgement Date" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Report Date]"
+                          dataType="date"
+                          name="Report Date" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date Proceedings Issued]"
+                          dataType="date"
+                          name="Date Proceedings Issued" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[AXA XL as defendant]"
+                          dataType="wstr"
+                          length="255"
+                          name="AXA XL as defendant" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Reason for proceedings]"
+                          dataType="wstr"
+                          length="255"
+                          name="Reason for proceedings" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Proceeding Track]"
+                          dataType="wstr"
+                          length="255"
+                          name="Proceeding Track" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Trial date]"
+                          dataType="wstr"
+                          length="255"
+                          name="Trial date" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Damages Reserve]"
+                          dataType="wstr"
+                          length="255"
+                          name="Damages Reserve" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Opposing sides costs reserve]"
+                          dataType="wstr"
+                          length="255"
+                          name="Opposing sides costs reserve" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Panel budget reserve]"
+                          dataType="wstr"
+                          length="255"
+                          name="Panel budget reserve" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Reason for panel budget change if occurred]"
+                          dataType="wstr"
+                          length="255"
+                          name="Reason for panel budget change if occurred" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Panel Fees Paid]"
+                          dataType="wstr"
+                          length="255"
+                          name="Panel Fees Paid" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Counsel Paid]"
+                          dataType="wstr"
+                          length="255"
+                          name="Counsel Paid" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Other Disbursements Paid]"
+                          dataType="wstr"
+                          length="255"
+                          name="Other Disbursements Paid" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Opposing sides Costs Claimed]"
+                          dataType="wstr"
+                          length="255"
+                          name="Opposing sides Costs Claimed" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[First_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="First_name" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Last_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="Last_name" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Unique timekeeper ID per timekeeper]"
+                          dataType="wstr"
+                          length="255"
+                          name="Unique timekeeper ID per timekeeper" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Level solicitor partner ]"
+                          dataType="wstr"
+                          length="255"
+                          name="Level solicitor partner " />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[PQE]"
+                          dataType="r8"
+                          name="PQE" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Hours spent on case]"
+                          dataType="cy"
+                          name="Hours spent on case" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date closed]"
+                          dataType="wstr"
+                          length="255"
+                          name="Date closed" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date of Final Panel Invoice]"
+                          dataType="wstr"
+                          length="255"
+                          name="Date of Final Panel Invoice" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date Damages settled]"
+                          dataType="wstr"
+                          length="255"
+                          name="Date Damages settled" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Final Damages Amount]"
+                          dataType="wstr"
+                          length="255"
+                          name="Final Damages Amount" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Claimants Costs Handled by Panel ]"
+                          dataType="wstr"
+                          length="255"
+                          name="Claimants Costs Handled by Panel " />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Date Claimants costs settled]"
+                          dataType="wstr"
+                          length="255"
+                          name="Date Claimants costs settled" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Final Claimants Costs Amount]"
+                          dataType="wstr"
+                          length="255"
+                          name="Final Claimants Costs Amount" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Mediated outcome Select from list]"
+                          dataType="wstr"
+                          length="255"
+                          name="Mediated outcome Select from list" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Outcome of Instruction Select from list]"
+                          dataType="wstr"
+                          length="255"
+                          name="Outcome of Instruction Select from list" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Was litigation avoidable Select from list]"
+                          dataType="wstr"
+                          length="255"
+                          name="Was litigation avoidable Select from list" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[F48]"
+                          dataType="wstr"
+                          length="255"
+                          name="F48" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].ExternalColumns[Row Order]"
+                          dataType="r8"
+                          name="Row Order" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output]"
+                      isErrorOut="true"
+                      name="Excel Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Status]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Status]"
+                          name="Status" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[AXA XL Claim Number]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[AXA XL Claim Number]"
+                          name="AXA XL Claim Number" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Law Firm Matter Number]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Law Firm Matter Number]"
+                          name="Law Firm Matter Number" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Line of Business]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Line of Business]"
+                          name="Line of Business" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Product Type]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Product Type]"
+                          name="Product Type" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Insured Name]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Insured Name]"
+                          name="Insured Name" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[AXA XL Percentage line share of loss expenses recovery]"
+                          dataType="cy"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[AXA XL Percentage line share of loss expenses recovery]"
+                          name="AXA XL Percentage line share of loss expenses recovery" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[AXA XL Claims Handler]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[AXA XL Claims Handler]"
+                          name="AXA XL Claims Handler" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Third Party Administrator]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Third Party Administrator]"
+                          name="Third Party Administrator" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Coverage defence ]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Coverage defence ]"
+                          name="Coverage defence " />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Law firm handling office city ]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Law firm handling office city ]"
+                          name="Law firm handling office city " />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date Instructed]"
+                          dataType="date"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date Instructed]"
+                          name="Date Instructed" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Opposing Side's Solicitor Firm Name]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Opposing Side's Solicitor Firm Name]"
+                          name="Opposing Side's Solicitor Firm Name" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Reason For instruction]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Reason For instruction]"
+                          name="Reason For instruction" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Fee Scale]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Fee Scale]"
+                          name="Fee Scale" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Damages Claimed]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Damages Claimed]"
+                          name="Damages Claimed" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[First acknowledgement Date]"
+                          dataType="date"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[First acknowledgement Date]"
+                          name="First acknowledgement Date" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Report Date]"
+                          dataType="date"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Report Date]"
+                          name="Report Date" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date Proceedings Issued]"
+                          dataType="date"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date Proceedings Issued]"
+                          name="Date Proceedings Issued" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[AXA XL as defendant]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[AXA XL as defendant]"
+                          name="AXA XL as defendant" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Reason for proceedings]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Reason for proceedings]"
+                          name="Reason for proceedings" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Proceeding Track]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Proceeding Track]"
+                          name="Proceeding Track" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Trial date]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Trial date]"
+                          name="Trial date" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Damages Reserve]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Damages Reserve]"
+                          name="Damages Reserve" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Opposing sides costs reserve]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Opposing sides costs reserve]"
+                          name="Opposing sides costs reserve" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Panel budget reserve]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Panel budget reserve]"
+                          name="Panel budget reserve" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Reason for panel budget change if occurred]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Reason for panel budget change if occurred]"
+                          name="Reason for panel budget change if occurred" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Panel Fees Paid]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Panel Fees Paid]"
+                          name="Panel Fees Paid" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Counsel Paid]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Counsel Paid]"
+                          name="Counsel Paid" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Other Disbursements Paid]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Other Disbursements Paid]"
+                          name="Other Disbursements Paid" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Opposing sides Costs Claimed]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Opposing sides Costs Claimed]"
+                          name="Opposing sides Costs Claimed" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[First_name]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[First_name]"
+                          name="First_name" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Last_name]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Last_name]"
+                          name="Last_name" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Unique timekeeper ID per timekeeper]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Unique timekeeper ID per timekeeper]"
+                          name="Unique timekeeper ID per timekeeper" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Level solicitor partner ]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Level solicitor partner ]"
+                          name="Level solicitor partner " />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[PQE]"
+                          dataType="r8"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[PQE]"
+                          name="PQE" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Hours spent on case]"
+                          dataType="cy"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Hours spent on case]"
+                          name="Hours spent on case" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date closed]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date closed]"
+                          name="Date closed" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date of Final Panel Invoice]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date of Final Panel Invoice]"
+                          name="Date of Final Panel Invoice" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date Damages settled]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date Damages settled]"
+                          name="Date Damages settled" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Final Damages Amount]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Final Damages Amount]"
+                          name="Final Damages Amount" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Claimants Costs Handled by Panel ]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Claimants Costs Handled by Panel ]"
+                          name="Claimants Costs Handled by Panel " />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date Claimants costs settled]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Date Claimants costs settled]"
+                          name="Date Claimants costs settled" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Final Claimants Costs Amount]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Final Claimants Costs Amount]"
+                          name="Final Claimants Costs Amount" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Mediated outcome Select from list]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Mediated outcome Select from list]"
+                          name="Mediated outcome Select from list" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Outcome of Instruction Select from list]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Outcome of Instruction Select from list]"
+                          name="Outcome of Instruction Select from list" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Was litigation avoidable Select from list]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Was litigation avoidable Select from list]"
+                          name="Was litigation avoidable Select from list" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Row Order]"
+                          dataType="r8"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[Row Order]"
+                          name="Row Order" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Stage Container\Stage\AXA XL Submission Destination Table"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="AXA XL Submission Destination Table"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[AXAXLDataSubmissionAPIStage]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[svr-liv-dw-01.Reporting]"
+                      connectionManagerRefId="Package.ConnectionManagers[svr-liv-dw-01.Reporting]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Status]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Status"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Status]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[AXA XL Claim Number]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="AXA XL Claim Number"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[AXA XL Claim Number]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL Claim Number]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Law Firm Matter Number]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Law Firm Matter Number"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Law Firm Matter Number]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Law Firm Matter Number]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Line of Business]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Line of Business"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Line of Business]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Line of Business]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Product Type]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Product Type"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Product Type]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Product Type]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Insured Name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Insured Name"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Insured Name]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Insured Name]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[AXA XL Percentage line share of loss expenses recovery]"
+                          cachedDataType="cy"
+                          cachedName="AXA XL Percentage line share of loss expenses recovery"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[AXA XL Percentage line share of loss expenses recovery]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL Percentage line share of loss expenses recovery]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[AXA XL Claims Handler]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="AXA XL Claims Handler"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[AXA XL Claims Handler]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL Claims Handler]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Third Party Administrator]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Third Party Administrator"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Third Party Administrator]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Third Party Administrator]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Coverage defence ]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Coverage defence "
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Coverage defence ]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Coverage defence ]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Law firm handling office city ]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Law firm handling office city "
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Law firm handling office city ]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Law firm handling office city ]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Date Instructed]"
+                          cachedDataType="date"
+                          cachedName="Date Instructed"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date Instructed]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Instructed]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Opposing Side's Solicitor Firm Name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Opposing Side's Solicitor Firm Name"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Opposing Side's Solicitor Firm Name]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Opposing Side's Solicitor Firm Name]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Reason For instruction]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Reason For instruction"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Reason For instruction]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Reason For instruction]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Fee Scale]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Fee Scale"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Fee Scale]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Fee Scale]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Damages Claimed]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Damages Claimed"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Damages Claimed]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Damages Claimed]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[First acknowledgement Date]"
+                          cachedDataType="date"
+                          cachedName="First acknowledgement Date"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[First acknowledgement Date]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[First acknowledgement Date]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Report Date]"
+                          cachedDataType="date"
+                          cachedName="Report Date"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Report Date]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Report Date]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Date Proceedings Issued]"
+                          cachedDataType="date"
+                          cachedName="Date Proceedings Issued"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date Proceedings Issued]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Proceedings Issued]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[AXA XL as defendant]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="AXA XL as defendant"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[AXA XL as defendant]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[AXA XL as defendant]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Reason for proceedings]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Reason for proceedings"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Reason for proceedings]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Reason for proceedings]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Proceeding Track]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Proceeding Track"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Proceeding Track]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Proceeding Track]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Trial date]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Trial date"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Trial date]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Trial date]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Damages Reserve]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Damages Reserve"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Damages Reserve]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Damages Reserve]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Opposing sides costs reserve]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Opposing sides costs reserve"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Opposing sides costs reserve]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Opposing sides costs reserve]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Panel budget reserve]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Panel budget reserve"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Panel budget reserve]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Panel budget reserve]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Reason for panel budget change if occurred]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Reason for panel budget change if occurred"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Reason for panel budget change if occurred]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Reason for panel budget change if occurred]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Panel Fees Paid]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Panel Fees Paid"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Panel Fees Paid]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Panel Fees Paid]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Counsel Paid]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Counsel Paid"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Counsel Paid]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Counsel Paid]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Other Disbursements Paid]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Other Disbursements Paid"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Other Disbursements Paid]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Other Disbursements Paid]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Opposing sides Costs Claimed]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Opposing sides Costs Claimed"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Opposing sides Costs Claimed]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Opposing sides Costs Claimed]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[First_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="First_name"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[First_name]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[First_name]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Last_name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Last_name"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Last_name]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Last_name]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Unique timekeeper ID per timekeeper]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Unique timekeeper ID per timekeeper"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Unique timekeeper ID per timekeeper]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Unique timekeeper ID per timekeeper]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Level solicitor partner ]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Level solicitor partner "
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Level solicitor partner ]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Level solicitor partner ]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[PQE]"
+                          cachedDataType="r8"
+                          cachedName="PQE"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[PQE]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[PQE]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Hours spent on case]"
+                          cachedDataType="cy"
+                          cachedName="Hours spent on case"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Hours spent on case]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Hours spent on case]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Date closed]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Date closed"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date closed]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date closed]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Date of Final Panel Invoice]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Date of Final Panel Invoice"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date of Final Panel Invoice]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date of Final Panel Invoice]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Date Damages settled]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Date Damages settled"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date Damages settled]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Damages settled]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Final Damages Amount]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Final Damages Amount"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Final Damages Amount]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Final Damages Amount]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Claimants Costs Handled by Panel ]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Claimants Costs Handled by Panel "
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Claimants Costs Handled by Panel ]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Claimants Costs Handled by Panel ]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Date Claimants costs settled]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Date Claimants costs settled"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date Claimants costs settled]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Date Claimants costs settled]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Final Claimants Costs Amount]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Final Claimants Costs Amount"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Final Claimants Costs Amount]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Final Claimants Costs Amount]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Mediated outcome Select from list]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Mediated outcome Select from list"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Mediated outcome Select from list]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Mediated outcome Select from list]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Outcome of Instruction Select from list]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Outcome of Instruction Select from list"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Outcome of Instruction Select from list]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Outcome of Instruction Select from list]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Was litigation avoidable Select from list]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Was litigation avoidable Select from list"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Was litigation avoidable Select from list]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Was litigation avoidable Select from list]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[dss_load_date]"
+                          cachedDataType="date"
+                          cachedName="dss_load_date"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[dss_load_date]"
+                          lineageId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Output].Columns[dss_load_date]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[dss_current_flag]"
+                          cachedDataType="wstr"
+                          cachedLength="1"
+                          cachedName="dss_current_flag"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[dss_current_flag]"
+                          lineageId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Output].Columns[dss_current_flag]" />
+                        <inputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].Columns[Row Order]"
+                          cachedDataType="r8"
+                          cachedName="Row Order"
+                          externalMetadataColumnId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[RowOrder]"
+                          lineageId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output].Columns[Row Order]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                          dataType="wstr"
+                          length="255"
+                          name="Status" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[AXA XL Claim Number]"
+                          dataType="wstr"
+                          length="255"
+                          name="AXA XL Claim Number" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Law Firm Matter Number]"
+                          dataType="wstr"
+                          length="255"
+                          name="Law Firm Matter Number" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Line of Business]"
+                          dataType="wstr"
+                          length="255"
+                          name="Line of Business" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Product Type]"
+                          dataType="wstr"
+                          length="255"
+                          name="Product Type" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Insured Name]"
+                          dataType="wstr"
+                          length="255"
+                          name="Insured Name" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[AXA XL Percentage line share of loss expenses recovery]"
+                          dataType="wstr"
+                          length="255"
+                          name="AXA XL Percentage line share of loss expenses recovery" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[AXA XL Claims Handler]"
+                          dataType="wstr"
+                          length="255"
+                          name="AXA XL Claims Handler" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Third Party Administrator]"
+                          dataType="wstr"
+                          length="255"
+                          name="Third Party Administrator" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Coverage defence ]"
+                          dataType="wstr"
+                          length="255"
+                          name="Coverage defence " />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Law firm handling office city ]"
+                          dataType="wstr"
+                          length="255"
+                          name="Law firm handling office city " />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date Instructed]"
+                          dataType="dbTimeStamp"
+                          name="Date Instructed" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Opposing Side's Solicitor Firm Name]"
+                          dataType="wstr"
+                          length="255"
+                          name="Opposing Side's Solicitor Firm Name" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Reason For instruction]"
+                          dataType="wstr"
+                          length="255"
+                          name="Reason For instruction" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Fee Scale]"
+                          dataType="wstr"
+                          length="255"
+                          name="Fee Scale" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Damages Claimed]"
+                          dataType="wstr"
+                          length="255"
+                          name="Damages Claimed" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[First acknowledgement Date]"
+                          dataType="dbTimeStamp"
+                          name="First acknowledgement Date" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Report Date]"
+                          dataType="dbTimeStamp"
+                          name="Report Date" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date Proceedings Issued]"
+                          dataType="dbTimeStamp"
+                          name="Date Proceedings Issued" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[AXA XL as defendant]"
+                          dataType="wstr"
+                          length="255"
+                          name="AXA XL as defendant" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Reason for proceedings]"
+                          dataType="wstr"
+                          length="255"
+                          name="Reason for proceedings" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Proceeding Track]"
+                          dataType="wstr"
+                          length="255"
+                          name="Proceeding Track" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Trial date]"
+                          dataType="wstr"
+                          length="255"
+                          name="Trial date" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Damages Reserve]"
+                          dataType="wstr"
+                          length="255"
+                          name="Damages Reserve" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Opposing sides costs reserve]"
+                          dataType="wstr"
+                          length="255"
+                          name="Opposing sides costs reserve" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Panel budget reserve]"
+                          dataType="wstr"
+                          length="255"
+                          name="Panel budget reserve" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Reason for panel budget change if occurred]"
+                          dataType="wstr"
+                          length="255"
+                          name="Reason for panel budget change if occurred" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Panel Fees Paid]"
+                          dataType="wstr"
+                          length="255"
+                          name="Panel Fees Paid" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Counsel Paid]"
+                          dataType="wstr"
+                          length="255"
+                          name="Counsel Paid" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Other Disbursements Paid]"
+                          dataType="wstr"
+                          length="255"
+                          name="Other Disbursements Paid" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Opposing sides Costs Claimed]"
+                          dataType="wstr"
+                          length="255"
+                          name="Opposing sides Costs Claimed" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[First_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="First_name" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Last_name]"
+                          dataType="wstr"
+                          length="255"
+                          name="Last_name" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Unique timekeeper ID per timekeeper]"
+                          dataType="wstr"
+                          length="255"
+                          name="Unique timekeeper ID per timekeeper" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Level solicitor partner ]"
+                          dataType="wstr"
+                          length="255"
+                          name="Level solicitor partner " />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[PQE]"
+                          dataType="r8"
+                          name="PQE" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Hours spent on case]"
+                          dataType="cy"
+                          name="Hours spent on case" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date closed]"
+                          dataType="wstr"
+                          length="255"
+                          name="Date closed" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date of Final Panel Invoice]"
+                          dataType="wstr"
+                          length="255"
+                          name="Date of Final Panel Invoice" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date Damages settled]"
+                          dataType="wstr"
+                          length="255"
+                          name="Date Damages settled" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Final Damages Amount]"
+                          dataType="wstr"
+                          length="255"
+                          name="Final Damages Amount" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Claimants Costs Handled by Panel ]"
+                          dataType="wstr"
+                          length="255"
+                          name="Claimants Costs Handled by Panel " />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Date Claimants costs settled]"
+                          dataType="wstr"
+                          length="255"
+                          name="Date Claimants costs settled" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Final Claimants Costs Amount]"
+                          dataType="wstr"
+                          length="255"
+                          name="Final Claimants Costs Amount" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Mediated outcome Select from list]"
+                          dataType="wstr"
+                          length="255"
+                          name="Mediated outcome Select from list" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Outcome of Instruction Select from list]"
+                          dataType="wstr"
+                          length="255"
+                          name="Outcome of Instruction Select from list" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[Was litigation avoidable Select from list]"
+                          dataType="wstr"
+                          length="255"
+                          name="Was litigation avoidable Select from list" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[dss_load_date]"
+                          dataType="dbTimeStamp"
+                          name="dss_load_date" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[dss_current_flag]"
+                          dataType="wstr"
+                          length="1"
+                          name="dss_current_flag" />
+                        <externalMetadataColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input].ExternalColumns[RowOrder]"
+                          dataType="r8"
+                          name="RowOrder" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Stage Container\Stage\Derived Column"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Derived Column"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Stage Container\Stage\Derived Column.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Stage Container\Stage\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Output].Columns[dss_load_date]"
+                          dataType="date"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Output].Columns[dss_load_date]"
+                          name="dss_load_date"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">@[System::ContainerStartTime]</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">@[System::ContainerStartTime]</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Output].Columns[dss_current_flag]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="1"
+                          lineageId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Output].Columns[dss_current_flag]"
+                          name="dss_current_flag"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">"Y"</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">"Y"</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Stage Container\Stage\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Stage Container\Stage.Paths[Derived Column Output]"
+                  endId="Package\Stage Container\Stage\AXA XL Submission Destination Table.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Stage Container\Stage\Derived Column.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Stage Container\Stage.Paths[Excel Source Output]"
+                  endId="Package\Stage Container\Stage\Derived Column.Inputs[Derived Column Input]"
+                  name="Excel Source Output"
+                  startId="Package\Stage Container\Stage\API Template.Outputs[Excel Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Stage Container\Update Current Flags"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{6ACFB86F-1938-4C90-8D12-610BBBF21D3E}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update Current Flags"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{EB01A0A4-83A7-445A-8F9D-556CF42CDC54}"
+              SQLTask:SqlStatementSource="UPDATE dbo.AXAXLDataSubmissionAPIStage&#xA;&#xA;SET [dss_current_flag] = 'N'&#xA;FROM dbo.AXAXLDataSubmissionAPIStage &#xA;&#xA;WHERE CAST([dss_load_date] AS DATE) &lt;&gt; CAST(GETDATE() AS DATE)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Stage Container.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{3BC47FBB-EB3D-4330-8814-774D945D4420}"
+          DTS:From="Package\Stage Container\Stage"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Stage Container\Update Current Flags" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{1E4C9369-5B41-4881-BDB2-2652B918CCB8}"
+      DTS:From="Package\Stage Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\File System Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="158,42"
+          Id="Package\File System Task"
+          TopLeft="383,269" />
+        <NodeLayout
+          Size="106,42"
+          Id="Package\Stage Container\Stage"
+          TopLeft="85,9" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\Stage Container\Update Current Flags"
+          TopLeft="30,162" />
+        <EdgeLayout
+          Id="Package\Stage Container.PrecedenceConstraints[Constraint]"
+          TopLeft="138,51">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-18.5,111"
+              Start="0,0"
+              End="-18.5,103.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,51.5"
+                    Point2="0,55.5"
+                    Point3="-4,55.5" />
+                  <mssgle:LineSegment
+                    End="-14.5,55.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-14.5,55.5"
+                    Point2="-18.5,55.5"
+                    Point3="-18.5,59.5" />
+                  <mssgle:LineSegment
+                    End="-18.5,103.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="270,369"
+          Size="270,412"
+          Id="Package\Stage Container"
+          TopLeft="63,19" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="333,225">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="50,65"
+              Start="0,0"
+              End="42.5,65">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="21,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="21,0"
+                    Point2="25,0"
+                    Point3="25,4" />
+                  <mssgle:LineSegment
+                    End="25,61" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25,61"
+                    Point2="25,65"
+                    Point3="29,65" />
+                  <mssgle:LineSegment
+                    End="42.5,65" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Stage Container\Stage">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="254,42"
+          Id="Package\Stage Container\Stage\AXA XL Submission Destination Table"
+          TopLeft="151,263" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Stage Container\Stage\Derived Column"
+          TopLeft="181,148" />
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Stage Container\Stage\API Template"
+          TopLeft="180,58" />
+        <EdgeLayout
+          Id="Package\Stage Container\Stage.Paths[Excel Source Output]"
+          TopLeft="254.75,100">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48"
+              Start="0,0"
+              End="0,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Stage Container\Stage.Paths[Derived Column Output]"
+          TopLeft="258,190">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="20,73"
+              Start="0,0"
+              End="20,65.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.5"
+                    Point2="0,36.5"
+                    Point3="4,36.5" />
+                  <mssgle:LineSegment
+                    End="16,36.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16,36.5"
+                    Point2="20,36.5"
+                    Point3="20,40.5" />
+                  <mssgle:LineSegment
+                    End="20,65.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Stage Container\Stage\AXA XL Submission Destination Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Stage Container\Stage\API Template">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
