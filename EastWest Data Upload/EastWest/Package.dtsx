@@ -7,12 +7,12 @@
   DTS:CreatorName="SBC\jlough"
   DTS:DTSID="{F9687754-64FC-45FD-B083-D8DADB03EA6A}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LastModifiedProductVersion="14.0.3002.113"
   DTS:LocaleID="2057"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="20"
-  DTS:VersionGUID="{088D54C9-5B06-4CB5-A76F-9AC110274250}">
+  DTS:VersionBuild="22"
+  DTS:VersionGUID="{9627687D-97FB-46C4-ACCA-8AA004BB201B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables>
@@ -25,7 +25,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="ControlDate">
       <DTS:VariableValue
-        DTS:DataType="8">2021-05-17</DTS:VariableValue>
+        DTS:DataType="8">2021-08-12</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -45,7 +45,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="FromDate">
       <DTS:VariableValue
-        DTS:DataType="8">202105</DTS:VariableValue>
+        DTS:DataType="8">202108</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -56,10 +56,2439 @@
       DTS:Namespace="User"
       DTS:ObjectName="ToDate">
       <DTS:VariableValue
-        DTS:DataType="8">202105</DTS:VariableValue>
+        DTS:DataType="8">202108</DTS:VariableValue>
     </DTS:Variable>
   </DTS:Variables>
   <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Claims Data"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{608EDE28-5078-4D1F-B3A7-18C05DEC1193}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Claims Data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Claims Data\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Claims Data\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Claims Data\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Claims Data\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Claims Data\Derived Column.Outputs[Derived Column Output].Columns[ControlDate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\Claims Data\Derived Column.Outputs[Derived Column Output].Columns[ControlDate]"
+                      name="ControlDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::ControlDate]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::ControlDate]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Claims Data\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Claims Data\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Claims Data\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Claims Data\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Claims Data\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Claims Data\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Claims Data\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Staging].[CustomClaimFields]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Claims Data\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{628AA1D9-0318-4A87-B973-D3C337EB33A4}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[SVR-LIV-DW-01.EastWest]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Claim_Number]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Claim_Number"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Claim_Number]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Claim_Number]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Claim_Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="Claim_Status"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Claim_Status]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Claim_Status]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Loss_Type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="Loss_Type"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Loss_Type]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Loss_Type]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Zurich_Policy_No]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Zurich_Policy_No"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Zurich_Policy_No]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Zurich_Policy_No]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Address_Line_1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="80"
+                      cachedName="Address_Line_1"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address_Line_1]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_1]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Address_Line_2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="80"
+                      cachedName="Address_Line_2"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address_Line_2]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_2]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Address_Line_3]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="80"
+                      cachedName="Address_Line_3"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address_Line_3]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_3]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Address_Line_4]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="80"
+                      cachedName="Address_Line_4"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address_Line_4]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_4]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PostCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="PostCode"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PostCode]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostCode]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Processed_By]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="Processed_By"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Processed_By]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Processed_By]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Trading_State]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="Trading_State"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Trading_State]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Trading_State]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Case_Reserve_Set_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Case_Reserve_Set_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Case_Reserve_Set_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Case_Reserve_Set_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[First_Site_Visit_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="First_Site_Visit_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[First_Site_Visit_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[First_Site_Visit_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Coverage_Confimed_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Coverage_Confimed_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Coverage_Confimed_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Coverage_Confimed_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Repairs_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Repairs_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Repairs_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Repairs_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Repairer_Invoice_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Repairer_Invoice_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Repairer_Invoice_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Repairer_Invoice_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Invoice_Payment_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Invoice_Payment_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Invoice_Payment_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoice_Payment_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Invoice_Payment_Terms]"
+                      cachedDataType="numeric"
+                      cachedName="Invoice_Payment_Terms"
+                      cachedPrecision="18"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Invoice_Payment_Terms]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoice_Payment_Terms]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Litigation_Flag]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="Litigation_Flag"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Flag]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Flag]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Litigation_Issue]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Litigation_Issue"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Issue]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Issue]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Litigation_Matter_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Litigation_Matter_Name"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Matter_Name]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Matter_Name]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Litigation_Solicitor_Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Litigation_Solicitor_Name"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Solicitor_Name]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Solicitor_Name]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Litigation_Update]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Litigation_Update"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Update]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Update]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Recovery_Flag]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Recovery_Flag"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Recovery_Flag]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Recovery_Flag]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Developer]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Developer"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Developer]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Developer]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Builder]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Builder"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Builder]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Builder]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Media_Flag]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Media_Flag"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Media_Flag]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Media_Flag]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Armour_Advised_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Armour_Advised_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Armour_Advised_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Armour_Advised_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Zurich_Advised_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Zurich_Advised_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Zurich_Advised_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Zurich_Advised_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[New_or_Rectification_Work]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="New_or_Rectification_Work"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New_or_Rectification_Work]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[New_or_Rectification_Work]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Policy_Wording]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="Policy_Wording"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Policy_Wording]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Policy_Wording]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Priority]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="Priority"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Priority]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Priority]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Reason_for_High_Priority]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="Reason_for_High_Priority"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Reason_for_High_Priority]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Reason_for_High_Priority]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Cunningham_Lindsay_as_Previous_Contractor]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Cunningham_Lindsay_as_Previous_Contractor"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Cunningham_Lindsay_as_Previous_Contractor]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Cunningham_Lindsay_as_Previous_Contractor]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Fulfilment_or_Normal_Indemnity]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="Fulfilment_or_Normal_Indemnity"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Fulfilment_or_Normal_Indemnity]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fulfilment_or_Normal_Indemnity]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Complaint_received]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Complaint_received"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Complaint_received]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Complaint_received]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Complaint_Category]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="Complaint_Category"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Complaint_Category]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Complaint_Category]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Initial_Potential_Estimate]"
+                      cachedDataType="numeric"
+                      cachedName="Initial_Potential_Estimate"
+                      cachedPrecision="18"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Initial_Potential_Estimate]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Initial_Potential_Estimate]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Date_IPE_likely_to_be_updated]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Date_IPE_likely_to_be_updated"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date_IPE_likely_to_be_updated]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_IPE_likely_to_be_updated]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Expected_Next_Phase_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Expected_Next_Phase_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Expected_Next_Phase_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Expected_Next_Phase_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Next_Review_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Next_Review_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Next_Review_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Next_Review_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Anticipated_Resolution_Date]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Anticipated_Resolution_Date"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Anticipated_Resolution_Date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Anticipated_Resolution_Date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Hardship_Considerations?]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Hardship_Considerations?"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Hardship_Considerations?]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Hardship_Considerations?]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Completed_Request_for_Info?]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Completed_Request_for_Info?"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Completed_Request_for_Info?]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Completed_Request_for_Info?]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FSCS_Qualifying_Test]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="FSCS_Qualifying_Test"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FSCS_Qualifying_Test]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[FSCS_Qualifying_Test]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FSCS_Eligibility_Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="FSCS_Eligibility_Status"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FSCS_Eligibility_Status]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[FSCS_Eligibility_Status]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Claim_Phase]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="93"
+                      cachedName="Claim_Phase"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Claim_Phase]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Claim_Phase]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Waking_Watch_or_Fire_Notice_Issued]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="Waking_Watch_or_Fire_Notice_Issued"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Waking_Watch_or_Fire_Notice_Issued]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Waking_Watch_or_Fire_Notice_Issued]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Litigated_Recoveries_Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="93"
+                      cachedName="Litigated_Recoveries_Status"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigated_Recoveries_Status]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigated_Recoveries_Status]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RoM_Recoveries_Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="93"
+                      cachedName="RoM_Recoveries_Status"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RoM_Recoveries_Status]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[RoM_Recoveries_Status]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Date_when_recovery_expected_to_enter_next_phase]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Date_when_recovery_expected_to_enter_next_phase"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date_when_recovery_expected_to_enter_next_phase]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_when_recovery_expected_to_enter_next_phase]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Overall_prospects_of_successful_recovery]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="70"
+                      cachedName="Overall_prospects_of_successful_recovery"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Overall_prospects_of_successful_recovery]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Overall_prospects_of_successful_recovery]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Total_recovery_made_to_date]"
+                      cachedDataType="numeric"
+                      cachedName="Total_recovery_made_to_date"
+                      cachedPrecision="18"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_recovery_made_to_date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_recovery_made_to_date]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Reasonably_expected_recovery_value]"
+                      cachedDataType="numeric"
+                      cachedName="Reasonably_expected_recovery_value"
+                      cachedPrecision="18"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Reasonably_expected_recovery_value]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Reasonably_expected_recovery_value]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Date_anticipated_resolution_of_recovery]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Date_anticipated_resolution_of_recovery"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date_anticipated_resolution_of_recovery]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_anticipated_resolution_of_recovery]" />
+                    <inputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ControlDate]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="ControlDate"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Control_Date]"
+                      lineageId="Package\Claims Data\Derived Column.Outputs[Derived Column Output].Columns[ControlDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Control_Date]"
+                      dataType="dbDate"
+                      name="Control_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Claim_Number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Claim_Number" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Claim_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="Claim_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Loss_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="Loss_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Zurich_Policy_No]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Zurich_Policy_No" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address_Line_1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      name="Address_Line_1" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address_Line_2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      name="Address_Line_2" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address_Line_3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      name="Address_Line_3" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address_Line_4]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      name="Address_Line_4" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PostCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="PostCode" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Processed_By]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Processed_By" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Trading_State]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Trading_State" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Case_Reserve_Set_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Case_Reserve_Set_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[First_Site_Visit_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="First_Site_Visit_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Coverage_Confimed_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Coverage_Confimed_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Repairs_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Repairs_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Repairer_Invoice_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Repairer_Invoice_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Invoice_Payment_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Invoice_Payment_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Invoice_Payment_Terms]"
+                      dataType="numeric"
+                      name="Invoice_Payment_Terms"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="Litigation_Flag" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Issue]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Litigation_Issue" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Matter_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Litigation_Matter_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Solicitor_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Litigation_Solicitor_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigation_Update]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Litigation_Update" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Recovery_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Recovery_Flag" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Developer]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Developer" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Builder]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Builder" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Media_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Media_Flag" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Armour_Advised_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Armour_Advised_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Zurich_Advised_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Zurich_Advised_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[New_or_Rectification_Work]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="New_or_Rectification_Work" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Policy_Wording]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Policy_Wording" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Priority]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Priority" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Reason_for_High_Priority]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Reason_for_High_Priority" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Cunningham_Lindsay_as_Previous_Contractor]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Cunningham_Lindsay_as_Previous_Contractor" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Fulfilment_or_Normal_Indemnity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Fulfilment_or_Normal_Indemnity" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Complaint_received]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Complaint_received" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Complaint_Category]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Complaint_Category" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Initial_Potential_Estimate]"
+                      dataType="numeric"
+                      name="Initial_Potential_Estimate"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date_IPE_likely_to_be_updated]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Date_IPE_likely_to_be_updated" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Expected_Next_Phase_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Expected_Next_Phase_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Next_Review_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Next_Review_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Anticipated_Resolution_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Anticipated_Resolution_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Hardship_Considerations?]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Hardship_Considerations?" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Completed_Request_for_Info?]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Completed_Request_for_Info?" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FSCS_Qualifying_Test]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="FSCS_Qualifying_Test" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FSCS_Eligibility_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="FSCS_Eligibility_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Claim_Phase]"
+                      codePage="1252"
+                      dataType="str"
+                      length="93"
+                      name="Claim_Phase" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Waking_Watch_or_Fire_Notice_Issued]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Waking_Watch_or_Fire_Notice_Issued" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Litigated_Recoveries_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="93"
+                      name="Litigated_Recoveries_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RoM_Recoveries_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="93"
+                      name="RoM_Recoveries_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date_when_recovery_expected_to_enter_next_phase]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Date_when_recovery_expected_to_enter_next_phase" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Overall_prospects_of_successful_recovery]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Overall_prospects_of_successful_recovery" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_recovery_made_to_date]"
+                      dataType="numeric"
+                      name="Total_recovery_made_to_date"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Reasonably_expected_recovery_value]"
+                      dataType="numeric"
+                      name="Reasonably_expected_recovery_value"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date_anticipated_resolution_of_recovery]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Date_anticipated_resolution_of_recovery" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Claims Data\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Claims Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Claims Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Claims Data\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[dqvwCustomClaimFields]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT Claim_Number,
+       Loss_Type,
+       Zurich_Policy_No,
+       Address_Ln_1,
+       Address_Ln_2,
+       Address_Ln_3,
+       Address_Ln_4,
+       Post_Code,
+       Processed_By,
+       Trading_State,
+       Case_Reserve_Set_Date,
+       First_Site_Visit_Date,
+       [Coverage_Confimed/Denied_Date],
+       Repairs_Carried_Out_Date,
+       Repairer_Invoice_Recieved,
+       [Invoice_Payment_Terms_(Days)],
+       Invoice_Payment_Date,
+       Litigation_Flag,
+       Litigation_Issue,
+       Matter_Name,
+       Solicitor_Name,
+       Litigation_Update,
+       Recovery_Flag,
+       Developer,
+       Builder,
+       Media_Flag,
+       Armour_Advised_Date,
+       Zurich_Advised_Date,
+       New_or_Rectification_Work,
+       Policy_Wording,
+       Priority,
+       Reason_for_High_Priority,
+       Cunningham_Lindsay_as_Previous_Contractor,
+       Fulfilment_or_Normal_Indemnity,
+       Complaint_received,
+       Complaint_Category,
+       Initial_Potential_Estimate,
+       Date_IPE_likely_to_be_updated,
+       Expected_Next_Phase_Date,
+       Next_Review_Date,
+       Anticipated_Resolution_Date,
+       [Hardship_Considerations?],
+       [Completed_Request_for_Info?],
+       FSCS_Qualifying_Test,
+       FSCS_Eligibility_Status,
+       Claim_Phase,
+       Waking_Watch_or_Fire_Notice_Issued,
+       Litigated_Recoveries_Status,
+       RoM_Recoveries_Status,
+       Date_when_recovery_expected_to_enter_next_phase,
+       Overall_prospects_of_successful_recovery,
+       Total_recovery_made_to_date,
+       Reasonably_expected_recovery_value,
+       Date_anticipated_resolution_of_recovery FROM dqvwCustomClaimFields</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Claims Data\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{E94D55C2-F53B-45CA-A3C5-421ADB52F572}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[svr-liv-3pty-01.Wellington_Live]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Claim_Number]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Claim_Number]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Claim_Number]"
+                      name="Claim_Number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Claim_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Claim_Status]"
+                      length="6"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Claim_Status]"
+                      name="Claim_Status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Loss_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Loss_Type]"
+                      length="6"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Loss_Type]"
+                      name="Loss_Type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Zurich_Policy_No]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Zurich_Policy_No]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Zurich_Policy_No]"
+                      name="Zurich_Policy_No"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_1]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address_Line_1]"
+                      length="80"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_1]"
+                      name="Address_Line_1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_2]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address_Line_2]"
+                      length="80"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_2]"
+                      name="Address_Line_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_3]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address_Line_3]"
+                      length="80"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_3]"
+                      name="Address_Line_3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_4]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address_Line_4]"
+                      length="80"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Address_Line_4]"
+                      name="Address_Line_4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostCode]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PostCode]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[PostCode]"
+                      name="PostCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Processed_By]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Processed_By]"
+                      length="30"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Processed_By]"
+                      name="Processed_By"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Trading_State]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Trading_State]"
+                      length="30"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Trading_State]"
+                      name="Trading_State"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Case_Reserve_Set_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Case_Reserve_Set_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Case_Reserve_Set_Date]"
+                      name="Case_Reserve_Set_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[First_Site_Visit_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[First_Site_Visit_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[First_Site_Visit_Date]"
+                      name="First_Site_Visit_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Coverage_Confimed_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Coverage_Confimed_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Coverage_Confimed_Date]"
+                      name="Coverage_Confimed_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Repairs_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Repairs_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Repairs_Date]"
+                      name="Repairs_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Repairer_Invoice_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Repairer_Invoice_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Repairer_Invoice_Date]"
+                      name="Repairer_Invoice_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoice_Payment_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Invoice_Payment_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoice_Payment_Date]"
+                      name="Invoice_Payment_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoice_Payment_Terms]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Invoice_Payment_Terms]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoice_Payment_Terms]"
+                      name="Invoice_Payment_Terms"
+                      precision="18"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Flag]"
+                      length="1"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Flag]"
+                      name="Litigation_Flag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Issue]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Issue]"
+                      length="50"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Issue]"
+                      name="Litigation_Issue"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Matter_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Matter_Name]"
+                      length="50"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Matter_Name]"
+                      name="Litigation_Matter_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Solicitor_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Solicitor_Name]"
+                      length="50"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Solicitor_Name]"
+                      name="Litigation_Solicitor_Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Update]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Update]"
+                      length="50"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigation_Update]"
+                      name="Litigation_Update"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Recovery_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Recovery_Flag]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Recovery_Flag]"
+                      name="Recovery_Flag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Developer]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Developer]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Developer]"
+                      name="Developer"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Builder]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Builder]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Builder]"
+                      name="Builder"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Media_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Media_Flag]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Media_Flag]"
+                      name="Media_Flag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Armour_Advised_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Armour_Advised_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Armour_Advised_Date]"
+                      name="Armour_Advised_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Zurich_Advised_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Zurich_Advised_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Zurich_Advised_Date]"
+                      name="Zurich_Advised_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[New_or_Rectification_Work]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New_or_Rectification_Work]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[New_or_Rectification_Work]"
+                      name="New_or_Rectification_Work"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Policy_Wording]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Policy_Wording]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Policy_Wording]"
+                      name="Policy_Wording"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Priority]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Priority]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Priority]"
+                      name="Priority"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Reason_for_High_Priority]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Reason_for_High_Priority]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Reason_for_High_Priority]"
+                      name="Reason_for_High_Priority"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Cunningham_Lindsay_as_Previous_Contractor]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Cunningham_Lindsay_as_Previous_Contractor]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Cunningham_Lindsay_as_Previous_Contractor]"
+                      name="Cunningham_Lindsay_as_Previous_Contractor"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fulfilment_or_Normal_Indemnity]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Fulfilment_or_Normal_Indemnity]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Fulfilment_or_Normal_Indemnity]"
+                      name="Fulfilment_or_Normal_Indemnity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Complaint_received]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Complaint_received]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Complaint_received]"
+                      name="Complaint_received"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Complaint_Category]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Complaint_Category]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Complaint_Category]"
+                      name="Complaint_Category"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Initial_Potential_Estimate]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Initial_Potential_Estimate]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Initial_Potential_Estimate]"
+                      name="Initial_Potential_Estimate"
+                      precision="18"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_IPE_likely_to_be_updated]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_IPE_likely_to_be_updated]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_IPE_likely_to_be_updated]"
+                      name="Date_IPE_likely_to_be_updated"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Expected_Next_Phase_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Expected_Next_Phase_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Expected_Next_Phase_Date]"
+                      name="Expected_Next_Phase_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Next_Review_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Next_Review_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Next_Review_Date]"
+                      name="Next_Review_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Anticipated_Resolution_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Anticipated_Resolution_Date]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Anticipated_Resolution_Date]"
+                      name="Anticipated_Resolution_Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Hardship_Considerations?]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Hardship_Considerations?]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Hardship_Considerations?]"
+                      name="Hardship_Considerations?"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Completed_Request_for_Info?]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Completed_Request_for_Info?]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Completed_Request_for_Info?]"
+                      name="Completed_Request_for_Info?"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[FSCS_Qualifying_Test]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FSCS_Qualifying_Test]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[FSCS_Qualifying_Test]"
+                      name="FSCS_Qualifying_Test"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[FSCS_Eligibility_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FSCS_Eligibility_Status]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[FSCS_Eligibility_Status]"
+                      name="FSCS_Eligibility_Status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Claim_Phase]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Claim_Phase]"
+                      length="93"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Claim_Phase]"
+                      name="Claim_Phase"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Waking_Watch_or_Fire_Notice_Issued]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Waking_Watch_or_Fire_Notice_Issued]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Waking_Watch_or_Fire_Notice_Issued]"
+                      name="Waking_Watch_or_Fire_Notice_Issued"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigated_Recoveries_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigated_Recoveries_Status]"
+                      length="93"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Litigated_Recoveries_Status]"
+                      name="Litigated_Recoveries_Status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[RoM_Recoveries_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RoM_Recoveries_Status]"
+                      length="93"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[RoM_Recoveries_Status]"
+                      name="RoM_Recoveries_Status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_when_recovery_expected_to_enter_next_phase]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_when_recovery_expected_to_enter_next_phase]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_when_recovery_expected_to_enter_next_phase]"
+                      name="Date_when_recovery_expected_to_enter_next_phase"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Overall_prospects_of_successful_recovery]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Overall_prospects_of_successful_recovery]"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Overall_prospects_of_successful_recovery]"
+                      name="Overall_prospects_of_successful_recovery"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_recovery_made_to_date]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Total_recovery_made_to_date]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Total_recovery_made_to_date]"
+                      name="Total_recovery_made_to_date"
+                      precision="18"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Reasonably_expected_recovery_value]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Reasonably_expected_recovery_value]"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Reasonably_expected_recovery_value]"
+                      name="Reasonably_expected_recovery_value"
+                      precision="18"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_anticipated_resolution_of_recovery]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_anticipated_resolution_of_recovery]"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date_anticipated_resolution_of_recovery]"
+                      name="Date_anticipated_resolution_of_recovery"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Claim_Number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Claim_Number" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Claim_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="Claim_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Loss_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="Loss_Type" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Zurich_Policy_No]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Zurich_Policy_No" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address_Line_1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      name="Address_Line_1" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address_Line_2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      name="Address_Line_2" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address_Line_3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      name="Address_Line_3" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Address_Line_4]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      name="Address_Line_4" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PostCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="PostCode" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Processed_By]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Processed_By" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Trading_State]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="Trading_State" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Case_Reserve_Set_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Case_Reserve_Set_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[First_Site_Visit_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="First_Site_Visit_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Coverage_Confimed_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Coverage_Confimed_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Repairs_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Repairs_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Repairer_Invoice_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Repairer_Invoice_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Invoice_Payment_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Invoice_Payment_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Invoice_Payment_Terms]"
+                      dataType="numeric"
+                      name="Invoice_Payment_Terms"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="Litigation_Flag" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Issue]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Litigation_Issue" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Matter_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Litigation_Matter_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Solicitor_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Litigation_Solicitor_Name" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigation_Update]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Litigation_Update" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Recovery_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Recovery_Flag" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Developer]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Developer" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Builder]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Builder" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Media_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Media_Flag" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Armour_Advised_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Armour_Advised_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Zurich_Advised_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Zurich_Advised_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[New_or_Rectification_Work]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="New_or_Rectification_Work" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Policy_Wording]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Policy_Wording" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Priority]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Priority" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Reason_for_High_Priority]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Reason_for_High_Priority" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Cunningham_Lindsay_as_Previous_Contractor]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Cunningham_Lindsay_as_Previous_Contractor" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Fulfilment_or_Normal_Indemnity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Fulfilment_or_Normal_Indemnity" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Complaint_received]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Complaint_received" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Complaint_Category]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Complaint_Category" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Initial_Potential_Estimate]"
+                      dataType="numeric"
+                      name="Initial_Potential_Estimate"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_IPE_likely_to_be_updated]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Date_IPE_likely_to_be_updated" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Expected_Next_Phase_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Expected_Next_Phase_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Next_Review_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Next_Review_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Anticipated_Resolution_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Anticipated_Resolution_Date" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Hardship_Considerations?]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Hardship_Considerations?" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Completed_Request_for_Info?]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Completed_Request_for_Info?" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FSCS_Qualifying_Test]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="FSCS_Qualifying_Test" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FSCS_Eligibility_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="FSCS_Eligibility_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Claim_Phase]"
+                      codePage="1252"
+                      dataType="str"
+                      length="93"
+                      name="Claim_Phase" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Waking_Watch_or_Fire_Notice_Issued]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Waking_Watch_or_Fire_Notice_Issued" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Litigated_Recoveries_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="93"
+                      name="Litigated_Recoveries_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RoM_Recoveries_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="93"
+                      name="RoM_Recoveries_Status" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_when_recovery_expected_to_enter_next_phase]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Date_when_recovery_expected_to_enter_next_phase" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Overall_prospects_of_successful_recovery]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="Overall_prospects_of_successful_recovery" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Total_recovery_made_to_date]"
+                      dataType="numeric"
+                      name="Total_recovery_made_to_date"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Reasonably_expected_recovery_value]"
+                      dataType="numeric"
+                      name="Reasonably_expected_recovery_value"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date_anticipated_resolution_of_recovery]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Date_anticipated_resolution_of_recovery" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Claim_Number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Claim_Number]"
+                      name="Claim_Number" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Claim_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Claim_Status]"
+                      name="Claim_Status" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Loss_Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Loss_Type]"
+                      name="Loss_Type" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Zurich_Policy_No]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Zurich_Policy_No]"
+                      name="Zurich_Policy_No" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address_Line_1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address_Line_1]"
+                      name="Address_Line_1" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address_Line_2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address_Line_2]"
+                      name="Address_Line_2" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address_Line_3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address_Line_3]"
+                      name="Address_Line_3" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address_Line_4]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Address_Line_4]"
+                      name="Address_Line_4" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PostCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PostCode]"
+                      name="PostCode" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Processed_By]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Processed_By]"
+                      name="Processed_By" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Trading_State]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Trading_State]"
+                      name="Trading_State" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Case_Reserve_Set_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Case_Reserve_Set_Date]"
+                      name="Case_Reserve_Set_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[First_Site_Visit_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[First_Site_Visit_Date]"
+                      name="First_Site_Visit_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Coverage_Confimed_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Coverage_Confimed_Date]"
+                      name="Coverage_Confimed_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Repairs_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Repairs_Date]"
+                      name="Repairs_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Repairer_Invoice_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Repairer_Invoice_Date]"
+                      name="Repairer_Invoice_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Invoice_Payment_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Invoice_Payment_Date]"
+                      name="Invoice_Payment_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Invoice_Payment_Terms]"
+                      dataType="numeric"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Invoice_Payment_Terms]"
+                      name="Invoice_Payment_Terms"
+                      precision="18" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Flag]"
+                      name="Litigation_Flag" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Issue]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Issue]"
+                      name="Litigation_Issue" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Matter_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Matter_Name]"
+                      name="Litigation_Matter_Name" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Solicitor_Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Solicitor_Name]"
+                      name="Litigation_Solicitor_Name" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Update]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigation_Update]"
+                      name="Litigation_Update" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Recovery_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Recovery_Flag]"
+                      name="Recovery_Flag" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Developer]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Developer]"
+                      name="Developer" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Builder]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Builder]"
+                      name="Builder" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Media_Flag]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Media_Flag]"
+                      name="Media_Flag" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Armour_Advised_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Armour_Advised_Date]"
+                      name="Armour_Advised_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Zurich_Advised_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Zurich_Advised_Date]"
+                      name="Zurich_Advised_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New_or_Rectification_Work]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[New_or_Rectification_Work]"
+                      name="New_or_Rectification_Work" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Policy_Wording]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Policy_Wording]"
+                      name="Policy_Wording" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Priority]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Priority]"
+                      name="Priority" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Reason_for_High_Priority]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Reason_for_High_Priority]"
+                      name="Reason_for_High_Priority" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Cunningham_Lindsay_as_Previous_Contractor]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Cunningham_Lindsay_as_Previous_Contractor]"
+                      name="Cunningham_Lindsay_as_Previous_Contractor" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Fulfilment_or_Normal_Indemnity]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Fulfilment_or_Normal_Indemnity]"
+                      name="Fulfilment_or_Normal_Indemnity" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Complaint_received]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Complaint_received]"
+                      name="Complaint_received" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Complaint_Category]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Complaint_Category]"
+                      name="Complaint_Category" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Initial_Potential_Estimate]"
+                      dataType="numeric"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Initial_Potential_Estimate]"
+                      name="Initial_Potential_Estimate"
+                      precision="18" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_IPE_likely_to_be_updated]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_IPE_likely_to_be_updated]"
+                      name="Date_IPE_likely_to_be_updated" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Expected_Next_Phase_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Expected_Next_Phase_Date]"
+                      name="Expected_Next_Phase_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Next_Review_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Next_Review_Date]"
+                      name="Next_Review_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Anticipated_Resolution_Date]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Anticipated_Resolution_Date]"
+                      name="Anticipated_Resolution_Date" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Hardship_Considerations?]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Hardship_Considerations?]"
+                      name="Hardship_Considerations?" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Completed_Request_for_Info?]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Completed_Request_for_Info?]"
+                      name="Completed_Request_for_Info?" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FSCS_Qualifying_Test]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FSCS_Qualifying_Test]"
+                      name="FSCS_Qualifying_Test" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FSCS_Eligibility_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FSCS_Eligibility_Status]"
+                      name="FSCS_Eligibility_Status" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Claim_Phase]"
+                      codePage="1252"
+                      dataType="str"
+                      length="93"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Claim_Phase]"
+                      name="Claim_Phase" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Waking_Watch_or_Fire_Notice_Issued]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Waking_Watch_or_Fire_Notice_Issued]"
+                      name="Waking_Watch_or_Fire_Notice_Issued" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigated_Recoveries_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="93"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Litigated_Recoveries_Status]"
+                      name="Litigated_Recoveries_Status" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RoM_Recoveries_Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="93"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RoM_Recoveries_Status]"
+                      name="RoM_Recoveries_Status" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_when_recovery_expected_to_enter_next_phase]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_when_recovery_expected_to_enter_next_phase]"
+                      name="Date_when_recovery_expected_to_enter_next_phase" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Overall_prospects_of_successful_recovery]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Overall_prospects_of_successful_recovery]"
+                      name="Overall_prospects_of_successful_recovery" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Total_recovery_made_to_date]"
+                      dataType="numeric"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Total_recovery_made_to_date]"
+                      name="Total_recovery_made_to_date"
+                      precision="18" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Reasonably_expected_recovery_value]"
+                      dataType="numeric"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Reasonably_expected_recovery_value]"
+                      name="Reasonably_expected_recovery_value"
+                      precision="18" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_anticipated_resolution_of_recovery]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date_anticipated_resolution_of_recovery]"
+                      name="Date_anticipated_resolution_of_recovery" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Claims Data.Paths[Derived Column Output]"
+              endId="Package\Claims Data\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Claims Data\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Claims Data.Paths[OLE DB Source Output]"
+              endId="Package\Claims Data\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Claims Data\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Execute Staging"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
@@ -162,7 +2591,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -304,7 +2733,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">With ClaimsHandlers As 
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">With ClaimsHandlers As 
 (
 
 SELECT Claim_Handler
@@ -525,7 +2954,7 @@ ON CD.[Claim Number] = CH.Claim_No</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -1592,7 +4021,7 @@ ON CD.[Claim Number] = CH.Claim_No</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Select  Finance_Group,
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select  Finance_Group,
         Policy_Number,
         [Policy Basis],
         UW_Year,
@@ -3426,7 +5855,7 @@ ON CD.[Claim Number] = CH.Claim_No</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -4047,7 +6476,7 @@ ON CD.[Claim Number] = CH.Claim_No</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Select * From dbo.dqfnzvwClaimReportGN (? ,?)</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select * From dbo.dqfnzvwClaimReportGN (? ,?)</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -5048,7 +7477,7 @@ ON CD.[Claim Number] = CH.Claim_No</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -5767,7 +8196,7 @@ ON CD.[Claim Number] = CH.Claim_No</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">With TransactionList AS
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">With TransactionList AS
 
 (
 
@@ -7039,6 +9468,14 @@ From TransactionList T
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 5"
       DTS:To="Package\Execute Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{25554AF3-999D-4D2E-B49D-15CF408D04CA}"
+      DTS:From="Package\Claims Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\Truncate Claims Handler" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -7272,6 +9709,44 @@ From TransactionList T
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Claims Data"
+          TopLeft="563,52" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="563,73">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-169,-14"
+              Start="0,0"
+              End="-161.5,-14">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-80.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-80.5,0"
+                    Point2="-84.5,0"
+                    Point3="-84.5,-4" />
+                  <mssgle:LineSegment
+                    End="-84.5,-10" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-84.5,-10"
+                    Point2="-84.5,-14"
+                    Point3="-88.5,-14" />
+                  <mssgle:LineSegment
+                    End="-161.5,-14" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -7279,7 +9754,7 @@ From TransactionList T
     design-time-name="Package\UpDate Claims Handler">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\UpDate Claims Handler\OLE DB Source"
@@ -7319,7 +9794,9 @@ From TransactionList T
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -7350,7 +9827,7 @@ From TransactionList T
     design-time-name="Package\UpDateEastWestClaimsRegister">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\UpDateEastWestClaimsRegister\OLE DB Source"
@@ -7378,7 +9855,9 @@ From TransactionList T
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -7409,7 +9888,7 @@ From TransactionList T
     design-time-name="Package\UpdateEastWestZurichClaims">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\UpdateEastWestZurichClaims\OLE DB Source"
@@ -7449,7 +9928,9 @@ From TransactionList T
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -7480,7 +9961,7 @@ From TransactionList T
     design-time-name="Package\UploadDataPolygonal">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\UploadDataPolygonal\OLE DB Source"
@@ -7508,7 +9989,9 @@ From TransactionList T
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -7532,6 +10015,120 @@ From TransactionList T
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Claims Data">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Claims Data\OLE DB Source"
+          TopLeft="422,30" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Claims Data\OLE DB Destination"
+          TopLeft="384,217" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Claims Data\Derived Column"
+          TopLeft="609.5,129.5" />
+        <EdgeLayout
+          Id="Package\Claims Data.Paths[OLE DB Source Output]"
+          TopLeft="500.5,72">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="188,57.5"
+              Start="0,0"
+              End="188,50">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.75"
+                    Point2="0,28.75"
+                    Point3="4,28.75" />
+                  <mssgle:LineSegment
+                    End="184,28.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="184,28.75"
+                    Point2="188,28.75"
+                    Point3="188,32.75" />
+                  <mssgle:LineSegment
+                    End="188,50" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Claims Data.Paths[Derived Column Output]"
+          TopLeft="688.5,171.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-216,45.5"
+              Start="0,0"
+              End="-216,38">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.75"
+                    Point2="0,22.75"
+                    Point3="-4,22.75" />
+                  <mssgle:LineSegment
+                    End="-212,22.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-212,22.75"
+                    Point2="-216,22.75"
+                    Point3="-216,26.75" />
+                  <mssgle:LineSegment
+                    End="-216,38" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Claims Data\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">View</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Claims Data\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
