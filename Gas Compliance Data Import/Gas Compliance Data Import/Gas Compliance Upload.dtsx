@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Gas Compliance Upload"
   DTS:PackageType="5"
-  DTS:VersionBuild="41"
-  DTS:VersionGUID="{99DA9FE8-C538-44AD-8AAA-E16045216E1D}">
+  DTS:VersionBuild="46"
+  DTS:VersionGUID="{2DF9EE68-912D-4045-8054-49033E4369BC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -24,7 +24,7 @@
       DTS:ObjectName="Excel Connection Manager">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\svr-liv-fs-06\Restricted\LTA\Litigation\Property Litigation\Riverside Gas\TOLOAD_MASTER REFERRAL SPREADSHEET.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\svr-liv-dw-01\c$\APIDataStaging\Riverside Gas\TOLOAD_MASTER REFERRAL SPREADSHEET.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -70,23 +70,43 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
+      DTS:DTSID="{164E2821-4FD3-49D4-9D7B-F5336CA048D4}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Output_FileLocation]+&quot;TO_LOAD_MASTER REFERRAL SPREADSHEET.xlsx&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Load_FilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\svr-liv-dw-01\c$\APIDataStaging\Riverside Gas\TO_LOAD_MASTER REFERRAL SPREADSHEET.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{59711E35-44A5-4269-BF05-8BFFE5E7CC13}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Output_FileLocation">
+      <DTS:VariableValue
+        DTS:DataType="8">\\svr-liv-dw-01\c$\APIDataStaging\Riverside Gas\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
       DTS:DTSID="{18F374F9-647C-4461-B73E-1F795DBD0CE9}"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="Output_FileName">
       <DTS:VariableValue
-        DTS:DataType="8">TOLOAD_MASTER REFERRAL SPREADSHEET.xlsx</DTS:VariableValue>
+        DTS:DataType="8">MASTER REFERRAL SPREADSHEET.xlsx</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
       DTS:DTSID="{7812A830-AC4C-40A4-9BE9-C59BE67CE74D}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="@[User::FileLocation]+ @[User::Output_FileName]"
+      DTS:Expression="@[User::Output_FileLocation]+ @[User::Output_FileName]"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="Output_FilePath">
       <DTS:VariableValue
-        DTS:DataType="8">\\svr-liv-fs-06\Restricted\LTA\Litigation\Property Litigation\Riverside Gas\TOLOAD_MASTER REFERRAL SPREADSHEET.xlsx</DTS:VariableValue>
+        DTS:DataType="8">\\svr-liv-dw-01\c$\APIDataStaging\Riverside Gas\MASTER REFERRAL SPREADSHEET.xlsx</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -117,6 +137,42 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
+      DTS:refId="Package\Cleanup File 1"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="File System Task"
+      DTS:DTSID="{5be90b4c-6577-4bc7-a1b6-05f0bb13c229}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Cleanup File 1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOperationType="DeleteFile"
+          TaskSourcePath="User::Load_FilePath"
+          TaskIsSourceVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Copy file to server"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="File System Task"
+      DTS:DTSID="{8FA9666A-FCAE-4114-870E-11266A8D289F}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Copy file to server"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOverwriteDestFile="True"
+          TaskSourcePath="User::FilePath"
+          TaskIsSourceVariable="True"
+          TaskDestinationPath="User::Output_FilePath"
+          TaskIsDestinationVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\Create copy of file without password"
       DTS:CreationName="Microsoft.ExecuteProcess"
       DTS:Description="Execute Process Task"
@@ -126,12 +182,10 @@
       DTS:ObjectName="Create copy of file without password"
       DTS:ThreadHint="0">
       <DTS:Variables />
-      <DTS:PropertyExpression
-        DTS:Name="Arguments">"-ExecutionPolicy Unrestricted -File RemovePassword.ps1 -filepath '" + @[User::FilePath] + "' -password " + @[User::Password]  + " -outputpath '" +  @[User::Output_FilePath] + "'"</DTS:PropertyExpression>
       <DTS:ObjectData>
         <ExecuteProcessData
           Executable="Powershell.exe"
-          Arguments="-ExecutionPolicy Unrestricted -File RemovePassword.ps1 -filepath '\\svr-liv-fs-06\Restricted\LTA\Litigation\Property Litigation\Riverside Gas\MASTER REFERRAL SPREADSHEET.xlsx' -password Riversidegas -outputpath '\\svr-liv-fs-06\Restricted\LTA\Litigation\Property Litigation\Riverside Gas\TOLOAD_MASTER REFERRAL SPREADSHEET.xlsx'"
+          Arguments="-ExecutionPolicy Unrestricted -File RemovePassword.ps1"
           WorkingDirectory="C:\APIDataStaging\Riverside Gas" />
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1558,6 +1612,22 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\Cleanup File" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{526E791F-0B6D-4939-BCD1-923D7598C2B4}"
+      DTS:From="Package\Copy file to server"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Create copy of file without password" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{27145E3A-8DBC-4253-962A-BAD6C83957CD}"
+      DTS:From="Package\Get Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Cleanup File 1" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -1571,6 +1641,22 @@
     <LayoutInfo>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="137.333333333334,42.6666666666667"
+          Id="Package\Cleanup File"
+          TopLeft="772.916655149311,215.888886280193" />
+        <NodeLayout
+          Size="252,42.6666666666667"
+          Id="Package\Create copy of file without password"
+          TopLeft="144.444442292054,259.222218838665" />
+        <NodeLayout
+          Size="190,42"
+          Id="Package\Get Data\Import Completed Data"
+          TopLeft="6.54166665114462,193.583334476252" />
+        <NodeLayout
+          Size="158,42.6666666666667"
+          Id="Package\Get Data\Import Live Data"
+          TopLeft="22.1041666278616,109.9166677321" />
         <NodeLayout
           Size="154.666666666667,42"
           Id="Package\Get Data\Truncate Tables"
@@ -1597,10 +1683,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="158,42.6666666666667"
-          Id="Package\Get Data\Import Live Data"
-          TopLeft="22.1041666278616,109.9166677321" />
         <EdgeLayout
           Id="Package\Get Data.PrecedenceConstraints[Constraint 1]"
           TopLeft="101.322916639503,152.583334398766">
@@ -1623,10 +1705,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="190,42"
-          Id="Package\Get Data\Import Completed Data"
-          TopLeft="6.54166665114462,193.583334476252" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
@@ -1634,10 +1712,6 @@
           Size="205.333333333334,333.333333333334"
           Id="Package\Get Data"
           TopLeft="457.29165985249,118.62499865368" />
-        <NodeLayout
-          Size="252,42.6666666666667"
-          Id="Package\Create copy of file without password"
-          TopLeft="144.444442292054,259.222218838665" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="396.444442292054,282.923608746173">
@@ -1660,24 +1734,72 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="137.333333333334,42.6666666666667"
-          Id="Package\Cleanup File"
-          TopLeft="768.055544110636,262.833329885205" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="662.624993185823,284.729164269442">
+          TopLeft="662.624993185823,234.145831355825">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="105.430550924813,0"
+              EndConnector="110.291661963488,0"
               Start="0,0"
-              End="97.9305509248132,0">
+              End="102.791661963488,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="97.9305509248132,0" />
+                    End="102.791661963488,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="165.333333333334,42.6666666666667"
+          Id="Package\Copy file to server"
+          TopLeft="188.888886074225,133.27777567274" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="270.999997516473,175.944442339407">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,83.2777764992579"
+              Start="0,0"
+              End="0,75.7777764992579">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,75.7777764992579" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="146.666666666667,42.6666666666667"
+          Id="Package\Cleanup File 1"
+          TopLeft="767.36109967654,325.722216397855" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="662.624993185823,343.284718636879">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="104.736106490716,0"
+              Start="0,0"
+              End="97.2361064907163,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="97.2361064907163,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
