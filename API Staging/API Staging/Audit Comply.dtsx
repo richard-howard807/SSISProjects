@@ -7,12 +7,12 @@
   DTS:CreatorName="SBC\6237"
   DTS:DTSID="{28847E83-273C-4434-8CC8-CBA92AE4834A}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LastModifiedProductVersion="15.0.2000.121"
   DTS:LocaleID="2057"
   DTS:ObjectName="Audit Comply"
   DTS:PackageType="5"
-  DTS:VersionBuild="143"
-  DTS:VersionGUID="{E21B42F1-399E-4541-B0BD-9C1D91F2FA95}">
+  DTS:VersionBuild="146"
+  DTS:VersionGUID="{74E17883-F399-417D-AD52-6FBBB97F867A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -211,13 +211,13 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Foreach File"
+      DTS:refId="Package\Foreach Audit File"
       DTS:CreationName="STOCK:FOREACHLOOP"
       DTS:Description="Foreach File"
       DTS:DTSID="{274f84cb-9137-4df1-bda9-352469fb94d6}"
       DTS:ExecutableType="STOCK:FOREACHLOOP"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Foreach File">
+      DTS:ObjectName="Foreach Audit File">
       <DTS:ForEachEnumerator
         DTS:CreationName="Microsoft.ForEachFileEnumerator"
         DTS:DTSID="{6856FAD9-4B4E-4C53-A2ED-5A10A88DDF50}"
@@ -238,7 +238,7 @@
       <DTS:Variables />
       <DTS:Executables>
         <DTS:Executable
-          DTS:refId="Package\Foreach File\Delete loaded files"
+          DTS:refId="Package\Foreach Audit File\Delete loaded files"
           DTS:CreationName="Microsoft.FileSystemTask"
           DTS:DelayValidation="True"
           DTS:Description="File System Task"
@@ -257,7 +257,7 @@
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Foreach File\Execute stored procedure"
+          DTS:refId="Package\Foreach Audit File\Execute stored procedure"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute stored procedure"
           DTS:DTSID="{4854D170-AAA9-49F4-8B1A-9A013A509A66}"
@@ -283,13 +283,13 @@
       </DTS:Executables>
       <DTS:PrecedenceConstraints>
         <DTS:PrecedenceConstraint
-          DTS:refId="Package\Foreach File.PrecedenceConstraints[Constraint]"
+          DTS:refId="Package\Foreach Audit File.PrecedenceConstraints[Constraint]"
           DTS:CreationName=""
           DTS:DTSID="{62AF0FFE-D16C-467F-BA58-7BA2068C0627}"
-          DTS:From="Package\Foreach File\Execute stored procedure"
+          DTS:From="Package\Foreach Audit File\Execute stored procedure"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint"
-          DTS:To="Package\Foreach File\Delete loaded files" />
+          DTS:To="Package\Foreach Audit File\Delete loaded files" />
       </DTS:PrecedenceConstraints>
       <DTS:ForEachVariableMappings>
         <DTS:ForEachVariableMapping
@@ -301,14 +301,125 @@
       </DTS:ForEachVariableMappings>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Get data from API"
+      DTS:refId="Package\Foreach Custom File"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach File"
+      DTS:DTSID="{6f28e64d-86cb-4387-8359-b281334aabbb}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Custom File">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{a09ed2cc-c9b3-44f9-87ee-0428457d89ad}"
+        DTS:ObjectName="{6856FAD9-4B4E-4C53-A2ED-5A10A88DDF50}">
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\APIDataStaging\AuditComply\Files\Custom" />
+            <FEFEProperty
+              FileSpec="*.json" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Custom File\Delete loaded files"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:DelayValidation="True"
+          DTS:Description="File System Task"
+          DTS:DTSID="{e4c7869c-7275-4d60-80b7-5334314d0b0f}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Delete loaded files"
+          DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="DeleteFile"
+              TaskSourcePath="User::LoadFile"
+              TaskIsSourceVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Custom File\Execute stored procedure"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute stored procedure"
+          DTS:DTSID="{4c550539-c527-46d0-bd56-d4e6005aa828}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute stored procedure"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E86DFC32-7749-415E-BA0B-7562347DC4B7}"
+              SQLTask:SqlStatementSource="EXEC load_auditcomply_custom ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@FileName"
+                SQLTask:DtsVariableName="User::LoadFile"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="0" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Foreach Custom File.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{91096a2d-c725-4bb5-842f-9c6c1b46c368}"
+          DTS:From="Package\Foreach Custom File\Execute stored procedure"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Foreach Custom File\Delete loaded files" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{15FBC1E6-32B7-4279-9716-5E95E4F88193}"
+          DTS:ObjectName="{15FBC1E6-32B7-4279-9716-5E95E4F88193}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::LoadFile" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get audit files from API"
       DTS:CreationName="Microsoft.ExecuteProcess"
       DTS:Description="Get data for each file"
-      DTS:Disabled="True"
       DTS:DTSID="{0e5a7401-6e1d-48c5-97b7-8a51e6ac11bd}"
       DTS:ExecutableType="Microsoft.ExecuteProcess"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Get data from API"
+      DTS:ObjectName="Get audit files from API"
+      DTS:TaskContact="Execute Process Task;Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="Arguments">"-ExecutionPolicy Unrestricted -File GetData.ps1 -Token " + @[User::fulltoken]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="WorkingDirectory">@[User::ScriptDirectory]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="Powershell.exe"
+          Arguments="-ExecutionPolicy Unrestricted -File GetData.ps1 -Token "
+          WorkingDirectory="C:\APIDataStaging\AuditComply\Scripts" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get custom files from API"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Get data for each file"
+      DTS:DTSID="{ab2c2645-81d4-4d4e-b72b-119773af5ede}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get custom files from API"
       DTS:TaskContact="Execute Process Task;Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
       DTS:ThreadHint="0">
       <DTS:Variables />
@@ -327,7 +438,6 @@
       DTS:refId="Package\Get Token"
       DTS:CreationName="STOCK:SEQUENCE"
       DTS:Description="Sequence Container"
-      DTS:Disabled="True"
       DTS:DTSID="{7FC111CB-0988-401C-BA79-0AEFFF7F7862}"
       DTS:ExecutableType="STOCK:SEQUENCE"
       DTS:LocaleID="-1"
@@ -1060,7 +1170,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{E86DFC32-7749-415E-BA0B-7562347DC4B7}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.staging_auditcomply" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.staging_auditcomply&#xA;TRUNCATE TABLE auditcomply_custom" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -1072,12 +1182,20 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
       DTS:From="Package\Get Token"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
-      DTS:To="Package\Get data from API" />
+      DTS:To="Package\Get audit files from API" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{2E90E352-D63A-40E8-9AFC-C49F7C7C9A5A}"
+      DTS:From="Package\Get audit files from API"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Get custom files from API" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{0E24F435-1121-4AF7-8393-B31E38BAADE6}"
-      DTS:From="Package\Get data from API"
+      DTS:DTSID="{F46E4AD3-ADD1-49D1-83E3-4D41F1C77E5A}"
+      DTS:From="Package\Get custom files from API"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\Truncate Staging Table" />
@@ -1088,15 +1206,23 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
       DTS:From="Package\Truncate Staging Table"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 3"
-      DTS:To="Package\Foreach File" />
+      DTS:To="Package\Foreach Audit File" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
       DTS:CreationName=""
       DTS:DTSID="{B0425D20-99C1-4516-8C5D-9CB139BF9AE8}"
-      DTS:From="Package\Foreach File"
+      DTS:From="Package\Foreach Audit File"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
       DTS:To="Package\Execute Merge Sprocs" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{26A8648D-CB9B-4037-A813-EEB76D5C35BC}"
+      DTS:From="Package\Execute Merge Sprocs"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Foreach Custom File" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -1109,21 +1235,21 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="183,42"
           Id="Package\Execute Merge Sprocs"
-          TopLeft="757,334" />
+          TopLeft="740,364" />
         <NodeLayout
           Size="166,42"
-          Id="Package\Foreach File\Delete loaded files"
+          Id="Package\Foreach Audit File\Delete loaded files"
           TopLeft="43,121" />
         <NodeLayout
           Size="163,42"
-          Id="Package\Foreach File\Execute stored procedure"
+          Id="Package\Foreach Audit File\Execute stored procedure"
           TopLeft="39,19" />
         <EdgeLayout
-          Id="Package\Foreach File.PrecedenceConstraints[Constraint]"
+          Id="Package\Foreach Audit File.PrecedenceConstraints[Constraint]"
           TopLeft="123.25,61">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -1149,12 +1275,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           IsExpanded="True"
           PanelSize="266,225"
           Size="266,268"
-          Id="Package\Foreach File"
+          Id="Package\Foreach Audit File"
           TopLeft="697,26" />
         <NodeLayout
-          Size="230,42"
-          Id="Package\Get data from API"
-          TopLeft="393,160" />
+          Size="189,42"
+          Id="Package\Get audit files from API"
+          TopLeft="408,62" />
         <NodeLayout
           Size="230,42"
           Id="Package\Get Token\Get Token"
@@ -1202,48 +1328,26 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="98.5,-11"
+              EndConnector="113.5,-109"
               Start="0,0"
-              End="91,-11">
+              End="106,-109">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="45.25,0" />
+                    End="52.75,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="45.25,0"
-                    Point2="49.25,0"
-                    Point3="49.25,-4" />
+                    Point1="52.75,0"
+                    Point2="56.75,0"
+                    Point3="56.75,-4" />
                   <mssgle:LineSegment
-                    End="49.25,-7" />
+                    End="56.75,-105" />
                   <mssgle:CubicBezierSegment
-                    Point1="49.25,-7"
-                    Point2="49.25,-11"
-                    Point3="53.25,-11" />
+                    Point1="56.75,-105"
+                    Point2="56.75,-109"
+                    Point3="60.75,-109" />
                   <mssgle:LineSegment
-                    End="91,-11" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="507.5,202">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,42"
-              Start="0,0"
-              End="0,34.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,34.5" />
+                    End="106,-109" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1288,30 +1392,137 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="830,294">
+          TopLeft="830.75,294">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="18.5,40"
+              EndConnector="0,70"
               Start="0,0"
-              End="18.5,32.5">
+              End="0,62.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,16" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,16"
-                    Point2="0,20"
-                    Point3="4,20" />
+                    End="0,62.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="199,42"
+          Id="Package\Get custom files from API"
+          TopLeft="405.5,149" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="503.75,104">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45"
+              Start="0,0"
+              End="0,37.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="14.5,20" />
-                  <mssgle:CubicBezierSegment
-                    Point1="14.5,20"
-                    Point2="18.5,20"
-                    Point3="18.5,24" />
+                    End="0,37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="506,191">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53"
+              Start="0,0"
+              End="0,45.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="18.5,32.5" />
+                    End="0,45.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Foreach Custom File\Delete loaded files"
+          TopLeft="43,121" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Foreach Custom File\Execute stored procedure"
+          TopLeft="39,19" />
+        <EdgeLayout
+          Id="Package\Foreach Custom File.PrecedenceConstraints[Constraint]"
+          TopLeft="123.25,61">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="266,225"
+          Size="266,268"
+          Id="Package\Foreach Custom File"
+          TopLeft="1021,25" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="860.666666666667,364">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="293.333333333333,-71"
+              Start="0,0"
+              End="293.333333333333,-63.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-24.7692307692308" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-24.7692307692308"
+                    Point2="0,-28.7692307692308"
+                    Point3="4,-28.7692307692308" />
+                  <mssgle:LineSegment
+                    End="289.333333333333,-28.7692307692308" />
+                  <mssgle:CubicBezierSegment
+                    Point1="289.333333333333,-28.7692307692308"
+                    Point2="293.333333333333,-28.7692307692308"
+                    Point3="293.333333333333,-32.7692307692308" />
+                  <mssgle:LineSegment
+                    End="293.333333333333,-63.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
