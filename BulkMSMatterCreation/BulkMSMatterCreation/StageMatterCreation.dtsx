@@ -7,12 +7,12 @@
   DTS:CreatorName="SBC\khanse"
   DTS:DTSID="{E7C8CAE9-4AE7-4E8E-8071-41D31735CE0C}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.0900.40"
+  DTS:LastModifiedProductVersion="15.0.2000.150"
   DTS:LocaleID="2057"
   DTS:ObjectName="StageMatterCreation"
   DTS:PackageType="5"
-  DTS:VersionBuild="9"
-  DTS:VersionGUID="{E3B04216-9855-497D-ADA8-36C3FD433CEA}">
+  DTS:VersionBuild="10"
+  DTS:VersionGUID="{E93E9076-EEA9-47B0-A3F2-97BDCB1F0C41}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -577,8 +577,7 @@
                       lineageId="Package\DFT -MatterCreationSpreadsheetData\Lookup.Outputs[Lookup Match Output].Columns[SectionGroup]" />
                     <inputColumn
                       refId="Package\DFT -MatterCreationSpreadsheetData\DFT - Matters To Stage.Inputs[OLE DB Destination Input].Columns[Office]"
-                      cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedDataType="i4"
                       cachedName="Office"
                       externalMetadataColumnId="Package\DFT -MatterCreationSpreadsheetData\DFT - Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[brID]"
                       lineageId="Package\DFT -MatterCreationSpreadsheetData\Lookup.Outputs[Lookup Match Output].Columns[Office]" />
@@ -1058,7 +1057,7 @@ BCMUser.usrAlias AS TM,
 td.Section,
 s.SectionGroup,
 td.Department,
-dbBranch.brCode AS Office
+dbBranch.brID AS Office
 from dbFeeEarner fe
 INNER JOIN MS_PROD.dbo.dbUser AS MatterManager
  ON fe.feeusrID = MatterManager.usrID
@@ -1094,7 +1093,7 @@ BCMUser.usrAlias AS TM,
 td.Section,
 s.SectionGroup,
 td.Department,
-dbBranch.brCode AS Office
+dbBranch.brID AS Office
 from dbFeeEarner fe
 INNER JOIN MS_PROD.dbo.dbUser AS MatterManager
  ON fe.feeusrID = MatterManager.usrID
@@ -1151,7 +1150,7 @@ where [refTable].[Matter Owner] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Matter Owner" dataType="DT_WSTR" length="36" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TM" dataType="DT_WSTR" length="36" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Section" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SectionGroup" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Department" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Office" dataType="DT_WSTR" length="15" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Matter Owner" dataType="DT_WSTR" length="36" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TM" dataType="DT_WSTR" length="36" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Section" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SectionGroup" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Department" dataType="DT_WSTR" length="16" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Office" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -1271,9 +1270,8 @@ where [refTable].[Matter Owner] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\DFT -MatterCreationSpreadsheetData\Lookup.Outputs[Lookup Match Output].Columns[Office]"
-                      dataType="wstr"
+                      dataType="i4"
                       errorOrTruncationOperation="Copy Column"
-                      length="15"
                       lineageId="Package\DFT -MatterCreationSpreadsheetData\Lookup.Outputs[Lookup Match Output].Columns[Office]"
                       name="Office"
                       truncationRowDisposition="FailComponent">
@@ -1993,19 +1991,43 @@ where [refTable].[Matter Owner] = ?</property>
       </GraphLayout>
     </LayoutInfo>
   </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="261,186" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="416,178" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
   <TaskHost
     design-time-name="Package\DFT -MatterCreationSpreadsheetData">
     <LayoutInfo>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="148,42"
-          Id="Package\DFT -MatterCreationSpreadsheetData\List of Matters"
-          TopLeft="139,89" />
-        <NodeLayout
           Size="100,42"
           Id="Package\DFT -MatterCreationSpreadsheetData\Sort"
           TopLeft="418,182" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\DFT -MatterCreationSpreadsheetData\Row Count 1"
+          TopLeft="392,430" />
         <NodeLayout
           Size="115,42"
           Id="Package\DFT -MatterCreationSpreadsheetData\Lookup"
@@ -2022,28 +2044,10 @@ where [refTable].[Matter Owner] = ?</property>
           Size="177,42"
           Id="Package\DFT -MatterCreationSpreadsheetData\DFT - Failed Matters"
           TopLeft="621,323" />
-        <EdgeLayout
-          Id="Package\DFT -MatterCreationSpreadsheetData.Paths[Excel Source Output]"
-          TopLeft="287,113.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="120,0"
-              Start="0,0"
-              End="112.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="112.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="148,42"
+          Id="Package\DFT -MatterCreationSpreadsheetData\List of Matters"
+          TopLeft="139,89" />
         <EdgeLayout
           Id="Package\DFT -MatterCreationSpreadsheetData.Paths[Sort Output]"
           TopLeft="464.75,224">
@@ -2058,6 +2062,28 @@ where [refTable].[Matter Owner] = ?</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,72.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT -MatterCreationSpreadsheetData.Paths[Row Count Output 11]"
+          TopLeft="465,472">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2124,10 +2150,6 @@ where [refTable].[Matter Owner] = ?</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="141,42"
-          Id="Package\DFT -MatterCreationSpreadsheetData\Row Count 1"
-          TopLeft="392,430" />
         <EdgeLayout
           Id="Package\DFT -MatterCreationSpreadsheetData.Paths[Lookup Match Output]"
           TopLeft="462,346">
@@ -2153,19 +2175,19 @@ where [refTable].[Matter Owner] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DFT -MatterCreationSpreadsheetData.Paths[Row Count Output 11]"
-          TopLeft="465,472">
+          Id="Package\DFT -MatterCreationSpreadsheetData.Paths[Excel Source Output]"
+          TopLeft="287,113.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,44"
+              EndConnector="120,0"
               Start="0,0"
-              End="0,36.5">
+              End="112.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,36.5" />
+                    End="112.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2178,25 +2200,12 @@ where [refTable].[Matter Owner] = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\DFT -MatterCreationSpreadsheetData\List of Matters">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\DFT -MatterCreationSpreadsheetData\Lookup">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2206,7 +2215,7 @@ where [refTable].[Matter Owner] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2239,29 +2248,18 @@ where [refTable].[Matter Owner] = ?</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
-  <DtsEventHandler
-    design-time-name="Package.EventHandlers[OnPreExecute]">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
-        <NodeLayout
-          Size="128,42"
-          Id="Package.EventHandlers[OnPreExecute]\StartAudit"
-          TopLeft="416,178" />
-      </GraphLayout>
-    </LayoutInfo>
-  </DtsEventHandler>
-  <DtsEventHandler
-    design-time-name="Package.EventHandlers[OnPostExecute]">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
-        <NodeLayout
-          Size="123,42"
-          Id="Package.EventHandlers[OnPostExecute]\EndAudit"
-          TopLeft="261,186" />
-      </GraphLayout>
-    </LayoutInfo>
-  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT -MatterCreationSpreadsheetData\List of Matters">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>
