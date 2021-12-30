@@ -11,11 +11,40 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="SDP Leavers"
   DTS:PackageType="5"
-  DTS:VersionBuild="16"
-  DTS:VersionGUID="{07791FC3-A865-4388-995E-2060B2D7E944}">
+  DTS:VersionBuild="71"
+  DTS:VersionGUID="{C6B4AD18-946C-4915-9023-68FE420D4373}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Flat File Connection Manager]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{EE56332B-6CFF-435D-B12E-301C83DC0805}"
+      DTS:ObjectName="Flat File Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="2057"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\APIDataStaging\SPDLeavers\TestOutputData.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="TestData"
+              DTS:DTSID="{DEC2DA02-4669-4CE4-B0B7-64B7D8F07FD2}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[SVR-LIV-DW-01.APIDataStaging]"
       DTS:CreationName="OLEDB"
@@ -55,7 +84,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="Days">
       <DTS:VariableValue
-        DTS:DataType="3">28</DTS:VariableValue>
+        DTS:DataType="3">22</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -76,6 +105,35 @@
       <DTS:VariableValue
         DTS:DataType="8"
         xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{83428EE8-0BB2-47A8-AB7F-6A319BE6AA91}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileName">
+      <DTS:VariableValue
+        DTS:DataType="8">AddSDPNewLeaverRequest.ps1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BFAEBE46-C4EB-41CB-A6DC-79FA066A5A7A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\APIDataStaging\SPDLeavers\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{23A64FA9-1BC1-4A00-B8BA-7724F0504F44}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::FilePath]+ @[User::FileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FullFilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\APIDataStaging\SPDLeavers\AddSDPNewLeaverRequest.ps1</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -117,12 +175,23 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
+      DTS:DTSID="{0565EDB1-6A7A-47E3-9DD1-418586ADE3AD}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;-NoProfile -ExecutionPolicy Unrestricted -File &quot; +  @[User::FullFilePath] + &quot; -Subject &quot; +  @[User::DisplayName] + &quot; -Body &quot; +  @[User::EmailBody] + &quot; -OfficeManager &quot; +  @[User::OfficeManagerEmail] + &quot; -Asset &quot; +  @[User::Asset] + &quot; -Office &quot; +  @[User::Office]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RunScriptCmd">
+      <DTS:VariableValue
+        DTS:DataType="8">-NoProfile -ExecutionPolicy Unrestricted -File C:\APIDataStaging\SPDLeavers\AddSDPNewLeaverRequest.ps1 -Subject  -Body  -OfficeManager  -Asset  -Office </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
       DTS:DTSID="{FA723208-91AA-4A15-87C6-F6D8E2D32198}"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="ScriptDirectory">
       <DTS:VariableValue
-        DTS:DataType="8">\\svr-liv-dw-01\APIDataStaging</DTS:VariableValue>
+        DTS:DataType="8">C:\APIDataStaging\SPDLeavers</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -132,6 +201,17 @@
       DTS:ObjectName="TestFlag">
       <DTS:VariableValue
         DTS:DataType="17">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{14636CD5-1967-40F5-A310-05AB50EC6A71}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;-NoProfile -ExecutionPolicy ByPass -Command \&quot;if(Test-Path '&quot; + @[User::FullFilePath] + &quot;') {exit 0} else {exit 999}\&quot;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TestPathCmd">
+      <DTS:VariableValue
+        DTS:DataType="8">-NoProfile -ExecutionPolicy ByPass -Command "if(Test-Path 'C:\APIDataStaging\SPDLeavers\AddSDPNewLeaverRequest.ps1') {exit 0} else {exit 999}"</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -175,14 +255,12 @@
           DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:PropertyExpression
-            DTS:Name="Arguments">"-ExecutionPolicy Unrestricted -File Add SDP New Leaver Request - Final.ps1 -Subject " +    @[User::DisplayName] + " -Body " +  @[User::EmailBody] + " -OfficeManager " +  @[User::OfficeManagerEmail] + " -Asset " + @[User::Asset] + " -Office " +  @[User::Office]</DTS:PropertyExpression>
-          <DTS:PropertyExpression
-            DTS:Name="WorkingDirectory">@[User::ScriptDirectory]</DTS:PropertyExpression>
+            DTS:Name="Arguments">@[User::RunScriptCmd]</DTS:PropertyExpression>
           <DTS:ObjectData>
             <ExecuteProcessData
-              Executable="Powershell.exe"
-              Arguments="-ExecutionPolicy Unrestricted -File Add SDP New Leaver Request - Final.ps1 -Subject  -Body  -OfficeManager  -Asset  -Office "
-              WorkingDirectory="\\svr-liv-dw-01\APIDataStaging"
+              Executable="C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+              Arguments="-NoProfile -ExecutionPolicy Unrestricted -File C:\APIDataStaging\SPDLeavers\AddSDPNewLeaverRequest.ps1 -Subject  -Body  -OfficeManager  -Asset  -Office "
+              WorkingDirectory="C:\Windows\System32\WindowsPowerShell\v1.0"
               StandardOutputVariable="User::TicketId" />
           </DTS:ObjectData>
         </DTS:Executable>
@@ -199,7 +277,7 @@
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{FE2F4CE9-A9A3-4B95-A7A1-29621968CC73}"
-              SQLTask:SqlStatementSource="DECLARE&#x9;@TicketId AS NVARCHAR(10) = ?&#xA;DECLARE&#x9;@Asset AS NVARCHAR(20) = ?&#xA;DECLARE @Office AS NVARCHAR(30) = ?&#xA;DECLARE @DisplayName AS NVARCHAR(100) = ?&#xA;DECLARE @EmailBody AS NVARCHAR(MAX) = ?&#xA;DECLARE&#x9;@OfficeManagerEmail AS NVARCHAR(100) = ?&#xA;&#xA;UPDATE [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;SET sdp_audit_leavers.ticket_id = @TicketId&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;sdp_audit_leavers.asset = @Asset&#xA;&#x9;AND sdp_audit_leavers.office = @Office&#xA;&#x9;AND sdp_audit_leavers.display_name = @DisplayName&#xA;&#x9;AND sdp_audit_leavers.email_body = @EmailBody&#xA;&#x9;AND sdp_audit_leavers.office_manager_email = @OfficeManagerEmail&#xA;&#x9;AND sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              SQLTask:SqlStatementSource="DECLARE&#x9;@TicketId AS NVARCHAR(MAX) = ?&#xA;DECLARE @TicketIdTrimmed AS NVARCHAR(MAX) = RIGHT(@TicketId, LEN(@TicketId)-PATINDEX('%\r\n[0-9]%', @TicketId)-3)&#xA;DECLARE @TidiedTicketId AS NVARCHAR(10) = LEFT(@TicketIdTrimmed, LEN(@TicketIdTrimmed)+1-PATINDEX('%[0-9]%', REVERSE(@TicketIdTrimmed)))&#xA;DECLARE&#x9;@Asset AS NVARCHAR(20) = ?&#xA;DECLARE @Office AS NVARCHAR(30) = ?&#xA;DECLARE @DisplayName AS NVARCHAR(100) = ?&#xA;DECLARE @EmailBody AS NVARCHAR(MAX) = ?&#xA;DECLARE&#x9;@OfficeManagerEmail AS NVARCHAR(100) = ?&#xA;&#xA;UPDATE [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;SET sdp_audit_leavers.ticket_id = @TidiedTicketId&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;sdp_audit_leavers.asset = @Asset&#xA;&#x9;AND sdp_audit_leavers.office = @Office&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.display_name, '-', '') + '&quot;' = @DisplayName&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.email_body, '-', '') + '&quot;' = @EmailBody&#xA;&#x9;AND sdp_audit_leavers.office_manager_email = @OfficeManagerEmail&#xA;&#x9;AND sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
               <SQLTask:ParameterBinding
                 SQLTask:ParameterName="@TicketId"
                 SQLTask:DtsVariableName="User::TicketId"
@@ -253,32 +331,32 @@
       <DTS:ForEachVariableMappings>
         <DTS:ForEachVariableMapping
           DTS:CreationName=""
-          DTS:DTSID="{48E84CDC-DD31-46CA-B647-6C6BFE96A271}"
-          DTS:ObjectName="{48E84CDC-DD31-46CA-B647-6C6BFE96A271}"
+          DTS:DTSID="{08969537-4065-4705-BB3B-99C092C1437A}"
+          DTS:ObjectName="{08969537-4065-4705-BB3B-99C092C1437A}"
           DTS:ValueIndex="0"
           DTS:VariableName="User::Asset" />
         <DTS:ForEachVariableMapping
           DTS:CreationName=""
-          DTS:DTSID="{78EC6717-3915-4EB7-A0D3-9F385FBCD31A}"
-          DTS:ObjectName="{78EC6717-3915-4EB7-A0D3-9F385FBCD31A}"
+          DTS:DTSID="{7F997B22-6441-4091-9B1D-5A60333CF78A}"
+          DTS:ObjectName="{7F997B22-6441-4091-9B1D-5A60333CF78A}"
           DTS:ValueIndex="1"
           DTS:VariableName="User::Office" />
         <DTS:ForEachVariableMapping
           DTS:CreationName=""
-          DTS:DTSID="{C4F18D26-7901-429A-A626-723408DAE0EC}"
-          DTS:ObjectName="{C4F18D26-7901-429A-A626-723408DAE0EC}"
+          DTS:DTSID="{FFC7EA83-CBC8-4A46-A16B-5FDFEBDE5399}"
+          DTS:ObjectName="{FFC7EA83-CBC8-4A46-A16B-5FDFEBDE5399}"
           DTS:ValueIndex="2"
           DTS:VariableName="User::DisplayName" />
         <DTS:ForEachVariableMapping
           DTS:CreationName=""
-          DTS:DTSID="{1690EC90-913B-490C-9A42-E761816792B5}"
-          DTS:ObjectName="{1690EC90-913B-490C-9A42-E761816792B5}"
+          DTS:DTSID="{1BB7E4B6-018C-451D-BE6B-C73195119C32}"
+          DTS:ObjectName="{1BB7E4B6-018C-451D-BE6B-C73195119C32}"
           DTS:ValueIndex="3"
           DTS:VariableName="User::EmailBody" />
         <DTS:ForEachVariableMapping
           DTS:CreationName=""
-          DTS:DTSID="{711159CA-9047-4C35-B944-4C8188A6F9F1}"
-          DTS:ObjectName="{711159CA-9047-4C35-B944-4C8188A6F9F1}"
+          DTS:DTSID="{7828A2D3-3FD3-495C-8394-5B04D2AB81BC}"
+          DTS:ObjectName="{7828A2D3-3FD3-495C-8394-5B04D2AB81BC}"
           DTS:ValueIndex="4"
           DTS:VariableName="User::OfficeManagerEmail" />
       </DTS:ForEachVariableMappings>
@@ -296,7 +374,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{FE2F4CE9-A9A3-4B95-A7A1-29621968CC73}"
-          SQLTask:SqlStatementSource="SELECT *&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)&#xA;&#x9;AND sdp_audit_leavers.ticket_id IS NULL"
+          SQLTask:SqlStatementSource="SELECT top 1&#xA;&#x9;sdp_audit_leavers.asset&#xA;&#x9;, sdp_audit_leavers.office&#xA;&#x9;, '&quot;' + REPLACE(sdp_audit_leavers.display_name, '-', '') + '&quot;'&#x9;AS display_name&#xA;&#x9;, '&quot;' + REPLACE(sdp_audit_leavers.email_body, '-', '') + '&quot;'&#x9;AS email_body&#xA;&#x9;, sdp_audit_leavers.office_manager_email&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)&#xA;&#x9;AND sdp_audit_leavers.ticket_id IS NULL&#xA;"
           SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
             SQLTask:ResultName="0"
@@ -333,6 +411,135 @@
         </SQLTask:SqlTaskData>
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\test"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Leaver"
+      DTS:Disabled="True"
+      DTS:DTSID="{300502f3-a4d1-460f-b498-6159bee5e2fd}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="test">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachADOEnumerator"
+        DTS:DTSID="{05d94607-e394-4059-addf-e076d6d72a69}"
+        DTS:ObjectName="{EB031774-2AFE-4667-B94E-A4209A744BB1}">
+        <DTS:ObjectData>
+          <FEEADO
+            EnumType="EnumerateRowsInFirstTable"
+            VarName="User::LeaverList" />
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\test\Execute SQL Task"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{BB93D9A3-ADE6-4ED6-8104-267021DF7E37}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FE2F4CE9-A9A3-4B95-A7A1-29621968CC73}"
+              SQLTask:SqlStatementSource="DECLARE @test_data AS NVARCHAR(MAX) = ?&#xA;&#xA;INSERT INTO [APIDataStaging].[dbo].[sdp_audit_leavers] &#xA;VALUES ('test', 'test', 'test', @test_data, 'test', cast(getdate() as date), 'test')&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@test_data"
+                SQLTask:DtsVariableName="User::TicketId"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\test\test script run"
+          DTS:CreationName="Microsoft.ExecuteProcess"
+          DTS:Description="test script run"
+          DTS:DTSID="{a9ea5dbb-ed73-4d68-81a6-bcfcb9c886ab}"
+          DTS:ExecutableType="Microsoft.ExecuteProcess"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="test script run"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="Arguments">@[User::RunScriptCmd]</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <ExecuteProcessData
+              Executable="C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+              Arguments="-NoProfile -ExecutionPolicy Unrestricted -File C:\APIDataStaging\SPDLeavers\AddSDPNewLeaverRequest.ps1 -Subject  -Body  -OfficeManager  -Asset  -Office "
+              WorkingDirectory="C:\Windows\System32\WindowsPowerShell\v1.0"
+              StandardOutputVariable="User::TicketId" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\test.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{209AF997-842A-49DB-AB3D-B436873F6218}"
+          DTS:From="Package\test\test script run"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\test\Execute SQL Task" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{1FF8CCBA-CD06-41D9-A69F-F3D8C2C3A0C3}"
+          DTS:ObjectName="{1FF8CCBA-CD06-41D9-A69F-F3D8C2C3A0C3}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::Asset" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{9AF13FF9-D28A-415D-BC8A-F41862F3C00F}"
+          DTS:ObjectName="{9AF13FF9-D28A-415D-BC8A-F41862F3C00F}"
+          DTS:ValueIndex="1"
+          DTS:VariableName="User::Office" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{750619A3-061D-4EDB-836C-93C5980D351F}"
+          DTS:ObjectName="{750619A3-061D-4EDB-836C-93C5980D351F}"
+          DTS:ValueIndex="2"
+          DTS:VariableName="User::DisplayName" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{CD9F222F-7B2C-4118-AF40-24B35ADD6B2D}"
+          DTS:ObjectName="{CD9F222F-7B2C-4118-AF40-24B35ADD6B2D}"
+          DTS:ValueIndex="3"
+          DTS:VariableName="User::EmailBody" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{0631B7BF-3A04-4FB6-8B49-6FB042C27990}"
+          DTS:ObjectName="{0631B7BF-3A04-4FB6-8B49-6FB042C27990}"
+          DTS:ValueIndex="4"
+          DTS:VariableName="User::OfficeManagerEmail" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Test file location"
+      DTS:CreationName="Microsoft.ExecuteProcess"
+      DTS:Description="Execute Process Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{FC3D3F21-120D-4BF3-8237-E62667891001}"
+      DTS:ExecutableType="Microsoft.ExecuteProcess"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Test file location"
+      DTS:TaskContact="Execute Process Task;Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="Arguments">@[User::TestPathCmd]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <ExecuteProcessData
+          Executable="PowerShell.exe"
+          Arguments="-NoProfile -ExecutionPolicy ByPass -Command &quot;if(Test-Path 'C:\APIDataStaging\SPDLeavers\AddSDPNewLeaverRequest.ps1') {exit 0} else {exit 999}&quot;" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -346,7 +553,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{52802D7E-86FD-46B3-9FA0-DB7155F19D8C}"
+      DTS:DTSID="{446107CB-B13C-4A92-A5D3-4C7DE9C527EF}"
       DTS:From="Package\Get sdp_audit_leavers data"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
@@ -363,41 +570,41 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="181.333333333334,42.6666666666667"
+          Size="237.6,41.6"
           Id="Package\Foreach leaver record\Execute SDP New Leaver Request"
-          TopLeft="36.4166614450514,16.6666626373927" />
+          TopLeft="36.8333281055092,17.0999959629774" />
         <NodeLayout
-          Size="233.333333333334,42.6666666666667"
+          Size="233.6,42.4"
           Id="Package\Foreach leaver record\Update audit table with ticket no"
-          TopLeft="21.9999949832757,96.9333288701376" />
+          TopLeft="21.9999949832757,153.215682600653" />
         <EdgeLayout
           Id="Package\Foreach leaver record.PrecedenceConstraints[Constraint]"
-          TopLeft="127.083328111718,59.3333293040594">
+          TopLeft="155.633328105509,58.6999959629774">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="11.5833335382243,37.5999995660782"
+              EndConnector="-16.8333331222335,94.5156866376756"
               Start="0,0"
-              End="11.5833335382243,30.0999995660782">
+              End="-16.8333331222335,87.0156866376756">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,14.7999997830391" />
+                    End="0,43.2578433188378" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,14.7999997830391"
-                    Point2="0,18.7999997830391"
-                    Point3="4,18.7999997830391" />
+                    Point1="0,43.2578433188378"
+                    Point2="0,47.2578433188378"
+                    Point3="-4,47.2578433188378" />
                   <mssgle:LineSegment
-                    End="7.58333353822432,18.7999997830391" />
+                    End="-12.8333331222335,47.2578433188378" />
                   <mssgle:CubicBezierSegment
-                    Point1="7.58333353822432,18.7999997830391"
-                    Point2="11.5833335382243,18.7999997830391"
-                    Point3="11.5833335382243,22.7999997830391" />
+                    Point1="-12.8333331222335,47.2578433188378"
+                    Point2="-16.8333331222335,47.2578433188378"
+                    Point3="-16.8333331222335,51.2578433188378" />
                   <mssgle:LineSegment
-                    End="11.5833335382243,30.0999995660782" />
+                    End="-16.8333331222335,87.0156866376756" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -409,18 +616,71 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="285.333333333334,208.666666666667"
-          Size="285.333333333334,251.333333333334"
+          PanelSize="285.6,250.4"
+          Size="285.6,293.6"
           Id="Package\Foreach leaver record"
-          TopLeft="275.416662562639,186.766663327018" />
+          TopLeft="275.833329223097,187.633329978187" />
         <NodeLayout
-          Size="208,42"
+          Size="208,41.6"
           Id="Package\Get sdp_audit_leavers data"
           TopLeft="311.666662022471,94.0666650084654" />
         <NodeLayout
-          Size="173.333333333334,42.6666666666667"
+          Size="173.6,42.4"
           Id="Package\Populate audit table"
           TopLeft="331.333329819143,15.333334766825" />
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\test\Execute SQL Task"
+          TopLeft="75.6081713979519,102.52773331092" />
+        <NodeLayout
+          Size="144,41.6"
+          Id="Package\test\test script run"
+          TopLeft="36.8333281055092,17.0999959629774" />
+        <EdgeLayout
+          Id="Package\test.PrecedenceConstraints[Constraint]"
+          TopLeft="108.833328105509,58.6999959629774">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47.9748432924427,43.8277373479426"
+              Start="0,0"
+              End="47.9748432924427,36.3277373479426">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.9138686739713" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.9138686739713"
+                    Point2="0,21.9138686739713"
+                    Point3="4,21.9138686739713" />
+                  <mssgle:LineSegment
+                    End="43.9748432924427,21.9138686739713" />
+                  <mssgle:CubicBezierSegment
+                    Point1="43.9748432924427,21.9138686739713"
+                    Point2="47.9748432924427,21.9138686739713"
+                    Point3="47.9748432924427,25.9138686739713" />
+                  <mssgle:LineSegment
+                    End="47.9748432924427,36.3277373479426" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="285.6,250.4"
+          Size="285.6,293.6"
+          Id="Package\test"
+          TopLeft="592.979601331772,117.512605936764" />
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\Test file location"
+          TopLeft="72.1428583714427,136.352941616184" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="416.83332925414,58.0000014334917">
@@ -445,18 +705,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="416.874995625888,136.066665008465">
+          TopLeft="417.149995622784,135.666665008465">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,50.6999983185526"
+              EndConnector="0,51.9666649697216"
               Start="0,0"
-              End="0,43.1999983185526">
+              End="0,44.4666649697216">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,43.1999983185526" />
+                    End="0,44.4666649697216" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
