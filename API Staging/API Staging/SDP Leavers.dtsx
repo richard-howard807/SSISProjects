@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="SDP Leavers"
   DTS:PackageType="5"
-  DTS:VersionBuild="71"
-  DTS:VersionGUID="{C6B4AD18-946C-4915-9023-68FE420D4373}">
+  DTS:VersionBuild="83"
+  DTS:VersionGUID="{334CAF78-BAFB-45A3-A9AE-814ADBCC86E0}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -277,7 +277,7 @@
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{FE2F4CE9-A9A3-4B95-A7A1-29621968CC73}"
-              SQLTask:SqlStatementSource="DECLARE&#x9;@TicketId AS NVARCHAR(MAX) = ?&#xA;DECLARE @TicketIdTrimmed AS NVARCHAR(MAX) = RIGHT(@TicketId, LEN(@TicketId)-PATINDEX('%\r\n[0-9]%', @TicketId)-3)&#xA;DECLARE @TidiedTicketId AS NVARCHAR(10) = LEFT(@TicketIdTrimmed, LEN(@TicketIdTrimmed)+1-PATINDEX('%[0-9]%', REVERSE(@TicketIdTrimmed)))&#xA;DECLARE&#x9;@Asset AS NVARCHAR(20) = ?&#xA;DECLARE @Office AS NVARCHAR(30) = ?&#xA;DECLARE @DisplayName AS NVARCHAR(100) = ?&#xA;DECLARE @EmailBody AS NVARCHAR(MAX) = ?&#xA;DECLARE&#x9;@OfficeManagerEmail AS NVARCHAR(100) = ?&#xA;&#xA;UPDATE [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;SET sdp_audit_leavers.ticket_id = @TidiedTicketId&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;sdp_audit_leavers.asset = @Asset&#xA;&#x9;AND sdp_audit_leavers.office = @Office&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.display_name, '-', '') + '&quot;' = @DisplayName&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.email_body, '-', '') + '&quot;' = @EmailBody&#xA;&#x9;AND sdp_audit_leavers.office_manager_email = @OfficeManagerEmail&#xA;&#x9;AND sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              SQLTask:SqlStatementSource="DECLARE&#x9;@TicketId AS NVARCHAR(MAX) = ?&#xA;DECLARE @TrimmedTicketId AS NVARCHAR(MAX) = LTRIM(RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(@TicketId, CHAR(10), CHAR(32)),CHAR(13), CHAR(32)),CHAR(160), CHAR(32)),CHAR(9),CHAR(32))))&#xA;DECLARE @TidiedTicketId AS NVARCHAR(10) = RIGHT(@TrimmedTicketId, PATINDEX('%[0-9]  ...noituloser%', REVERSE(@TrimmedTicketId)))&#xA;DECLARE&#x9;@Asset AS NVARCHAR(20) = ?&#xA;DECLARE @Office AS NVARCHAR(30) = ?&#xA;DECLARE @DisplayName AS NVARCHAR(100) = ?&#xA;DECLARE @EmailBody AS NVARCHAR(MAX) = ?&#xA;DECLARE&#x9;@OfficeManagerEmail AS NVARCHAR(100) = ?&#xA;&#xA;UPDATE [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;SET sdp_audit_leavers.ticket_id = @TidiedTicketId&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;sdp_audit_leavers.asset = @Asset&#xA;&#x9;AND sdp_audit_leavers.office = @Office&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.display_name, '-', '') + '&quot;' = @DisplayName&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.email_body, '-', '') + '&quot;' = @EmailBody&#xA;&#x9;AND sdp_audit_leavers.office_manager_email = @OfficeManagerEmail&#xA;&#x9;AND sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
               <SQLTask:ParameterBinding
                 SQLTask:ParameterName="@TicketId"
                 SQLTask:DtsVariableName="User::TicketId"
@@ -374,7 +374,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{FE2F4CE9-A9A3-4B95-A7A1-29621968CC73}"
-          SQLTask:SqlStatementSource="SELECT top 1&#xA;&#x9;sdp_audit_leavers.asset&#xA;&#x9;, sdp_audit_leavers.office&#xA;&#x9;, '&quot;' + REPLACE(sdp_audit_leavers.display_name, '-', '') + '&quot;'&#x9;AS display_name&#xA;&#x9;, '&quot;' + REPLACE(sdp_audit_leavers.email_body, '-', '') + '&quot;'&#x9;AS email_body&#xA;&#x9;, sdp_audit_leavers.office_manager_email&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)&#xA;&#x9;AND sdp_audit_leavers.ticket_id IS NULL&#xA;"
+          SQLTask:SqlStatementSource="SELECT  --top 1&#xA;&#x9;sdp_audit_leavers.asset&#xA;&#x9;, sdp_audit_leavers.office&#xA;&#x9;, '&quot;' + REPLACE(sdp_audit_leavers.display_name, '-', '') + '&quot;'&#x9;AS display_name&#xA;&#x9;, '&quot;' + REPLACE(sdp_audit_leavers.email_body, '-', '') + '&quot;'&#x9;AS email_body&#xA;&#x9;, sdp_audit_leavers.office_manager_email&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)&#xA;&#x9;AND sdp_audit_leavers.ticket_id IS NULL&#xA;"
           SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
             SQLTask:ResultName="0"
