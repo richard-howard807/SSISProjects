@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="SDP Leavers"
   DTS:PackageType="5"
-  DTS:VersionBuild="107"
-  DTS:VersionGUID="{9589A5AD-2705-4706-B74F-3ADD97DC1124}">
+  DTS:VersionBuild="108"
+  DTS:VersionGUID="{EB30711F-A1F3-4CDB-9F1D-5DFE7FC8315A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -252,7 +252,7 @@
           DTS:ExecutableType="Microsoft.ExecuteProcess"
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SDP New Leaver Request"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:PropertyExpression
             DTS:Name="Arguments">@[User::RunScriptCmd]</DTS:PropertyExpression>
@@ -272,12 +272,12 @@
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
           DTS:ObjectName="Update audit table with ticket no"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{CE33AF51-C22A-4EE8-8DFD-1A63459645BD}"
-              SQLTask:SqlStatementSource="DECLARE&#x9;@TicketId AS NVARCHAR(MAX) = ?&#xA;DECLARE @TrimmedTicketId AS NVARCHAR(MAX) = LTRIM(RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(@TicketId, CHAR(10), CHAR(32)),CHAR(13), CHAR(32)),CHAR(160), CHAR(32)),CHAR(9),CHAR(32))))&#xA;DECLARE&#x9;@Asset AS NVARCHAR(MAX) = ?&#xA;DECLARE @Office AS NVARCHAR(30) = ?&#xA;DECLARE @DisplayName AS NVARCHAR(100) = ?&#xA;DECLARE @EmailBody AS NVARCHAR(MAX) = ?&#xA;DECLARE&#x9;@OfficeManagerEmail AS NVARCHAR(100) = ?&#xA;&#xA;UPDATE [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;SET sdp_audit_leavers.ticket_id = @TrimmedTicketId, sdp_audit_leavers.test_ticket = @TicketId&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;'&quot;&quot;assets&quot;: [' + IIF(sdp_audit_leavers.asset IS NULL, '', '{&quot;name&quot;: ' + sdp_audit_leavers.asset + '}') + ']&quot;' = @Asset&#xA;&#x9;AND sdp_audit_leavers.office = @Office&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.display_name, '-', '') + '&quot;' = @DisplayName&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.email_body, '-', '') + '&quot;' = @EmailBody&#xA;&#x9;AND sdp_audit_leavers.office_manager_email = @OfficeManagerEmail&#xA;&#x9;AND sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              SQLTask:SqlStatementSource="DECLARE&#x9;@TicketId AS NVARCHAR(MAX) = ?&#xA;DECLARE @TrimmedTicketId AS NVARCHAR(10) = LTRIM(RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(@TicketId, CHAR(10), CHAR(32)),CHAR(13), CHAR(32)),CHAR(160), CHAR(32)),CHAR(9),CHAR(32))))&#xA;DECLARE&#x9;@Asset AS NVARCHAR(MAX) = ?&#xA;DECLARE @Office AS NVARCHAR(30) = ?&#xA;DECLARE @DisplayName AS NVARCHAR(100) = ?&#xA;DECLARE @EmailBody AS NVARCHAR(MAX) = ?&#xA;DECLARE&#x9;@OfficeManagerEmail AS NVARCHAR(100) = ?&#xA;&#xA;UPDATE [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;SET sdp_audit_leavers.ticket_id = @TrimmedTicketId, sdp_audit_leavers.package_output_message = @TicketId&#xA;FROM [APIDataStaging].[dbo].[sdp_audit_leavers]&#xA;WHERE&#xA;&#x9;'&quot;&quot;assets&quot;: [' + IIF(sdp_audit_leavers.asset IS NULL, '', '{&quot;name&quot;: ' + sdp_audit_leavers.asset + '}') + ']&quot;' = @Asset&#xA;&#x9;AND sdp_audit_leavers.office = @Office&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.display_name, '-', '') + '&quot;' = @DisplayName&#xA;&#x9;AND '&quot;' + REPLACE(sdp_audit_leavers.email_body, '-', '') + '&quot;' = @EmailBody&#xA;&#x9;AND sdp_audit_leavers.office_manager_email = @OfficeManagerEmail&#xA;&#x9;AND sdp_audit_leavers.package_run_date = CAST(GETDATE() AS DATE)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
               <SQLTask:ParameterBinding
                 SQLTask:ParameterName="@TicketId"
                 SQLTask:DtsVariableName="User::TicketId"
@@ -369,7 +369,7 @@
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Get sdp_audit_leavers data"
-      DTS:ThreadHint="0">
+      DTS:ThreadHint="1">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -390,7 +390,7 @@
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Populate audit table"
-      DTS:ThreadHint="0">
+      DTS:ThreadHint="1">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -441,7 +441,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SQL Task"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -464,7 +464,7 @@
           DTS:ExecutableType="Microsoft.ExecuteProcess"
           DTS:LocaleID="-1"
           DTS:ObjectName="test script run"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:PropertyExpression
             DTS:Name="Arguments">@[User::RunScriptCmd]</DTS:PropertyExpression>
