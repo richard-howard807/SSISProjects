@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="UK Sanctions V2"
   DTS:PackageType="5"
-  DTS:VersionBuild="6"
-  DTS:VersionGUID="{F65ACA80-9817-4ADA-ADB5-9371EFE94DF9}">
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{58CDE002-6D1F-4D2A-83D7-3DBCD92D812C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -39,11 +39,11 @@
             <DTS:Property
               DTS:Name="ServerPassword"
               Sensitive="1"
-              Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAV402nd/lmkS7ojAfMCcWKAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABhIwe0UGOXo6xe882Y0zFpAAAAAASAAACgAAAAEAAAAPJyqlSZw+S+/Rsox0BYdbUIAAAADf3mDvo4aNQUAAAA5aBz5oAwISHcEzw+O44uzGtC5Wg</DTS:Property>
+              Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAV402nd/lmkS7ojAfMCcWKAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABWCSgin7v6l8jSl5P2Tk2FAAAAAASAAACgAAAAEAAAADMybaD+jy0lMEKoLqVXVp4IAAAAziVR9EHt6FMUAAAAyqqiu2gybD3ett8CDJ+4kUhXbRk</DTS:Property>
             <DTS:Property
               DTS:Name="ProxyPassword"
               Sensitive="1"
-              Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAV402nd/lmkS7ojAfMCcWKAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADFwNKY4jzVwhsZa1fMZacOAAAAAASAAACgAAAAEAAAACScIdtLU0CxAArMpf/50KwIAAAAQKGW4F+wOK4UAAAALmR6u+4HOiL8LBG8IXG4GeybD4g</DTS:Property>
+              Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAV402nd/lmkS7ojAfMCcWKAAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABXktu8RW+JrgaEAa7qNcB6AAAAAASAAACgAAAAEAAAAELsVr3cMf0BY0Q3NgaF9sgIAAAA+CwZ6oE2cegUAAAAIhbcbq4ZXFVzT7WLrgRaxPcFY8o</DTS:Property>
           </DTS:HttpConnection>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
@@ -82,6 +82,26 @@
   </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Failure Email"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{9DE7C35D-72A9-4615-AE9A-142C7D36222A}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Failure Email"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{55ED7832-2E87-42FC-B259-AD5ABCC9361C}"
+          SendMailTask:From="Kevin.Hansen@Weightmans.com"
+          SendMailTask:To="Kevin.Hansen@Weightmans.com"
+          SendMailTask:Subject="UK Sanctions Upload Failure"
+          SendMailTask:MessageSource="Sanctions has failed to update" xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Get UK Sanctions List"
       DTS:CreationName="Microsoft.ScriptTask"
@@ -762,13 +782,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</BinaryItem>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Send Mail Task"
+      DTS:refId="Package\Success Email"
       DTS:CreationName="Microsoft.SendMailTask"
       DTS:Description="Send Mail Task"
       DTS:DTSID="{259B43FF-9E3D-4EC6-8BE0-1AA43BEACA75}"
       DTS:ExecutableType="Microsoft.SendMailTask"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Send Mail Task"
+      DTS:ObjectName="Success Email"
       DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
       DTS:ThreadHint="0">
       <DTS:Variables />
@@ -2936,7 +2956,16 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
       DTS:From="Package\Remove Test Row"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
-      DTS:To="Package\Send Mail Task" />
+      DTS:To="Package\Success Email" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{AB6EB900-A9E8-441A-98FE-38240D5825C3}"
+      DTS:From="Package\Upload Sanctions to SQL2008svr"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Failure Email"
+      DTS:Value="1" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -2949,7 +2978,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="186,42"
           Id="Package\Get UK Sanctions List"
@@ -2957,21 +2986,21 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <NodeLayout
           Size="182,42"
           Id="Package\Tidy Excel Workbook"
-          TopLeft="47,135" />
+          TopLeft="43,105" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="136.5,71">
+          TopLeft="134.5,71">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,64"
+              EndConnector="0,34"
               Start="0,0"
-              End="0,56.5">
+              End="0,26.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,56.5" />
+                    End="0,26.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2983,21 +3012,21 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <NodeLayout
           Size="194,42"
           Id="Package\Truncate Sanctions List"
-          TopLeft="353,130" />
+          TopLeft="266,107" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="229,153.5">
+          TopLeft="225,127">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="124,0"
+              EndConnector="41,0"
               Start="0,0"
-              End="116.5,0">
+              End="33.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="116.5,0" />
+                    End="33.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3009,21 +3038,21 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <NodeLayout
           Size="241,42"
           Id="Package\Upload Sanctions to SQL2008svr"
-          TopLeft="329,210" />
+          TopLeft="286,199" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="449.75,172">
+          TopLeft="365.333333333333,149">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,38"
+              EndConnector="0,50"
               Start="0,0"
-              End="0,30.5">
+              End="0,42.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,30.5" />
+                    End="0,42.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3035,21 +3064,21 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <NodeLayout
           Size="169,42"
           Id="Package\Remove Test Row"
-          TopLeft="365,307" />
+          TopLeft="350,298" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="449.5,252">
+          TopLeft="407.083333333333,241">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,55"
+              EndConnector="0,57"
               Start="0,0"
-              End="0,47.5">
+              End="0,49.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,47.5" />
+                    End="0,49.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3059,41 +3088,81 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="155,42"
-          Id="Package\Send Mail Task"
+          Size="151,42"
+          Id="Package\Success Email"
           TopLeft="792,178" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="476.333333333333,307">
+          TopLeft="461.333333333333,298">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="393.166666666667,-87"
+              EndConnector="406.166666666667,-78"
               Start="0,0"
-              End="393.166666666667,-79.5">
+              End="406.166666666667,-70.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-31.2895662368113" />
+                    End="0,-27.6389214536929" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-31.2895662368113"
-                    Point2="0,-35.2895662368113"
-                    Point3="4,-35.2895662368113" />
+                    Point1="0,-27.6389214536929"
+                    Point2="0,-31.6389214536929"
+                    Point3="4,-31.6389214536929" />
                   <mssgle:LineSegment
-                    End="389.166666666667,-35.2895662368113" />
+                    End="402.166666666667,-31.6389214536929" />
                   <mssgle:CubicBezierSegment
-                    Point1="389.166666666667,-35.2895662368113"
-                    Point2="393.166666666667,-35.2895662368113"
-                    Point3="393.166666666667,-39.2895662368113" />
+                    Point1="402.166666666667,-31.6389214536929"
+                    Point2="406.166666666667,-31.6389214536929"
+                    Point3="406.166666666667,-35.6389214536929" />
                   <mssgle:LineSegment
-                    End="393.166666666667,-79.5" />
+                    End="406.166666666667,-70.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Failure Email"
+          TopLeft="687,67" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="445.333333333333,199">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="313.166666666667,-90"
+              Start="0,0"
+              End="313.166666666667,-82.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-32.356141797197" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-32.356141797197"
+                    Point2="0,-36.356141797197"
+                    Point3="4,-36.356141797197" />
+                  <mssgle:LineSegment
+                    End="309.166666666667,-36.356141797197" />
+                  <mssgle:CubicBezierSegment
+                    Point1="309.166666666667,-36.356141797197"
+                    Point2="313.166666666667,-36.356141797197"
+                    Point3="313.166666666667,-40.356141797197" />
+                  <mssgle:LineSegment
+                    End="313.166666666667,-82.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="141.341985677083,-31.356141797197,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
