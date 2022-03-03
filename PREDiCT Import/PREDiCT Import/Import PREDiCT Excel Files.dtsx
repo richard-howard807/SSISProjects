@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Import PREDiCT Excel Files"
   DTS:PackageType="5"
-  DTS:VersionBuild="108"
-  DTS:VersionGUID="{6D0C107A-CF17-4E10-BFDB-1EB8C61BB5CC}">
+  DTS:VersionBuild="109"
+  DTS:VersionGUID="{A60174B4-6C74-4C56-87BD-82FDE467E353}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -10205,7 +10205,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{D5BF303E-18A7-4278-82E9-8B9DEEACBE17}"
-          SQLTask:SqlStatementSource="&#xA;DECLARE @start_date AS DATE = '2021-05-01'&#xA;&#xA;SELECT --TOP 3&#xA;&#x9;dbDocument.fileID&#xA;&#x9;, dbDocument.docID&#xA;&#x9;, dbDirectory.dirPath + '\' + dbDocument.docFileName&#x9;AS doc_link&#xA;&#x9;, dbDocument.Created&#xA;&#x9;, dbDocument.Updated&#xA;FROM MS_Prod.config.dbDocument&#xA;&#x9;INNER JOIN MS_Prod.dbo.dbDirectory&#xA;&#x9;&#x9;ON dbDirectory.dirID = dbDocument.docdirID&#xA;WHERE 1 = 1&#xA;&#x9;AND dbDocument.Created &gt;= @start_date&#xA;&#x9;AND dbDocument.docDesc LIKE 'PREDiCT v%'&#xA;&#x9;AND dbDocument.docExtension IN ('xls', 'xlsx')&#xA;&#x9;--AND dbDocument.Created &gt; '2022-01-19 12:27:00.000'&#xA;&#x9;AND dbDocument.docID NOT IN (SELECT DISTINCT ds_mds_predict_import.doc_id FROM red_dw.dbo.ds_mds_predict_import)&#xA;ORDER BY&#x9;&#xA;&#x9;dbDocument.Created"
+          SQLTask:SqlStatementSource="DECLARE @start_date AS DATE = '2021-05-01'&#xA;&#xA;SELECT &#xA;&#x9;dbDocument.fileID&#xA;&#x9;, dbDocument.docID&#xA;&#x9;, dbDirectory.dirPath + '\' + dbDocument.docFileName&#x9;AS doc_link&#xA;&#x9;, dbDocument.Created&#xA;&#x9;, dbDocument.Updated&#xA;&#x9;, dbDocument.docDesc&#xA;FROM MS_Prod.config.dbDocument&#xA;&#x9;INNER JOIN MS_Prod.dbo.dbDirectory&#xA;&#x9;&#x9;ON dbDirectory.dirID = dbDocument.docdirID&#xA;WHERE 1 = 1&#xA;&#x9;AND dbDocument.Created &gt;= @start_date&#xA;&#x9;AND LOWER(dbDocument.docDesc) LIKE '%predict v%'&#xA;&#x9;AND dbDocument.docExtension IN ('xls', 'xlsx')&#xA;&#x9;--AND dbDocument.Created &gt; '2022-01-19 12:27:00.000'&#xA;&#x9;AND dbDocument.docID NOT IN (SELECT DISTINCT ds_mds_predict_import.doc_id FROM red_dw.dbo.ds_mds_predict_import)&#xA;ORDER BY&#x9;&#xA;&#x9;dbDocument.Created"
           SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
             SQLTask:ResultName="0"
@@ -10260,18 +10260,18 @@
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="152,42.6666666666667"
+          Size="152,43"
           Id="Package\Foreach Document Link\Data Flow Task"
           TopLeft="92.0833278882007,25.7999970710277" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="345.333333333334,202"
-          Size="345.333333333334,245.333333333334"
+          PanelSize="345,202"
+          Size="345,245"
           Id="Package\Foreach Document Link"
           TopLeft="240.833329744637,123.933331117232" />
         <NodeLayout
-          Size="169.333333333334,42.6666666666667"
+          Size="169,43"
           Id="Package\Get list of doc links"
           TopLeft="329.24999517575,48.833332558473" />
         <EdgeLayout
@@ -10305,85 +10305,53 @@
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="157.333333333334,42.6666666666667"
-          Id="Package\Foreach Document Link\Data Flow Task\Data Conversion"
-          TopLeft="402.91666066274,414.366663048069" />
+          Size="181,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Document Error Type"
+          TopLeft="619.583324100822,73.2333320238193" />
         <NodeLayout
-          Size="102.666666666667,43.3333333333334"
-          Id="Package\Foreach Document Link\Data Flow Task\Pivot"
-          TopLeft="416.999999975164,221.299999976754" />
-        <NodeLayout
-          Size="139.333333333334,45.3333333333334"
+          Size="139,45"
           Id="Package\Foreach Document Link\Data Flow Task\Excel Source"
           TopLeft="401.583333289871,20.7999999380111" />
         <NodeLayout
-          Size="149.333333333334,42.6666666666667"
-          Id="Package\Foreach Document Link\Data Flow Task\Add MS File ID"
-          TopLeft="388.416666660458,121.099999992251" />
+          Size="163,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Conversion Errors"
+          TopLeft="589.166657887399,576.799995133877" />
         <NodeLayout
-          Size="190.666666666667,42.6666666666667"
+          Size="155,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Derived Column"
+          TopLeft="398.749994058162,313.099997047782" />
+        <NodeLayout
+          Size="165,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Import Error Type"
+          TopLeft="262.083329427987,584.066662528912" />
+        <NodeLayout
+          Size="157,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Data Conversion"
+          TopLeft="402.91666066274,414.366663048069" />
+        <NodeLayout
+          Size="184,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Conversion Error Type"
+          TopLeft="584.583324622363,494.566664117376" />
+        <NodeLayout
+          Size="191,43"
           Id="Package\Foreach Document Link\Data Flow Task\ds_mds_predict_import"
           TopLeft="244.583329688758,513.433325964411" />
         <NodeLayout
-          Size="154.666666666667,42.6666666666667"
-          Id="Package\Foreach Document Link\Data Flow Task\Derived Column"
-          TopLeft="398.749994058162,313.099997047782" />
-        <EdgeLayout
-          Id="Package\Foreach Document Link\Data Flow Task.Paths[Data Conversion Output]"
-          TopLeft="481.583327329407,457.033329714735">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-141.666664307316,56.3999962496755"
-              Start="0,0"
-              End="-141.666664307316,48.8999962496755">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,24.1999981248377" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,24.1999981248377"
-                    Point2="0,28.1999981248377"
-                    Point3="-4,28.1999981248377" />
-                  <mssgle:LineSegment
-                    End="-137.666664307316,28.1999981248377" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-137.666664307316,28.1999981248377"
-                    Point2="-141.666664307316,28.1999981248377"
-                    Point3="-141.666664307316,32.1999981248377" />
-                  <mssgle:LineSegment
-                    End="-141.666664307316,48.8999962496755" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Foreach Document Link\Data Flow Task.Paths[Pivot Default Output]"
-          TopLeft="472.208330349997,264.633333310087">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,48.4666637376945"
-              Start="0,0"
-              End="0,40.9666637376945">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,40.9666637376945" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="103,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Pivot"
+          TopLeft="416.999999975164,221.299999976754" />
+        <NodeLayout
+          Size="143,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Import Errors"
+          TopLeft="267.916662674397,657.899994971156" />
+        <NodeLayout
+          Size="155,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Document Error"
+          TopLeft="631.249990593642,157.299997187257" />
+        <NodeLayout
+          Size="149,43"
+          Id="Package\Foreach Document Link\Data Flow Task\Add MS File ID"
+          TopLeft="388.416666660458,121.099999992251" />
         <EdgeLayout
           Id="Package\Foreach Document Link\Data Flow Task.Paths[Excel Source Output]"
           TopLeft="471.249999956538,66.1333332713445">
@@ -10410,6 +10378,108 @@
                     Point3="-8.16666662941287,31.4833333604533" />
                   <mssgle:LineSegment
                     End="-8.16666662941287,47.4666667209065" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Document Link\Data Flow Task.Paths[Excel Source Error Output]"
+          TopLeft="540.916666623204,43.4666666046778">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="78.6666574776179,51.0999987524749"
+              Start="0,0"
+              End="71.1666574776179,51.0999987524749">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="35.333328738809,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="35.333328738809,0"
+                    Point2="39.333328738809,0"
+                    Point3="39.333328738809,4" />
+                  <mssgle:LineSegment
+                    End="39.333328738809,47.0999987524749" />
+                  <mssgle:CubicBezierSegment
+                    Point1="39.333328738809,47.0999987524749"
+                    Point2="39.333328738809,51.0999987524749"
+                    Point3="43.333328738809,51.0999987524749" />
+                  <mssgle:LineSegment
+                    End="71.1666574776179,51.0999987524749" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-18.518057979941,-17.609375,115.7027734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Document Link\Data Flow Task.Paths[Derived Column Output4]"
+          TopLeft="709.416657347232,115.899998690486">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.3999984967708"
+              Start="0,0"
+              End="0,33.8999984967708">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.8999984967708" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Document Link\Data Flow Task.Paths[Derived Column Output3]"
+          TopLeft="341.999996051192,626.733329195579">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31.1666657755771"
+              Start="0,0"
+              End="0,23.6666657755771">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.6666657755771" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Document Link\Data Flow Task.Paths[Derived Column Output2]"
+          TopLeft="668.541657921548,537.233330784043">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.5666643498341"
+              Start="0,0"
+              End="0,32.0666643498341">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.0666643498341" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -10462,14 +10532,40 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="162.666666666667,42.6666666666667"
-          Id="Package\Foreach Document Link\Data Flow Task\Conversion Errors"
-          TopLeft="589.166657887399,576.799995133877" />
-        <NodeLayout
-          Size="184,42.6666666666667"
-          Id="Package\Foreach Document Link\Data Flow Task\Conversion Error Type"
-          TopLeft="584.583324622363,494.566664117376" />
+        <EdgeLayout
+          Id="Package\Foreach Document Link\Data Flow Task.Paths[Data Conversion Output]"
+          TopLeft="481.583327329407,457.033329714735">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-141.666664307316,56.3999962496755"
+              Start="0,0"
+              End="-141.666664307316,48.8999962496755">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.1999981248377" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.1999981248377"
+                    Point2="0,28.1999981248377"
+                    Point3="-4,28.1999981248377" />
+                  <mssgle:LineSegment
+                    End="-137.666664307316,28.1999981248377" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-137.666664307316,28.1999981248377"
+                    Point2="-141.666664307316,28.1999981248377"
+                    Point3="-141.666664307316,32.1999981248377" />
+                  <mssgle:LineSegment
+                    End="-141.666664307316,48.8999962496755" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Foreach Document Link\Data Flow Task.Paths[Data Conversion Error Output]"
           TopLeft="506.472216218296,457.033329714735">
@@ -10507,19 +10603,19 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Foreach Document Link\Data Flow Task.Paths[Derived Column Output2]"
-          TopLeft="668.541657921548,537.233330784043">
+          Id="Package\Foreach Document Link\Data Flow Task.Paths[Pivot Default Output]"
+          TopLeft="472.208330349997,264.633333310087">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,39.5666643498341"
+              EndConnector="0,48.4666637376945"
               Start="0,0"
-              End="0,32.0666643498341">
+              End="0,40.9666637376945">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,32.0666643498341" />
+                    End="0,40.9666637376945" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -10528,10 +10624,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="165.333333333334,42.6666666666667"
-          Id="Package\Foreach Document Link\Data Flow Task\Import Error Type"
-          TopLeft="262.083329427987,584.066662528912" />
         <EdgeLayout
           Id="Package\Foreach Document Link\Data Flow Task.Paths[OLE DB Destination Error Output]"
           TopLeft="342.333329558373,556.099992631078">
@@ -10556,129 +10648,24 @@
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="142.666666666667,42.6666666666667"
-          Id="Package\Foreach Document Link\Data Flow Task\Import Errors"
-          TopLeft="267.916662674397,657.899994971156" />
-        <EdgeLayout
-          Id="Package\Foreach Document Link\Data Flow Task.Paths[Derived Column Output3]"
-          TopLeft="341.999996051192,626.733329195579">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,31.1666657755771"
-              Start="0,0"
-              End="0,23.6666657755771">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,23.6666657755771" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="181.333333333334,42.6666666666667"
-          Id="Package\Foreach Document Link\Data Flow Task\Document Error Type"
-          TopLeft="619.583324100822,73.2333320238193" />
-        <EdgeLayout
-          Id="Package\Foreach Document Link\Data Flow Task.Paths[Excel Source Error Output]"
-          TopLeft="540.916666623204,43.4666666046778">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="78.6666574776179,51.0999987524749"
-              Start="0,0"
-              End="71.1666574776179,51.0999987524749">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="35.333328738809,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="35.333328738809,0"
-                    Point2="39.333328738809,0"
-                    Point3="39.333328738809,4" />
-                  <mssgle:LineSegment
-                    End="39.333328738809,47.0999987524749" />
-                  <mssgle:CubicBezierSegment
-                    Point1="39.333328738809,47.0999987524749"
-                    Point2="39.333328738809,51.0999987524749"
-                    Point3="43.333328738809,51.0999987524749" />
-                  <mssgle:LineSegment
-                    End="71.1666574776179,51.0999987524749" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-18.518057979941,-17.609375,115.7027734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="154.666666666667,42.6666666666667"
-          Id="Package\Foreach Document Link\Data Flow Task\Document Error"
-          TopLeft="631.249990593642,157.299997187257" />
-        <EdgeLayout
-          Id="Package\Foreach Document Link\Data Flow Task.Paths[Derived Column Output4]"
-          TopLeft="709.416657347232,115.899998690486">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,41.3999984967708"
-              Start="0,0"
-              End="0,33.8999984967708">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.8999984967708" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Foreach Document Link\Data Flow Task\Excel Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Foreach Document Link\Data Flow Task\ds_mds_predict_import">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Foreach Document Link\Data Flow Task\Conversion Errors">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Foreach Document Link\Data Flow Task\Document Error">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -10704,7 +10691,20 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Foreach Document Link\Data Flow Task\Document Error">
+    design-time-name="Package\Foreach Document Link\Data Flow Task\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Foreach Document Link\Data Flow Task\ds_mds_predict_import">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
