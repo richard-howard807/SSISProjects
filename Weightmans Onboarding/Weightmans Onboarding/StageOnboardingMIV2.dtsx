@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageOnboardingMIV2"
   DTS:PackageType="5"
-  DTS:VersionBuild="3"
-  DTS:VersionGUID="{B5FC6596-484C-4195-9FAB-DB652B5972AF}">
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{F0679C7D-4459-4C35-A19B-D7D54B35384E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -49,7 +49,7 @@
       DTS:ObjectName="Excel Connection Manager">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MattersphereDetailAPI\OnboardingTemplate.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MattersphereDetailAPI\OnboardingTemplate.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -79,6 +79,52 @@
         <pipeline
           version="1">
           <components>
+            <component
+              refId="Package\DFT - StageLSDetails\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - StageLSDetails\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageLSDetails\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\DFT - StageLSDetails\Data Conversion.Inputs[Data Conversion Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - StageLSDetails\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\DFT - StageLSDetails\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageLSDetails\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLSDetails\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageLSDetails\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLSDetails\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
             <component
               refId="Package\DFT - StageLSDetails\dbCodeLookup"
               componentClassID="Microsoft.Lookup"
@@ -1333,6 +1379,20 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                           dataType="System.Int32"
                           description="The input column associated with this output column"
                           name="InputColumnID">#{Package\DFT - StageLSDetails\Merge Join.Inputs[Merge Join Left Input].Columns[txtDesc]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLSDetails\Merge Join.Outputs[Merge Join Output].Columns[LegacyRef (1)]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - StageLSDetails\Merge Join.Outputs[Merge Join Output].Columns[LegacyRef (1)]"
+                      name="LegacyRef (1)">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DFT - StageLSDetails\Merge Join.Inputs[Merge Join Right Input].Columns[LegacyRef]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -3288,238 +3348,6 @@ LEFT OUTER JOIN config.dbClient
                   <externalMetadataColumns />
                 </input>
                 <input
-                  refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2]"
-                  hasSideEffects="true"
-                  name="Union All Input 2">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[LegacyRef]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="LegacyRef"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[LegacyRef]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[LegacyRef]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[LegacyFieldName]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="LegacyFieldName"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[LegacyFieldName]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[LegacyFieldName]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[MSTable]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="MSTable"
-                      cachedSortKeyPosition="2"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[MSTable]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[MSTable]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[MSCode]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="MSCode"
-                      cachedSortKeyPosition="1"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[MSCode]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[MSCode]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[CaseText]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="CaseText"
-                      cachedSortKeyPosition="3"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseText]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[CaseText]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[CaseDate]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="CaseDate"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseDate]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[CaseDate]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[CaseValue]"
-                      cachedDataType="r8"
-                      cachedName="CaseValue"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseValue]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[CaseValue]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[Lookup code / Datalist table]"
-                      cachedDataType="wstr"
-                      cachedLength="15"
-                      cachedName="Lookup code / Datalist table"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[Lookup code / Datalist table]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[Lookup code / Datalist table]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[txtDataType]"
-                      cachedDataType="wstr"
-                      cachedLength="50"
-                      cachedName="txtDataType"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[txtDataType]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[txtDataType]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[txtLookupTable]"
-                      cachedDataType="wstr"
-                      cachedLength="50"
-                      cachedName="txtLookupTable"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[txtLookupTable]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[txtLookupTable]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[txtDetCode]"
-                      cachedDataType="wstr"
-                      cachedLength="50"
-                      cachedName="txtDetCode"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[txtDetCode]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[txtDetCode]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[clNo]"
-                      cachedDataType="wstr"
-                      cachedLength="12"
-                      cachedName="clNo"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[clNo]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[clNo]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[fileNo]"
-                      cachedDataType="wstr"
-                      cachedLength="20"
-                      cachedName="fileNo"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[fileNo]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[fileNo]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[MSFileID]"
-                      cachedDataType="i8"
-                      cachedName="MSFileID"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[MSFileID]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[MSFileID]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[DCT-Status]"
-                      cachedDataType="i4"
-                      cachedName="DCT-Status"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[DCT-Status]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[DCT-Status]}</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[txtDesc]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
-                      cachedName="txtDesc"
-                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[txtDesc]">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Output column lineage ID"
-                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[txtDesc]}</property>
-                      </properties>
-                    </inputColumn>
-                  </inputColumns>
-                  <externalMetadataColumns />
-                </input>
-                <input
                   refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 3]"
                   hasSideEffects="true"
                   name="Union All Input 3">
@@ -3753,9 +3581,254 @@ LEFT OUTER JOIN config.dbClient
                 </input>
                 <input
                   refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4]"
-                  dangling="true"
                   hasSideEffects="true"
                   name="Union All Input 4">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[LegacyRef]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="LegacyRef"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[LegacyRef]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[LegacyRef]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[LegacyFieldName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="LegacyFieldName"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[LegacyFieldName]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[LegacyFieldName]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[MSTable]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSTable"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[MSTable]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[MSTable]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[MSCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MSCode"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[MSCode]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[MSCode]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[CaseText]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CaseText"
+                      cachedSortKeyPosition="3"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseText]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[CaseText]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[CaseDate]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CaseDate"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseDate]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[CaseDate]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[CaseValue]"
+                      cachedDataType="r8"
+                      cachedName="CaseValue"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseValue]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[CaseValue]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[Lookup code / Datalist table]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Lookup code / Datalist table"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[Lookup code / Datalist table]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[Lookup code / Datalist table]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[txtDataType]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="txtDataType"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[txtDataType]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[txtDataType]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[txtLookupTable]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="txtLookupTable"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[txtLookupTable]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[txtLookupTable]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[txtDetCode]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="txtDetCode"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[txtDetCode]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[txtDetCode]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[clNo]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[clNo]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[clID]"
+                      cachedDataType="i8"
+                      cachedName="clID"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[clID]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[clID]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[fileNo]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="fileNo"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[fileNo]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[fileNo]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[MSFileID]"
+                      cachedDataType="i8"
+                      cachedName="MSFileID"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[MSFileID]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[MSFileID]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[DCT-Status]"
+                      cachedDataType="i4"
+                      cachedName="DCT-Status"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[DCT-Status]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[DCT-Status]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4].Columns[txtDesc]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="txtDesc"
+                      lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[txtDesc]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\DFT - StageLSDetails\Union All.Outputs[Union All Output 1].Columns[txtDesc]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
                   <externalMetadataColumns />
                 </input>
               </inputs>
@@ -3875,6 +3948,11 @@ LEFT OUTER JOIN config.dbClient
               name="Conditional Split Default Output"
               startId="Package\DFT - StageLSDetails\Split Out Lookups.Outputs[Conditional Split Default Output]" />
             <path
+              refId="Package\DFT - StageLSDetails.Paths[Data Conversion Output]"
+              endId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 4]"
+              name="Data Conversion Output"
+              startId="Package\DFT - StageLSDetails\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
               refId="Package\DFT - StageLSDetails.Paths[Derived Column Output]"
               endId="Package\DFT - StageLSDetails\Split Out Lookups.Inputs[Conditional Split Input]"
               name="Derived Column Output"
@@ -3896,7 +3974,7 @@ LEFT OUTER JOIN config.dbClient
               startId="Package\DFT - StageLSDetails\dbCodeLookup.Outputs[Lookup Match Output]" />
             <path
               refId="Package\DFT - StageLSDetails.Paths[Lookup Match Output1]"
-              endId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2]"
+              endId="Package\DFT - StageLSDetails\Data Conversion.Inputs[Data Conversion Input]"
               name="Lookup Match Output"
               startId="Package\DFT - StageLSDetails\Lookup.Outputs[Lookup Match Output]" />
             <path
@@ -3974,31 +4052,75 @@ LEFT OUTER JOIN config.dbClient
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="113,42"
+          Id="Package\DFT - StageLSDetails\Lookup"
+          TopLeft="989,534" />
+        <NodeLayout
+          Size="107,42"
+          Id="Package\DFT - StageLSDetails\Sort 2"
+          TopLeft="804,530" />
+        <NodeLayout
+          Size="98,42"
+          Id="Package\DFT - StageLSDetails\Sort"
+          TopLeft="748,128" />
+        <NodeLayout
+          Size="107,42"
+          Id="Package\DFT - StageLSDetails\Sort 1"
+          TopLeft="430,203" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\DFT - StageLSDetails\Merge Join"
+          TopLeft="597,286" />
+        <NodeLayout
           Size="166,42"
           Id="Package\DFT - StageLSDetails\SRC_Mattersphere"
           TopLeft="722,38" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\DFT - StageLSDetails\DEST - MSDetailStage"
+          TopLeft="540,831" />
         <NodeLayout
           Size="208,42"
           Id="Package\DFT - StageLSDetails\SRC_Onboarding_Template"
           TopLeft="370,32" />
         <NodeLayout
+          Size="154,42"
+          Id="Package\DFT - StageLSDetails\Derived Column"
+          TopLeft="953,714" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\DFT - StageLSDetails\Split Out Lookups"
+          TopLeft="578,448" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\DFT - StageLSDetails\Row Count"
+          TopLeft="569,755" />
+        <NodeLayout
           Size="149,42"
           Id="Package\DFT - StageLSDetails\dbCodeLookup"
           TopLeft="402,117" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - StageLSDetails\DCT-Status"
+          TopLeft="590,369" />
+        <NodeLayout
+          Size="121,45"
+          Id="Package\DFT - StageLSDetails\Union All"
+          TopLeft="572,656" />
         <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[Excel Source Output]"
-          TopLeft="475.25,74">
+          Id="Package\DFT - StageLSDetails.Paths[Union All Output 1]"
+          TopLeft="633.25,701">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,43"
+              EndConnector="0,54"
               Start="0,0"
-              End="0,35.5">
+              End="0,46.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,35.5" />
+                    End="0,46.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4007,102 +4129,20 @@ LEFT OUTER JOIN config.dbClient
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="98,42"
-          Id="Package\DFT - StageLSDetails\Sort"
-          TopLeft="748,128" />
         <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[OLE DB Source Output]"
-          TopLeft="805,80">
+          Id="Package\DFT - StageLSDetails.Paths[Sort Output2]"
+          TopLeft="911,553">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-8,48"
+              EndConnector="78,0"
               Start="0,0"
-              End="-8,40.5">
+              End="70.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,20" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20"
-                    Point2="0,24"
-                    Point3="-4,24" />
-                  <mssgle:LineSegment
-                    End="-4,24" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-4,24"
-                    Point2="-8,24"
-                    Point3="-8,28" />
-                  <mssgle:LineSegment
-                    End="-8,40.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="107,42"
-          Id="Package\DFT - StageLSDetails\Sort 1"
-          TopLeft="430,203" />
-        <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[Lookup Match Output]"
-          TopLeft="480,159">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,44"
-              Start="0,0"
-              End="0,36.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,36.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,12.4453125,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="130,42"
-          Id="Package\DFT - StageLSDetails\Merge Join"
-          TopLeft="597,286" />
-        <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[Sort Output]"
-          TopLeft="483.5,245">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="178.5,41"
-              Start="0,0"
-              End="178.5,33.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,16.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,16.5"
-                    Point2="0,20.5"
-                    Point3="4,20.5" />
-                  <mssgle:LineSegment
-                    End="174.5,20.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="174.5,20.5"
-                    Point2="178.5,20.5"
-                    Point3="178.5,24.5" />
-                  <mssgle:LineSegment
-                    End="178.5,33.5" />
+                    End="70.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4145,10 +4185,120 @@ LEFT OUTER JOIN config.dbClient
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="132,42"
-          Id="Package\DFT - StageLSDetails\DCT-Status"
-          TopLeft="590,369" />
+        <EdgeLayout
+          Id="Package\DFT - StageLSDetails.Paths[Sort Output]"
+          TopLeft="483.5,245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="178.5,41"
+              Start="0,0"
+              End="178.5,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.5"
+                    Point2="0,20.5"
+                    Point3="4,20.5" />
+                  <mssgle:LineSegment
+                    End="174.5,20.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="174.5,20.5"
+                    Point2="178.5,20.5"
+                    Point3="178.5,24.5" />
+                  <mssgle:LineSegment
+                    End="178.5,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLSDetails.Paths[Row Count Output 1]"
+          TopLeft="632.75,797">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLSDetails.Paths[OLE DB Source Output]"
+          TopLeft="805,80">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8,48"
+              Start="0,0"
+              End="-8,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20"
+                    Point2="0,24"
+                    Point3="-4,24" />
+                  <mssgle:LineSegment
+                    End="-4,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4,24"
+                    Point2="-8,24"
+                    Point3="-8,28" />
+                  <mssgle:LineSegment
+                    End="-8,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLSDetails.Paths[NonCodeLookups]"
+          TopLeft="632.916666666667,490">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,166"
+              Start="0,0"
+              End="0,158.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,158.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-38.687578125,73.4453125,77.37515625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Merge Join Output]"
           TopLeft="659,328">
@@ -4171,10 +4321,122 @@ LEFT OUTER JOIN config.dbClient
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="162,42"
-          Id="Package\DFT - StageLSDetails\Split Out Lookups"
-          TopLeft="578,448" />
+        <EdgeLayout
+          Id="Package\DFT - StageLSDetails.Paths[Lookup No Match Output]"
+          TopLeft="1063,576">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-33,138"
+              Start="0,0"
+              End="-33,130.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.3560209424084" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,52.3560209424084"
+                    Point2="0,56.3560209424084"
+                    Point3="-4,56.3560209424084" />
+                  <mssgle:LineSegment
+                    End="-29,56.3560209424084" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-29,56.3560209424084"
+                    Point2="-33,56.3560209424084"
+                    Point3="-33,60.3560209424084" />
+                  <mssgle:LineSegment
+                    End="-33,130.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-72.30638671875,61.3560209424084,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLSDetails.Paths[Lookup Match Output]"
+          TopLeft="480,159">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,12.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLSDetails.Paths[Excel Source Output]"
+          TopLeft="475.25,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLSDetails.Paths[Derived Column Output1]"
+          TopLeft="953,735">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-260,-50.3333333333334"
+              Start="0,0"
+              End="-252.5,-50.3333333333334">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-146.643776824034,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-146.643776824034,0"
+                    Point2="-150.643776824034,0"
+                    Point3="-150.643776824034,-4" />
+                  <mssgle:LineSegment
+                    End="-150.643776824034,-46.3333333333334" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-150.643776824034,-46.3333333333334"
+                    Point2="-150.643776824034,-50.3333333333334"
+                    Point3="-154.643776824034,-50.3333333333334" />
+                  <mssgle:LineSegment
+                    End="-252.5,-50.3333333333334" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Derived Column Output]"
           TopLeft="657.5,411">
@@ -4197,278 +4459,108 @@ LEFT OUTER JOIN config.dbClient
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="107,42"
-          Id="Package\DFT - StageLSDetails\Sort 2"
-          TopLeft="712,531" />
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Conditional Split Default Output]"
-          TopLeft="659,490">
+          TopLeft="684.666666666667,490">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="106.5,41"
+              EndConnector="172.833333333333,40"
               Start="0,0"
-              End="106.5,33.5">
+              End="172.833333333333,32.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,16.5" />
+                    End="0,12.2347188264059" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,16.5"
-                    Point2="0,20.5"
-                    Point3="4,20.5" />
+                    Point1="0,12.2347188264059"
+                    Point2="0,16.2347188264059"
+                    Point3="4,16.2347188264059" />
                   <mssgle:LineSegment
-                    End="102.5,20.5" />
+                    End="168.833333333333,16.2347188264059" />
                   <mssgle:CubicBezierSegment
-                    Point1="102.5,20.5"
-                    Point2="106.5,20.5"
-                    Point3="106.5,24.5" />
+                    Point1="168.833333333333,16.2347188264059"
+                    Point2="172.833333333333,16.2347188264059"
+                    Point3="172.833333333333,20.2347188264059" />
                   <mssgle:LineSegment
-                    End="106.5,33.5" />
+                    End="172.833333333333,32.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-17.36390625,25.5,141.2278125,11.658203125"
+              BoundingBox="15.8027604166667,21.2347188264059,141.2278125,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="113,42"
-          Id="Package\DFT - StageLSDetails\Lookup"
-          TopLeft="710,601" />
-        <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[Sort Output2]"
-          TopLeft="766,573">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,28"
-              Start="0,0"
-              End="0,20.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="154,42"
-          Id="Package\DFT - StageLSDetails\Derived Column"
-          TopLeft="823,687" />
-        <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[Lookup No Match Output]"
-          TopLeft="766.5,643">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="133.5,44"
-              Start="0,0"
-              End="133.5,36.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,18" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,18"
-                    Point2="0,22"
-                    Point3="4,22" />
-                  <mssgle:LineSegment
-                    End="129.5,22" />
-                  <mssgle:CubicBezierSegment
-                    Point1="129.5,22"
-                    Point2="133.5,22"
-                    Point3="133.5,26" />
-                  <mssgle:LineSegment
-                    End="133.5,36.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="10.94361328125,27,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="130,42"
-          Id="Package\DFT - StageLSDetails\Row Count"
-          TopLeft="539,762" />
-        <NodeLayout
-          Size="183,42"
-          Id="Package\DFT - StageLSDetails\DEST - MSDetailStage"
-          TopLeft="526,834" />
-        <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[Row Count Output 1]"
-          TopLeft="604,804">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="13.5,30"
-              Start="0,0"
-              End="13.5,22.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,11" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,11"
-                    Point2="0,15"
-                    Point3="4,15" />
-                  <mssgle:LineSegment
-                    End="9.5,15" />
-                  <mssgle:CubicBezierSegment
-                    Point1="9.5,15"
-                    Point2="13.5,15"
-                    Point3="13.5,19" />
-                  <mssgle:LineSegment
-                    End="13.5,22.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="121,42"
-          Id="Package\DFT - StageLSDetails\Union All"
-          TopLeft="537,668" />
-        <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[NonCodeLookups]"
-          TopLeft="633.333333333333,490">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-54.6666666666667,178"
-              Start="0,0"
-              End="-54.6666666666667,170.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,84.6381396271321" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,84.6381396271321"
-                    Point2="0,88.6381396271321"
-                    Point3="-4,88.6381396271321" />
-                  <mssgle:LineSegment
-                    End="-50.6666666666667,88.6381396271321" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-50.6666666666667,88.6381396271321"
-                    Point2="-54.6666666666667,88.6381396271321"
-                    Point3="-54.6666666666667,92.6381396271321" />
-                  <mssgle:LineSegment
-                    End="-54.6666666666667,170.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-66.0209114583334,93.6381396271321,77.37515625,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="156,42"
+          Id="Package\DFT - StageLSDetails\Data Conversion"
+          TopLeft="764,611" />
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Lookup Match Output1]"
-          TopLeft="749,643">
+          TopLeft="1028,576">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-132.666666666667,25"
+              EndConnector="-186,35"
               Start="0,0"
-              End="-132.666666666667,17.5">
+              End="-186,27.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,8.51414327133866" />
+                    End="0,10.2931937172775" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,8.51414327133866"
-                    Point2="0,12.5141432713387"
-                    Point3="-4,12.5141432713387" />
+                    Point1="0,10.2931937172775"
+                    Point2="0,14.2931937172775"
+                    Point3="-4,14.2931937172775" />
                   <mssgle:LineSegment
-                    End="-128.666666666667,12.5141432713387" />
+                    End="-182,14.2931937172775" />
                   <mssgle:CubicBezierSegment
-                    Point1="-128.666666666667,12.5141432713387"
-                    Point2="-132.666666666667,12.5141432713387"
-                    Point3="-132.666666666667,16.5141432713387" />
+                    Point1="-182,14.2931937172775"
+                    Point2="-186,14.2931937172775"
+                    Point3="-186,18.2931937172775" />
                   <mssgle:LineSegment
-                    End="-132.666666666667,17.5" />
+                    End="-186,27.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-114.524720052083,17.5141432713387,96.3827734375,11.609375"
+              BoundingBox="-141.19138671875,19.2931937172775,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[Derived Column Output1]"
-          TopLeft="823,708">
+          Id="Package\DFT - StageLSDetails.Paths[Data Conversion Output]"
+          TopLeft="764,632">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-165,-19"
+              EndConnector="-71,40.3333333333334"
               Start="0,0"
-              End="-157.5,-19">
+              End="-63.5,40.3333333333334">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-78.5,0" />
+                    End="-37.137339055794,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="-78.5,0"
-                    Point2="-82.5,0"
-                    Point3="-82.5,-4" />
+                    Point1="-37.137339055794,0"
+                    Point2="-41.137339055794,0"
+                    Point3="-41.137339055794,4" />
                   <mssgle:LineSegment
-                    End="-82.5,-15" />
+                    End="-41.137339055794,36.3333333333334" />
                   <mssgle:CubicBezierSegment
-                    Point1="-82.5,-15"
-                    Point2="-82.5,-19"
-                    Point3="-86.5,-19" />
+                    Point1="-41.137339055794,36.3333333333334"
+                    Point2="-41.137339055794,40.3333333333334"
+                    Point3="-45.137339055794,40.3333333333334" />
                   <mssgle:LineSegment
-                    End="-157.5,-19" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[Union All Output 1]"
-          TopLeft="600.75,710">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,52"
-              Start="0,0"
-              End="0,44.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,44.5" />
+                    End="-63.5,40.3333333333334" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4481,10 +4573,46 @@ LEFT OUTER JOIN config.dbClient
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageLSDetails\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\DFT - StageLSDetails\SRC_Mattersphere">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageLSDetails\DEST - MSDetailStage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -4507,7 +4635,7 @@ LEFT OUTER JOIN config.dbClient
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -4517,46 +4645,10 @@ LEFT OUTER JOIN config.dbClient
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - StageLSDetails\Lookup">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - StageLSDetails\DEST - MSDetailStage">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
