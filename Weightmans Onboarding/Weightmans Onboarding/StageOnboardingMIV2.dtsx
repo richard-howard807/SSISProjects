@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageOnboardingMIV2"
   DTS:PackageType="5"
-  DTS:VersionBuild="14"
-  DTS:VersionGUID="{DD36A086-2F7E-4F40-AC50-947CBDD0286E}">
+  DTS:VersionBuild="21"
+  DTS:VersionGUID="{1F2A0DE3-1300-45E4-B7D4-2C8E438A0965}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
         DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MS_PROD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MS_PROD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -39,7 +39,7 @@
         DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=SVR-DEV-SQL-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -1185,8 +1185,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\DFT - StageLSDetails\Merge Join.Outputs[Merge Join Output].Columns[CaseDate]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="date"
                       lineageId="Package\DFT - StageLSDetails\Merge Join.Outputs[Merge Join Output].Columns[CaseDate]"
                       name="CaseDate">
                       <properties>
@@ -1332,20 +1331,6 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                           dataType="System.Int32"
                           description="The input column associated with this output column"
                           name="InputColumnID">#{Package\DFT - StageLSDetails\Merge Join.Inputs[Merge Join Left Input].Columns[txtDesc]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\DFT - StageLSDetails\Merge Join.Outputs[Merge Join Output].Columns[LegacyRef (1)]"
-                      dataType="wstr"
-                      length="255"
-                      lineageId="Package\DFT - StageLSDetails\Merge Join.Outputs[Merge Join Output].Columns[LegacyRef (1)]"
-                      name="LegacyRef (1)">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="The input column associated with this output column"
-                          name="InputColumnID">#{Package\DFT - StageLSDetails\Merge Join.Inputs[Merge Join Right Input].Columns[LegacyRef]}</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -2090,8 +2075,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     </inputColumn>
                     <inputColumn
                       refId="Package\DFT - StageLSDetails\Sort 2.Inputs[Sort Input].Columns[CaseDate]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
+                      cachedDataType="date"
                       cachedName="CaseDate"
                       lineageId="Package\DFT - StageLSDetails\Merge Join.Outputs[Merge Join Output].Columns[CaseDate]">
                       <properties>
@@ -2373,8 +2357,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     </outputColumn>
                     <outputColumn
                       refId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseDate]"
-                      dataType="wstr"
-                      length="255"
+                      dataType="date"
                       lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseDate]"
                       name="CaseDate">
                       <properties>
@@ -2655,14 +2638,17 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  clNo AS clNo ,
-        MS.clID,
-        MS.fileNo ,
-        CAST(AltNumber AS NVARCHAR(255)) AS LegacyRef,
-        MS.fileID AS MSFileID
-FROM  dbo.udEnvisionMatterBridge AS MS
-LEFT OUTER JOIN config.dbClient
- ON dbClient.clID = MS.clID</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT MS.clNo AS clNo ,
+MS.clID,
+MS.fileNo ,
+CAST(LegacyRef AS NVARCHAR(255)) AS LegacyRef,
+MS.fileID AS MSFileID
+FROM MattersphereStaging.dbo.OnboardingMatterStage AS a
+INNER JOIN (SELECT clNo,fileNo,fileID,dbClient.clID FROM config.dbFile
+INNER JOIN config.dbClient
+ON dbClient.clID = dbFile.clID) AS MS
+ON a.clno=MS.clNo
+AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -3130,8 +3116,7 @@ LEFT OUTER JOIN config.dbClient
                     </inputColumn>
                     <inputColumn
                       refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 1].Columns[CaseDate]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
+                      cachedDataType="date"
                       cachedName="CaseDate"
                       lineageId="Package\DFT - StageLSDetails\Merge Join.Outputs[Merge Join Output].Columns[CaseDate]">
                       <properties>
@@ -3375,8 +3360,7 @@ LEFT OUTER JOIN config.dbClient
                     </inputColumn>
                     <inputColumn
                       refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 3].Columns[CaseDate]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
+                      cachedDataType="date"
                       cachedName="CaseDate"
                       lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseDate]">
                       <properties>
@@ -3592,8 +3576,7 @@ LEFT OUTER JOIN config.dbClient
                     </inputColumn>
                     <inputColumn
                       refId="Package\DFT - StageLSDetails\Union All.Inputs[Union All Input 2].Columns[CaseDate]"
-                      cachedDataType="wstr"
-                      cachedLength="255"
+                      cachedDataType="date"
                       cachedName="CaseDate"
                       lineageId="Package\DFT - StageLSDetails\Sort 2.Outputs[Sort Output].Columns[CaseDate]">
                       <properties>
@@ -3984,7 +3967,7 @@ LEFT OUTER JOIN config.dbClient
         <NodeLayout
           Size="178,42"
           Id="Package\DFT - StageLSDetails"
-          TopLeft="360,71" />
+          TopLeft="360,74" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -3994,23 +3977,23 @@ LEFT OUTER JOIN config.dbClient
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="107,42"
+          Size="106.666666666667,42"
           Id="Package\DFT - StageLSDetails\Sort 2"
-          TopLeft="804,530" />
+          TopLeft="803.375000009313,533.249999941886" />
         <NodeLayout
-          Size="113,42"
+          Size="113.333333333334,42"
           Id="Package\DFT - StageLSDetails\Lookup"
-          TopLeft="802,601" />
+          TopLeft="789.500000186265,596.45000008136" />
         <NodeLayout
           Size="166,42"
           Id="Package\DFT - StageLSDetails\SRC_Mattersphere"
-          TopLeft="722,38" />
+          TopLeft="711.375000158325,32.1500001046061" />
         <NodeLayout
           Size="130,42"
           Id="Package\DFT - StageLSDetails\Merge Join"
           TopLeft="597,286" />
         <NodeLayout
-          Size="183,42"
+          Size="182.666666666667,42"
           Id="Package\DFT - StageLSDetails\DEST - MSDetailStage"
           TopLeft="540,831" />
         <NodeLayout
@@ -4020,11 +4003,11 @@ LEFT OUTER JOIN config.dbClient
         <NodeLayout
           Size="98,42"
           Id="Package\DFT - StageLSDetails\Sort"
-          TopLeft="748,128" />
+          TopLeft="746.750000018627,129.949999965131" />
         <NodeLayout
-          Size="121,45"
+          Size="121.333333333334,45.3333333333334"
           Id="Package\DFT - StageLSDetails\Union All"
-          TopLeft="572,656" />
+          TopLeft="571.375000009313,661.849999895394" />
         <NodeLayout
           Size="162,42"
           Id="Package\DFT - StageLSDetails\Split Out Lookups"
@@ -4032,49 +4015,49 @@ LEFT OUTER JOIN config.dbClient
         <NodeLayout
           Size="130,42"
           Id="Package\DFT - StageLSDetails\Row Count"
-          TopLeft="569,755" />
+          TopLeft="568.375000009313,757.599999953508" />
         <NodeLayout
           Size="154,42"
           Id="Package\DFT - StageLSDetails\Derived Column"
           TopLeft="953,714" />
         <NodeLayout
-          Size="107,42"
+          Size="106.666666666667,42"
           Id="Package\DFT - StageLSDetails\Sort 1"
           TopLeft="430,203" />
         <NodeLayout
-          Size="149,42"
+          Size="149.333333333334,42"
           Id="Package\DFT - StageLSDetails\dbCodeLookup"
           TopLeft="402,117" />
         <NodeLayout
           Size="132,42"
           Id="Package\DFT - StageLSDetails\DCT-Status"
-          TopLeft="590,369" />
+          TopLeft="588.750000018626,370.299999976754" />
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Sort Output1]"
-          TopLeft="797,170">
+          TopLeft="795.750000018627,171.949999965131">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-114.666666666667,116"
+              EndConnector="-113.416666685293,114.050000034869"
               Start="0,0"
-              End="-114.666666666667,108.5">
+              End="-113.416666685293,106.550000034869">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,64.7537993920973" />
+                    End="0,63.5980243367763" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,64.7537993920973"
-                    Point2="0,68.7537993920973"
-                    Point3="-4,68.7537993920973" />
+                    Point1="0,63.5980243367763"
+                    Point2="0,67.5980243367763"
+                    Point3="-4,67.5980243367763" />
                   <mssgle:LineSegment
-                    End="-110.666666666667,68.7537993920973" />
+                    End="-109.416666685293,67.5980243367763" />
                   <mssgle:CubicBezierSegment
-                    Point1="-110.666666666667,68.7537993920973"
-                    Point2="-114.666666666667,68.7537993920973"
-                    Point3="-114.666666666667,72.7537993920973" />
+                    Point1="-109.416666685293,67.5980243367763"
+                    Point2="-113.416666685293,67.5980243367763"
+                    Point3="-113.416666685293,71.5980243367763" />
                   <mssgle:LineSegment
-                    End="-114.666666666667,108.5" />
+                    End="-113.416666685293,106.550000034869" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4119,18 +4102,18 @@ LEFT OUTER JOIN config.dbClient
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Row Count Output 1]"
-          TopLeft="632.75,797">
+          TopLeft="632.354166671323,799.599999953508">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,34"
+              EndConnector="0,31.4000000464916"
               Start="0,0"
-              End="0,26.5">
+              End="0,23.9000000464916">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.5" />
+                    End="0,23.9000000464916" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4141,30 +4124,18 @@ LEFT OUTER JOIN config.dbClient
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[OLE DB Source Output]"
-          TopLeft="805,80">
+          TopLeft="795.062500088476,74.1500001046061">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-8,48"
+              EndConnector="0,55.7999998605251"
               Start="0,0"
-              End="-8,40.5">
+              End="0,48.2999998605251">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,20" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20"
-                    Point2="0,24"
-                    Point3="-4,24" />
-                  <mssgle:LineSegment
-                    End="-4,24" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-4,24"
-                    Point2="-8,24"
-                    Point3="-8,28" />
-                  <mssgle:LineSegment
-                    End="-8,40.5" />
+                    End="0,48.2999998605251" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4175,42 +4146,54 @@ LEFT OUTER JOIN config.dbClient
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[NonCodeLookups]"
-          TopLeft="632.916666666667,490">
+          TopLeft="633.333333333333,490">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,166"
+              EndConnector="-20.1805555462423,171.849999895394"
               Start="0,0"
-              End="0,158.5">
+              End="-20.1805555462423,164.349999895394">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,158.5" />
+                    End="0,81.5794190815526" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,81.5794190815526"
+                    Point2="0,85.5794190815526"
+                    Point3="-4,85.5794190815526" />
+                  <mssgle:LineSegment
+                    End="-16.1805555462423,85.5794190815526" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-16.1805555462423,85.5794190815526"
+                    Point2="-20.1805555462423,85.5794190815526"
+                    Point3="-20.1805555462423,89.5794190815526" />
+                  <mssgle:LineSegment
+                    End="-20.1805555462423,164.349999895394" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-38.687578125,73.4453125,77.37515625,11.609375"
+              BoundingBox="-48.7778558981212,90.5794190815526,77.37515625,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Merge Join Output]"
-          TopLeft="659,328">
+          TopLeft="658.375000009313,328">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,41"
+              EndConnector="0,42.2999999767542"
               Start="0,0"
-              End="0,33.5">
+              End="0,34.7999999767542">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,33.5" />
+                    End="0,34.7999999767542" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4221,73 +4204,37 @@ LEFT OUTER JOIN config.dbClient
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Lookup No Match Output]"
-          TopLeft="858.5,643">
+          TopLeft="846.166666852931,638.45000008136">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="171.5,71"
+              EndConnector="183.833333147069,75.5499999186396"
               Start="0,0"
-              End="171.5,63.5">
+              End="183.833333147069,68.0499999186396">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,31.5" />
+                    End="0,33.7749999593198" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,31.5"
-                    Point2="0,35.5"
-                    Point3="4,35.5" />
+                    Point1="0,33.7749999593198"
+                    Point2="0,37.7749999593198"
+                    Point3="4,37.7749999593198" />
                   <mssgle:LineSegment
-                    End="167.5,35.5" />
+                    End="179.833333147069,37.7749999593198" />
                   <mssgle:CubicBezierSegment
-                    Point1="167.5,35.5"
-                    Point2="171.5,35.5"
-                    Point3="171.5,39.5" />
+                    Point1="179.833333147069,37.7749999593198"
+                    Point2="183.833333147069,37.7749999593198"
+                    Point3="183.833333147069,41.7749999593198" />
                   <mssgle:LineSegment
-                    End="171.5,63.5" />
+                    End="183.833333147069,68.0499999186396" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="29.94361328125,40.5,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - StageLSDetails.Paths[Lookup Match Output1]"
-          TopLeft="802,622">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-109,50.3333333333334"
-              Start="0,0"
-              End="-101.5,50.3333333333334">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-59.1545064377682,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-59.1545064377682,0"
-                    Point2="-63.1545064377682,0"
-                    Point3="-63.1545064377682,4" />
-                  <mssgle:LineSegment
-                    End="-63.1545064377682,46.3333333333334" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-63.1545064377682,46.3333333333334"
-                    Point2="-63.1545064377682,50.3333333333334"
-                    Point3="-67.1545064377682,50.3333333333334" />
-                  <mssgle:LineSegment
-                    End="-101.5,50.3333333333334" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-111.345893156518,-17.609375,96.3827734375,11.609375"
+              BoundingBox="36.1102798547844,42.7749999593198,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -4343,26 +4290,26 @@ LEFT OUTER JOIN config.dbClient
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-260,-50.3333333333334"
+              EndConnector="-260.291666657353,-50.4833334379396"
               Start="0,0"
-              End="-252.5,-50.3333333333334">
+              End="-252.791666657353,-50.4833334379396">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-146.643776824034,0" />
+                    End="-126.145833328677,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="-146.643776824034,0"
-                    Point2="-150.643776824034,0"
-                    Point3="-150.643776824034,-4" />
+                    Point1="-126.145833328677,0"
+                    Point2="-130.145833328677,0"
+                    Point3="-130.145833328677,-4" />
                   <mssgle:LineSegment
-                    End="-150.643776824034,-46.3333333333334" />
+                    End="-130.145833328677,-46.4833334379396" />
                   <mssgle:CubicBezierSegment
-                    Point1="-150.643776824034,-46.3333333333334"
-                    Point2="-150.643776824034,-50.3333333333334"
-                    Point3="-154.643776824034,-50.3333333333334" />
+                    Point1="-130.145833328677,-46.4833334379396"
+                    Point2="-130.145833328677,-50.4833334379396"
+                    Point3="-134.145833328677,-50.4833334379396" />
                   <mssgle:LineSegment
-                    End="-252.5,-50.3333333333334" />
+                    End="-252.791666657353,-50.4833334379396" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4373,18 +4320,18 @@ LEFT OUTER JOIN config.dbClient
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Derived Column Output]"
-          TopLeft="657.5,411">
+          TopLeft="656.875000009313,412.299999976754">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,37"
+              EndConnector="0,35.7000000232458"
               Start="0,0"
-              End="0,29.5">
+              End="0,28.2000000232458">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29.5" />
+                    End="0,28.2000000232458" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4399,50 +4346,50 @@ LEFT OUTER JOIN config.dbClient
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="172.833333333333,40"
+              EndConnector="172.04166667598,43.2499999418856"
               Start="0,0"
-              End="172.833333333333,32.5">
+              End="172.04166667598,35.7499999418856">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,12.2347188264059" />
+                    End="0,13.5537897074646" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,12.2347188264059"
-                    Point2="0,16.2347188264059"
-                    Point3="4,16.2347188264059" />
+                    Point1="0,13.5537897074646"
+                    Point2="0,17.5537897074646"
+                    Point3="4,17.5537897074646" />
                   <mssgle:LineSegment
-                    End="168.833333333333,16.2347188264059" />
+                    End="168.04166667598,17.5537897074646" />
                   <mssgle:CubicBezierSegment
-                    Point1="168.833333333333,16.2347188264059"
-                    Point2="172.833333333333,16.2347188264059"
-                    Point3="172.833333333333,20.2347188264059" />
+                    Point1="168.04166667598,17.5537897074646"
+                    Point2="172.04166667598,17.5537897074646"
+                    Point3="172.04166667598,21.5537897074646" />
                   <mssgle:LineSegment
-                    End="172.833333333333,32.5" />
+                    End="172.04166667598,35.7499999418856" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="15.8027604166667,21.2347188264059,141.2278125,11.658203125"
+              BoundingBox="15.4069270879899,22.5537897074646,141.2278125,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Union All Output 1]"
-          TopLeft="633.25,701">
+          TopLeft="632.708333342646,707.183333228727">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,54"
+              EndConnector="0,50.4166667247812"
               Start="0,0"
-              End="0,46.5">
+              End="0,42.9166667247812">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,46.5" />
+                    End="0,42.9166667247812" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4453,24 +4400,72 @@ LEFT OUTER JOIN config.dbClient
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageLSDetails.Paths[Sort Output2]"
-          TopLeft="858,572">
+          TopLeft="910.04166667598,554.249999941886">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,29"
+              EndConnector="-7.20833315638174,63.2000001394748"
               Start="0,0"
-              End="0,21.5">
+              End="0.291666843618259,63.2000001394748">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,21.5" />
+                    End="18.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18.5,0"
+                    Point2="22.5,0"
+                    Point3="22.5,4" />
+                  <mssgle:LineSegment
+                    End="22.5,59.2000001394748" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.5,59.2000001394748"
+                    Point2="22.5,63.2000001394748"
+                    Point3="18.5,63.2000001394748" />
+                  <mssgle:LineSegment
+                    End="0.291666843618259,63.2000001394748" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLSDetails.Paths[Lookup Match Output1]"
+          TopLeft="828.611111297376,638.45000008136">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-177.680555732507,23.3999998140334"
+              Start="0,0"
+              End="-177.680555732507,15.8999998140334">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.7131640524303" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.7131640524303"
+                    Point2="0,11.7131640524303"
+                    Point3="-4,11.7131640524303" />
+                  <mssgle:LineSegment
+                    End="-173.680555732507,11.7131640524303" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-173.680555732507,11.7131640524303"
+                    Point2="-177.680555732507,11.7131640524303"
+                    Point3="-177.680555732507,15.7131640524303" />
+                  <mssgle:LineSegment
+                    End="-177.680555732507,15.8999998140334" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-137.031664585003,16.7131640524303,96.3827734375,11.609375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -4549,7 +4544,7 @@ LEFT OUTER JOIN config.dbClient
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
