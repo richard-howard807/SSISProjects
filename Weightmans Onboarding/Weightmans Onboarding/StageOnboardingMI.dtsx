@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageOnboardingMI"
   DTS:PackageType="5"
-  DTS:VersionBuild="24"
-  DTS:VersionGUID="{2C62417E-EBB6-4C4B-BE43-042181C1AD26}">
+  DTS:VersionBuild="26"
+  DTS:VersionGUID="{B029CA86-5135-431B-86D9-308D83D0DE79}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -97,14 +97,12 @@
 	udMapDetail.txtDetCode
 	, udMapDetail.txtMSTable
 	, udMapDetail.txtMSCode
-	, NULLIF(udMapDetail.txtLookupTable, '')		AS txtLookupTable
-	, IIF(NULLIF(udMapDetail.txtLookupTable, '') IS NULL, NULL, dbCodeLookup.cdType)  AS [Lookup code / Datalist table]
+	, CAST('dbCodeLookup' AS NVARCHAR(255))		AS txtLookupTable
+	, txtLookupCode AS [Lookup code / Datalist table]
 	, udMapDetail.txtDataType
 	, udMapDetail.txtDesc
---SELECT *
-FROM dbo.udMapDetail
-	LEFT OUTER JOIN dbo.dbCodeLookup
-		ON dbCodeLookup.cdType = udMapDetail.txtLookupCode</property>
+
+FROM MS_PROD.dbo.udMapDetail</property>
                 <property
                   dataType="System.String"
                   description="Specifies a SQL statement that uses parameters to generate the lookup table."
@@ -114,14 +112,12 @@ FROM dbo.udMapDetail
 	udMapDetail.txtDetCode
 	, udMapDetail.txtMSTable
 	, udMapDetail.txtMSCode
-	, NULLIF(udMapDetail.txtLookupTable, '')		AS txtLookupTable
-	, IIF(NULLIF(udMapDetail.txtLookupTable, '') IS NULL, NULL, dbCodeLookup.cdType)  AS [Lookup code / Datalist table]
+	, CAST('dbCodeLookup' AS NVARCHAR(255))		AS txtLookupTable
+	, txtLookupCode AS [Lookup code / Datalist table]
 	, udMapDetail.txtDataType
 	, udMapDetail.txtDesc
---SELECT *
-FROM dbo.udMapDetail
-	LEFT OUTER JOIN dbo.dbCodeLookup
-		ON dbCodeLookup.cdType = udMapDetail.txtLookupCode) [refTable]
+
+FROM MS_PROD.dbo.udMapDetail) [refTable]
 where [refTable].[txtMSTable] = ? and [refTable].[txtMSCode] = ?</property>
                 <property
                   dataType="System.Int32"
@@ -153,7 +149,7 @@ where [refTable].[txtMSTable] = ? and [refTable].[txtMSCode] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="txtDetCode" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtMSTable" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtMSCode" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtLookupTable" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Lookup code / Datalist table" dataType="DT_WSTR" length="15" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtDataType" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtDesc" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="txtDetCode" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtMSTable" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtMSCode" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtLookupTable" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Lookup code / Datalist table" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtDataType" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="txtDesc" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -223,7 +219,7 @@ where [refTable].[txtMSTable] = ? and [refTable].[txtMSCode] = ?</property>
                 <output
                   refId="Package\DFT - StageOnboardingDetails\dbCodeLookup.Outputs[Lookup Match Output]"
                   errorOrTruncationOperation="Lookup"
-                  errorRowDisposition="IgnoreFailure"
+                  errorRowDisposition="FailComponent"
                   exclusionGroup="1"
                   name="Lookup Match Output"
                   synchronousInputId="Package\DFT - StageOnboardingDetails\dbCodeLookup.Inputs[Lookup Input]">
@@ -232,7 +228,7 @@ where [refTable].[txtMSTable] = ? and [refTable].[txtMSCode] = ?</property>
                       refId="Package\DFT - StageOnboardingDetails\dbCodeLookup.Outputs[Lookup Match Output].Columns[Lookup code / Datalist table]"
                       dataType="wstr"
                       errorOrTruncationOperation="Copy Column"
-                      length="15"
+                      length="50"
                       lineageId="Package\DFT - StageOnboardingDetails\dbCodeLookup.Outputs[Lookup Match Output].Columns[Lookup code / Datalist table]"
                       name="Lookup code / Datalist table"
                       truncationRowDisposition="FailComponent">
@@ -262,7 +258,7 @@ where [refTable].[txtMSTable] = ? and [refTable].[txtMSCode] = ?</property>
                       refId="Package\DFT - StageOnboardingDetails\dbCodeLookup.Outputs[Lookup Match Output].Columns[txtLookupTable]"
                       dataType="wstr"
                       errorOrTruncationOperation="Copy Column"
-                      length="50"
+                      length="255"
                       lineageId="Package\DFT - StageOnboardingDetails\dbCodeLookup.Outputs[Lookup Match Output].Columns[txtLookupTable]"
                       name="txtLookupTable"
                       truncationRowDisposition="FailComponent">
@@ -620,14 +616,14 @@ where [refTable].[txtMSTable] = ? and [refTable].[txtMSCode] = ?</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\DEST - MSDetailStage.Inputs[OLE DB Destination Input].Columns[Lookup code / Datalist table]"
                       cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedLength="50"
                       cachedName="Lookup code / Datalist table"
                       externalMetadataColumnId="Package\DFT - StageOnboardingDetails\DEST - MSDetailStage.Inputs[OLE DB Destination Input].ExternalColumns[Lookupcode]"
                       lineageId="Package\DFT - StageOnboardingDetails\Union All.Outputs[Union All Output 1].Columns[Lookup code / Datalist table]" />
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\DEST - MSDetailStage.Inputs[OLE DB Destination Input].Columns[txtLookupTable]"
                       cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedLength="255"
                       cachedName="txtLookupTable"
                       externalMetadataColumnId="Package\DFT - StageOnboardingDetails\DEST - MSDetailStage.Inputs[OLE DB Destination Input].ExternalColumns[LookupTable]"
                       lineageId="Package\DFT - StageOnboardingDetails\Union All.Outputs[Union All Output 1].Columns[txtLookupTable]" />
@@ -885,7 +881,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Lookup.Inputs[Lookup Input].Columns[Lookup code / Datalist table]"
                       cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedLength="50"
                       cachedName="Lookup code / Datalist table"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 2.Outputs[Sort Output].Columns[Lookup code / Datalist table]">
                       <properties>
@@ -1037,7 +1033,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Merge Join.Inputs[Merge Join Left Input].Columns[Lookup code / Datalist table]"
                       cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedLength="50"
                       cachedName="Lookup code / Datalist table"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 1.Outputs[Sort Output].Columns[Lookup code / Datalist table]" />
                     <inputColumn
@@ -1049,7 +1045,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Merge Join.Inputs[Merge Join Left Input].Columns[txtLookupTable]"
                       cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedLength="255"
                       cachedName="txtLookupTable"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 1.Outputs[Sort Output].Columns[txtLookupTable]" />
                     <inputColumn
@@ -1211,7 +1207,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <outputColumn
                       refId="Package\DFT - StageOnboardingDetails\Merge Join.Outputs[Merge Join Output].Columns[Lookup code / Datalist table]"
                       dataType="wstr"
-                      length="15"
+                      length="50"
                       lineageId="Package\DFT - StageOnboardingDetails\Merge Join.Outputs[Merge Join Output].Columns[Lookup code / Datalist table]"
                       name="Lookup code / Datalist table">
                       <properties>
@@ -1239,7 +1235,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <outputColumn
                       refId="Package\DFT - StageOnboardingDetails\Merge Join.Outputs[Merge Join Output].Columns[txtLookupTable]"
                       dataType="wstr"
-                      length="50"
+                      length="255"
                       lineageId="Package\DFT - StageOnboardingDetails\Merge Join.Outputs[Merge Join Output].Columns[txtLookupTable]"
                       name="txtLookupTable">
                       <properties>
@@ -1699,7 +1695,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Sort 1.Inputs[Sort Input].Columns[Lookup code / Datalist table]"
                       cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedLength="50"
                       cachedName="Lookup code / Datalist table"
                       lineageId="Package\DFT - StageOnboardingDetails\dbCodeLookup.Outputs[Lookup Match Output].Columns[Lookup code / Datalist table]">
                       <properties>
@@ -1733,7 +1729,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Sort 1.Inputs[Sort Input].Columns[txtLookupTable]"
                       cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedLength="255"
                       cachedName="txtLookupTable"
                       lineageId="Package\DFT - StageOnboardingDetails\dbCodeLookup.Outputs[Lookup Match Output].Columns[txtLookupTable]">
                       <properties>
@@ -1891,7 +1887,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <outputColumn
                       refId="Package\DFT - StageOnboardingDetails\Sort 1.Outputs[Sort Output].Columns[Lookup code / Datalist table]"
                       dataType="wstr"
-                      length="15"
+                      length="50"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 1.Outputs[Sort Output].Columns[Lookup code / Datalist table]"
                       name="Lookup code / Datalist table">
                       <properties>
@@ -1919,7 +1915,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <outputColumn
                       refId="Package\DFT - StageOnboardingDetails\Sort 1.Outputs[Sort Output].Columns[txtLookupTable]"
                       dataType="wstr"
-                      length="50"
+                      length="255"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 1.Outputs[Sort Output].Columns[txtLookupTable]"
                       name="txtLookupTable">
                       <properties>
@@ -2107,7 +2103,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Sort 2.Inputs[Sort Input].Columns[Lookup code / Datalist table]"
                       cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedLength="50"
                       cachedName="Lookup code / Datalist table"
                       lineageId="Package\DFT - StageOnboardingDetails\Merge Join.Outputs[Merge Join Output].Columns[Lookup code / Datalist table]">
                       <properties>
@@ -2141,7 +2137,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Sort 2.Inputs[Sort Input].Columns[txtLookupTable]"
                       cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedLength="255"
                       cachedName="txtLookupTable"
                       lineageId="Package\DFT - StageOnboardingDetails\Merge Join.Outputs[Merge Join Output].Columns[txtLookupTable]">
                       <properties>
@@ -2383,7 +2379,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <outputColumn
                       refId="Package\DFT - StageOnboardingDetails\Sort 2.Outputs[Sort Output].Columns[Lookup code / Datalist table]"
                       dataType="wstr"
-                      length="15"
+                      length="50"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 2.Outputs[Sort Output].Columns[Lookup code / Datalist table]"
                       name="Lookup code / Datalist table">
                       <properties>
@@ -2411,7 +2407,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <outputColumn
                       refId="Package\DFT - StageOnboardingDetails\Sort 2.Outputs[Sort Output].Columns[txtLookupTable]"
                       dataType="wstr"
-                      length="50"
+                      length="255"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 2.Outputs[Sort Output].Columns[txtLookupTable]"
                       name="txtLookupTable">
                       <properties>
@@ -2538,7 +2534,7 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Split Out Lookups.Inputs[Conditional Split Input].Columns[Lookup code / Datalist table]"
                       cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedLength="50"
                       cachedName="Lookup code / Datalist table"
                       lineageId="Package\DFT - StageOnboardingDetails\Merge Join.Outputs[Merge Join Output].Columns[Lookup code / Datalist table]" />
                   </inputColumns>
@@ -3142,7 +3138,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Union All.Inputs[Union All Input 1].Columns[Lookup code / Datalist table]"
                       cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedLength="50"
                       cachedName="Lookup code / Datalist table"
                       lineageId="Package\DFT - StageOnboardingDetails\Merge Join.Outputs[Merge Join Output].Columns[Lookup code / Datalist table]">
                       <properties>
@@ -3170,7 +3166,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Union All.Inputs[Union All Input 1].Columns[txtLookupTable]"
                       cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedLength="255"
                       cachedName="txtLookupTable"
                       lineageId="Package\DFT - StageOnboardingDetails\Merge Join.Outputs[Merge Join Output].Columns[txtLookupTable]">
                       <properties>
@@ -3371,7 +3367,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Union All.Inputs[Union All Input 2].Columns[Lookup code / Datalist table]"
                       cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedLength="50"
                       cachedName="Lookup code / Datalist table"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 2.Outputs[Sort Output].Columns[Lookup code / Datalist table]">
                       <properties>
@@ -3399,7 +3395,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Union All.Inputs[Union All Input 2].Columns[txtLookupTable]"
                       cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedLength="255"
                       cachedName="txtLookupTable"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 2.Outputs[Sort Output].Columns[txtLookupTable]">
                       <properties>
@@ -3629,7 +3625,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Union All.Inputs[Union All Input 3].Columns[Lookup code / Datalist table]"
                       cachedDataType="wstr"
-                      cachedLength="15"
+                      cachedLength="50"
                       cachedName="Lookup code / Datalist table"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 2.Outputs[Sort Output].Columns[Lookup code / Datalist table]">
                       <properties>
@@ -3657,7 +3653,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
                     <inputColumn
                       refId="Package\DFT - StageOnboardingDetails\Union All.Inputs[Union All Input 3].Columns[txtLookupTable]"
                       cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedLength="255"
                       cachedName="txtLookupTable"
                       lineageId="Package\DFT - StageOnboardingDetails\Sort 2.Outputs[Sort Output].Columns[txtLookupTable]">
                       <properties>
@@ -3822,7 +3818,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
                     <outputColumn
                       refId="Package\DFT - StageOnboardingDetails\Union All.Outputs[Union All Output 1].Columns[Lookup code / Datalist table]"
                       dataType="wstr"
-                      length="15"
+                      length="50"
                       lineageId="Package\DFT - StageOnboardingDetails\Union All.Outputs[Union All Output 1].Columns[Lookup code / Datalist table]"
                       name="Lookup code / Datalist table" />
                     <outputColumn
@@ -3834,7 +3830,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
                     <outputColumn
                       refId="Package\DFT - StageOnboardingDetails\Union All.Outputs[Union All Output 1].Columns[txtLookupTable]"
                       dataType="wstr"
-                      length="50"
+                      length="255"
                       lineageId="Package\DFT - StageOnboardingDetails\Union All.Outputs[Union All Output 1].Columns[txtLookupTable]"
                       name="txtLookupTable" />
                     <outputColumn
@@ -3990,7 +3986,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         <NodeLayout
           Size="115,42"
           Id="Package\DFT - StageOnboardingDetails\Lookup"
-          TopLeft="787.500000186265,596.45000008136" />
+          TopLeft="796.500000186265,601.45000008136" />
         <NodeLayout
           Size="107,42"
           Id="Package\DFT - StageOnboardingDetails\Sort 2"
@@ -3998,15 +3994,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         <NodeLayout
           Size="98,42"
           Id="Package\DFT - StageOnboardingDetails\Sort"
-          TopLeft="746.750000018627,129.949999965131" />
-        <NodeLayout
-          Size="107,42"
-          Id="Package\DFT - StageOnboardingDetails\Sort 1"
-          TopLeft="430,203" />
-        <NodeLayout
-          Size="133,42"
-          Id="Package\DFT - StageOnboardingDetails\Merge Join"
-          TopLeft="651,298" />
+          TopLeft="747.750000018627,132.949999965131" />
         <NodeLayout
           Size="166,42"
           Id="Package\DFT - StageOnboardingDetails\SRC_Mattersphere"
@@ -4014,7 +4002,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         <NodeLayout
           Size="183,42"
           Id="Package\DFT - StageOnboardingDetails\DEST - MSDetailStage"
-          TopLeft="540,831" />
+          TopLeft="539,831" />
         <NodeLayout
           Size="208,42"
           Id="Package\DFT - StageOnboardingDetails\SRC_Onboarding_Template"
@@ -4026,7 +4014,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         <NodeLayout
           Size="162,42"
           Id="Package\DFT - StageOnboardingDetails\Split Out Lookups"
-          TopLeft="576,452" />
+          TopLeft="580,455" />
         <NodeLayout
           Size="130,42"
           Id="Package\DFT - StageOnboardingDetails\Row Count"
@@ -4034,75 +4022,25 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         <NodeLayout
           Size="149,42"
           Id="Package\DFT - StageOnboardingDetails\dbCodeLookup"
-          TopLeft="402,117" />
+          TopLeft="400,115" />
         <NodeLayout
           Size="132,42"
           Id="Package\DFT - StageOnboardingDetails\DCT-Status"
           TopLeft="588.750000018626,370.299999976754" />
-        <NodeLayout
-          Size="123,42"
-          Id="Package\DFT - StageOnboardingDetails\Union All"
-          TopLeft="592,658" />
-        <EdgeLayout
-          Id="Package\DFT - StageOnboardingDetails.Paths[Sort Output1]"
-          TopLeft="483.5,245">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="234,53"
-              Start="0,0"
-              End="234,45.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,22.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,22.5"
-                    Point2="0,26.5"
-                    Point3="4,26.5" />
-                  <mssgle:LineSegment
-                    End="230,26.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="230,26.5"
-                    Point2="234,26.5"
-                    Point3="234,30.5" />
-                  <mssgle:LineSegment
-                    End="234,45.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageOnboardingDetails.Paths[Sort Output]"
-          TopLeft="910.375000009313,554.249999941886">
+          TopLeft="855.437500097789,575.249999941886">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-7.87499982304803,63.200000139474"
+              EndConnector="0,26.200000139474"
               Start="0,0"
-              End="-0.374999823048029,63.200000139474">
+              End="0,18.700000139474">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="18.5,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="18.5,0"
-                    Point2="22.5,0"
-                    Point3="22.5,4" />
-                  <mssgle:LineSegment
-                    End="22.5,59.200000139474" />
-                  <mssgle:CubicBezierSegment
-                    Point1="22.5,59.200000139474"
-                    Point2="22.5,63.200000139474"
-                    Point3="18.5,63.200000139474" />
-                  <mssgle:LineSegment
-                    End="-0.374999823048029,63.200000139474" />
+                    End="0,18.700000139474" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4113,18 +4051,18 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageOnboardingDetails.Paths[Row Count Output 1]"
-          TopLeft="632.354166671323,799.599999953508">
+          TopLeft="631.937500004657,799.599999953508">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,31.4000000464916"
+              EndConnector="0,31.400000046492"
               Start="0,0"
-              End="0,23.9000000464916">
+              End="0,23.900000046492">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,23.9000000464916" />
+                    End="0,23.900000046492" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4135,88 +4073,18 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageOnboardingDetails.Paths[OLE DB Source Output]"
-          TopLeft="795.062500088476,74.1500001046061">
+          TopLeft="795.562500088476,74.1500001046061">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,55.7999998605251"
+              EndConnector="0,58.7999998605249"
               Start="0,0"
-              End="0,48.2999998605251">
+              End="0,51.2999998605249">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,48.2999998605251" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - StageOnboardingDetails.Paths[NonCodeLookups]"
-          TopLeft="631.333333333333,494">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="22.1666666666666,164"
-              Start="0,0"
-              End="22.1666666666666,156.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,62.5623471882641" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,62.5623471882641"
-                    Point2="0,66.5623471882641"
-                    Point3="4,66.5623471882641" />
-                  <mssgle:LineSegment
-                    End="18.1666666666666,66.5623471882641" />
-                  <mssgle:CubicBezierSegment
-                    Point1="18.1666666666666,66.5623471882641"
-                    Point2="22.1666666666666,66.5623471882641"
-                    Point3="22.1666666666666,70.5623471882641" />
-                  <mssgle:LineSegment
-                    End="22.1666666666666,156.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-27.6042447916667,71.5623471882641,77.37515625,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - StageOnboardingDetails.Paths[Merge Join Output]"
-          TopLeft="717.5,340">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-62.749999981374,30.299999976754"
-              Start="0,0"
-              End="-62.749999981374,22.799999976754">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,11.149999988377" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,11.149999988377"
-                    Point2="0,15.149999988377"
-                    Point3="-4,15.149999988377" />
-                  <mssgle:LineSegment
-                    End="-58.749999981374,15.149999988377" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-58.749999981374,15.149999988377"
-                    Point2="-62.749999981374,15.149999988377"
-                    Point3="-62.749999981374,19.149999988377" />
-                  <mssgle:LineSegment
-                    End="-62.749999981374,22.799999976754" />
+                    End="0,51.2999998605249" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4227,148 +4095,54 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageOnboardingDetails.Paths[Lookup No Match Output]"
-          TopLeft="845.000000186265,638.45000008136">
+          TopLeft="854.000000186265,643.45000008136">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="182.999999813735,76.54999991864"
+              EndConnector="173.999999813735,71.54999991864"
               Start="0,0"
-              End="182.999999813735,69.04999991864">
+              End="173.999999813735,64.04999991864">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,34.27499995932" />
+                    End="0,31.77499995932" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,34.27499995932"
-                    Point2="0,38.27499995932"
-                    Point3="4,38.27499995932" />
+                    Point1="0,31.77499995932"
+                    Point2="0,35.77499995932"
+                    Point3="4,35.77499995932" />
                   <mssgle:LineSegment
-                    End="178.999999813735,38.27499995932" />
+                    End="169.999999813735,35.77499995932" />
                   <mssgle:CubicBezierSegment
-                    Point1="178.999999813735,38.27499995932"
-                    Point2="182.999999813735,38.27499995932"
-                    Point3="182.999999813735,42.27499995932" />
+                    Point1="169.999999813735,35.77499995932"
+                    Point2="173.999999813735,35.77499995932"
+                    Point3="173.999999813735,39.77499995932" />
                   <mssgle:LineSegment
-                    End="182.999999813735,69.04999991864" />
+                    End="173.999999813735,64.04999991864" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="35.6936131881175,43.27499995932,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - StageOnboardingDetails.Paths[Lookup Match Output1]"
-          TopLeft="787.500000186265,617.45000008136">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-72.500000186265,55.8833332519733"
-              Start="0,0"
-              End="-65.000000186265,55.8833332519733">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-37.9036698324283,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-37.9036698324283,0"
-                    Point2="-41.9036698324283,0"
-                    Point3="-41.9036698324283,4" />
-                  <mssgle:LineSegment
-                    End="-41.9036698324283,51.8833332519733" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-41.9036698324283,51.8833332519733"
-                    Point2="-41.9036698324283,55.8833332519733"
-                    Point3="-45.9036698324283,55.8833332519733" />
-                  <mssgle:LineSegment
-                    End="-65.000000186265,55.8833332519733" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-90.0950565511783,-17.609375,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - StageOnboardingDetails.Paths[Lookup Match Output]"
-          TopLeft="480,159">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,44"
-              Start="0,0"
-              End="0,36.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,36.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,12.4453125,96.3827734375,11.609375"
+              BoundingBox="31.1936131881175,40.77499995932,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageOnboardingDetails.Paths[Excel Source Output]"
-          TopLeft="475.25,74">
+          TopLeft="474.25,74">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,43"
+              EndConnector="0,41"
               Start="0,0"
-              End="0,35.5">
+              End="0,33.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,35.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - StageOnboardingDetails.Paths[Derived Column Output1]"
-          TopLeft="951,736">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-236,-51.3333333333334"
-              Start="0,0"
-              End="-228.5,-51.3333333333334">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-132.403669724771,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-132.403669724771,0"
-                    Point2="-136.403669724771,0"
-                    Point3="-136.403669724771,-4" />
-                  <mssgle:LineSegment
-                    End="-136.403669724771,-47.3333333333334" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-136.403669724771,-47.3333333333334"
-                    Point2="-136.403669724771,-51.3333333333334"
-                    Point3="-140.403669724771,-51.3333333333334" />
-                  <mssgle:LineSegment
-                    End="-228.5,-51.3333333333334" />
+                    End="0,33.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4379,18 +4153,18 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageOnboardingDetails.Paths[Derived Column Output]"
-          TopLeft="655.875000009313,412.299999976754">
+          TopLeft="657.875000009313,412.299999976754">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,39.700000023246"
+              EndConnector="0,42.700000023246"
               Start="0,0"
-              End="0,32.200000023246">
+              End="0,35.200000023246">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,32.200000023246" />
+                    End="0,35.200000023246" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4401,66 +4175,110 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageOnboardingDetails.Paths[Conditional Split Default Output]"
-          TopLeft="657,494">
+          TopLeft="661,497">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="199.875000009313,39.249999941886"
+              EndConnector="195.875000009313,36.249999941886"
               Start="0,0"
-              End="199.875000009313,31.749999941886">
+              End="195.875000009313,28.749999941886">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,15.624999970943" />
+                    End="0,14.124999970943" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,15.624999970943"
-                    Point2="0,19.624999970943"
-                    Point3="4,19.624999970943" />
+                    Point1="0,14.124999970943"
+                    Point2="0,18.124999970943"
+                    Point3="4,18.124999970943" />
                   <mssgle:LineSegment
-                    End="195.875000009313,19.624999970943" />
+                    End="191.875000009313,18.124999970943" />
                   <mssgle:CubicBezierSegment
-                    Point1="195.875000009313,19.624999970943"
-                    Point2="199.875000009313,19.624999970943"
-                    Point3="199.875000009313,23.624999970943" />
+                    Point1="191.875000009313,18.124999970943"
+                    Point2="195.875000009313,18.124999970943"
+                    Point3="195.875000009313,22.124999970943" />
                   <mssgle:LineSegment
-                    End="199.875000009313,31.749999941886" />
+                    End="195.875000009313,28.749999941886" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="29.3235937546565,24.624999970943,141.2278125,11.658203125"
+              BoundingBox="27.3235937546565,23.124999970943,141.2278125,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <NodeLayout
+          Size="107,42"
+          Id="Package\DFT - StageOnboardingDetails\Sort 1"
+          TopLeft="473,200" />
         <EdgeLayout
-          Id="Package\DFT - StageOnboardingDetails.Paths[Union All Output 1]"
-          TopLeft="653.5,700">
+          Id="Package\DFT - StageOnboardingDetails.Paths[Lookup Match Output]"
+          TopLeft="474.5,157">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-20.124999990687,57.599999953508"
+              EndConnector="52,43"
               Start="0,0"
-              End="-20.124999990687,50.099999953508">
+              End="52,35.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,24.799999976754" />
+                    End="0,17.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,24.799999976754"
-                    Point2="0,28.799999976754"
-                    Point3="-4,28.799999976754" />
+                    Point1="0,17.5"
+                    Point2="0,21.5"
+                    Point3="4,21.5" />
                   <mssgle:LineSegment
-                    End="-16.124999990687,28.799999976754" />
+                    End="48,21.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="-16.124999990687,28.799999976754"
-                    Point2="-20.124999990687,28.799999976754"
-                    Point3="-20.124999990687,32.799999976754" />
+                    Point1="48,21.5"
+                    Point2="52,21.5"
+                    Point3="52,25.5" />
                   <mssgle:LineSegment
-                    End="-20.124999990687,50.099999953508" />
+                    End="52,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-22.19138671875,26.5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="130,42"
+          Id="Package\DFT - StageOnboardingDetails\Merge Join"
+          TopLeft="683,280" />
+        <EdgeLayout
+          Id="Package\DFT - StageOnboardingDetails.Paths[Sort Output1]"
+          TopLeft="526.5,242">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="201.166666666667,38"
+              Start="0,0"
+              End="201.166666666667,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5227963525836" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.5227963525836"
+                    Point2="0,22.5227963525836"
+                    Point3="4,22.5227963525836" />
+                  <mssgle:LineSegment
+                    End="197.166666666667,22.5227963525836" />
+                  <mssgle:CubicBezierSegment
+                    Point1="197.166666666667,22.5227963525836"
+                    Point2="201.166666666667,22.5227963525836"
+                    Point3="201.166666666667,26.5227963525836" />
+                  <mssgle:LineSegment
+                    End="201.166666666667,30.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4471,30 +4289,196 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - StageOnboardingDetails.Paths[Sort Output2]"
-          TopLeft="795.750000018627,171.949999965131">
+          TopLeft="796.750000018627,174.949999965131">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-57.4166666852936,126.050000034869"
+              EndConnector="-28.4166666852936,105.050000034869"
               Start="0,0"
-              End="-57.4166666852936,118.550000034869">
+              End="-28.4166666852936,97.550000034869">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,70.7309807041794" />
+                    End="0,58.2636778322172" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,70.7309807041794"
-                    Point2="0,74.7309807041794"
-                    Point3="-4,74.7309807041794" />
+                    Point1="0,58.2636778322172"
+                    Point2="0,62.2636778322172"
+                    Point3="-4,62.2636778322172" />
                   <mssgle:LineSegment
-                    End="-53.4166666852936,74.7309807041794" />
+                    End="-24.4166666852936,62.2636778322172" />
                   <mssgle:CubicBezierSegment
-                    Point1="-53.4166666852936,74.7309807041794"
-                    Point2="-57.4166666852936,74.7309807041794"
-                    Point3="-57.4166666852936,78.7309807041794" />
+                    Point1="-24.4166666852936,62.2636778322172"
+                    Point2="-28.4166666852936,62.2636778322172"
+                    Point3="-28.4166666852936,66.2636778322172" />
                   <mssgle:LineSegment
-                    End="-57.4166666852936,118.550000034869" />
+                    End="-28.4166666852936,97.550000034869" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageOnboardingDetails.Paths[Merge Join Output]"
+          TopLeft="748,322">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-93.249999981374,48.299999976754"
+              Start="0,0"
+              End="-93.249999981374,40.799999976754">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.149999988377" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.149999988377"
+                    Point2="0,24.149999988377"
+                    Point3="-4,24.149999988377" />
+                  <mssgle:LineSegment
+                    End="-89.249999981374,24.149999988377" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-89.249999981374,24.149999988377"
+                    Point2="-93.249999981374,24.149999988377"
+                    Point3="-93.249999981374,28.149999988377" />
+                  <mssgle:LineSegment
+                    End="-93.249999981374,40.799999976754" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="121,42"
+          Id="Package\DFT - StageOnboardingDetails\Union All"
+          TopLeft="601,670" />
+        <EdgeLayout
+          Id="Package\DFT - StageOnboardingDetails.Paths[NonCodeLookups]"
+          TopLeft="639,497">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,173"
+              Start="0,0"
+              End="0,165.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,165.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-38.687578125,76.9453125,77.37515625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageOnboardingDetails.Paths[Lookup Match Output1]"
+          TopLeft="836.166666852932,643.45000008136">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-155.833333519598,26.54999991864"
+              Start="0,0"
+              End="-155.833333519598,19.04999991864">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.28607245528939" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.28607245528939"
+                    Point2="0,13.2860724552894"
+                    Point3="-4,13.2860724552894" />
+                  <mssgle:LineSegment
+                    End="-151.833333519598,13.2860724552894" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-151.833333519598,13.2860724552894"
+                    Point2="-155.833333519598,13.2860724552894"
+                    Point3="-155.833333519598,17.2860724552894" />
+                  <mssgle:LineSegment
+                    End="-155.833333519598,19.04999991864" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-126.108053478549,18.2860724552894,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageOnboardingDetails.Paths[Derived Column Output1]"
+          TopLeft="951,736">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-229,-45"
+              Start="0,0"
+              End="-221.5,-45">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-110.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-110.5,0"
+                    Point2="-114.5,0"
+                    Point3="-114.5,-4" />
+                  <mssgle:LineSegment
+                    End="-114.5,-41" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-114.5,-41"
+                    Point2="-114.5,-45"
+                    Point3="-118.5,-45" />
+                  <mssgle:LineSegment
+                    End="-221.5,-45" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageOnboardingDetails.Paths[Union All Output 1]"
+          TopLeft="661.5,712">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-28.124999990687,45.599999953508"
+              Start="0,0"
+              End="-28.124999990687,38.099999953508">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.799999976754" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.799999976754"
+                    Point2="0,22.799999976754"
+                    Point3="-4,22.799999976754" />
+                  <mssgle:LineSegment
+                    End="-24.124999990687,22.799999976754" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-24.124999990687,22.799999976754"
+                    Point2="-28.124999990687,22.799999976754"
+                    Point3="-28.124999990687,26.799999976754" />
+                  <mssgle:LineSegment
+                    End="-28.124999990687,38.099999953508" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4579,7 +4563,7 @@ AND CAST(a.NewMatterNumber AS NVARCHAR(100))=ms.fileNo</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
