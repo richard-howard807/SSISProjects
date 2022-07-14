@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Benefex_Export"
   DTS:PackageType="5"
-  DTS:VersionBuild="14"
-  DTS:VersionGUID="{146AE362-1EDF-474E-8BD0-24FD41B2B7B6}">
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{A335EBE0-F0CB-4F14-BE8D-F726C45E2993}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -411,7 +411,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT load_cascade_employee.displayemployeeid AS [Employee ID]
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT load_cascade_employee.displayemployeeid AS [Employee ID]
 , load_cascade_employee.knownas AS [First Name]
 , load_cascade_employee.surname AS [Last Name]
 , load_cascade_employee.workemail AS [Email]
@@ -419,8 +419,8 @@
 , 'United Kingdom' AS [Country]
 , hierarchylevel3 AS [Department]
 , hierarchylevel4 AS [Business Unit]
-, CONVERT(VARCHAR, load_cascade_employee.contservicedate,101) AS [Start Date]
-, CONVERT(VARCHAR, load_cascade_employee.leftdate,101) AS [Leave Date]
+, CASE WHEN load_cascade_employee.previousfirmud='RadcliffesLeBrasseur' THEN NULL ELSE CONVERT(VARCHAR, load_cascade_employee.contservicedate,101) END AS [Start Date]
+, CASE WHEN CONVERT(VARCHAR, load_cascade_employee.leftdate,101)&gt;GETDATE() THEN NULL ELSE CONVERT(VARCHAR, load_cascade_employee.leftdate,101) END  AS [Leave Date]
 , linemanager.displayemployeeid AS [Manager Employee ID]
 , CASE WHEN load_cascade_employee_jobs.levelidud ='Equity Partner' THEN 'NoReward' ELSE 'Reward' END AS [User Type]
 , load_cascade_employee.workemail AS [SSO Unique Identifier]
@@ -436,7 +436,10 @@ AND load_cascade_employee.surname &lt;&gt; 'Auto'
 AND load_cascade_employee.displayemployeeid NOT IN ('5597','3483')
 AND load_cascade_employee_jobs.jobtitle NOT LIKE '%Payroll%'
 AND load_cascade_employee_jobs.levelidud NOT IN ('Self Employed Consultant','Non-voting A Member')
---AND CONVERT(VARCHAR, load_cascade_employee.leftdate,101) IS NULL
+AND (CONVERT(VARCHAR, load_cascade_employee.leftdate,101) IS NULL 
+	OR load_cascade_employee.leftdate &gt;= (SELECT MIN(dim_date.calendar_date) date 
+										FROM red_dw.dbo.dim_date
+										WHERE dim_date.current_cal_month='Previous'))
 
 ORDER BY [Last Name], [First Name]</property>
                 <property
