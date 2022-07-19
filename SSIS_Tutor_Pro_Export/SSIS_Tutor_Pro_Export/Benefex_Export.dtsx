@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Benefex_Export"
   DTS:PackageType="5"
-  DTS:VersionBuild="15"
-  DTS:VersionGUID="{A335EBE0-F0CB-4F14-BE8D-F726C45E2993}">
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{41C75D3B-370C-49E4-8F6A-7BF7832B6E2A}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -419,8 +419,8 @@
 , 'United Kingdom' AS [Country]
 , hierarchylevel3 AS [Department]
 , hierarchylevel4 AS [Business Unit]
-, CASE WHEN load_cascade_employee.previousfirmud='RadcliffesLeBrasseur' THEN NULL ELSE CONVERT(VARCHAR, load_cascade_employee.contservicedate,101) END AS [Start Date]
-, CASE WHEN CONVERT(VARCHAR, load_cascade_employee.leftdate,101)&gt;GETDATE() THEN NULL ELSE CONVERT(VARCHAR, load_cascade_employee.leftdate,101) END  AS [Leave Date]
+, CONVERT(VARCHAR, CASE WHEN load_cascade_employee.previousfirmud='RadcliffesLeBrasseur' THEN NULL ELSE  load_cascade_employee.contservicedate END, 101) AS [Start Date]
+, CONVERT(VARCHAR, CASE WHEN  load_cascade_employee.leftdate&gt;GETDATE() THEN NULL ELSE load_cascade_employee.leftdate END, 101) AS [Leave Date]
 , linemanager.displayemployeeid AS [Manager Employee ID]
 , CASE WHEN load_cascade_employee_jobs.levelidud ='Equity Partner' THEN 'NoReward' ELSE 'Reward' END AS [User Type]
 , load_cascade_employee.workemail AS [SSO Unique Identifier]
@@ -432,11 +432,11 @@ LEFT OUTER JOIN red_dw.dbo.load_cascade_employee linemanager ON linemanager.empl
 
 WHERE 
 load_cascade_employee_jobs.jobtitle &lt;&gt; 'Non-Executive Director'
-AND load_cascade_employee.surname &lt;&gt; 'Auto'
+AND load_cascade_employee.surname NOT LIKE 'Auto%'
 AND load_cascade_employee.displayemployeeid NOT IN ('5597','3483')
 AND load_cascade_employee_jobs.jobtitle NOT LIKE '%Payroll%'
 AND load_cascade_employee_jobs.levelidud NOT IN ('Self Employed Consultant','Non-voting A Member')
-AND (CONVERT(VARCHAR, load_cascade_employee.leftdate,101) IS NULL 
+AND (load_cascade_employee.leftdate IS NULL 
 	OR load_cascade_employee.leftdate &gt;= (SELECT MIN(dim_date.calendar_date) date 
 										FROM red_dw.dbo.dim_date
 										WHERE dim_date.current_cal_month='Previous'))
