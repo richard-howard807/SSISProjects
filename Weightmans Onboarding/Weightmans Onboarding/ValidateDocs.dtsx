@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="ValidateDocs"
   DTS:PackageType="5"
-  DTS:VersionBuild="164"
-  DTS:VersionGUID="{BD58EEEC-A124-4B7B-9FBD-6AE181F59430}">
+  DTS:VersionBuild="165"
+  DTS:VersionGUID="{EB044B0D-737C-4027-9D5C-B9149A4543D6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -26,7 +26,7 @@
         DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=svr-liv-msp-01;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -38,7 +38,7 @@
         DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=svr-liv-msp-01;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -52,7 +52,7 @@
         DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MS_PROD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=svr-liv-msp-01;Initial Catalog=MS_TEST;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -64,7 +64,7 @@
         DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=svr-liv-msp-01;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -367,8 +367,8 @@
       </DTS:EventHandlers>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{CC700A6A-C4E9-4DCC-BF76-014B671BB77E}"
-          SQLTask:SqlStatementSource="UPDATE DocumentStage &#xA;SET StatusID=6&#xA;WHERE DocFileName IS NULL&#xA;&#xA;--UPDATE a&#xA;--SET StatusID=6 &#xA;--FROM DocumentStage AS a&#xA;--INNER JOIN MS_Prod.config.dbDocument AS b&#xA;-- ON a.DocumentNumber=b.docIDOld&#xA;-- AND a.FileID=b.fileID&#xA;&#xA;-- UPDATE FOLDER GUID&#xA;&#xA;UPDATE a&#xA;SET a.FolderGUID=b.FolderGUID&#xA;--SELECT a.FileID,a.FolderName,b.FolderGUID &#xA;FROM dbo.DocumentStage AS a&#xA;LEFT OUTER JOIN (SELECT fc.fileID&#xA;,CAST(fc.FolderCode AS NVARCHAR(15)) AS FolderCode&#xA;&#x9;, CAST(fc.FolderGuid AS UNIQUEIDENTIFIER) AS FolderGUID&#xA;&#x9;, cdDesc AS FolderDescription &#xA;FROM MS_PROD.dbo.dbFileFolder fc WITH(NOLOCK) &#xA;INNER JOIN MS_PROD.dbo.dbCodeLookup ON cdCode=fc.FolderCode AND cdType='DFLDR_MATTER') AS b&#xA; ON b.fileID = a.FileID&#xA; AND a.FolderName=b.FolderDescription COLLATE DATABASE_DEFAULT" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:Connection="{D1F2AD2B-AAB8-4651-A6CF-8B2E786861DF}"
+          SQLTask:SqlStatementSource="UPDATE MattersphereStaging.dbo.DocumentStage &#xA;SET StatusID=6&#xA;WHERE DocFileName IS NULL&#xA;&#xA;--UPDATE a&#xA;--SET StatusID=6 &#xA;--FROM DocumentStage AS a&#xA;--INNER JOIN MS_Prod.config.dbDocument AS b&#xA;-- ON a.DocumentNumber=b.docIDOld&#xA;-- AND a.FileID=b.fileID&#xA;&#xA;-- UPDATE FOLDER GUID&#xA;&#xA;UPDATE a&#xA;SET a.FolderGUID=b.FolderGUID&#xA;--SELECT a.FileID,a.FolderName,b.FolderGUID &#xA;FROM MattersphereStaging.dbo.DocumentStage AS a&#xA;LEFT OUTER JOIN (SELECT fc.fileID&#xA;,CAST(fc.FolderCode AS NVARCHAR(15)) AS FolderCode&#xA;&#x9;, CAST(fc.FolderGuid AS UNIQUEIDENTIFIER) AS FolderGUID&#xA;&#x9;, cdDesc AS FolderDescription &#xA;FROM dbo.dbFileFolder fc WITH(NOLOCK) &#xA;INNER JOIN dbo.dbCodeLookup ON cdCode=fc.FolderCode AND cdType='DFLDR_MATTER') AS b&#xA; ON b.fileID = a.FileID&#xA; AND a.FolderName=b.FolderDescription COLLATE DATABASE_DEFAULT" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -445,7 +445,7 @@
         <NodeLayout
           Size="195,42"
           Id="Package\EST - Onboarding Docs"
-          TopLeft="370,203" />
+          TopLeft="370,202" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
