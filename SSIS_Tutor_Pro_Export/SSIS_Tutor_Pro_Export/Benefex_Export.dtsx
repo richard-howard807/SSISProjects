@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Benefex_Export"
   DTS:PackageType="5"
-  DTS:VersionBuild="16"
-  DTS:VersionGUID="{41C75D3B-370C-49E4-8F6A-7BF7832B6E2A}">
+  DTS:VersionBuild="17"
+  DTS:VersionGUID="{D63983F2-DD9B-475F-B10C-D6B3AEE1F270}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:ConnectionManagers>
@@ -419,8 +419,8 @@
 , 'United Kingdom' AS [Country]
 , hierarchylevel3 AS [Department]
 , hierarchylevel4 AS [Business Unit]
-, CONVERT(VARCHAR, CASE WHEN load_cascade_employee.previousfirmud='RadcliffesLeBrasseur' THEN NULL ELSE  load_cascade_employee.contservicedate END, 101) AS [Start Date]
-, CONVERT(VARCHAR, CASE WHEN  load_cascade_employee.leftdate&gt;GETDATE() THEN NULL ELSE load_cascade_employee.leftdate END, 101) AS [Leave Date]
+, ISNULL(CONVERT(VARCHAR, CASE WHEN load_cascade_employee.previousfirmud='RadcliffesLeBrasseur' AND load_cascade_employee_jobs.levelidud&lt;&gt;'Fixed Share Partner' THEN NULL ELSE  load_cascade_employee.contservicedate END, 101),'') AS [Start Date]
+, ISNULL(CONVERT(VARCHAR, load_cascade_employee.leftdate, 101),'') AS [Leave Date]
 , linemanager.displayemployeeid AS [Manager Employee ID]
 , CASE WHEN load_cascade_employee_jobs.levelidud ='Equity Partner' THEN 'NoReward' ELSE 'Reward' END AS [User Type]
 , load_cascade_employee.workemail AS [SSO Unique Identifier]
@@ -435,7 +435,7 @@ load_cascade_employee_jobs.jobtitle &lt;&gt; 'Non-Executive Director'
 AND load_cascade_employee.surname NOT LIKE 'Auto%'
 AND load_cascade_employee.displayemployeeid NOT IN ('5597','3483')
 AND load_cascade_employee_jobs.jobtitle NOT LIKE '%Payroll%'
-AND load_cascade_employee_jobs.levelidud NOT IN ('Self Employed Consultant','Non-voting A Member')
+AND load_cascade_employee_jobs.levelidud NOT IN ('Self Employed Consultant','Non-voting A Member','Non-Voting A Member')
 AND (load_cascade_employee.leftdate IS NULL 
 	OR load_cascade_employee.leftdate &gt;= (SELECT MIN(dim_date.calendar_date) date 
 										FROM red_dw.dbo.dim_date
