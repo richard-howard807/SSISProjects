@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageRLBDocuments"
   DTS:PackageType="5"
-  DTS:VersionBuild="144"
-  DTS:VersionGUID="{E92C8D72-632C-4EF6-95D5-CC91B86C7689}">
+  DTS:VersionBuild="145"
+  DTS:VersionGUID="{684E80DE-3F2F-42EF-AF58-144FB9F539D4}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2293,16 +2293,28 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  clNo AS clNo ,
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">--SELECT  clNo AS clNo ,
+--        dbClient.clID AS clID,
+--        fileNo ,
+--        --CAST(AltNumber AS NVARCHAR(255)) AS FEDCode,
+--		CAST('00922707.00001' AS NVARCHAR(255)) AS FEDCode,
+--        fileID
+--		FROM MS_PROD.config.dbFile
+--		INNER JOIN MS_PROD.config.dbClient
+--		 ON dbClient.clID = dbFile.clID
+--WHERE fileID=5026382
+
+SELECT  clNo AS clNo ,
         dbClient.clID AS clID,
         fileNo ,
         --CAST(AltNumber AS NVARCHAR(255)) AS FEDCode,
-		CAST('00922707.00001' AS NVARCHAR(255)) AS FEDCode,
-        fileID
-		FROM MS_PROD.config.dbFile
-		INNER JOIN MS_PROD.config.dbClient
-		 ON dbClient.clID = dbFile.clID
-WHERE fileID=5026382</property>
+		CAST(FEDCode AS NVARCHAR(255)) AS FEDCode,
+        a.fileID
+		FROM MattersphereStaging.dbo.RLBTestMatters AS a
+		INNER JOIN config.dbFile
+		 ON dbFile.fileID = a.FileID
+		INNER JOIN config.dbClient
+		 ON dbClient.clID = dbFile.clID</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -2410,7 +2422,7 @@ WHERE fileID=5026382</property>
                       name="FEDCode" />
                     <externalMetadataColumn
                       refId="Package\DFT - GetDocumentStageData\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[fileID]"
-                      dataType="i8"
+                      dataType="r8"
                       name="fileID" />
                   </externalMetadataColumns>
                 </output>
@@ -2444,7 +2456,7 @@ WHERE fileID=5026382</property>
                       name="FEDCode" />
                     <outputColumn
                       refId="Package\DFT - GetDocumentStageData\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[fileID]"
-                      dataType="i8"
+                      dataType="r8"
                       lineageId="Package\DFT - GetDocumentStageData\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[fileID]"
                       name="fileID" />
                     <outputColumn
@@ -2529,7 +2541,7 @@ INNER  JOIN MHGROUP.DOCTYPES
   ON CurrentVersion.DOCNUM = AllData.DOCNUM
   AND AllData.VERSION=LatestVersion
   WHERE ISNUMERIC(AllData.C1ALIAS)=1
-  AND AllData.MatterReference='00922707.00001'</property>
+  --AND AllData.MatterReference='00922707.00001'</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -4109,10 +4121,6 @@ INNER  JOIN MHGROUP.DOCTYPES
           Id="Package\DFT - GetDocumentStageData\Sort"
           TopLeft="641,449" />
         <NodeLayout
-          Size="168,42"
-          Id="Package\DFT - GetDocumentStageData\SRC_Mattersphere"
-          TopLeft="603,333" />
-        <NodeLayout
           Size="156,42"
           Id="Package\DFT - GetDocumentStageData\Data Conversion"
           TopLeft="538.641121111929,645.212645980881" />
@@ -4120,6 +4128,18 @@ INNER  JOIN MHGROUP.DOCTYPES
           Size="211,42"
           Id="Package\DFT - GetDocumentStageData\Row Count"
           TopLeft="538.641121111929,796.876616966107" />
+        <NodeLayout
+          Size="145,42"
+          Id="Package\DFT - GetDocumentStageData\SRC_RLBDocs"
+          TopLeft="339,318" />
+        <NodeLayout
+          Size="168,42"
+          Id="Package\DFT - GetDocumentStageData\SRC_Mattersphere"
+          TopLeft="603,333" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\DFT - GetDocumentStageData\Merge Join"
+          TopLeft="532,562" />
         <NodeLayout
           Size="211,42"
           Id="Package\DFT - GetDocumentStageData\Derived Column"
@@ -4132,6 +4152,74 @@ INNER  JOIN MHGROUP.DOCTYPES
           Size="211,42"
           Id="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging"
           TopLeft="538.641121111929,886.460456150284" />
+        <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[Sort Output1]"
+          TopLeft="691,491">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-73.6666666666666,71"
+              Start="0,0"
+              End="-73.6666666666666,63.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.0820668693009" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38.0820668693009"
+                    Point2="0,42.0820668693009"
+                    Point3="-4,42.0820668693009" />
+                  <mssgle:LineSegment
+                    End="-69.6666666666666,42.0820668693009" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-69.6666666666666,42.0820668693009"
+                    Point2="-73.6666666666666,42.0820668693009"
+                    Point3="-73.6666666666666,46.0820668693009" />
+                  <mssgle:LineSegment
+                    End="-73.6666666666666,63.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[Sort Output]"
+          TopLeft="433.835820530457,489.318526635302">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="163.164179469543,72.681473364698"
+              Start="0,0"
+              End="163.164179469543,65.181473364698">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.340736682349" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.340736682349"
+                    Point2="0,36.340736682349"
+                    Point3="4,36.340736682349" />
+                  <mssgle:LineSegment
+                    End="159.164179469543,36.340736682349" />
+                  <mssgle:CubicBezierSegment
+                    Point1="159.164179469543,36.340736682349"
+                    Point2="163.164179469543,36.340736682349"
+                    Point3="163.164179469543,40.340736682349" />
+                  <mssgle:LineSegment
+                    End="163.164179469543,65.181473364698" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - GetDocumentStageData.Paths[Row Count Output 1]"
           TopLeft="644.141121111929,838.876616966107">
@@ -4155,6 +4243,40 @@ INNER  JOIN MHGROUP.DOCTYPES
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[OLE DB Source Output1]"
+          TopLeft="411.5,360">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="22.335820530457,87.318526635302"
+              Start="0,0"
+              End="22.335820530457,79.818526635302">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.659263317651" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,39.659263317651"
+                    Point2="0,43.659263317651"
+                    Point3="4,43.659263317651" />
+                  <mssgle:LineSegment
+                    End="18.335820530457,43.659263317651" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18.335820530457,43.659263317651"
+                    Point2="22.335820530457,43.659263317651"
+                    Point3="22.335820530457,47.659263317651" />
+                  <mssgle:LineSegment
+                    End="22.335820530457,79.818526635302" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\DFT - GetDocumentStageData.Paths[OLE DB Source Output]"
           TopLeft="689,375">
           <EdgeLayout.Curve>
@@ -4168,6 +4290,40 @@ INNER  JOIN MHGROUP.DOCTYPES
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,66.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[Merge Join Output]"
+          TopLeft="597,604">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="19.641121111929,41.212645980881"
+              Start="0,0"
+              End="19.641121111929,33.712645980881">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.6063229904405" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.6063229904405"
+                    Point2="0,20.6063229904405"
+                    Point3="4,20.6063229904405" />
+                  <mssgle:LineSegment
+                    End="15.641121111929,20.6063229904405" />
+                  <mssgle:CubicBezierSegment
+                    Point1="15.641121111929,20.6063229904405"
+                    Point2="19.641121111929,20.6063229904405"
+                    Point3="19.641121111929,24.6063229904405" />
+                  <mssgle:LineSegment
+                    End="19.641121111929,33.712645980881" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4232,150 +4388,6 @@ INNER  JOIN MHGROUP.DOCTYPES
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="145,42"
-          Id="Package\DFT - GetDocumentStageData\SRC_RLBDocs"
-          TopLeft="339,318" />
-        <EdgeLayout
-          Id="Package\DFT - GetDocumentStageData.Paths[OLE DB Source Output1]"
-          TopLeft="411.5,360">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="22.335820530457,87.318526635302"
-              Start="0,0"
-              End="22.335820530457,79.818526635302">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,39.659263317651" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,39.659263317651"
-                    Point2="0,43.659263317651"
-                    Point3="4,43.659263317651" />
-                  <mssgle:LineSegment
-                    End="18.335820530457,43.659263317651" />
-                  <mssgle:CubicBezierSegment
-                    Point1="18.335820530457,43.659263317651"
-                    Point2="22.335820530457,43.659263317651"
-                    Point3="22.335820530457,47.659263317651" />
-                  <mssgle:LineSegment
-                    End="22.335820530457,79.818526635302" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="130,42"
-          Id="Package\DFT - GetDocumentStageData\Merge Join"
-          TopLeft="532,562" />
-        <EdgeLayout
-          Id="Package\DFT - GetDocumentStageData.Paths[Sort Output]"
-          TopLeft="433.835820530457,489.318526635302">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="163.164179469543,72.681473364698"
-              Start="0,0"
-              End="163.164179469543,65.181473364698">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,32.340736682349" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,32.340736682349"
-                    Point2="0,36.340736682349"
-                    Point3="4,36.340736682349" />
-                  <mssgle:LineSegment
-                    End="159.164179469543,36.340736682349" />
-                  <mssgle:CubicBezierSegment
-                    Point1="159.164179469543,36.340736682349"
-                    Point2="163.164179469543,36.340736682349"
-                    Point3="163.164179469543,40.340736682349" />
-                  <mssgle:LineSegment
-                    End="163.164179469543,65.181473364698" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - GetDocumentStageData.Paths[Sort Output1]"
-          TopLeft="691,491">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-73.6666666666666,71"
-              Start="0,0"
-              End="-73.6666666666666,63.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38.0820668693009" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,38.0820668693009"
-                    Point2="0,42.0820668693009"
-                    Point3="-4,42.0820668693009" />
-                  <mssgle:LineSegment
-                    End="-69.6666666666666,42.0820668693009" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-69.6666666666666,42.0820668693009"
-                    Point2="-73.6666666666666,42.0820668693009"
-                    Point3="-73.6666666666666,46.0820668693009" />
-                  <mssgle:LineSegment
-                    End="-73.6666666666666,63.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\DFT - GetDocumentStageData.Paths[Merge Join Output]"
-          TopLeft="597,604">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="19.641121111929,41.212645980881"
-              Start="0,0"
-              End="19.641121111929,33.712645980881">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,16.6063229904405" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,16.6063229904405"
-                    Point2="0,20.6063229904405"
-                    Point3="4,20.6063229904405" />
-                  <mssgle:LineSegment
-                    End="15.641121111929,20.6063229904405" />
-                  <mssgle:CubicBezierSegment
-                    Point1="15.641121111929,20.6063229904405"
-                    Point2="19.641121111929,20.6063229904405"
-                    Point3="19.641121111929,24.6063229904405" />
-                  <mssgle:LineSegment
-                    End="19.641121111929,33.712645980881" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -4416,6 +4428,14 @@ INNER  JOIN MHGROUP.DOCTYPES
     </LayoutInfo>
   </DtsEventHandler>
   <PipelineComponentMetadata
+    design-time-name="Package\DFT - GetDocumentStageData\SRC_RLBDocs">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\DFT - GetDocumentStageData\SRC_Mattersphere">
     <Properties>
       <Property>
@@ -4433,14 +4453,6 @@ INNER  JOIN MHGROUP.DOCTYPES
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - GetDocumentStageData\SRC_RLBDocs">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
