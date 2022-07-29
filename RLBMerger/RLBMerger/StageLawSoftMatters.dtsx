@@ -1,0 +1,2531 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2016 5:34:25 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\khanse"
+  DTS:DTSID="{35B3E806-E9AD-4CE8-8AF5-F1A4626DCA7C}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.150"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="StageLawShareMatters"
+  DTS:PackageType="5"
+  DTS:VersionBuild="164"
+  DTS:VersionGUID="{2E483AF0-8C19-4FBE-AB4B-BF8730B681C1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{351D9C5A-410E-48F7-B2BE-B79FFFBC4C85}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A0CC359B-515F-4E46-B327-862744A49DBB}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Lawsoft]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8BCBBC42-4227-44D1-AA11-E36B708F8208}"
+      DTS:ObjectName="CM_Lawsoft">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Lawsoft]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-LIV-SQL-02\WB;Initial Catalog=LawsoftStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{DFA6E6BA-6D88-416E-92B7-BF350EA5C139}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MS_PROD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4D09000C-55B5-48C3-821C-D79775AD79DB}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{F4F908D6-D9CA-4FC9-AF1A-52D45AA90B16}"
+      DTS:ObjectName="ParentAuditID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::AuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{769407D8-F77C-4322-BEC6-0D370E3FE43F}"
+      DTS:ObjectName="AuditID" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{07D8C236-BF59-4791-ACBB-89CFF8996D7B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{739207FC-CBE3-4659-A993-3D8A17FA5FB0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{488056C9-4C65-421B-8D2A-5025107605BA}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7D7A7EE4-526E-40C0-9FEC-4365EA47F090}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B8892936-42D4-4BB8-8603-8A2A6C7B3430}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4DE2F993-4945-4AA7-80EE-B1D9DAC6D623}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B35D1BC6-4F68-4410-AD50-AFE691E7EF74}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E72C159F-6AD1-42C0-A82A-5F69FB5F5FA9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5F061FF3-1ACE-49D0-8A11-2E434B3FC744}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8BBEC354-1A30-47F8-8A4D-2C32CCED6867}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{186F47BF-184D-49FD-BDF0-72DBE6E3C1F3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6145EDF7-4173-46D9-A5B6-5DE6450A6F70}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - StageLawShareMatterCreation"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D9FBE0FF-30E4-4AD7-9909-C9CD456198CB}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - StageLawShareMatterCreation"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - StageLawShareMatterCreation.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{97B03CAF-0050-4DCB-9EE6-3C11EAD8B179}"
+          DTS:EventID="0"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{BCE81BD7-D524-48D3-BB43-67ED5774E10E}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - StageLawShareMatterCreation.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{AA48F4C1-A17F-4863-A079-0D6493BA536E}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{351D9C5A-410E-48F7-B2BE-B79FFFBC4C85}"
+                  SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCountInserts"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountUpdates"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - StageLawShareMatterCreation.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{5ADF5CFF-98C7-422C-8EF5-0C683F92ACC9}"
+          DTS:EventID="0"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{A4781E0D-5A31-4165-85F6-1F6DB09DB8B9}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - StageLawShareMatterCreation.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{7B5CFECB-E33C-455A-B856-B75602BF85F3}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{351D9C5A-410E-48F7-B2BE-B79FFFBC4C85}"
+                  SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DFT - LawSoft Matters To Stage"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[LSMatterCreationStage]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[clNo]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[fileStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="fileStatus"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[fileStatus]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[SourceSystemID]"
+                      cachedDataType="i8"
+                      cachedName="SourceSystemID"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[SourceSystemID]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[MatterDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MatterDescription"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileDesc]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterDescription]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[MatterOwner]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="MatterOwner"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[filePrincipleID]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[Deparment]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Deparment"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileDept]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[Deparment]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[Worktype]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Worktype"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileType]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[Worktype]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[DateOpened]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DateOpened"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileCreated]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[DateOpened]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[TM]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="TM"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileResponsibleID]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[TM]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[Section]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Section"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSection]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Section]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[SectionGroup]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="SectionGroup"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSectionGroup]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[SectionGroup]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[Department]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Department"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[BusinessLine]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Department]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[Office]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Office"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[brID]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Office]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[MatterPartner]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MatterPartner"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[Partner]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterPartner]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[ClosedDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ClosedDate"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileClosed]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[ClosedDate]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].Columns[LSMatter]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="LSMatter"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[LSMatter]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[LSMatter]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[extFileID]"
+                      dataType="i8"
+                      name="extFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="fileDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileResponsibleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileResponsibleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[filePrincipleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="filePrincipleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileDept]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileDept" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileType]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileFundCode]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileFundCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileCurISOCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="fileCurISOCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      name="fileCreated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      name="fileUpdated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      name="fileClosed" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSource]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSource" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSection]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSection" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[fileSectionGroup]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSectionGroup" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[MattIndex]"
+                      dataType="i4"
+                      name="MattIndex" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[Office]"
+                      dataType="i4"
+                      name="Office" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[brID]"
+                      dataType="wstr"
+                      length="15"
+                      name="brID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[Partner]"
+                      dataType="i8"
+                      name="Partner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[NewMatterNumber]"
+                      dataType="i4"
+                      name="NewMatterNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[BusinessLine]"
+                      dataType="wstr"
+                      length="15"
+                      name="BusinessLine" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input].ExternalColumns[LSMatter]"
+                      dataType="wstr"
+                      length="20"
+                      name="LSMatter" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Failed LawSoft Matters"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[LSMatterCreationFailure]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[clNo]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[fileStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="fileStatus"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[fileStatus]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[SourceSystemID]"
+                      cachedDataType="i8"
+                      cachedName="SourceSystemID"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[SourceSystemID]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[MatterDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MatterDescription"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileDesc]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterDescription]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[MatterOwner]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="MatterOwner"
+                      cachedSortKeyPosition="2"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[filePrincipleID]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[Deparment]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Deparment"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileDept]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[Deparment]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[Worktype]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Worktype"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileType]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[Worktype]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[DateOpened]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DateOpened"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileCreated]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[DateOpened]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[LSMatter]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="LSMatter"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[LSMatter]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[LSMatter]" />
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].Columns[ClosedDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ClosedDate"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileClosed]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[ClosedDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileNo]"
+                      dataType="wstr"
+                      length="20"
+                      name="fileNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[extFileID]"
+                      dataType="i8"
+                      name="extFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileDesc]"
+                      dataType="wstr"
+                      length="255"
+                      name="fileDesc" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileResponsibleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileResponsibleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[filePrincipleID]"
+                      dataType="wstr"
+                      length="15"
+                      name="filePrincipleID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileDept]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileDept" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileType]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileType" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileFundCode]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileFundCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileCurISOCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="fileCurISOCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileCreated]"
+                      dataType="dbTimeStamp"
+                      name="fileCreated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileUpdated]"
+                      dataType="dbTimeStamp"
+                      name="fileUpdated" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileClosed]"
+                      dataType="dbTimeStamp"
+                      name="fileClosed" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileSource]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSource" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileSection]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSection" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[fileSectionGroup]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileSectionGroup" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[MattIndex]"
+                      dataType="i4"
+                      name="MattIndex" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[Office]"
+                      dataType="i4"
+                      name="Office" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[brID]"
+                      dataType="wstr"
+                      length="15"
+                      name="brID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[Partner]"
+                      dataType="i8"
+                      name="Partner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[NewMatterNumber]"
+                      dataType="i4"
+                      name="NewMatterNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[BusinessLine]"
+                      dataType="wstr"
+                      length="15"
+                      name="BusinessLine" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[FEDCode]"
+                      dataType="wstr"
+                      length="50"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input].ExternalColumns[LSMatter]"
+                      dataType="wstr"
+                      length="20"
+                      name="LSMatter" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageLawShareMatterCreation\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT MatterManager.usrAlias AS [Matter Owner],
+CAST(BCMUser.usrAlias AS NVARCHAR(15))  AS TM,
+CAST(td.Section  AS NVARCHAR(15)) AS Section,
+CAST(s.SectionGroup  AS NVARCHAR(15)) AS SectionGroup,
+CAST(td.Department AS NVARCHAR(15)) AS Department,
+dbBranch.brCode AS Office
+from dbFeeEarner fe
+INNER JOIN dbo.dbUser AS MatterManager
+ ON fe.feeusrID = MatterManager.usrID
+INNER JOIN dbo.Syn3ETimeKeeper  t on fe.feeExtID = t.tkprindex
+Inner Join dbo.Syn3ETkprDate  TD	on fe.feeExtID = TD.timekeeperlkup
+Inner Join dbo.Syn3EnxUser  U		on U.NxUserID = T.TRE_User
+Inner Join dbo.Syn3EnxFWKUser NxFWKUser 	on NxFWKUser.NxFWKUserID = U.NxUserID
+INNER JOIN dbo.Syn3ESection  s	on s.code = td.Section
+INNER JOIN dbUser dbu on  fe.[feeusrID] = dbu.usrID
+
+-------SD 20160321 added this join to get the actual login for the users as the returned SupTkpr is in fact the index of the table and not the actual login
+LEFT JOIN dbo.Syn3ETimeKeeper  as BCM on TD.SupTkpr  = BCM.[TkprIndex] 
+LEFT JOIN dbUser as BCMUser on BCMUser.usrAlias collate database_default = BCM.Number collate database_default
+LEFT JOIN dbFeeEarner as BCMFeeEarner on BCMFeeEarner.[feeusrID] = BCMUser.usrID
+LEFT JOIN udDepartmentSectionLookup as DepartmentLookup on td.Section collate database_default = DepartmentLookup.section collate database_default and s.SectionGroup collate database_default = DepartmentLookup.sectiongroup collate database_default
+LEFT JOIN udDepartment as Department on DepartmentLookup.departmentcode = Department.[code]
+LEFT JOIN dbo.dbBranch ON td.Office COLLATE DATABASE_DEFAULT = dbBranch.brCode COLLATE DATABASE_DEFAULT
+
+
+Where getDate() BETWEEN (NxStartDate ) AND (NxEndDate)
+and t.tre_user is not null
+and t.tkprstatus = 'Active'
+AND MatterManager.usrActive=1
+
+ORDER BY MatterManager.usrAlias</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT MatterManager.usrAlias AS [Matter Owner],
+CAST(BCMUser.usrAlias AS NVARCHAR(15))  AS TM,
+CAST(td.Section  AS NVARCHAR(15)) AS Section,
+CAST(s.SectionGroup  AS NVARCHAR(15)) AS SectionGroup,
+CAST(td.Department AS NVARCHAR(15)) AS Department,
+dbBranch.brCode AS Office
+from dbFeeEarner fe
+INNER JOIN dbo.dbUser AS MatterManager
+ ON fe.feeusrID = MatterManager.usrID
+INNER JOIN dbo.Syn3ETimeKeeper  t on fe.feeExtID = t.tkprindex
+Inner Join dbo.Syn3ETkprDate  TD	on fe.feeExtID = TD.timekeeperlkup
+Inner Join dbo.Syn3EnxUser  U		on U.NxUserID = T.TRE_User
+Inner Join dbo.Syn3EnxFWKUser NxFWKUser 	on NxFWKUser.NxFWKUserID = U.NxUserID
+INNER JOIN dbo.Syn3ESection  s	on s.code = td.Section
+INNER JOIN dbUser dbu on  fe.[feeusrID] = dbu.usrID
+
+-------SD 20160321 added this join to get the actual login for the users as the returned SupTkpr is in fact the index of the table and not the actual login
+LEFT JOIN dbo.Syn3ETimeKeeper  as BCM on TD.SupTkpr  = BCM.[TkprIndex] 
+LEFT JOIN dbUser as BCMUser on BCMUser.usrAlias collate database_default = BCM.Number collate database_default
+LEFT JOIN dbFeeEarner as BCMFeeEarner on BCMFeeEarner.[feeusrID] = BCMUser.usrID
+LEFT JOIN udDepartmentSectionLookup as DepartmentLookup on td.Section collate database_default = DepartmentLookup.section collate database_default and s.SectionGroup collate database_default = DepartmentLookup.sectiongroup collate database_default
+LEFT JOIN udDepartment as Department on DepartmentLookup.departmentcode = Department.[code]
+LEFT JOIN dbo.dbBranch ON td.Office COLLATE DATABASE_DEFAULT = dbBranch.brCode COLLATE DATABASE_DEFAULT
+
+
+Where getDate() BETWEEN (NxStartDate ) AND (NxEndDate)
+and t.tre_user is not null
+and t.tkprstatus = 'Active'
+AND MatterManager.usrActive=1
+
+ORDER BY MatterManager.usrAlias) [refTable]
+where [refTable].[Matter Owner] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Matter Owner" dataType="DT_WSTR" length="36" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TM" dataType="DT_WSTR" length="15" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Section" dataType="DT_WSTR" length="15" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SectionGroup" dataType="DT_WSTR" length="15" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Department" dataType="DT_WSTR" length="15" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Office" dataType="DT_WSTR" length="15" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageLawShareMatterCreation\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Mattersphere]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Mattersphere]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageLawShareMatterCreation\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Lookup.Inputs[Lookup Input].Columns[MatterOwner]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="MatterOwner"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Matter Owner</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT - StageLawShareMatterCreation\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[TM]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[TM]"
+                      name="TM"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">TM</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Section]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Section]"
+                      name="Section"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Section</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[SectionGroup]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[SectionGroup]"
+                      name="SectionGroup"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">SectionGroup</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Department]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Department]"
+                      name="Department"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Department</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Office]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output].Columns[Office]"
+                      name="Office"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Office</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT - StageLawShareMatterCreation\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT - StageLawShareMatterCreation\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageLawShareMatterCreation\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCount</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageLawShareMatterCreation\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - StageLawShareMatterCreation\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageLawShareMatterCreation\Row Count 1"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count 1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageLawShareMatterCreation\Row Count 1.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\Row Count 1.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - StageLawShareMatterCreation\Row Count 1.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageLawShareMatterCreation\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[ID]"
+                      cachedDataType="i4"
+                      cachedName="ID"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[clNo]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="clNo"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[clNo]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[MatterDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MatterDescription"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterDescription]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[MatterOwner]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="MatterOwner"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterOwner]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[Deparment]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Deparment"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[Deparment]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[Worktype]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="Worktype"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[Worktype]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[fileStatus]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="fileStatus"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[fileStatus]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[DateOpened]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DateOpened"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[DateOpened]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[SourceSystemID]"
+                      cachedDataType="i8"
+                      cachedName="SourceSystemID"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[SourceSystemID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[MatterPartner]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MatterPartner"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterPartner]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[ClosedDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ClosedDate"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[ClosedDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input].Columns[LSMatter]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="LSMatter"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[LSMatter]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[ID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[ID]"
+                      name="ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[clNo]"
+                      name="clNo"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[clNo]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterDescription]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterDescription]"
+                      name="MatterDescription">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterDescription]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterOwner]"
+                      name="MatterOwner"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterOwner]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[Deparment]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[Deparment]"
+                      name="Deparment">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[Deparment]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[Worktype]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[Worktype]"
+                      name="Worktype">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[Worktype]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[fileStatus]"
+                      name="fileStatus">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[fileStatus]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[DateOpened]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[DateOpened]"
+                      name="DateOpened">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[DateOpened]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[SourceSystemID]"
+                      name="SourceSystemID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[SourceSystemID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterPartner]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[MatterPartner]"
+                      name="MatterPartner">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterPartner]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[ClosedDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[ClosedDate]"
+                      name="ClosedDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[ClosedDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output].Columns[LSMatter]"
+                      name="LSMatter">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[LSMatter]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_LawShare"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT ID,
+       clNo,
+       MatterDescription,
+       MatterOwner,
+       CAST(Deparment AS NVARCHAR(15)) AS Deparment ,
+       Worktype,
+       fileStatus,
+       DateOpened,
+       SourceSystemID,
+	   '3409' AS MatterPartner,
+	   ClosedDate,
+	   LSMatter FROM [dbo].[LSToMSMatters]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Lawsoft]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Lawsoft]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[ID]"
+                      name="ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[clNo]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      length="12"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[clNo]"
+                      name="clNo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[MatterDescription]"
+                      length="255"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterDescription]"
+                      name="MatterDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterOwner]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[MatterOwner]"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterOwner]"
+                      name="MatterOwner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[Deparment]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[Deparment]"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[Deparment]"
+                      name="Deparment"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[Worktype]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[Worktype]"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[Worktype]"
+                      name="Worktype"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[fileStatus]"
+                      name="fileStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[DateOpened]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[DateOpened]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[DateOpened]"
+                      name="DateOpened"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      name="SourceSystemID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterPartner]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[MatterPartner]"
+                      length="4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[MatterPartner]"
+                      name="MatterPartner"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[ClosedDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[ClosedDate]"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[ClosedDate]"
+                      name="ClosedDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[LSMatter]"
+                      length="20"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].Columns[LSMatter]"
+                      name="LSMatter"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      name="clNo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[MatterDescription]"
+                      dataType="wstr"
+                      length="255"
+                      name="MatterDescription" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[MatterOwner]"
+                      dataType="wstr"
+                      length="15"
+                      name="MatterOwner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[Deparment]"
+                      dataType="wstr"
+                      length="15"
+                      name="Deparment" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[Worktype]"
+                      dataType="wstr"
+                      length="15"
+                      name="Worktype" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      name="fileStatus" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[DateOpened]"
+                      dataType="dbTimeStamp"
+                      name="DateOpened" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[MatterPartner]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="MatterPartner" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[ClosedDate]"
+                      dataType="dbTimeStamp"
+                      name="ClosedDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output].ExternalColumns[LSMatter]"
+                      dataType="wstr"
+                      length="20"
+                      name="LSMatter" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[ID]"
+                      name="ID" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[clNo]"
+                      name="clNo" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[MatterDescription]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[MatterDescription]"
+                      name="MatterDescription" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[MatterOwner]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[MatterOwner]"
+                      name="MatterOwner" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[Deparment]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[Deparment]"
+                      name="Deparment" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[Worktype]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[Worktype]"
+                      name="Worktype" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[fileStatus]"
+                      name="fileStatus" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[DateOpened]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[DateOpened]"
+                      name="DateOpened" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      name="SourceSystemID" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[MatterPartner]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[MatterPartner]"
+                      name="MatterPartner" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[ClosedDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[ClosedDate]"
+                      name="ClosedDate" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[LSMatter]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[LSMatter]"
+                      name="LSMatter" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - StageLawShareMatterCreation.Paths[Lookup Match Output]"
+              endId="Package\DFT - StageLawShareMatterCreation\Row Count 1.Inputs[Row Count Input 1]"
+              name="Lookup Match Output"
+              startId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT - StageLawShareMatterCreation.Paths[Lookup No Match Output]"
+              endId="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\DFT - StageLawShareMatterCreation\Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DFT - StageLawShareMatterCreation.Paths[OLE DB Source Output]"
+              endId="Package\DFT - StageLawShareMatterCreation\Row Count.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - StageLawShareMatterCreation\SRC_LawShare.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - StageLawShareMatterCreation.Paths[Row Count Output 1]"
+              endId="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - StageLawShareMatterCreation\Row Count 1.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - StageLawShareMatterCreation.Paths[Row Count Output 11]"
+              endId="Package\DFT - StageLawShareMatterCreation\Sort.Inputs[Sort Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - StageLawShareMatterCreation\Row Count.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\DFT - StageLawShareMatterCreation.Paths[Sort Output]"
+              endId="Package\DFT - StageLawShareMatterCreation\Lookup.Inputs[Lookup Input]"
+              name="Sort Output"
+              startId="Package\DFT - StageLawShareMatterCreation\Sort.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{487A529C-0ABF-42F1-A229-6D3653BFB011}"
+      DTS:EventID="-3"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{74D45BEB-9D0C-4B7C-8E70-F7E49547F934}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{521A99D3-B656-4DAD-B5F7-97EEBE603F67}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{351D9C5A-410E-48F7-B2BE-B79FFFBC4C85}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="253,42"
+          Id="Package\DFT - StageLawShareMatterCreation"
+          TopLeft="233.05703958826,199.466349634765" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="129,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="426,210" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT - StageLawShareMatterCreation">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="188,42"
+          Id="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters"
+          TopLeft="782,268" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\DFT - StageLawShareMatterCreation\Row Count 1"
+          TopLeft="469,367" />
+        <NodeLayout
+          Size="115,42"
+          Id="Package\DFT - StageLawShareMatterCreation\Lookup"
+          TopLeft="483,265" />
+        <NodeLayout
+          Size="232,42"
+          Id="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage"
+          TopLeft="423,465" />
+        <EdgeLayout
+          Id="Package\DFT - StageLawShareMatterCreation.Paths[Lookup Match Output]"
+          TopLeft="540,307">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLawShareMatterCreation.Paths[Row Count Output 1]"
+          TopLeft="539.25,409">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,56"
+              Start="0,0"
+              End="0,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLawShareMatterCreation.Paths[Lookup No Match Output]"
+          TopLeft="598,287.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="184,0"
+              Start="0,0"
+              End="176.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="176.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="32.44361328125,5,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="152,42"
+          Id="Package\DFT - StageLawShareMatterCreation\SRC_LawShare"
+          TopLeft="247,64" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\DFT - StageLawShareMatterCreation\Row Count"
+          TopLeft="478,65" />
+        <EdgeLayout
+          Id="Package\DFT - StageLawShareMatterCreation.Paths[OLE DB Source Output]"
+          TopLeft="399,85.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="79,0"
+              Start="0,0"
+              End="71.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="71.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="100,42"
+          Id="Package\DFT - StageLawShareMatterCreation\Sort"
+          TopLeft="489,175" />
+        <EdgeLayout
+          Id="Package\DFT - StageLawShareMatterCreation.Paths[Row Count Output 11]"
+          TopLeft="541.5,107">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68"
+              Start="0,0"
+              End="0,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - StageLawShareMatterCreation.Paths[Sort Output]"
+          TopLeft="539.75,217">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48"
+              Start="0,0"
+              End="0,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - StageLawShareMatterCreation.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - StageLawShareMatterCreation.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="462,189" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - StageLawShareMatterCreation.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="123,42"
+          Id="Package\DFT - StageLawShareMatterCreation.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="410,169" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageLawShareMatterCreation\Failed LawSoft Matters">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageLawShareMatterCreation\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageLawShareMatterCreation\DFT - LawSoft Matters To Stage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - StageLawShareMatterCreation\SRC_LawShare">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
