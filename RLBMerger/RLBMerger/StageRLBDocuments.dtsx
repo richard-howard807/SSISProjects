@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageRLBDocuments"
   DTS:PackageType="5"
-  DTS:VersionBuild="177"
-  DTS:VersionGUID="{7B36D9F1-9A35-4675-AB8F-526F3FC0FBFE}">
+  DTS:VersionBuild="178"
+  DTS:VersionGUID="{D4C121B7-30B8-4AE5-A773-B0143D82A555}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2528,6 +2528,7 @@ SELECT  clNo AS clNo ,
 ,2 AS MSSecurityOption
 ,CAST(0 AS BIGINT) AS SourceSystemID
 ,CAST(NULL AS NVARCHAR(1000)) AS FolderName
+
 FROM(
   SELECT APPEXTENSION AS Extension
   ,DOCLOC +'.'+LOWER(APPEXTENSION) AS DocLocation
@@ -2537,11 +2538,12 @@ FROM MHGROUP.DOCMASTER
 INNER  JOIN MHGROUP.DOCTYPES
  ON DOCTYPES.T_ALIAS = DOCMASTER.T_ALIAS
  ) AS AllData
- LEFT OUTER JOIN (SELECT DOCNUM,MAX(VERSION) AS LatestVersion FROM MHGROUP.DOCMASTER GROUP BY DOCNUM) AS CurrentVersion
+INNER JOIN RLBtoMSStaging.dbo.RLBMatters
+ ON AllData.MatterReference=Matter
+LEFT OUTER JOIN (SELECT DOCNUM,MAX(VERSION) AS LatestVersion FROM MHGROUP.DOCMASTER GROUP BY DOCNUM) AS CurrentVersion
   ON CurrentVersion.DOCNUM = AllData.DOCNUM
   AND AllData.VERSION=LatestVersion
-  WHERE ISNUMERIC(AllData.C1ALIAS)=1
-  --AND AllData.MatterReference='00922707.00001'</property>
+  WHERE ISNUMERIC(AllData.C1ALIAS)=1</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
