@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="GetRLBMatters"
   DTS:PackageType="5"
-  DTS:VersionBuild="181"
-  DTS:VersionGUID="{27E67862-F93A-4E17-8C8B-E50812273B60}">
+  DTS:VersionBuild="182"
+  DTS:VersionGUID="{32E04DCC-A5BD-4BEF-86B5-7E9298E2F070}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -546,6 +546,12 @@
                       cachedName="MSFileID"
                       externalMetadataColumnId="Package\DFT - GetRLBMatters\DEST_RLBDocs.Inputs[OLE DB Destination Input].ExternalColumns[MSFileID]"
                       lineageId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[MSFileID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetRLBMatters\DEST_RLBDocs.Inputs[OLE DB Destination Input].Columns[clID]"
+                      cachedDataType="i8"
+                      cachedName="clID"
+                      externalMetadataColumnId="Package\DFT - GetRLBMatters\DEST_RLBDocs.Inputs[OLE DB Destination Input].ExternalColumns[clID]"
+                      lineageId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[clID]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -559,6 +565,10 @@
                       refId="Package\DFT - GetRLBMatters\DEST_RLBDocs.Inputs[OLE DB Destination Input].ExternalColumns[MSFileID]"
                       dataType="i8"
                       name="MSFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetRLBMatters\DEST_RLBDocs.Inputs[OLE DB Destination Input].ExternalColumns[clID]"
+                      dataType="i8"
+                      name="clID" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -642,7 +652,11 @@
                   description="The SQL command to be executed."
                   name="SqlCommand"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT CAST(FEDCode AS VARCHAR(15)) AS FEDCode,
-       CAST(FileID AS BIGINT) AS MSFileID FROM	MattersphereStaging.dbo.RLBTestMatters</property>
+       CAST(RLBTestMatters.FileID AS BIGINT) AS MSFileID,
+	   CAST(clID AS BIGINT) AS clID  
+	   FROM	MattersphereStaging.dbo.RLBTestMatters
+	   INNER JOIN config.dbFile
+	    ON  dbFile.fileID = RLBTestMatters.FileID</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -668,8 +682,8 @@
               <connections>
                 <connection
                   refId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
-                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerID="Package.ConnectionManagers[CM_Mattersphere]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_Mattersphere]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -698,6 +712,15 @@
                       lineageId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[MSFileID]"
                       name="MSFileID"
                       truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[clID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[clID]"
+                      lineageId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Output].Columns[clID]"
+                      name="clID"
+                      truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -711,6 +734,10 @@
                       refId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[MSFileID]"
                       dataType="i8"
                       name="MSFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[clID]"
+                      dataType="i8"
+                      name="clID" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -730,6 +757,11 @@
                       dataType="i8"
                       lineageId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[MSFileID]"
                       name="MSFileID" />
+                    <outputColumn
+                      refId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[clID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[clID]"
+                      name="clID" />
                     <outputColumn
                       refId="Package\DFT - GetRLBMatters\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -913,6 +945,10 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="166,42"
+          Id="Package\DFT - GetRLBMatters\SRC_Mattersphere"
+          TopLeft="396,173" />
+        <NodeLayout
           Size="211,42"
           Id="Package\DFT - GetRLBMatters\Row Count"
           TopLeft="319.641121111929,285.876616966107" />
@@ -920,6 +956,40 @@
           Size="151,42"
           Id="Package\DFT - GetRLBMatters\DEST_RLBDocs"
           TopLeft="410,377" />
+        <EdgeLayout
+          Id="Package\DFT - GetRLBMatters.Paths[OLE DB Source Output]"
+          TopLeft="479,215">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-53.858878888071,70.876616966107"
+              Start="0,0"
+              End="-53.858878888071,63.376616966107">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.4383084830535" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.4383084830535"
+                    Point2="0,35.4383084830535"
+                    Point3="-4,35.4383084830535" />
+                  <mssgle:LineSegment
+                    End="-49.858878888071,35.4383084830535" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-49.858878888071,35.4383084830535"
+                    Point2="-53.858878888071,35.4383084830535"
+                    Point3="-53.858878888071,39.4383084830535" />
+                  <mssgle:LineSegment
+                    End="-53.858878888071,63.376616966107" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\DFT - GetRLBMatters.Paths[Row Count Output 1]"
           TopLeft="425.141121111929,327.876616966107">
@@ -946,44 +1016,6 @@
                     Point3="60.358878888071,28.5616915169465" />
                   <mssgle:LineSegment
                     End="60.358878888071,41.623383033893" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="166,42"
-          Id="Package\DFT - GetRLBMatters\SRC_Mattersphere"
-          TopLeft="397,173" />
-        <EdgeLayout
-          Id="Package\DFT - GetRLBMatters.Paths[OLE DB Source Output]"
-          TopLeft="480,215">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-54.858878888071,70.876616966107"
-              Start="0,0"
-              End="-54.858878888071,63.376616966107">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,31.4383084830535" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,31.4383084830535"
-                    Point2="0,35.4383084830535"
-                    Point3="-4,35.4383084830535" />
-                  <mssgle:LineSegment
-                    End="-50.858878888071,35.4383084830535" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-50.858878888071,35.4383084830535"
-                    Point2="-54.858878888071,35.4383084830535"
-                    Point3="-54.858878888071,39.4383084830535" />
-                  <mssgle:LineSegment
-                    End="-54.858878888071,63.376616966107" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1032,6 +1064,14 @@
     </LayoutInfo>
   </DtsEventHandler>
   <PipelineComponentMetadata
+    design-time-name="Package\DFT - GetRLBMatters\SRC_Mattersphere">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\DFT - GetRLBMatters\DEST_RLBDocs">
     <Properties>
       <Property>
@@ -1041,14 +1081,6 @@
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\DFT - GetRLBMatters\SRC_Mattersphere">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
