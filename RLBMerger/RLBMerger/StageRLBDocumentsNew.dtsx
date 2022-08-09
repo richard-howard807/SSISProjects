@@ -1,0 +1,2498 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/27/2016 5:34:25 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="A06000"
+  DTS:CreatorName="SBC\khanse"
+  DTS:DTSID="{A08CC667-BECB-4898-8CD1-B621890B6879}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.150"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="StageRLBDocumentsNew"
+  DTS:PackageType="5"
+  DTS:VersionBuild="182"
+  DTS:VersionGUID="{24CF4EAF-9A7C-423E-8DD8-B80F17366F5E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Audit]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9359DAA7-2A68-409A-BAB8-F025BD71BCE7}"
+      DTS:ObjectName="CM_Audit">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Audit]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Control]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{51875593-8DD4-4185-9EB1-CADDCCF86752}"
+      DTS:ObjectName="CM_Control">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_Control]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_Mattersphere]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{690E36B9-A0CB-4546-8491-E91C2BF6699A}"
+      DTS:ObjectName="CM_Mattersphere">
+      <DTS:PropertyExpression
+        DTS:Name="InitialCatalog">@[$Project::CM_MSInitialCatalog]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MS_Prod]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MS_PROD;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BCBA95D3-66AB-4123-93A7-1F6DB70CAB98}"
+      DTS:ObjectName="CM_MatterSphereStaging">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_MattersphereStaging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=svr-dev-sql-05;Initial Catalog=MattersphereStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM_RLBDocs]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{126F552F-65E4-4418-9DDC-E3874A4B1206}"
+      DTS:ObjectName="CM_RLBDocs">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Project::CM_RLBDocs]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=LON-SQL3;Initial Catalog=Legal;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-StageRLBDocuments-{126F552F-65E4-4418-9DDC-E3874A4B1206}CM_RLBDocs;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentAuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{DAEA8498-64F6-45AD-AF64-9FB86871D067}"
+      DTS:ObjectName="ParentAuditID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="AuditID"
+      DTS:ConfigurationVariable="\Package.Variables[User::AuditID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{2153DD8B-7EE6-43B2-80ED-B6F521295F00}"
+      DTS:ObjectName="AuditID" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F66703FE-7163-4681-8037-12CD6E39EC73}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AuditID">
+      <DTS:VariableValue
+        DTS:DataType="3">999</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4FA46013-D8F9-4FF3-B5AF-99E84FB6E86C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestErrorTable">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AC37623A-AB1B-416A-BCB9-727A23DBAA25}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationTable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B7B17932-ED74-4A92-948E-40394A30F57D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DirectoryID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{04679686-1A99-4F7A-A750-D5D3D005423E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D4B1D2CD-42F6-4FB5-ACE4-1739B0180988}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFileNameOriginal">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{21DD23C7-01CC-4D2D-AC6D-6A7B4A4DEED6}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractFolder">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F8F3A806-5D31-4F3A-9549-0EDA3195FE35}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EDB757AF-4437-4D62-B26F-0625BC481F59}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewShareLocation">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{718C0426-CBFE-436F-909E-F9D4D165B061}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentAuditID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6653F8C4-FEB7-4102-A60D-D467A4347353}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PracticeArea">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DEF2FF8A-8CB9-4191-9557-E6BAD2E64B4B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{11DA2C85-A613-4D52-8744-B4FFD921DD13}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountInserts">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{49A65CF0-5AB4-44AB-81FA-55E867BA1738}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowCountUpdates">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - GetDocumentStageData"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{39BEDCD9-6CA3-4732-9A52-5C8404BCD2A2}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - GetDocumentStageData"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:EventHandlers>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - GetDocumentStageData.EventHandlers[OnError]"
+          DTS:CreationName="OnError"
+          DTS:DTSID="{2F47AC61-875D-4F99-9CE4-729C3EB3E092}"
+          DTS:EventID="234406780"
+          DTS:EventName="OnError"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{3DDD1FDF-70C9-4210-AE03-634C01D3810D}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - GetDocumentStageData.EventHandlers[OnError]\AuditError"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:Disabled="True"
+              DTS:DTSID="{D2C951F1-2502-488A-9A2A-A1C26FB7DA9B}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="AuditError"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9359DAA7-2A68-409A-BAB8-F025BD71BCE7}"
+                  SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERRORCODE"
+                    SQLTask:DtsVariableName="System::ErrorCode"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="2" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ERRORDESCRIPTION"
+                    SQLTask:DtsVariableName="System::ErrorDescription"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="3" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@AuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - GetDocumentStageData.EventHandlers[OnPostExecute]"
+          DTS:CreationName="OnPostExecute"
+          DTS:DTSID="{E6C962F8-6B1B-454C-9D88-E4ECD0E9C6A2}"
+          DTS:EventID="633920316"
+          DTS:EventName="OnPostExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{0619DB71-C677-4FBD-918C-BCEAE9328A86}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - GetDocumentStageData.EventHandlers[OnPostExecute]\EndAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{C006B034-5BEF-4D6C-A527-32FD6FCD6A4C}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="EndAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9359DAA7-2A68-409A-BAB8-F025BD71BCE7}"
+                  SQLTask:SqlStatementSource="config.uspAuditEnd ?, ?, ?, null, null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@Audit_ID"
+                    SQLTask:DtsVariableName="User::AuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountInserted"
+                    SQLTask:DtsVariableName="User::RowCountInserts"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CountChanged"
+                    SQLTask:DtsVariableName="User::RowCountUpdates"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+        <DTS:EventHandler
+          DTS:refId="Package\DFT - GetDocumentStageData.EventHandlers[OnPreExecute]"
+          DTS:CreationName="OnPreExecute"
+          DTS:DTSID="{4D594145-A1E7-46A2-86C4-C5803C39F07E}"
+          DTS:EventID="633922188"
+          DTS:EventName="OnPreExecute"
+          DTS:LocaleID="-1">
+          <DTS:Variables>
+            <DTS:Variable
+              DTS:CreationName=""
+              DTS:Description="The propagate property of the event"
+              DTS:DTSID="{AB559B76-0EC4-457A-936E-95F9D941821F}"
+              DTS:IncludeInDebugDump="6789"
+              DTS:Namespace="System"
+              DTS:ObjectName="Propagate">
+              <DTS:VariableValue
+                DTS:DataType="11">-1</DTS:VariableValue>
+            </DTS:Variable>
+          </DTS:Variables>
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\DFT - GetDocumentStageData.EventHandlers[OnPreExecute]\StartAudit"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{F30061AB-7E96-47CF-9170-F083B8A4D2BD}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="StartAudit"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{9359DAA7-2A68-409A-BAB8-F025BD71BCE7}"
+                  SQLTask:SqlStatementSource="config.uspAuditStart ?, ?, ?, ?, ?, ?, ?, ?"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="AuditID"
+                    SQLTask:DtsVariableName="User::AuditID" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageName"
+                    SQLTask:DtsVariableName="System::PackageName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@PackageStart"
+                    SQLTask:DtsVariableName="System::StartTime"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="7"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@TaskName"
+                    SQLTask:DtsVariableName="System::SourceName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@CreatedBy"
+                    SQLTask:DtsVariableName="System::UserName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@DestinationTable"
+                    SQLTask:DtsVariableName="User::DestinationTable"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFileName"
+                    SQLTask:DtsVariableName="User::ExtractFileNameOriginal"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ExtractFolder"
+                    SQLTask:DtsVariableName="User::ExtractFolder"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@ParentAuditID"
+                    SQLTask:DtsVariableName="User::ParentAuditID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="3"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:EventHandler>
+      </DTS:EventHandlers>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - GetDocumentStageData\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input].Columns[FEDCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8000"
+                      cachedName="FEDCode"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDCode]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input].Columns[DocumentTitle]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="DocumentTitle"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentTitle]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input].Columns[AlternateDocDescription]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="AlternateDocDescription"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[AlternateDocDescription]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input].Columns[DocumentExtension]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="DocumentExtension"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentExtension]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input].Columns[Author]"
+                      cachedDataType="i4"
+                      cachedName="Author"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[Author]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input].Columns[DocumentNumber]"
+                      cachedDataType="r8"
+                      cachedName="DocumentNumber"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentNumber]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input].Columns[DocumentSource]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="DocumentSource"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentSource]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-FEDCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="17"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-FEDCode]"
+                      name="DC-FEDCode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDCode]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentTitle]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentTitle]"
+                      name="DC-DocumentTitle"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentTitle]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-AlternateDocDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-AlternateDocDescription]"
+                      name="DC-AlternateDocDescription"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[AlternateDocDescription]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentExtension]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="15"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentExtension]"
+                      name="DC-DocumentExtension"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentExtension]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-Author]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="4"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-Author]"
+                      name="DC-Author"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[Author]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]"
+                      name="DC-DocumentNumber"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentNumber]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentSource]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentSource]"
+                      name="DC-DocumentSource"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentSource]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetDocumentStageData\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input].Columns[FileID]"
+                      cachedDataType="i8"
+                      cachedName="FileID"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FileID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input].Columns[DocumentExtension]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="DocumentExtension"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentExtension]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input].Columns[DC-DocumentNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="DC-DocumentNumber"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input].Columns[clID]"
+                      cachedDataType="i8"
+                      cachedName="clID"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[clID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input].Columns[VersionNumber]"
+                      cachedDataType="i4"
+                      cachedName="VersionNumber"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[VersionNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-Status]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-Status]"
+                      name="DCT-Status"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">8</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">8</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-DocFileName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="97"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-DocFileName]"
+                      name="DCT-DocFileName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_WSTR,10)#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[clID]} + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FileID]} + "\\In\\" + #{Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]} + "." + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[VersionNumber]} + "." + #{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentExtension]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_WSTR,10)clID + "\\" + (DT_WSTR,10)fileID + "\\In\\" + [DC-DocumentNumber] + "." + (DT_WSTR,10)VersionNumber + "." + DocumentExtension</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-MSFileId]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-MSFileId]"
+                      name="DCT-MSFileId"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FileID]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">fileID</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DocumentDestination]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="98"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DocumentDestination]"
+                      name="DCT - DocumentDestination"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::NewShareLocation] + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[clID]} + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FileID]} + "\\In\\" + #{Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]} + "." + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[VersionNumber]} + "." + #{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentExtension]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::NewShareLocation] + "\\" + (DT_WSTR,10)clID + "\\" + (DT_WSTR,10)fileID + "\\In\\" + [DC-DocumentNumber] + "." + (DT_WSTR,10)VersionNumber + "." + DocumentExtension</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DocumentLocation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DocumentLocation]"
+                      name="DCT - DocumentLocation"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::NewShareLocation] + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[clID]} + "\\" + (DT_WSTR,10)#{Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FileID]} + "\\In"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::NewShareLocation] + "\\" + (DT_WSTR,10)clID + "\\" + (DT_WSTR,10)fileID + "\\In"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - AuditID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - AuditID]"
+                      name="DCT - AuditID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::AuditID]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::AuditID]</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DirectoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DirectoryID]"
+                      name="DCT - DirectoryID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::DirectoryID]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::DirectoryID]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DEST_MatterSphereStaging"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DocumentStage]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_MatterSphereStaging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[FileID]"
+                      cachedDataType="i8"
+                      cachedName="FileID"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FileID]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FileID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT-Status]"
+                      cachedDataType="i4"
+                      cachedName="DCT-Status"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-Status]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT-DocFileName]"
+                      cachedDataType="wstr"
+                      cachedLength="97"
+                      cachedName="DCT-DocFileName"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocFileName]"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-DocFileName]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DC-FEDCode]"
+                      cachedDataType="wstr"
+                      cachedLength="17"
+                      cachedName="DC-FEDCode"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDCode]"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-FEDCode]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[clID]"
+                      cachedDataType="i8"
+                      cachedName="clID"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSClientID]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[clID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT-MSFileId]"
+                      cachedDataType="i8"
+                      cachedName="DCT-MSFileId"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSFileID]"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT-MSFileId]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[FEDClient]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="FEDClient"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDClient]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDClient]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[VersionNumber]"
+                      cachedDataType="i4"
+                      cachedName="VersionNumber"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[VersionNumber]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[VersionNumber]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DC-DocumentTitle]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DC-DocumentTitle"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentTitle]"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentTitle]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DC-AlternateDocDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DC-AlternateDocDescription"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[AlternateDocDescription]"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-AlternateDocDescription]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DC-DocumentExtension]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="DC-DocumentExtension"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentExtension]"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentExtension]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DC-DocumentNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="DC-DocumentNumber"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentNumber]"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentNumber]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DocWallet]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="19"
+                      cachedName="DocWallet"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocWallet]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocWallet]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DocDirection]"
+                      cachedDataType="i4"
+                      cachedName="DocDirection"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocDirection]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocDirection]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DC-Author]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="DC-Author"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDAuthor]"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-Author]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[CreationDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="CreationDate"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[CreationDate]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[CreationDate]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DocFrom]"
+                      cachedDataType="i4"
+                      cachedName="DocFrom"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocFrom]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocFrom]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DocTo]"
+                      cachedDataType="i4"
+                      cachedName="DocTo"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocTo]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocTo]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DocCC]"
+                      cachedDataType="i4"
+                      cachedName="DocCC"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocCC]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocCC]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DocSent]"
+                      cachedDataType="i4"
+                      cachedName="DocSent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocSent]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocSent]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DocReceived]"
+                      cachedDataType="i4"
+                      cachedName="DocReceived"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocReceived]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocReceived]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DocSubject]"
+                      cachedDataType="i4"
+                      cachedName="DocSubject"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocSubject]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocSubject]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[ModifiedDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ModifiedDate"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[ModifiedDate]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[ModifiedDate]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[FEDMatter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="FEDMatter"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDMatter]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDMatter]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT - DocumentDestination]"
+                      cachedDataType="wstr"
+                      cachedLength="98"
+                      cachedName="DCT - DocumentDestination"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentDestination]"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DocumentDestination]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT - DocumentLocation]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DCT - DocumentLocation"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentLocation]"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DocumentLocation]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DC-DocumentSource]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DC-DocumentSource"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentSource]"
+                      lineageId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output].Columns[DC-DocumentSource]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[IsCurrent]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="IsCurrent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[IsCurrent]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[IsCurrent]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT - AuditID]"
+                      cachedDataType="i4"
+                      cachedName="DCT - AuditID"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[AuditIdDataStage]"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - AuditID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[DCT - DirectoryID]"
+                      cachedDataType="i4"
+                      cachedName="DCT - DirectoryID"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DirectoryId]"
+                      lineageId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output].Columns[DCT - DirectoryID]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[MSSecurityOption]"
+                      cachedDataType="i4"
+                      cachedName="MSSecurityOption"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSSecurityOption]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[MSSecurityOption]" />
+                    <inputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].Columns[FolderName]"
+                      cachedDataType="wstr"
+                      cachedLength="1000"
+                      cachedName="FolderName"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FolderName]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FolderName]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[ID]"
+                      dataType="i4"
+                      name="ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDClient]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="FEDClient" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDMatter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="FEDMatter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSClientID]"
+                      dataType="i8"
+                      name="MSClientID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSFileID]"
+                      dataType="i8"
+                      name="MSFileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentSource]"
+                      dataType="wstr"
+                      length="255"
+                      name="DocumentSource" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[VersionNumber]"
+                      dataType="i4"
+                      name="VersionNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentTitle]"
+                      dataType="wstr"
+                      length="255"
+                      name="DocumentTitle" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[AlternateDocDescription]"
+                      dataType="wstr"
+                      length="255"
+                      name="AlternateDocDescription" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentNumber]"
+                      dataType="i4"
+                      name="DocumentNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentExtension]"
+                      dataType="wstr"
+                      length="15"
+                      name="DocumentExtension" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentDestination]"
+                      dataType="wstr"
+                      length="255"
+                      name="DocumentDestination" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FileID]"
+                      dataType="i8"
+                      name="FileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocWallet]"
+                      codePage="1252"
+                      dataType="str"
+                      length="19"
+                      name="DocWallet" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocFileName]"
+                      dataType="wstr"
+                      length="255"
+                      name="DocFileName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocDirection]"
+                      dataType="bool"
+                      name="DocDirection" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDAuthor]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="FEDAuthor" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[CreationDate]"
+                      dataType="dbTimeStamp"
+                      name="CreationDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocFrom]"
+                      dataType="i4"
+                      name="DocFrom" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocTo]"
+                      dataType="i4"
+                      name="DocTo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocCC]"
+                      dataType="i4"
+                      name="DocCC" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocSent]"
+                      dataType="i4"
+                      name="DocSent" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocReceived]"
+                      dataType="i4"
+                      name="DocReceived" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocSubject]"
+                      dataType="i4"
+                      name="DocSubject" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSDocAuthor]"
+                      dataType="i4"
+                      name="MSDocAuthor" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="ModifiedDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[Imported]"
+                      dataType="dbTimeStamp"
+                      name="Imported" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[StatusID]"
+                      dataType="ui1"
+                      name="StatusID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[error]"
+                      dataType="i4"
+                      name="error" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[errormsg]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="errormsg" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FEDCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DocumentLocation]"
+                      dataType="wstr"
+                      length="255"
+                      name="DocumentLocation" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[IsCurrent]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="IsCurrent" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[AuditIdDataStage]"
+                      dataType="i4"
+                      name="AuditIdDataStage" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[AuditIdFileMove]"
+                      dataType="i4"
+                      name="AuditIdFileMove" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[DirectoryId]"
+                      dataType="i4"
+                      name="DirectoryId" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[MSSecurityOption]"
+                      dataType="i8"
+                      name="MSSecurityOption" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FolderName]"
+                      dataType="wstr"
+                      length="1000"
+                      name="FolderName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input].ExternalColumns[FolderGUID]"
+                      dataType="guid"
+                      name="FolderGUID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetDocumentStageData\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowCountInserts</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DFT - GetDocumentStageData\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetDocumentStageData\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DFT - GetDocumentStageData\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_RLBDocs"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  'xxxxxxxx' AS [FEDClient] 
+, 'xxxxxxxx'  AS [FEDMatter] 
+,CAST(REPLACE(REPLACE(DocLocation,'DEFSERVER:','\\LON-FILE1\WSDocs')
+,'DEFSERVEREXP1:','\\LON-FILE1\WsDocs2')  AS VARCHAR(255))  AS [DocumentSource]
+,ISNULL(AllData.VERSION,'1') AS [VersionNumber] 
+,CAST(LEFT(AllData.DOCNAME,255) AS VARCHAR(255))  AS [DocumentTitle]
+,CAST(LEFT(AllData.DOCNAME,255) AS VARCHAR(255))  AS [AlternateDocDescription] 
+,AllData.DOCNUM AS [DocumentNumber]
+,CAST(AllData.Extension AS VARCHAR(30)) AS [DocumentExtension]  
+
+,'Converted Documents' AS [DocWallet] 
+,1 AS [DocDirection]
+,NULL AS [Author]
+,AllData.ENTRYWHEN AS [CreationDate] 
+,NULL AS [DocFrom] 
+,NULL AS [DocTo] 
+,NULL AS [DocCC] 
+,NULL AS [DocSent] 
+,NULL AS [DocReceived] 
+,NULL AS [DocSubject] 
+,AllData.EDITWHEN AS [ModifiedDate]
+,MatterReference AS FEDCode 
+,0 AS case_id
+,CASE WHEN CurrentVersion.LatestVersion  IS NOT NULL THEN 'y'ELSE 'n' END AS [IsCurrent]
+,2 AS MSSecurityOption
+,CAST(0 AS BIGINT) AS SourceSystemID
+,CAST(NULL AS NVARCHAR(1000)) AS FolderName
+,CAST(MSFileID AS BIGINT) AS FileID
+,CAST(clID AS BIGINT) AS clID
+FROM(
+  SELECT APPEXTENSION AS Extension
+  ,DOCLOC +'.'+LOWER(APPEXTENSION) AS DocLocation
+  ,REPLICATE('0', 8 - len(C1ALIAS)) + cast (C1ALIAS as varchar) +'.'+ REPLICATE('0', 5 - len(C2ALIAS)) + cast (C2ALIAS as varchar) MatterReference
+,DOCMASTER.*
+FROM MHGROUP.DOCMASTER
+INNER  JOIN MHGROUP.DOCTYPES
+ ON DOCTYPES.T_ALIAS = DOCMASTER.T_ALIAS
+ ) AS AllData
+INNER JOIN RLBtoMSStaging.dbo.RLBMatters
+ ON AllData.MatterReference=Matter
+LEFT OUTER JOIN (SELECT DOCNUM,MAX(VERSION) AS LatestVersion FROM MHGROUP.DOCMASTER GROUP BY DOCNUM) AS CurrentVersion
+  ON CurrentVersion.DOCNUM = AllData.DOCNUM
+  AND AllData.VERSION=LatestVersion
+  WHERE ISNUMERIC(AllData.C1ALIAS)=1</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM_RLBDocs]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM_RLBDocs]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDClient]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FEDClient]"
+                      length="8"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDClient]"
+                      name="FEDClient"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDMatter]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FEDMatter]"
+                      length="8"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDMatter]"
+                      name="FEDMatter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentSource]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocumentSource]"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentSource]"
+                      name="DocumentSource"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[VersionNumber]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[VersionNumber]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[VersionNumber]"
+                      name="VersionNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentTitle]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocumentTitle]"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentTitle]"
+                      name="DocumentTitle"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[AlternateDocDescription]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[AlternateDocDescription]"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[AlternateDocDescription]"
+                      name="AlternateDocDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentNumber]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocumentNumber]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentNumber]"
+                      name="DocumentNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentExtension]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocumentExtension]"
+                      length="30"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocumentExtension]"
+                      name="DocumentExtension"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocWallet]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocWallet]"
+                      length="19"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocWallet]"
+                      name="DocWallet"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocDirection]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocDirection]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocDirection]"
+                      name="DocDirection"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[Author]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[Author]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[Author]"
+                      name="Author"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[CreationDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[CreationDate]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[CreationDate]"
+                      name="CreationDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocFrom]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocFrom]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocFrom]"
+                      name="DocFrom"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocTo]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocTo]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocTo]"
+                      name="DocTo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocCC]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocCC]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocCC]"
+                      name="DocCC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocSent]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocSent]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocSent]"
+                      name="DocSent"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocReceived]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocReceived]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocReceived]"
+                      name="DocReceived"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocSubject]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocSubject]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[DocSubject]"
+                      name="DocSubject"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[ModifiedDate]"
+                      name="ModifiedDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      length="8000"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FEDCode]"
+                      name="FEDCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[case_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[case_id]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[case_id]"
+                      name="case_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[IsCurrent]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[IsCurrent]"
+                      length="1"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[IsCurrent]"
+                      name="IsCurrent"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[MSSecurityOption]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[MSSecurityOption]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[MSSecurityOption]"
+                      name="MSSecurityOption"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[SourceSystemID]"
+                      name="SourceSystemID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FolderName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FolderName]"
+                      length="1000"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FolderName]"
+                      name="FolderName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FileID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FileID]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[FileID]"
+                      name="FileID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[clID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[clID]"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].Columns[clID]"
+                      name="clID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FEDClient]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="FEDClient" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FEDMatter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="FEDMatter" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocumentSource]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="DocumentSource" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[VersionNumber]"
+                      dataType="i4"
+                      name="VersionNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocumentTitle]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="DocumentTitle" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[AlternateDocDescription]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="AlternateDocDescription" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocumentNumber]"
+                      dataType="r8"
+                      name="DocumentNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocumentExtension]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="DocumentExtension" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocWallet]"
+                      codePage="1252"
+                      dataType="str"
+                      length="19"
+                      name="DocWallet" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocDirection]"
+                      dataType="i4"
+                      name="DocDirection" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[Author]"
+                      dataType="i4"
+                      name="Author" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[CreationDate]"
+                      dataType="dbTimeStamp"
+                      name="CreationDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocFrom]"
+                      dataType="i4"
+                      name="DocFrom" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocTo]"
+                      dataType="i4"
+                      name="DocTo" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocCC]"
+                      dataType="i4"
+                      name="DocCC" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocSent]"
+                      dataType="i4"
+                      name="DocSent" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocReceived]"
+                      dataType="i4"
+                      name="DocReceived" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[DocSubject]"
+                      dataType="i4"
+                      name="DocSubject" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="ModifiedDate" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FEDCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8000"
+                      name="FEDCode" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[case_id]"
+                      dataType="i4"
+                      name="case_id" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[IsCurrent]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="IsCurrent" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[MSSecurityOption]"
+                      dataType="i4"
+                      name="MSSecurityOption" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[SourceSystemID]"
+                      dataType="i8"
+                      name="SourceSystemID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FolderName]"
+                      dataType="wstr"
+                      length="1000"
+                      name="FolderName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[FileID]"
+                      dataType="i8"
+                      name="FileID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output].ExternalColumns[clID]"
+                      dataType="i8"
+                      name="clID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FEDClient]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FEDClient]"
+                      name="FEDClient" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FEDMatter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FEDMatter]"
+                      name="FEDMatter" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocumentSource]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocumentSource]"
+                      name="DocumentSource" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[VersionNumber]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[VersionNumber]"
+                      name="VersionNumber" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocumentTitle]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocumentTitle]"
+                      name="DocumentTitle" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[AlternateDocDescription]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[AlternateDocDescription]"
+                      name="AlternateDocDescription" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocumentNumber]"
+                      dataType="r8"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocumentNumber]"
+                      name="DocumentNumber" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocumentExtension]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocumentExtension]"
+                      name="DocumentExtension" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocWallet]"
+                      codePage="1252"
+                      dataType="str"
+                      length="19"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocWallet]"
+                      name="DocWallet" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocDirection]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocDirection]"
+                      name="DocDirection" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[Author]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[Author]"
+                      name="Author" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[CreationDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[CreationDate]"
+                      name="CreationDate" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocFrom]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocFrom]"
+                      name="DocFrom" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocTo]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocTo]"
+                      name="DocTo" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocCC]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocCC]"
+                      name="DocCC" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocSent]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocSent]"
+                      name="DocSent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocReceived]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocReceived]"
+                      name="DocReceived" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocSubject]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[DocSubject]"
+                      name="DocSubject" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[ModifiedDate]"
+                      name="ModifiedDate" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8000"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FEDCode]"
+                      name="FEDCode" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[case_id]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[case_id]"
+                      name="case_id" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[IsCurrent]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[IsCurrent]"
+                      name="IsCurrent" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[MSSecurityOption]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[MSSecurityOption]"
+                      name="MSSecurityOption" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[SourceSystemID]"
+                      name="SourceSystemID" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FolderName]"
+                      dataType="wstr"
+                      length="1000"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FolderName]"
+                      name="FolderName" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FileID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[FileID]"
+                      name="FileID" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[clID]"
+                      dataType="i8"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[clID]"
+                      name="clID" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - GetDocumentStageData.Paths[Data Conversion Output]"
+              endId="Package\DFT - GetDocumentStageData\Derived Column.Inputs[Derived Column Input]"
+              name="Data Conversion Output"
+              startId="Package\DFT - GetDocumentStageData\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\DFT - GetDocumentStageData.Paths[Derived Column Output]"
+              endId="Package\DFT - GetDocumentStageData\Row Count.Inputs[Row Count Input 1]"
+              name="Derived Column Output"
+              startId="Package\DFT - GetDocumentStageData\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DFT - GetDocumentStageData.Paths[OLE DB Source Output]"
+              endId="Package\DFT - GetDocumentStageData\Data Conversion.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - GetDocumentStageData\SRC_RLBDocs.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DFT - GetDocumentStageData.Paths[Row Count Output 1]"
+              endId="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\DFT - GetDocumentStageData\Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Populate New Location Share Variable"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9103D885-DB14-483F-A5AD-CFF722BBD3B2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Populate New Location Share Variable"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{690E36B9-A0CB-4546-8491-E91C2BF6699A}"
+          SQLTask:SqlStatementSource="SELECT dirPath,dirid&#xA;FROM &#xA;dbo.dbDirectory &#xA;WHERE dirCode = 'OMDOCUMENTS'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="dirpath"
+            SQLTask:DtsVariableName="User::NewShareLocation" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="dirid"
+            SQLTask:DtsVariableName="User::DirectoryID" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{FCFAF996-E676-4357-B245-59B3327D8744}"
+      DTS:From="Package\Populate New Location Share Variable"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DFT - GetDocumentStageData" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{AC99F362-4FF2-4B1D-87D9-35F8F049C7F3}"
+      DTS:EventID="234406780"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{F38C34C5-3AD5-4C9F-8753-E187582DEAF0}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\AuditError"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{7E19661F-5219-4D63-B8A5-46452284AF02}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="AuditError"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9359DAA7-2A68-409A-BAB8-F025BD71BCE7}"
+              SQLTask:SqlStatementSource="exec config.uspAuditError ?, ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@AuditID"
+                SQLTask:DtsVariableName="User::AuditID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="131"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorCode"
+                SQLTask:DtsVariableName="System::ErrorCode"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@ErrorDescription"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="260,42"
+          Id="Package\DFT - GetDocumentStageData"
+          TopLeft="233.05703958826,300.466349634765" />
+        <NodeLayout
+          Size="260,42"
+          Id="Package\Populate New Location Share Variable"
+          TopLeft="234.05703958826,177.2990393291" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="363.55703958826,219.2990393291">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,81.167310305665"
+              Start="0,0"
+              End="0,73.667310305665">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,73.667310305665" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\DFT - GetDocumentStageData">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="156,42"
+          Id="Package\DFT - GetDocumentStageData\Data Conversion"
+          TopLeft="538.641121111929,517.212645980881" />
+        <NodeLayout
+          Size="145,42"
+          Id="Package\DFT - GetDocumentStageData\SRC_RLBDocs"
+          TopLeft="542,425" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\DFT - GetDocumentStageData\Row Count"
+          TopLeft="515.641121111929,677.876616966107" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\DFT - GetDocumentStageData\Derived Column"
+          TopLeft="513.641121111929,592.460456150284" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging"
+          TopLeft="512.641121111929,763.460456150284" />
+        <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[Row Count Output 1]"
+          TopLeft="619.641121111929,719.876616966107">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.583839184177"
+              Start="0,0"
+              End="0,36.083839184177">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.083839184177" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[OLE DB Source Output]"
+          TopLeft="615.570560555964,467">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.212645980881"
+              Start="0,0"
+              End="0,42.712645980881">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.712645980881" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[Derived Column Output]"
+          TopLeft="620.141121111929,634.460456150284">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.416160815823"
+              Start="0,0"
+              End="0,35.916160815823">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.916160815823" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT - GetDocumentStageData.Paths[Data Conversion Output]"
+          TopLeft="617.891121111929,559.212645980881">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.247810169403"
+              Start="0,0"
+              End="0,25.747810169403">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.747810169403" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <DtsEventHandler
+    design-time-name="Package\DFT - GetDocumentStageData.EventHandlers[OnPreExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - GetDocumentStageData.EventHandlers[OnPreExecute]\StartAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - GetDocumentStageData.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - GetDocumentStageData.EventHandlers[OnPostExecute]\EndAudit"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\DFT - GetDocumentStageData.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\DFT - GetDocumentStageData.EventHandlers[OnError]\AuditError"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - GetDocumentStageData\DEST_MatterSphereStaging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - GetDocumentStageData\SRC_RLBDocs">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
