@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Intapp_API"
   DTS:PackageType="5"
-  DTS:VersionBuild="32"
-  DTS:VersionGUID="{A7C3A2CC-F655-4B1A-AB1D-64A2B0A611B6}">
+  DTS:VersionBuild="37"
+  DTS:VersionGUID="{B3F43BF3-F152-4115-80EA-471DC8755370}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -51,6 +51,26 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
+      DTS:DTSID="{435CE178-D43B-4B69-BACA-28B63BBA3154}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ErrorClients">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8D8F550F-A861-43E6-9215-06F5801A4041}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ErrorTimeEntries">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
       DTS:DTSID="{EFC08B83-0306-4EE9-833A-9772ABAD83C2}"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
@@ -82,6 +102,30 @@
       <DTS:Variables />
       <DTS:Executables>
         <DTS:Executable
+          DTS:refId="Package\Clients - Get API Data\Error Handling Clients"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{11c77ee4-9991-45a9-a4c6-3deb22331bba}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Handling Clients"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{BA38CC37-3D67-403F-B554-B9EA55E53E9A}"
+              SQLTask:SqlStatementSource="INSERT INTO dbo.intapp_audit&#xA;SELECT ErrorType = 'Clients' , ? , GETDATE() " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::ErrorClients"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
           DTS:refId="Package\Clients - Get API Data\Get API Data"
           DTS:CreationName="Microsoft.ExecuteProcess"
           DTS:Description="Gets intapp web api data"
@@ -97,7 +141,8 @@
               Executable="Powershell.exe"
               Arguments="-ExecutionPolicy Unrestricted -File CallAPI.ps1"
               WorkingDirectory="\\SVR-LIV-DW-01\APIDataStaging\InTapp"
-              StandardOutputVariable="User::Data" />
+              StandardOutputVariable="User::Data"
+              StandardErrorVariable="User::ErrorClients" />
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
@@ -109,17 +154,26 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Import data into intapp_clients"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{BA38CC37-3D67-403F-B554-B9EA55E53E9A}"
-              SQLTask:SqlStatementSource="EXEC [dbo].[load_intappdata]"
+              SQLTask:SqlStatementSource="EXEC [dbo].[load_intappdata_clients]"
               SQLTask:TypeConversionMode="None" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
       <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Clients - Get API Data.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{F9B10C5A-91D1-43CA-AE81-75B054B71CDA}"
+          DTS:From="Package\Clients - Get API Data\Get API Data"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Clients - Get API Data\Error Handling Clients"
+          DTS:Value="2" />
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Clients - Get API Data.PrecedenceConstraints[Constraint 1]"
           DTS:CreationName=""
@@ -129,6 +183,30 @@
           DTS:ObjectName="Constraint 1"
           DTS:To="Package\Clients - Get API Data\Import data into intapp_clients" />
       </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Error Handling Token"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{DE558492-EE1A-473B-BB9F-16DA7DA0A6DE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Error Handling Token"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BA38CC37-3D67-403F-B554-B9EA55E53E9A}"
+          SQLTask:SqlStatementSource="INSERT INTO dbo.intapp_audit&#xA;SELECT ErrorType = 'Token' , ? , GETDATE() " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::ErrorToken"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Get Token"
@@ -161,6 +239,30 @@
       <DTS:Variables />
       <DTS:Executables>
         <DTS:Executable
+          DTS:refId="Package\TimeEntries - Get API Data\Error Handling Time Entries"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{e5f6dc0b-e935-4485-8ee9-c4ebcafd666f}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Error Handling Time Entries"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{BA38CC37-3D67-403F-B554-B9EA55E53E9A}"
+              SQLTask:SqlStatementSource="INSERT INTO dbo.intapp_audit&#xA;SELECT ErrorType = 'TimeEntries' , ? , GETDATE() " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::ErrorTimeEntries"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
           DTS:refId="Package\TimeEntries - Get API Data\Get API Data"
           DTS:CreationName="Microsoft.ExecuteProcess"
           DTS:Description="Gets intapp web api data"
@@ -175,7 +277,8 @@
             <ExecuteProcessData
               Executable="Powershell.exe"
               Arguments="-ExecutionPolicy Unrestricted -File CallAPITimeEntries.ps1"
-              WorkingDirectory="\\SVR-LIV-DW-01\APIDataStaging\InTapp" />
+              WorkingDirectory="\\SVR-LIV-DW-01\APIDataStaging\InTapp"
+              StandardErrorVariable="User::ErrorTimeEntries" />
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
@@ -187,7 +290,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Import data into intapp_timeentries"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -198,6 +301,15 @@
         </DTS:Executable>
       </DTS:Executables>
       <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\TimeEntries - Get API Data.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{86D14B58-787F-4DF3-92D9-399ADEE877BE}"
+          DTS:From="Package\TimeEntries - Get API Data\Get API Data"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\TimeEntries - Get API Data\Error Handling Time Entries"
+          DTS:Value="2" />
         <DTS:PrecedenceConstraint
           DTS:refId="Package\TimeEntries - Get API Data.PrecedenceConstraints[Constraint 1]"
           DTS:CreationName=""
@@ -226,6 +338,15 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\Clients - Get API Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{737BAD8C-E1E8-44B7-B06D-18A63B459DA8}"
+      DTS:From="Package\Get Token"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Error Handling Token"
+      DTS:Value="2" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -238,7 +359,11 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="182,42"
+          Id="Package\Clients - Get API Data\Error Handling Clients"
+          TopLeft="358,142" />
         <NodeLayout
           Size="140,42"
           Id="Package\Clients - Get API Data\Get API Data"
@@ -247,6 +372,42 @@
           Size="224,42"
           Id="Package\Clients - Get API Data\Import data into intapp_clients"
           TopLeft="90,125" />
+        <EdgeLayout
+          Id="Package\Clients - Get API Data.PrecedenceConstraints[Constraint]"
+          TopLeft="230,67.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="219,74.5"
+              Start="0,0"
+              End="219,67">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.3050847457627" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.3050847457627"
+                    Point2="0,30.3050847457627"
+                    Point3="4,30.3050847457627" />
+                  <mssgle:LineSegment
+                    End="215,30.3050847457627" />
+                  <mssgle:CubicBezierSegment
+                    Point1="215,30.3050847457627"
+                    Point2="219,30.3050847457627"
+                    Point3="219,34.3050847457627" />
+                  <mssgle:LineSegment
+                    End="219,67" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="84.195546875,35.3050847457627,50.60890625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Clients - Get API Data.PrecedenceConstraints[Constraint 1]"
           TopLeft="205,67.5">
@@ -272,10 +433,22 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="442,224"
-          Size="442,267"
+          PanelSize="545,239"
+          Size="545,282"
           Id="Package\Clients - Get API Data"
           TopLeft="63,90" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\Error Handling Token"
+          TopLeft="415,19" />
+        <NodeLayout
+          Size="128,42"
+          Id="Package\Get Token"
+          TopLeft="215.5,21" />
+        <NodeLayout
+          Size="209,42"
+          Id="Package\TimeEntries - Get API Data\Error Handling Time Entries"
+          TopLeft="427,215" />
         <NodeLayout
           Size="140,42"
           Id="Package\TimeEntries - Get API Data\Get API Data"
@@ -284,6 +457,42 @@
           Size="247,42"
           Id="Package\TimeEntries - Get API Data\Import data into intapp_timeentries"
           TopLeft="94,225" />
+        <EdgeLayout
+          Id="Package\TimeEntries - Get API Data.PrecedenceConstraints[Constraint]"
+          TopLeft="247,96.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="284.5,118.5"
+              Start="0,0"
+              End="284.5,111">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.2033898305085" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,44.2033898305085"
+                    Point2="0,48.2033898305085"
+                    Point3="4,48.2033898305085" />
+                  <mssgle:LineSegment
+                    End="280.5,48.2033898305085" />
+                  <mssgle:CubicBezierSegment
+                    Point1="280.5,48.2033898305085"
+                    Point2="284.5,48.2033898305085"
+                    Point3="284.5,52.2033898305085" />
+                  <mssgle:LineSegment
+                    End="284.5,111" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="116.945546875,53.2033898305085,50.60890625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\TimeEntries - Get API Data.PrecedenceConstraints[Constraint 1]"
           TopLeft="221.25,96.5">
@@ -309,24 +518,36 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="442,324"
-          Size="442,367"
+          PanelSize="641,324"
+          Size="641,367"
           Id="Package\TimeEntries - Get API Data"
           TopLeft="67,413" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="286,357">
+          TopLeft="335.5,372">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,56"
+              EndConnector="52,41"
               Start="0,0"
-              End="0,48.5">
+              End="52,33.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,48.5" />
+                    End="0,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.5"
+                    Point2="0,20.5"
+                    Point3="4,20.5" />
+                  <mssgle:LineSegment
+                    End="48,20.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="48,20.5"
+                    Point2="52,20.5"
+                    Point3="52,24.5" />
+                  <mssgle:LineSegment
+                    End="52,33.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -335,30 +556,62 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="128,42"
-          Id="Package\Get Token"
-          TopLeft="215.5,21" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="281.75,63">
+          TopLeft="259.5,63">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,27"
+              EndConnector="76,27"
               Start="0,0"
-              End="0,19.5">
+              End="76,19.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,19.5" />
+                    End="0,7" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7"
+                    Point2="0,11"
+                    Point3="4,11" />
+                  <mssgle:LineSegment
+                    End="72,11" />
+                  <mssgle:CubicBezierSegment
+                    Point1="72,11"
+                    Point2="76,11"
+                    Point3="76,15" />
+                  <mssgle:LineSegment
+                    End="76,19.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="343.5,41">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="71.5,0"
+              Start="0,0"
+              End="64,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="64,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="6.695546875,5,50.60890625,11.609375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
