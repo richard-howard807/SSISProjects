@@ -1,0 +1,1126 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/22/2022 5:12:02 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="L08269"
+  DTS:CreatorName="SBC\jbonne"
+  DTS:DTSID="{D97A1161-B951-4A89-A68F-895803A44899}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.150"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="update_civil_justice_stats"
+  DTS:PackageType="5"
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{F512085D-B47C-4F90-A0C5-1E268C0E4086}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{903F8DEB-5B29-46C1-8BAA-745D513C765D}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\civil_justice_stats.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SVR-LIV-DW-01.Visualisation]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E36B8961-761A-48E1-8421-72FF01FC7E37}"
+      DTS:ObjectName="SVR-LIV-DW-01.Visualisation">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-LIV-DW-01;Initial Catalog=Visualisation;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DCAD1E96-25B9-4E87-9745-D1D73D458455}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="destination_file_name">
+      <DTS:VariableValue
+        DTS:DataType="8">civil_justice_stats.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E3D35D54-3BE8-437F-BEDE-139E3F195C39}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="destination_path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4F812109-E1F6-472F-AC61-64E899A3C5EA}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::destination_path]+ @[User::destination_file_name]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="full_destination_path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\civil_justice_stats.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0FD28C09-203E-42CD-BFF8-C8E615AD55C1}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::source_path]+ @[User::source_file_name]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="full_source_path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\template - package use only\civil_justice_stats_template.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ACFE5488-BACD-441F-8F0E-985169CD3AF4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="source_file_name">
+      <DTS:VariableValue
+        DTS:DataType="8">civil_justice_stats_template.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{337DB8C9-36C8-4D23-A634-FFA2EF09C14C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="source_path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\template - package use only\</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Clear Excel Sheet"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="File System Task"
+      DTS:DTSID="{17FABE95-8928-4E3A-97F9-C14430D9D6B5}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clear Excel Sheet"
+      DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOverwriteDestFile="True"
+          TaskSourcePath="User::full_source_path"
+          TaskIsSourceVariable="True"
+          TaskDestinationPath="User::full_destination_path"
+          TaskIsDestinationVariable="True" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Stage Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{65FCF1B8-0EE2-45A2-BAE3-18BA93220B4E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Stage Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E36B8961-761A-48E1-8421-72FF01FC7E37}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.stage_civil_justice_stats" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{8ADD657A-26C2-4C02-88FA-27842326F000}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E36B8961-761A-48E1-8421-72FF01FC7E37}"
+          SQLTask:SqlStatementSource="EXEC dbo.update_civil_justice_stats_table" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Upload Civil Justice Stats"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D00144FF-BAA7-46C2-8524-B7941D6330C3}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Upload Civil Justice Stats"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Upload Civil Justice Stats\Civil Justice Stats"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Civil Justice Stats"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">civil_justice_stats$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[year]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[year]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[year]"
+                      name="year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[quarter]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[quarter]"
+                      length="255"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[quarter]"
+                      name="quarter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[figure_status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[figure_status]"
+                      length="255"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[figure_status]"
+                      name="figure_status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[money_claims]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[money_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[money_claims]"
+                      name="money_claims"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[personal_injury_claims]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[personal_injury_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[personal_injury_claims]"
+                      name="personal_injury_claims"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[other_damages_claims]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[other_damages_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[other_damages_claims]"
+                      name="other_damages_claims"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_damages_claims]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_damages_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_damages_claims]"
+                      name="total_damages_claims"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_money_and_damages_claims]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_money_and_damages_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_money_and_damages_claims]"
+                      name="total_money_and_damages_claims"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[mortgage_and_landlord_possession_claims]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[mortgage_and_landlord_possession_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[mortgage_and_landlord_possession_claims]"
+                      name="mortgage_and_landlord_possession_claims"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[claims_for_return_of_goods]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[claims_for_return_of_goods]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[claims_for_return_of_goods]"
+                      name="claims_for_return_of_goods"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[other_non_money_claims]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[other_non_money_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[other_non_money_claims]"
+                      name="other_non_money_claims"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_non_money_claims]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_non_money_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_non_money_claims]"
+                      name="total_non_money_claims"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_claims]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_claims]"
+                      name="total_claims"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_insolvency_petitions]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_insolvency_petitions]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_insolvency_petitions]"
+                      name="total_insolvency_petitions"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_proceedings_started]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_proceedings_started]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_proceedings_started]"
+                      name="total_proceedings_started"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_completed_civil_proceedings_in_the_magistrate_courts]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_completed_civil_proceedings_in_the_magistrate_courts]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_completed_civil_proceedings_in_the_magistrate_courts]"
+                      name="total_completed_civil_proceedings_in_the_magistrate_courts"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[year]"
+                      dataType="r8"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[quarter]"
+                      dataType="wstr"
+                      length="255"
+                      name="quarter" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[figure_status]"
+                      dataType="wstr"
+                      length="255"
+                      name="figure_status" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[money_claims]"
+                      dataType="r8"
+                      name="money_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[personal_injury_claims]"
+                      dataType="r8"
+                      name="personal_injury_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[other_damages_claims]"
+                      dataType="r8"
+                      name="other_damages_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_damages_claims]"
+                      dataType="r8"
+                      name="total_damages_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_money_and_damages_claims]"
+                      dataType="r8"
+                      name="total_money_and_damages_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[blank_one]"
+                      dataType="wstr"
+                      length="255"
+                      name="blank_one" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[mortgage_and_landlord_possession_claims]"
+                      dataType="r8"
+                      name="mortgage_and_landlord_possession_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[claims_for_return_of_goods]"
+                      dataType="r8"
+                      name="claims_for_return_of_goods" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[other_non_money_claims]"
+                      dataType="r8"
+                      name="other_non_money_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_non_money_claims]"
+                      dataType="r8"
+                      name="total_non_money_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_claims]"
+                      dataType="r8"
+                      name="total_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_insolvency_petitions]"
+                      dataType="r8"
+                      name="total_insolvency_petitions" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[blank_two]"
+                      dataType="wstr"
+                      length="255"
+                      name="blank_two" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_proceedings_started]"
+                      dataType="r8"
+                      name="total_proceedings_started" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].ExternalColumns[total_completed_civil_proceedings_in_the_magistrate_courts]"
+                      dataType="r8"
+                      name="total_completed_civil_proceedings_in_the_magistrate_courts" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[year]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[year]"
+                      name="year" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[quarter]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[quarter]"
+                      name="quarter" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[figure_status]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[figure_status]"
+                      name="figure_status" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[money_claims]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[money_claims]"
+                      name="money_claims" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[personal_injury_claims]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[personal_injury_claims]"
+                      name="personal_injury_claims" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[other_damages_claims]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[other_damages_claims]"
+                      name="other_damages_claims" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_damages_claims]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_damages_claims]"
+                      name="total_damages_claims" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_money_and_damages_claims]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_money_and_damages_claims]"
+                      name="total_money_and_damages_claims" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[mortgage_and_landlord_possession_claims]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[mortgage_and_landlord_possession_claims]"
+                      name="mortgage_and_landlord_possession_claims" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[claims_for_return_of_goods]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[claims_for_return_of_goods]"
+                      name="claims_for_return_of_goods" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[other_non_money_claims]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[other_non_money_claims]"
+                      name="other_non_money_claims" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_non_money_claims]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_non_money_claims]"
+                      name="total_non_money_claims" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_claims]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_claims]"
+                      name="total_claims" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_insolvency_petitions]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_insolvency_petitions]"
+                      name="total_insolvency_petitions" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_proceedings_started]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_proceedings_started]"
+                      name="total_proceedings_started" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_completed_civil_proceedings_in_the_magistrate_courts]"
+                      dataType="r8"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[total_completed_civil_proceedings_in_the_magistrate_courts]"
+                      name="total_completed_civil_proceedings_in_the_magistrate_courts" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Civil Justice Stats\figure status update"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="figure status update"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload Civil Justice Stats\figure status update.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\figure status update.Inputs[Derived Column Input].Columns[figure_status]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="figure_status"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[figure_status]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[REPLACENULL]([REPLACE]([REPLACE](#{Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[figure_status]},"(r)","revised"),"(p)","provisional"),"finalised")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(REPLACE(REPLACE(figure_status,"(r)","revised"),"(p)","provisional"),"finalised")</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Civil Justice Stats\figure status update.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Upload Civil Justice Stats\figure status update.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload Civil Justice Stats\figure status update.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Upload Civil Justice Stats\figure status update.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\figure status update.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Civil Justice Stats\figure status update.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\figure status update.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Civil Justice Stats\figure status update.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="stage_civil_justice_stats"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[stage_civil_justice_stats]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SVR-LIV-DW-01.Visualisation]"
+                  connectionManagerRefId="Package.ConnectionManagers[SVR-LIV-DW-01.Visualisation]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[year]"
+                      cachedDataType="r8"
+                      cachedName="year"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[year]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[year]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[quarter]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="quarter"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[quarter]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[quarter]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[figure_status]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="figure_status"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[figure_status]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[figure_status]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[money_claims]"
+                      cachedDataType="r8"
+                      cachedName="money_claims"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[money_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[money_claims]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[personal_injury_claims]"
+                      cachedDataType="r8"
+                      cachedName="personal_injury_claims"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[personal_injury_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[personal_injury_claims]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[other_damages_claims]"
+                      cachedDataType="r8"
+                      cachedName="other_damages_claims"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[other_damages_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[other_damages_claims]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[total_damages_claims]"
+                      cachedDataType="r8"
+                      cachedName="total_damages_claims"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_damages_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_damages_claims]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[total_money_and_damages_claims]"
+                      cachedDataType="r8"
+                      cachedName="total_money_and_damages_claims"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_money_and_damages_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_money_and_damages_claims]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[mortgage_and_landlord_possession_claims]"
+                      cachedDataType="r8"
+                      cachedName="mortgage_and_landlord_possession_claims"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[mortgage_and_landlord_possession_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[mortgage_and_landlord_possession_claims]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[claims_for_return_of_goods]"
+                      cachedDataType="r8"
+                      cachedName="claims_for_return_of_goods"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[claims_for_return_of_goods]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[claims_for_return_of_goods]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[other_non_money_claims]"
+                      cachedDataType="r8"
+                      cachedName="other_non_money_claims"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[other_non_money_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[other_non_money_claims]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[total_non_money_claims]"
+                      cachedDataType="r8"
+                      cachedName="total_non_money_claims"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_non_money_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_non_money_claims]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[total_claims]"
+                      cachedDataType="r8"
+                      cachedName="total_claims"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_claims]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_claims]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[total_insolvency_petitions]"
+                      cachedDataType="r8"
+                      cachedName="total_insolvency_petitions"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_insolvency_petitions]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_insolvency_petitions]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[total_proceedings_started]"
+                      cachedDataType="r8"
+                      cachedName="total_proceedings_started"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_proceedings_started]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_proceedings_started]" />
+                    <inputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].Columns[total_completed_civil_proceedings_in_the_magistrate_courts]"
+                      cachedDataType="r8"
+                      cachedName="total_completed_civil_proceedings_in_the_magistrate_courts"
+                      externalMetadataColumnId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_completed_civil_proceedings_in_the_magistrates_courts]"
+                      lineageId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output].Columns[total_completed_civil_proceedings_in_the_magistrate_courts]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[year]"
+                      dataType="r8"
+                      name="year" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[quarter]"
+                      dataType="wstr"
+                      length="255"
+                      name="quarter" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[figure_status]"
+                      dataType="wstr"
+                      length="255"
+                      name="figure_status" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[money_claims]"
+                      dataType="r8"
+                      name="money_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[personal_injury_claims]"
+                      dataType="r8"
+                      name="personal_injury_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[other_damages_claims]"
+                      dataType="r8"
+                      name="other_damages_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_damages_claims]"
+                      dataType="r8"
+                      name="total_damages_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_money_and_damages_claims]"
+                      dataType="r8"
+                      name="total_money_and_damages_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[mortgage_and_landlord_possession_claims]"
+                      dataType="r8"
+                      name="mortgage_and_landlord_possession_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[claims_for_return_of_goods]"
+                      dataType="r8"
+                      name="claims_for_return_of_goods" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[other_non_money_claims]"
+                      dataType="r8"
+                      name="other_non_money_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_non_money_claims]"
+                      dataType="r8"
+                      name="total_non_money_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_claims]"
+                      dataType="r8"
+                      name="total_claims" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_insolvency_petitions]"
+                      dataType="r8"
+                      name="total_insolvency_petitions" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_proceedings_started]"
+                      dataType="r8"
+                      name="total_proceedings_started" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input].ExternalColumns[total_completed_civil_proceedings_in_the_magistrates_courts]"
+                      dataType="r8"
+                      name="total_completed_civil_proceedings_in_the_magistrates_courts" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Upload Civil Justice Stats.Paths[Derived Column Output]"
+              endId="Package\Upload Civil Justice Stats\stage_civil_justice_stats.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Upload Civil Justice Stats\figure status update.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Upload Civil Justice Stats.Paths[Excel Source Output]"
+              endId="Package\Upload Civil Justice Stats\figure status update.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\Upload Civil Justice Stats\Civil Justice Stats.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{364B3BDA-E34B-4DC4-A4E1-D693865EA08A}"
+      DTS:From="Package\Truncate Stage Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Upload Civil Justice Stats" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{0A3362CF-0B6D-41B2-AD7B-D1F477F76CB8}"
+      DTS:From="Package\Upload Civil Justice Stats"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Update Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{0A20AD88-6BB7-4420-8EE0-E793222BFD5E}"
+      DTS:From="Package\Update Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Clear Excel Sheet" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="161.333333333334,42.6666666666667"
+          Id="Package\Clear Excel Sheet"
+          TopLeft="429.374993601814,328.899994118809" />
+        <NodeLayout
+          Size="164,42.6666666666667"
+          Id="Package\Truncate Stage Table"
+          TopLeft="406.249993946403,44.1999992096424" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\Update Table"
+          TopLeft="441.249993424863,229.449995897114" />
+        <NodeLayout
+          Size="196.666666666667,42.6666666666667"
+          Id="Package\Upload Civil Justice Stats"
+          TopLeft="413.749993834645,137.149997547567" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="488.999993890524,86.8666658763091">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.2833316712578"
+              Start="0,0"
+              End="0,42.7833316712578">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.7833316712578" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="512.333326963087,179.816664214234">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.6333316828807"
+              Start="0,0"
+              End="0,42.1333316828807">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.1333316828807" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="511.312493513338,272.116662563781">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,56.7833315550284"
+              Start="0,0"
+              End="0,49.2833315550284">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.2833315550284" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Upload Civil Justice Stats">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="160,42.6666666666667"
+          Id="Package\Upload Civil Justice Stats\Civil Justice Stats"
+          TopLeft="449.999993294477,59.1499989423156" />
+        <NodeLayout
+          Size="192,42.6666666666667"
+          Id="Package\Upload Civil Justice Stats\stage_civil_justice_stats"
+          TopLeft="436.874993490055,253.499995467067" />
+        <NodeLayout
+          Size="174.666666666667,42.6666666666667"
+          Id="Package\Upload Civil Justice Stats\figure status update"
+          TopLeft="449.374993303791,155.999997210503" />
+        <EdgeLayout
+          Id="Package\Upload Civil Justice Stats.Paths[Excel Source Output]"
+          TopLeft="533.354159965801,101.816665608982">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.1833316015204"
+              Start="0,0"
+              End="0,46.6833316015204">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.6833316015204" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Civil Justice Stats.Paths[Derived Column Output]"
+          TopLeft="534.79166006359,198.666663877169">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.8333315898976"
+              Start="0,0"
+              End="0,47.3333315898976">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.3333315898976" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload Civil Justice Stats\stage_civil_justice_stats">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload Civil Justice Stats\Civil Justice Stats">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

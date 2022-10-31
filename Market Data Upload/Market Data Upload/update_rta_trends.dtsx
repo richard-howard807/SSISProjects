@@ -1,0 +1,1654 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/27/2022 4:11:07 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="L08269"
+  DTS:CreatorName="SBC\jbonne"
+  DTS:DTSID="{A9B569A5-4854-41D2-95B8-A34085862882}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.150"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="update_rta_trends"
+  DTS:PackageType="5"
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{653E8604-17FB-4C97-A4E0-70297118A1C1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{0DE1AD26-1690-4D9F-A284-FAF907A6F915}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\rta_trends.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SVR-LIV-DW-01.Visualisation]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{37D5532E-F213-468E-9FBC-679E6DBFEBA7}"
+      DTS:ObjectName="SVR-LIV-DW-01.Visualisation">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SVR-LIV-DW-01;Initial Catalog=Visualisation;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2AA3A1C3-701D-4383-A065-8D1828EF3641}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="destination_file_name">
+      <DTS:VariableValue
+        DTS:DataType="8">rta_trends.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8E122C03-89A3-4B5F-A66A-30B4717E7A35}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="destination_path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E02561E6-3F9C-4DFC-8E74-65388BF20812}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::destination_path] +@[User::destination_file_name]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="full_destination_path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\rta_trends.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F449C1D2-95C4-47CD-850D-FBB7FAEA3C48}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::source_path] + @[User::source_file_name]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="full_source_path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\template - package use only\rta_trends_template.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{41AED350-7996-4B4C-B93E-24AAFE0F2F9C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="source_file_name">
+      <DTS:VariableValue
+        DTS:DataType="8">rta_trends_template.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D445F163-AC7B-4F9E-8B3A-0FCF08C6D681}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="source_path">
+      <DTS:VariableValue
+        DTS:DataType="8">\\sbc.root\usershares\Restricted\Business Services\Information Systems\Teams\Development\Business Intelligence\MarketDataUpload\template - package use only\</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data load"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{73C30BD7-B24F-4712-ACCD-A7FAEA32A654}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data load"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data load\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[stage_rta_trends]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data load\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SVR-LIV-DW-01.Visualisation]"
+                  connectionManagerRefId="Package.ConnectionManagers[SVR-LIV-DW-01.Visualisation]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[casualty_year]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="casualty_year"
+                      externalMetadataColumnId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[casualty_year]"
+                      lineageId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_year]" />
+                    <inputColumn
+                      refId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[casualty_value]"
+                      cachedDataType="r8"
+                      cachedName="casualty_value"
+                      externalMetadataColumnId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[casualty_value]"
+                      lineageId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]" />
+                    <inputColumn
+                      refId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[road_user_type]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="road_user_type"
+                      externalMetadataColumnId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[road_user_type]"
+                      lineageId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[road_user_type]" />
+                    <inputColumn
+                      refId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[casualty_severity]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="casualty_severity"
+                      externalMetadataColumnId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[casualty_severity]"
+                      lineageId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_severity]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[casualty_severity]"
+                      dataType="wstr"
+                      length="255"
+                      name="casualty_severity" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[road_user_type]"
+                      dataType="wstr"
+                      length="255"
+                      name="road_user_type" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[casualty_year]"
+                      dataType="wstr"
+                      length="4"
+                      name="casualty_year" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[casualty_value]"
+                      dataType="i4"
+                      name="casualty_value" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data load\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data load\Remove Empty Lines"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Remove Empty Lines"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data load\Remove Empty Lines.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data load\Remove Empty Lines.Inputs[Conditional Split Input].Columns[road_user_type]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="road_user_type"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[road_user_type]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data load\Remove Empty Lines.Outputs[empty_lines]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="empty_lines"
+                  synchronousInputId="Package\Data load\Remove Empty Lines.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[ISNULL](#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[road_user_type]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(road_user_type)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data load\Remove Empty Lines.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Data load\Remove Empty Lines.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data load\Remove Empty Lines.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Data load\Remove Empty Lines.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data load\Remove Empty Lines.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data load\Remove Empty Lines.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data load\Remove Empty Lines.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data load\Remove Empty Lines.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data load\rta_trends"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="rta_trends"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Annual$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data load\rta_trends.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data load\rta_trends.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[road_user_type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[road_user_type]"
+                      length="255"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[road_user_type]"
+                      name="road_user_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[casualty_severity]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[casualty_severity]"
+                      length="255"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[casualty_severity]"
+                      name="casualty_severity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2010]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2010]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2010]"
+                      name="2010"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2011]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2011]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2011]"
+                      name="2011"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2012]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2012]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2012]"
+                      name="2012"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2013]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2013]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2013]"
+                      name="2013"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2014]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2014]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2014]"
+                      name="2014"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2015]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2015]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2015]"
+                      name="2015"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2016]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2016]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2016]"
+                      name="2016"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2017]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2017]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2017]"
+                      name="2017"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2018]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2018]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2018]"
+                      name="2018"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2019]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2019]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2019]"
+                      name="2019"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2020]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2020]"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2020]"
+                      name="2020"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[road_user_type]"
+                      dataType="wstr"
+                      length="255"
+                      name="road_user_type" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[casualty_severity]"
+                      dataType="wstr"
+                      length="255"
+                      name="casualty_severity" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2010]"
+                      dataType="r8"
+                      name="2010" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2011]"
+                      dataType="r8"
+                      name="2011" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2012]"
+                      dataType="r8"
+                      name="2012" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2013]"
+                      dataType="r8"
+                      name="2013" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2014]"
+                      dataType="r8"
+                      name="2014" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2015]"
+                      dataType="r8"
+                      name="2015" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2016]"
+                      dataType="r8"
+                      name="2016" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2017]"
+                      dataType="r8"
+                      name="2017" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2018]"
+                      dataType="r8"
+                      name="2018" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2019]"
+                      dataType="r8"
+                      name="2019" />
+                    <externalMetadataColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Output].ExternalColumns[2020]"
+                      dataType="r8"
+                      name="2020" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[road_user_type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[road_user_type]"
+                      name="road_user_type" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[casualty_severity]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[casualty_severity]"
+                      name="casualty_severity" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2010]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2010]"
+                      name="2010" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2011]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2011]"
+                      name="2011" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2012]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2012]"
+                      name="2012" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2013]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2013]"
+                      name="2013" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2014]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2014]"
+                      name="2014" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2015]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2015]"
+                      name="2015" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2016]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2016]"
+                      name="2016" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2017]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2017]"
+                      name="2017" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2018]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2018]"
+                      name="2018" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2019]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2019]"
+                      name="2019" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2020]"
+                      dataType="r8"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[2020]"
+                      name="2020" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data load\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Data load\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[road_user_type]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="road_user_type"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[road_user_type]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[casualty_severity]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="casualty_severity"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[casualty_severity]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2010]"
+                      cachedDataType="r8"
+                      cachedName="2010"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2010]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2011]"
+                      cachedDataType="r8"
+                      cachedName="2011"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2011]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2012]"
+                      cachedDataType="r8"
+                      cachedName="2012"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2012]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2013]"
+                      cachedDataType="r8"
+                      cachedName="2013"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2013]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2014]"
+                      cachedDataType="r8"
+                      cachedName="2014"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2014]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2015]"
+                      cachedDataType="r8"
+                      cachedName="2015"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2015]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2016]"
+                      cachedDataType="r8"
+                      cachedName="2016"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2016]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2017]"
+                      cachedDataType="r8"
+                      cachedName="2017"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2017]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2018]"
+                      cachedDataType="r8"
+                      cachedName="2018"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2018]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2019]"
+                      cachedDataType="r8"
+                      cachedName="2019"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2019]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Sort.Inputs[Sort Input].Columns[2020]"
+                      cachedDataType="r8"
+                      cachedName="2020"
+                      lineageId="Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2020]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data load\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[road_user_type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[road_user_type]"
+                      name="road_user_type"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[road_user_type]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[casualty_severity]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[casualty_severity]"
+                      name="casualty_severity"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[casualty_severity]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2010]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2010]"
+                      name="2010">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2010]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2011]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2011]"
+                      name="2011">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2011]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2012]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2012]"
+                      name="2012">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2012]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2013]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2013]"
+                      name="2013">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2013]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2014]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2014]"
+                      name="2014">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2014]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2015]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2015]"
+                      name="2015">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2015]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2016]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2016]"
+                      name="2016">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2016]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2017]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2017]"
+                      name="2017">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2017]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2018]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2018]"
+                      name="2018">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2018]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2019]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2019]"
+                      name="2019">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2019]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Sort.Outputs[Sort Output].Columns[2020]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2020]"
+                      name="2020">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Data load\rta_trends.Outputs[Excel Source Output].Columns[2020]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data load\Unpivot"
+              componentClassID="Microsoft.UnPivot"
+              contactInfo="Unpivot;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Expands an un-normalized data flow into a more normalized version. Values from multiple columns of a single record expand to multiple records in a single column. For example, expand a table that lists athletic scores with a column for each game to more records and a single score column."
+              name="Unpivot">
+              <inputs>
+                <input
+                  refId="Package\Data load\Unpivot.Inputs[Unpivot Input]"
+                  hasSideEffects="true"
+                  name="Unpivot Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2010]"
+                      cachedDataType="r8"
+                      cachedName="2010"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2010]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2010</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2011]"
+                      cachedDataType="r8"
+                      cachedName="2011"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2011]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2011</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2012]"
+                      cachedDataType="r8"
+                      cachedName="2012"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2012]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2012</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2013]"
+                      cachedDataType="r8"
+                      cachedName="2013"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2013]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2013</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2014]"
+                      cachedDataType="r8"
+                      cachedName="2014"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2014]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2014</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2015]"
+                      cachedDataType="r8"
+                      cachedName="2015"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2015]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2015</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2016]"
+                      cachedDataType="r8"
+                      cachedName="2016"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2016]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2016</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2017]"
+                      cachedDataType="r8"
+                      cachedName="2017"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2017]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2017</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2018]"
+                      cachedDataType="r8"
+                      cachedName="2018"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2018]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2018</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2019]"
+                      cachedDataType="r8"
+                      cachedName="2019"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2019]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2019</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[2020]"
+                      cachedDataType="r8"
+                      cachedName="2020"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[2020]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]}</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue">2020</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[road_user_type]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="road_user_type"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[road_user_type]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[road_user_type]}</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data load\Unpivot.Inputs[Unpivot Input].Columns[casualty_severity]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="casualty_severity"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\Data load\Sort.Outputs[Sort Output].Columns[casualty_severity]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The lineage ID of the output column that will receive the value from this input column. Or -1 if column's value is not used in output rows."
+                          name="DestinationColumn">#{Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_severity]}</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the value written to the PivotKey column in the output row."
+                          expressionType="Notify"
+                          name="PivotKeyValue" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data load\Unpivot.Outputs[Unpivot Output]"
+                  name="Unpivot Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_year]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_year]"
+                      name="casualty_year">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">true</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]"
+                      dataType="r8"
+                      lineageId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_value]"
+                      name="casualty_value">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[road_user_type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[road_user_type]"
+                      name="road_user_type">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_severity]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data load\Unpivot.Outputs[Unpivot Output].Columns[casualty_severity]"
+                      name="casualty_severity">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the value in the PivotKeyValue property is written to the column in the new row."
+                          name="PivotKey">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data load.Paths[Conditional Split Default Output]"
+              endId="Package\Data load\Sort.Inputs[Sort Input]"
+              name="Conditional Split Default Output"
+              startId="Package\Data load\Remove Empty Lines.Outputs[Conditional Split Default Output]" />
+            <path
+              refId="Package\Data load.Paths[Excel Source Output]"
+              endId="Package\Data load\Remove Empty Lines.Inputs[Conditional Split Input]"
+              name="Excel Source Output"
+              startId="Package\Data load\rta_trends.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Data load.Paths[Sort Output]"
+              endId="Package\Data load\Unpivot.Inputs[Unpivot Input]"
+              name="Sort Output"
+              startId="Package\Data load\Sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\Data load.Paths[Unpivot Output]"
+              endId="Package\Data load\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Unpivot Output"
+              startId="Package\Data load\Unpivot.Outputs[Unpivot Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9E38CC14-4B33-429E-A540-CA9F6B2E2622}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{37D5532E-F213-468E-9FBC-679E6DBFEBA7}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.stage_rta_trends;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D30B065C-EF05-40CC-8BF2-8B9D896387A1}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data load" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="125.333333333334,42"
+          Id="Package\Data load"
+          TopLeft="418.749993760139,144.299997419715" />
+        <NodeLayout
+          Size="164,42.6666666666667"
+          Id="Package\Execute SQL Task"
+          TopLeft="394.999994114041,50.6999990934134" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="479.208327270424,93.36666576008">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.933331659635"
+              Start="0,0"
+              End="0,43.433331659635">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.433331659635" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data load">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="178.666666666667,42.6666666666667"
+          Id="Package\Data load\Remove Empty Lines"
+          TopLeft="465.624993061647,124.149997780025" />
+        <NodeLayout
+          Size="128,42.6666666666667"
+          Id="Package\Data load\rta_trends"
+          TopLeft="483.749992791563,33.7999993956089" />
+        <EdgeLayout
+          Id="Package\Data load.Paths[Excel Source Output]"
+          TopLeft="551.354159593271,76.4666660622755">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.6833317177494"
+              Start="0,0"
+              End="0,40.1833317177494">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.1833317177494" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="98.6666666666667,42.6666666666667"
+          Id="Package\Data load\Sort"
+          TopLeft="498.749992568046,201.766664644281" />
+        <EdgeLayout
+          Id="Package\Data load.Paths[Conditional Split Default Output]"
+          TopLeft="551.520826148179,166.816664446692">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.9500001975894"
+              Start="0,0"
+              End="0,27.4500001975894">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.4500001975894" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-70.61390625,7.89589853629472,141.2278125,11.658203125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="116,42.6666666666667"
+          Id="Package\Data load\Unpivot"
+          TopLeft="495.624992614612,295.099994723201" />
+        <EdgeLayout
+          Id="Package\Data load.Paths[Sort Output]"
+          TopLeft="550.854159257996,244.433331310948">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.6666634122531"
+              Start="0,0"
+              End="0,43.1666634122531">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.1666634122531" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Data load\OLE DB Destination"
+          TopLeft="464.99999307096,382.849993154109" />
+        <EdgeLayout
+          Id="Package\Data load.Paths[Unpivot Output]"
+          TopLeft="552.312492842786,337.766661389868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.0833317642408"
+              Start="0,0"
+              End="0,37.5833317642408">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.5833317642408" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data load\rta_trends">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data load\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
