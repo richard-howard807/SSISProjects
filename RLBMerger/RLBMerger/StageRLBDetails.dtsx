@@ -12,8 +12,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="StageRLBDetails"
   DTS:PackageType="5"
-  DTS:VersionBuild="232"
-  DTS:VersionGUID="{5C11C645-03FC-4249-AF32-FCE1E06DCD34}">
+  DTS:VersionBuild="234"
+  DTS:VersionGUID="{8EA7C78C-8239-4011-B6D7-2F5464B6F404}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -2549,23 +2549,14 @@ where [refTable].[FED Desc] = ? and [refTable].[MS Lookup Code] = ?</property>
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">--SELECT  clNo AS clNo ,
---        MS.clID,
---        MS.fileNo ,
---        CAST(AltNumber AS NVARCHAR(255)) AS FEDCode,
---        MS.fileID AS MSFileID
---FROM  dbo.udEnvisionMatterBridge AS MS
---LEFT OUTER JOIN config.dbClient
--- ON dbClient.clID = MS.clID
-
-SELECT  clNo AS clNo ,
-        config.dbClient.clID,
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  clNo AS clNo ,
+        dbFile.clID,
         fileNo ,
-        CAST(FEDCode AS NVARCHAR(255)) AS FEDCode,
-        RLB.fileID AS MSFileID
-FROM MattersphereStaging.dbo.RLBTestMatters201022 AS RLB
+        CAST(RTRIM(MS.RLBRef) AS NVARCHAR(255)) AS FEDCode,
+        MS.fileID AS MSFileID
+FROM  dbo.udRBLMatterBridge AS MS
 INNER JOIN config.dbFile
- ON dbFile.fileID = RLB.FileID
+ON dbFile.fileID = MS.fileID
 INNER JOIN config.dbClient
  ON dbClient.clID = dbFile.clID</property>
                 <property
@@ -2675,7 +2666,7 @@ INNER JOIN config.dbClient
                       name="FEDCode" />
                     <externalMetadataColumn
                       refId="Package\DFT - StageRLBDetails\SRC_Mattersphere.Outputs[OLE DB Source Output].ExternalColumns[MSFileID]"
-                      dataType="r8"
+                      dataType="i8"
                       name="MSFileID" />
                   </externalMetadataColumns>
                 </output>
@@ -2709,7 +2700,7 @@ INNER JOIN config.dbClient
                       name="FEDCode" />
                     <outputColumn
                       refId="Package\DFT - StageRLBDetails\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[MSFileID]"
-                      dataType="r8"
+                      dataType="i8"
                       lineageId="Package\DFT - StageRLBDetails\SRC_Mattersphere.Outputs[OLE DB Source Error Output].Columns[MSFileID]"
                       name="MSFileID" />
                     <outputColumn
